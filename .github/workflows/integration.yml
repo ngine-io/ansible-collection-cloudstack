@@ -53,7 +53,7 @@ jobs:
         path: .cache/collection-tarballs
 
   sanity-test-collection-via-containers:
-    name: Sanity in container via Python ${{ matrix.python-version }}
+    name: Sanity Py${{ matrix.python-version }}
     needs:
     - build-collection-artifact
     runs-on: ${{ matrix.runner-os }}
@@ -110,7 +110,7 @@ jobs:
         /home/runner/.ansible/collections/ansible_collections/ngine_io/cloudstack
 
   integration-test:
-    name: Integration test using Python ${{ matrix.python-version }}
+    name: Integration test group${{matrix.group}} Py${{ matrix.python-version }}
     needs:
     - build-collection-artifact
     - sanity-test-collection-via-containers
