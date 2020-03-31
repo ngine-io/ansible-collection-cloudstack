@@ -125,7 +125,7 @@ jobs:
         ansible-version:
         - git+https://github.com/ansible/ansible.git@devel
         python-version:
-        - 3.6
+        # - 3.6
         - 2.7
     steps:
     - name: Check out code
@@ -150,7 +150,7 @@ jobs:
         pip
         install
         --user
-        -r tests/requirements.txt
+        -r requirements.txt
     - name: Download migrated collection artifacts
       uses: actions/download-artifact@v1
       with:
@@ -171,7 +171,6 @@ jobs:
         -v
         --diff
         --color
-        --allow-unsupported
         --continue-on-error
         --coverage
         cloud/cs/
