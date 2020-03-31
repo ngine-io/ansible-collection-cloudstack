@@ -1,0 +1,24 @@
+---
+authors:
+  - "René Moser <mail@renemoser.net>"
+  - "David Passante (@dpassante)"
+  - "Netservers Ltd. <support@netservers.co.uk>"
+  - "Patryk D. Cichy <patryk.d.cichy@gmail.com>"
+  - "Darren Worrall <darren@iweb.co.uk>"
+  - "Marc-Aurèle Brothier (@marcaurele)"
+  - "Jefferson Girão <jefferson@girao.net>"
+dependencies: {}
+description: 'Ansible Collection for Apache CloudStack based clouds'
+documentation: ''
+homepage: 'https://github.com/ngine-io/ansible-collection-cloudstack'
+issues: 'https://github.com/ngine-io/ansible-collection-cloudstack/issues'
+license: GPL-3.0-or-later
+name: cloudstack
+namespace: ngine_io
+readme: README.md
+repository: 'https://github.com/ngine-io/ansible-collection-cloudstack'
+tags:
+  - cloud
+  - cloudstack
+  - ngine_io
+version: 0.0.1
