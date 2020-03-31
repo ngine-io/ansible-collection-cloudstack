@@ -125,8 +125,11 @@ jobs:
         ansible-version:
         - git+https://github.com/ansible/ansible.git@devel
         python-version:
-        # - 3.6
+        - 3.6
         - 2.7
+        group:
+        - 1
+        - 2
     steps:
     - name: Check out code
       uses: actions/checkout@v1
@@ -171,9 +174,11 @@ jobs:
         -v
         --diff
         --color
+        --retry-on-error
+        --python ${{ matrix.python-version }}
         --continue-on-error
         --coverage
-        cloud/cs/
+        shippable/cs/group${{ matrix.group }}/
     - name: Generate coverage report.
       run: >-
         ~/.local/bin/ansible-test
