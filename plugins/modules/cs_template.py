@@ -49,11 +49,6 @@ options:
       - The MD5 checksum value of this template.
       - If set, we search by checksum instead of name.
     type: str
-  is_ready:
-    description:
-      - "Note: this flag was not implemented and therefore marked as deprecated."
-      - Deprecated, will be removed in version 2.11.
-    type: bool
   is_public:
     description:
       - Register the template to be publicly available to all users.
@@ -680,7 +675,6 @@ def main():
         vm=dict(),
         snapshot=dict(),
         os_type=dict(),
-        is_ready=dict(type='bool', removed_in_version='2.11'),
         is_public=dict(type='bool'),
         is_featured=dict(type='bool'),
         is_dynamically_scalable=dict(type='bool'),
