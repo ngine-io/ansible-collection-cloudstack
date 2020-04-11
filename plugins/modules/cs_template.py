@@ -185,7 +185,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: register a systemvm template
-  cs_template:
+  ngine_io.cloudstack.cs_template:
     name: systemvm-vmware-4.5
     url: "http://packages.shapeblue.com/systemvmtemplate/4.5/systemvm64template-4.5-vmware.ova"
     hypervisor: VMware
@@ -193,9 +193,8 @@ EXAMPLES = '''
     cross_zones: yes
     os_type: Debian GNU/Linux 7(64-bit)
 
-
 - name: Create a template from a stopped virtual machine's volume
-  cs_template:
+  ngine_io.cloudstack.cs_template:
     name: Debian 9 (64-bit) 20GB ({{ ansible_date_time.date }})
     vm: debian-9-base-vm
     os_type: Debian GNU/Linux 9 (64-bit)
@@ -206,7 +205,7 @@ EXAMPLES = '''
 
 # Note: Use template_find_option(s) when a template name is not unique
 - name: Create a template from a stopped virtual machine's volume
-  cs_template:
+  ngine_io.cloudstack.cs_template:
     name: Debian 9 (64-bit)
     display_text: Debian 9 (64-bit) 20GB ({{ ansible_date_time.date }})
     template_find_option: display_text
@@ -216,9 +215,8 @@ EXAMPLES = '''
     password_enabled: yes
     is_public: yes
 
-
 - name: create a template from a virtual machine's root volume snapshot
-  cs_template:
+  ngine_io.cloudstack.cs_template:
     name: Debian 9 (64-bit) Snapshot ROOT-233_2015061509114
     snapshot: ROOT-233_2015061509114
     os_type: Debian GNU/Linux 9 (64-bit)
@@ -226,9 +224,8 @@ EXAMPLES = '''
     password_enabled: yes
     is_public: yes
 
-
 - name: Remove a template
-  cs_template:
+  ngine_io.cloudstack.cs_template:
     name: systemvm-4.2
     cross_zones: yes
     state: absent

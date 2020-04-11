@@ -72,23 +72,20 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Assign a specific IP to the default NIC of the VM
-  cs_instance_nic_secondaryip:
+  ngine_io.cloudstack.cs_instance_nic_secondaryip:
     vm: customer_xy
     vm_guest_ip: 10.10.10.10
-
 
 # Note: If vm_guest_ip is not set, you will get a new IP address on every run.
 - name: Assign an IP to the default NIC of the VM
-  cs_instance_nic_secondaryip:
+  ngine_io.cloudstack.cs_instance_nic_secondaryip:
     vm: customer_xy
 
-
 - name: Remove a specific IP from the default NIC
-  cs_instance_nic_secondaryip:
+  ngine_io.cloudstack.cs_instance_nic_secondaryip:
     vm: customer_xy
     vm_guest_ip: 10.10.10.10
     state: absent
-
 '''
 
 RETURN = '''

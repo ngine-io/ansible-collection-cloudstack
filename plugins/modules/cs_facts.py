@@ -40,15 +40,15 @@ requirements: [ yaml ]
 EXAMPLES = '''
 # Gather all facts on instances
 - name: Gather cloudstack facts
-  cs_facts:
+  ngine_io.cloudstack.cs_facts:
 
 # Gather specific fact on instances
 - name: Gather cloudstack facts
-  cs_facts: filter=cloudstack_instance_id
+  ngine_io.cloudstack.cs_facts: filter=cloudstack_instance_id
 
 # Gather specific fact on instances with a given meta_data_host
 - name: Gather cloudstack facts
-  cs_facts:
+  ngine_io.cloudstack.cs_facts:
     filter: cloudstack_instance_id
     meta_data_host: 169.254.169.254
 '''

@@ -95,40 +95,36 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: ensure a snapshot policy daily at 1h00 UTC
-  cs_snapshot_policy:
+  ngine_io.cloudstack.cs_snapshot_policy:
     volume: ROOT-478
     schedule: '00:1'
     max_snaps: 3
 
-
 - name: ensure a snapshot policy daily at 1h00 UTC on the second DATADISK of VM web-01
-  cs_snapshot_policy:
+  ngine_io.cloudstack.cs_snapshot_policy:
     vm: web-01
     volume_type: DATADISK
     device_id: 2
     schedule: '00:1'
     max_snaps: 3
 
-
 - name: ensure a snapshot policy hourly at minute 5 UTC
-  cs_snapshot_policy:
+  ngine_io.cloudstack.cs_snapshot_policy:
     volume: ROOT-478
     schedule: '5'
     interval_type: hourly
     max_snaps: 1
 
-
 - name: ensure a snapshot policy weekly on Sunday at 05h00, TZ Europe/Zurich
-  cs_snapshot_policy:
+  ngine_io.cloudstack.cs_snapshot_policy:
     volume: ROOT-478
     schedule: '00:5:1'
     interval_type: weekly
     max_snaps: 1
     time_zone: 'Europe/Zurich'
 
-
 - name: ensure a snapshot policy is absent
-  cs_snapshot_policy:
+  ngine_io.cloudstack.cs_snapshot_policy:
     volume: ROOT-478
     interval_type: hourly
     state: absent

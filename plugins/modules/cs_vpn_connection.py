@@ -72,20 +72,18 @@ extends_documentation_fragment:
 
 EXAMPLES = r'''
 - name: Create a VPN connection with activated VPN gateway
-  cs_vpn_connection:
+  ngine_io.cloudstack.cs_vpn_connection:
     vpn_customer_gateway: my vpn connection
     vpc: my vpc
 
-
 - name: Create a VPN connection and force VPN gateway activation
-  cs_vpn_connection:
+  ngine_io.cloudstack.cs_vpn_connection:
     vpn_customer_gateway: my vpn connection
     vpc: my vpc
     force: yes
 
-
 - name: Remove a vpn connection
-  cs_vpn_connection:
+  ngine_io.cloudstack.cs_vpn_connection:
     vpn_customer_gateway: my vpn connection
     vpc: my vpc
     state: absent

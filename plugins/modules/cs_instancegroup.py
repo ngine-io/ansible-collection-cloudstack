@@ -45,12 +45,11 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create an instance group
-  cs_instancegroup:
+  ngine_io.cloudstack.cs_instancegroup:
     name: loadbalancers
 
-
 - name: Remove an instance group
-  cs_instancegroup:
+  ngine_io.cloudstack.cs_instancegroup:
     name: loadbalancers
     state: absent
 '''

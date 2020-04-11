@@ -93,28 +93,25 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Ensure a VPC is present but not started after creating
-  cs_vpc:
+  ngine_io.cloudstack.cs_vpc:
     name: my_vpc
     display_text: My example VPC
     cidr: 10.10.0.0/16
     state: stopped
 
-
 - name: Ensure a VPC is present and started after creating
-  cs_vpc:
+  ngine_io.cloudstack.cs_vpc:
     name: my_vpc
     display_text: My example VPC
     cidr: 10.10.0.0/16
 
-
 - name: Ensure a VPC is absent
-  cs_vpc:
+  ngine_io.cloudstack.cs_vpc:
     name: my_vpc
     state: absent
 
-
 - name: Ensure a VPC is restarted with clean up
-  cs_vpc:
+  ngine_io.cloudstack.cs_vpc:
     name: my_vpc
     clean_up: yes
     state: restarted

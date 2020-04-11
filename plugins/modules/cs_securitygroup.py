@@ -49,13 +49,12 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: create a security group
-  cs_securitygroup:
+  ngine_io.cloudstack.cs_securitygroup:
     name: default
     description: default security group
 
-
 - name: remove a security group
-  cs_securitygroup:
+  ngine_io.cloudstack.cs_securitygroup:
     name: default
     state: absent
 '''

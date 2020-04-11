@@ -99,7 +99,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: create an account in domain 'CUSTOMERS'
-  cs_account:
+  ngine_io.cloudstack.cs_account:
     name: customer_xy
     username: customer_xy
     password: S3Cur3
@@ -109,42 +109,39 @@ EXAMPLES = '''
     domain: CUSTOMERS
     role: Domain Admin
 
-
 - name: Lock an existing account in domain 'CUSTOMERS'
-  cs_account:
+  ngine_io.cloudstack.cs_account:
     name: customer_xy
     domain: CUSTOMERS
     state: locked
 
-
 - name: Disable an existing account in domain 'CUSTOMERS'
-  cs_account:
+  ngine_io.cloudstack.cs_account:
     name: customer_xy
     domain: CUSTOMERS
     state: disabled
 
-
 - name: Enable an existing account in domain 'CUSTOMERS'
-  cs_account:
+  ngine_io.cloudstack.cs_account:
     name: customer_xy
     domain: CUSTOMERS
     state: enabled
 
 - name: Remove an account in domain 'CUSTOMERS'
-  cs_account:
+  ngine_io.cloudstack.cs_account:
     name: customer_xy
     domain: CUSTOMERS
     state: absent
 
 - name: Create a single user LDAP account in domain 'CUSTOMERS'
-  cs_account:
+  ngine_io.cloudstack.cs_account:
     name: customer_xy
     username: customer_xy
     domain: CUSTOMERS
     ldap_domain: cn=customer_xy,cn=team_xy,ou=People,dc=domain,dc=local
 
 - name: Create a LDAP account in domain 'CUSTOMERS' and bind it to a LDAP group
-  cs_account:
+  ngine_io.cloudstack.cs_account:
     name: team_xy
     username: customer_xy
     domain: CUSTOMERS

@@ -57,33 +57,29 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create a project
-  cs_project:
+  ngine_io.cloudstack.cs_project:
     name: web
     tags:
       - { key: admin, value: john }
       - { key: foo,   value: bar }
 
-
 - name: Rename a project
-  cs_project:
+  ngine_io.cloudstack.cs_project:
     name: web
     display_text: my web project
 
-
 - name: Suspend an existing project
-  cs_project:
+  ngine_io.cloudstack.cs_project:
     name: web
     state: suspended
 
-
 - name: Activate an existing project
-  cs_project:
+  ngine_io.cloudstack.cs_project:
     name: web
     state: active
 
-
 - name: Remove a project
-  cs_project:
+  ngine_io.cloudstack.cs_project:
     name: web
     state: absent
 '''

@@ -61,7 +61,7 @@ author:
 
 EXAMPLES = '''
 - name: Add a Image Store (NFS)
-  cs_image_store:
+  ngine_io.cloudstack.cs_image_store:
     zone: zone-01
     name: nfs-01
     provider: NFS
@@ -70,16 +70,15 @@ EXAMPLES = '''
 
 # Change the NFS share URL and force a Image Store recreation
 - name: Change the NFS url
-  cs_image_store:
+  ngine_io.cloudstack.cs_image_store:
     zone: zone-01
     name: nfs-01
     provider: NFS
     force_recreate: yes
     url: nfs://192.168.21.10/shares/secondary
 
-
 - name: delete the image store
-  cs_image_store:
+  ngine_io.cloudstack.cs_image_store:
     name: nfs-01
     zone: zone-01
     state: absent

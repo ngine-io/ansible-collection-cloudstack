@@ -50,18 +50,16 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Ensure an user role is present
-  cs_role:
+  ngine_io.cloudstack.cs_role:
     name: myrole_user
 
-
 - name: Ensure a role having particular ID is named as myrole_user
-  cs_role:
+  ngine_io.cloudstack.cs_role:
     name: myrole_user
     id: 04589590-ac63-4ffc-93f5-b698b8ac38b6
 
-
 - name: Ensure a role is absent
-  cs_role:
+  ngine_io.cloudstack.cs_role:
     name: myrole_user
     state: absent
 '''

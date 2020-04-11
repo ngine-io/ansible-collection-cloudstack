@@ -72,20 +72,18 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Add a nic on another network
-  cs_instance_nic:
+  ngine_io.cloudstack.cs_instance_nic:
     vm: privnet
     network: privNetForBasicZone
 
-
 - name: Ensure IP address on a nic
-  cs_instance_nic:
+  ngine_io.cloudstack.cs_instance_nic:
     vm: privnet
     ip_address: 10.10.11.32
     network: privNetForBasicZone
 
-
 - name: Remove a secondary nic
-  cs_instance_nic:
+  ngine_io.cloudstack.cs_instance_nic:
     vm: privnet
     state: absent
     network: privNetForBasicZone

@@ -54,27 +54,24 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Ensure global configuration
-  cs_configuration:
+  ngine_io.cloudstack.cs_configuration:
     name: router.reboot.when.outofband.migrated
     value: false
 
-
 - name: Ensure zone configuration
-  cs_configuration:
+  ngine_io.cloudstack.cs_configuration:
     name: router.reboot.when.outofband.migrated
     zone: ch-gva-01
     value: true
 
-
 - name: Ensure storage configuration
-  cs_configuration:
+  ngine_io.cloudstack.cs_configuration:
     name: storage.overprovisioning.factor
     storage: storage01
     value: 2.0
 
-
 - name: Ensure account configuration
-  cs_configuration:
+  ngine_io.cloudstack.cs_configuration:
     name: allow.public.user.templates
     value: false
     account: acme inc

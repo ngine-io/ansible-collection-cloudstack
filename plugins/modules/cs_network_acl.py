@@ -65,14 +65,13 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: create a network ACL
-  cs_network_acl:
+  ngine_io.cloudstack.cs_network_acl:
     name: Webserver ACL
     description: a more detailed description of the ACL
     vpc: customers
 
-
 - name: remove a network ACL
-  cs_network_acl:
+  ngine_io.cloudstack.cs_network_acl:
     name: Webserver ACL
     vpc: customers
     state: absent

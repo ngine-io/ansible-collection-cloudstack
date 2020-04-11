@@ -28,19 +28,17 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Gather information from a zone
-  cs_zone_info:
+  ngine_io.cloudstack.cs_zone_info:
     zone: ch-gva-1
   register: zone
-
 
 - name: Show the returned results of the registered variable
   debug:
     msg: "{{ zone }}"
 
 - name: Gather information from all zones
-  cs_zone_info:
+  ngine_io.cloudstack.cs_zone_info:
   register: zones
-
 
 - name: Show information on all zones
   debug:

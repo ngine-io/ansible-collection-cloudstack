@@ -80,7 +80,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Ensure a host is present but disabled
-  cs_host:
+  ngine_io.cloudstack.cs_host:
     name: pod01.zone01.example.com
     cluster: vcenter.example.com/zone01/cluster01
     pod: pod01
@@ -91,23 +91,20 @@ EXAMPLES = '''
     - perf
     - gpu
 
-
 - name: Ensure an existing host is disabled
-  cs_host:
+  ngine_io.cloudstack.cs_host:
     name: pod01.zone01.example.com
     zone: zone01
     allocation_state: disabled
 
-
 - name: Ensure an existing host is enabled
-  cs_host:
+  ngine_io.cloudstack.cs_host:
     name: pod01.zone01.example.com
     zone: zone01
     allocation_state: enabled
 
-
 - name: Ensure a host is absent
-  cs_host:
+  ngine_io.cloudstack.cs_host:
     name: pod01.zone01.example.com
     zone: zone01
     state: absent

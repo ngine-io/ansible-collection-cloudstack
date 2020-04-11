@@ -125,7 +125,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: create a network ACL rule, allow port 80 ingress
-  cs_network_acl_rule:
+  ngine_io.cloudstack.cs_network_acl_rule:
     network_acl: web
     rule_position: 1
     vpc: my vpc
@@ -134,9 +134,8 @@ EXAMPLES = '''
     port: 80
     cidr: 0.0.0.0/0
 
-
 - name: create a network ACL rule, deny port range 8000-9000 ingress for 10.20.0.0/16 and 10.22.0.0/16
-  cs_network_acl_rule:
+  ngine_io.cloudstack.cs_network_acl_rule:
     network_acl: web
     rule_position: 1
     vpc: my vpc
@@ -148,9 +147,8 @@ EXAMPLES = '''
     - 10.20.0.0/16
     - 10.22.0.0/16
 
-
 - name: remove a network ACL rule
-  cs_network_acl_rule:
+  ngine_io.cloudstack.cs_network_acl_rule:
     network_acl: web
     rule_position: 1
     vpc: my vpc

@@ -88,24 +88,24 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Ensure a network is present
-  cs_physical_network:
+  ngine_io.cloudstack.cs_physical_network:
     name: net01
     zone: zone01
     isolation_method: VLAN
     broadcast_domain_range: ZONE
 
 - name: Set a tag on a network
-  cs_physical_network:
+  ngine_io.cloudstack.cs_physical_network:
     name: net01
     tag: overlay
 
 - name: Remove tag on a network
-  cs_physical_network:
+  ngine_io.cloudstack.cs_physical_network:
     name: net01
     tag: ""
 
 - name: Ensure a network is enabled with specific nsps enabled
-  cs_physical_network:
+  ngine_io.cloudstack.cs_physical_network:
     name: net01
     zone: zone01
     isolation_method: VLAN
@@ -118,19 +118,19 @@ EXAMPLES = '''
       - vpcvirtualrouter
 
 - name: Ensure a network is disabled
-  cs_physical_network:
+  ngine_io.cloudstack.cs_physical_network:
     name: net01
     zone: zone01
     state: disabled
 
 - name: Ensure a network is enabled
-  cs_physical_network:
+  ngine_io.cloudstack.cs_physical_network:
     name: net01
     zone: zone01
     state: enabled
 
 - name: Ensure a network is absent
-  cs_physical_network:
+  ngine_io.cloudstack.cs_physical_network:
     name: net01
     zone: zone01
     state: absent

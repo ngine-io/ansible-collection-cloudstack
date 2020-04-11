@@ -120,7 +120,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create a network offering and enable it
-  cs_network_offering:
+  ngine_io.cloudstack.cs_network_offering:
     name: my_network_offering
     display_text: network offering description
     state: enabled
@@ -130,10 +130,8 @@ EXAMPLES = '''
       - { service: 'dns', provider: 'virtualrouter' }
       - { service: 'dhcp', provider: 'virtualrouter' }
 
-
-
 - name: Remove a network offering
-  cs_network_offering:
+  ngine_io.cloudstack.cs_network_offering:
     name: my_network_offering
     state: absent
 '''

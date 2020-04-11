@@ -80,7 +80,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create an user in domain 'CUSTOMERS'
-  cs_user:
+  ngine_io.cloudstack.cs_user:
     account: developers
     username: johndoe
     password: S3Cur3
@@ -89,30 +89,26 @@ EXAMPLES = '''
     email: john.doe@example.com
     domain: CUSTOMERS
 
-
 - name: Lock an existing user in domain 'CUSTOMERS'
-  cs_user:
+  ngine_io.cloudstack.cs_user:
     username: johndoe
     domain: CUSTOMERS
     state: locked
 
-
 - name: Disable an existing user in domain 'CUSTOMERS'
-  cs_user:
+  ngine_io.cloudstack.cs_user:
     username: johndoe
     domain: CUSTOMERS
     state: disabled
 
-
 - name: Enable/unlock an existing user in domain 'CUSTOMERS'
-  cs_user:
+  ngine_io.cloudstack.cs_user:
     username: johndoe
     domain: CUSTOMERS
     state: enabled
 
-
 - name: Remove an user in domain 'CUSTOMERS'
-  cs_user:
+  ngine_io.cloudstack.cs_user:
     name: customer_xy
     domain: CUSTOMERS
     state: absent

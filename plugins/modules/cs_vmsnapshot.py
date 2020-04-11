@@ -75,21 +75,19 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create a VM snapshot of disk and memory before an upgrade
-  cs_vmsnapshot:
+  ngine_io.cloudstack.cs_vmsnapshot:
     name: Snapshot before upgrade
     vm: web-01
     snapshot_memory: yes
 
-
 - name: Revert a VM to a snapshot after a failed upgrade
-  cs_vmsnapshot:
+  ngine_io.cloudstack.cs_vmsnapshot:
     name: Snapshot before upgrade
     vm: web-01
     state: revert
 
-
 - name: Remove a VM snapshot after successful upgrade
-  cs_vmsnapshot:
+  ngine_io.cloudstack.cs_vmsnapshot:
     name: Snapshot before upgrade
     vm: web-01
     state: absent

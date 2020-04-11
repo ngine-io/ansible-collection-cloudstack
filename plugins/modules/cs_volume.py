@@ -97,7 +97,6 @@ options:
   state:
     description:
       - State of the volume.
-      - The choices C(extracted) and C(uploaded) were added in version 2.8.
     type: str
     default: present
     choices: [ present, absent, attached, detached, extracted, uploaded ]
@@ -137,45 +136,39 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: create volume within project and zone with specified storage options
-  cs_volume:
+  ngine_io.cloudstack.cs_volume:
     name: web-vm-1-volume
     project: Integration
     zone: ch-zrh-ix-01
     disk_offering: PerfPlus Storage
     size: 20
 
-
 - name: create/attach volume to instance
-  cs_volume:
+  ngine_io.cloudstack.cs_volume:
     name: web-vm-1-volume
     disk_offering: PerfPlus Storage
     size: 20
     vm: web-vm-1
     state: attached
 
-
 - name: detach volume
-  cs_volume:
+  ngine_io.cloudstack.cs_volume:
     name: web-vm-1-volume
     state: detached
 
-
 - name: remove volume
-  cs_volume:
+  ngine_io.cloudstack.cs_volume:
     name: web-vm-1-volume
     state: absent
 
-
-# New in version 2.8
 - name: Extract DATA volume to make it downloadable
-  cs_volume:
+  ngine_io.cloudstack.cs_volume:
     state: extracted
     name: web-vm-1-volume
   register: data_vol_out
 
-
 - name: Create new volume by downloading source volume
-  cs_volume:
+  ngine_io.cloudstack.cs_volume:
     state: uploaded
     name: web-vm-1-volume-2
     format: VHD

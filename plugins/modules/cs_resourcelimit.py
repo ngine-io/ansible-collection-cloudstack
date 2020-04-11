@@ -59,14 +59,13 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Update a resource limit for instances of a domain
-  cs_resourcelimit:
+  ngine_io.cloudstack.cs_resourcelimit:
     type: instance
     limit: 10
     domain: customers
 
-
 - name: Update a resource limit for instances of an account
-  cs_resourcelimit:
+  ngine_io.cloudstack.cs_resourcelimit:
     type: instance
     limit: 12
     account: moserre

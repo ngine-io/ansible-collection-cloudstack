@@ -156,15 +156,14 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create a network
-  cs_network:
+  ngine_io.cloudstack.cs_network:
     name: my network
     zone: gva-01
     network_offering: DefaultIsolatedNetworkOfferingWithSourceNatService
     network_domain: example.com
 
-
 - name: Create a VPC tier
-  cs_network:
+  ngine_io.cloudstack.cs_network:
     name: my VPC tier 1
     zone: gva-01
     vpc: my VPC
@@ -173,23 +172,20 @@ EXAMPLES = '''
     netmask: 255.255.255.0
     acl: my web acl
 
-
 - name: Update a network
-  cs_network:
+  ngine_io.cloudstack.cs_network:
     name: my network
     display_text: network of domain example.local
     network_domain: example.local
 
-
 - name: Restart a network with clean up
-  cs_network:
+  ngine_io.cloudstack.cs_network:
     name: my network
     clean_up: yes
     state: restarted
 
-
 - name: Remove a network
-  cs_network:
+  ngine_io.cloudstack.cs_network:
     name: my network
     state: absent
 '''

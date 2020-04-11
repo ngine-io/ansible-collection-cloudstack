@@ -44,14 +44,13 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: create a region
-  cs_region:
+  ngine_io.cloudstack.cs_region:
     id: 2
     name: geneva
     endpoint: https://cloud.gva.example.com
 
-
 - name: remove a region with ID 2
-  cs_region:
+  ngine_io.cloudstack.cs_region:
     id: 2
     state: absent
 '''

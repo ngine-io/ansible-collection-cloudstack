@@ -110,33 +110,30 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: 1.2.3.4:80 -> web01:8080
-  cs_portforward:
+  ngine_io.cloudstack.cs_portforward:
     ip_address: 1.2.3.4
     vm: web01
     public_port: 80
     private_port: 8080
 
-
 - name: forward SSH and open firewall
-  cs_portforward:
+  ngine_io.cloudstack.cs_portforward:
     ip_address: '{{ public_ip }}'
     vm: '{{ inventory_hostname }}'
     public_port: '{{ ansible_ssh_port }}'
     private_port: 22
     open_firewall: true
 
-
 - name: forward DNS traffic, but do not open firewall
-  cs_portforward:
+  ngine_io.cloudstack.cs_portforward:
     ip_address: 1.2.3.4
     vm: '{{ inventory_hostname }}'
     public_port: 53
     private_port: 53
     protocol: udp
 
-
 - name: remove ssh port forwarding
-  cs_portforward:
+  ngine_io.cloudstack.cs_portforward:
     ip_address: 1.2.3.4
     public_port: 22
     private_port: 22

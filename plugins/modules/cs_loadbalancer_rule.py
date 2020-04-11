@@ -116,25 +116,23 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create a load balancer rule
-  cs_loadbalancer_rule:
+  ngine_io.cloudstack.cs_loadbalancer_rule:
     name: balance_http
     public_ip: 1.2.3.4
     algorithm: leastconn
     public_port: 80
     private_port: 8080
 
-
 - name: Update algorithm of an existing load balancer rule
-  cs_loadbalancer_rule:
+  ngine_io.cloudstack.cs_loadbalancer_rule:
     name: balance_http
     public_ip: 1.2.3.4
     algorithm: roundrobin
     public_port: 80
     private_port: 8080
 
-
 - name: Delete a load balancer rule
-  cs_loadbalancer_rule:
+  ngine_io.cloudstack.cs_loadbalancer_rule:
     name: balance_http
     public_ip: 1.2.3.4
     state: absent

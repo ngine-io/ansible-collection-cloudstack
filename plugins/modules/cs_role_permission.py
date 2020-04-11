@@ -53,29 +53,26 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create a role permission
-  cs_role_permission:
+  ngine_io.cloudstack.cs_role_permission:
     role: My_Custom_role
     name: createVPC
     permission: allow
     description: My comments
 
-
 - name: Remove a role permission
-  cs_role_permission:
+  ngine_io.cloudstack.cs_role_permission:
     state: absent
     role: My_Custom_role
     name: createVPC
 
-
 - name: Update a system role permission
-  cs_role_permission:
+  ngine_io.cloudstack.cs_role_permission:
     role: Domain Admin
     name: createVPC
     permission: deny
 
-
 - name: Update rules order. Move the rule at the top of list
-  cs_role_permission:
+  ngine_io.cloudstack.cs_role_permission:
     role: Domain Admin
     name: createVPC
     parent: 0

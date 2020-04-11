@@ -72,13 +72,12 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create a static NAT for IP 1.2.3.4 to web01
-  cs_staticnat:
+  ngine_io.cloudstack.cs_staticnat:
     ip_address: 1.2.3.4
     vm: web01
 
-
 - name: Remove a static NAT
-  cs_staticnat:
+  ngine_io.cloudstack.cs_staticnat:
     ip_address: 1.2.3.4
     state: absent
 '''

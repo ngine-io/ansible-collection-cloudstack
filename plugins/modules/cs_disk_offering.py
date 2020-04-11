@@ -104,24 +104,22 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create a disk offering with local storage
-  cs_disk_offering:
+  ngine_io.cloudstack.cs_disk_offering:
     name: small
     display_text: Small 10GB
     disk_size: 10
     storage_type: local
 
-
 - name: Create or update a disk offering with shared storage
-  cs_disk_offering:
+  ngine_io.cloudstack.cs_disk_offering:
     name: small
     display_text: Small 10GB
     disk_size: 10
     storage_type: shared
     storage_tags: SAN01
 
-
 - name: Remove a disk offering
-  cs_disk_offering:
+  ngine_io.cloudstack.cs_disk_offering:
     name: small
     state: absent
 '''

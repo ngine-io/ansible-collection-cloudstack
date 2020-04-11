@@ -78,29 +78,26 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Associate an IP address conditionally
-  cs_ip_address:
+  ngine_io.cloudstack.cs_ip_address:
     network: My Network
   register: ip_address
   when: instance.public_ip is undefined
 
-
 - name: Disassociate an IP address
-  cs_ip_address:
+  ngine_io.cloudstack.cs_ip_address:
     ip_address: 1.2.3.4
     state: absent
 
-
 - name: Associate an IP address with tags
-  cs_ip_address:
+  ngine_io.cloudstack.cs_ip_address:
     network: My Network
     tags:
       - key: myCustomID
       - value: 5510c31a-416e-11e8-9013-02000a6b00bf
   register: ip_address
 
-
 - name: Disassociate an IP address with tags
-  cs_ip_address:
+  ngine_io.cloudstack.cs_ip_address:
     state: absent
     tags:
       - key: myCustomID

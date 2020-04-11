@@ -16,7 +16,6 @@ description:
  - Add, remove, update Traffic Types associated with CloudStack Physical Networks.
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-
 author:
  - Patryk Cichy (@PatTheSilent)
 options:
@@ -80,22 +79,20 @@ options:
 
 EXAMPLES = '''
 - name: add a traffic type
-  cs_traffic_type:
+  ngine_io.cloudstack.cs_traffic_type:
     physical_network: public-network
     traffic_type: Guest
     zone: test-zone
 
-
 - name: update traffic type
-  cs_traffic_type:
+  ngine_io.cloudstack.cs_traffic_type:
     physical_network: public-network
     traffic_type: Guest
     kvm_networklabel: cloudbr0
     zone: test-zone
 
-
 - name: remove traffic type
-  cs_traffic_type:
+  ngine_io.cloudstack.cs_traffic_type:
     physical_network: public-network
     traffic_type: Public
     state: absent

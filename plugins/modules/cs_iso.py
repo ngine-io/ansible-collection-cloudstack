@@ -112,28 +112,25 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Register an ISO if ISO name does not already exist
-  cs_iso:
+  ngine_io.cloudstack.cs_iso:
     name: Debian 7 64-bit
     url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
     os_type: Debian GNU/Linux 7(64-bit)
 
-
 - name: Register an ISO with given name if ISO md5 checksum does not already exist
-  cs_iso:
+  ngine_io.cloudstack.cs_iso:
     name: Debian 7 64-bit
     url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
     os_type: Debian GNU/Linux 7(64-bit)
     checksum: 0b31bccccb048d20b551f70830bb7ad0
 
-
 - name: Remove an ISO by name
-  cs_iso:
+  ngine_io.cloudstack.cs_iso:
     name: Debian 7 64-bit
     state: absent
 
-
 - name: Remove an ISO by checksum
-  cs_iso:
+  ngine_io.cloudstack.cs_iso:
     name: Debian 7 64-bit
     checksum: 0b31bccccb048d20b551f70830bb7ad0
     state: absent

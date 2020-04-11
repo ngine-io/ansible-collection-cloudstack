@@ -96,7 +96,7 @@ extends_documentation_fragment:
 
 EXAMPLES = r'''
 - name: Create a vpn customer gateway
-  cs_vpn_customer_gateway:
+  ngine_io.cloudstack.cs_vpn_customer_gateway:
     name: my vpn customer gateway
     cidrs:
     - 192.168.123.0/24
@@ -106,9 +106,8 @@ EXAMPLES = r'''
     ike_policy: aes256-sha1;modp1536
     ipsec_psk: "S3cr3Tk3Y"
 
-
 - name: Remove a vpn customer gateway
-  cs_vpn_customer_gateway:
+  ngine_io.cloudstack.cs_vpn_customer_gateway:
     name: my vpn customer gateway
     state: absent
 '''

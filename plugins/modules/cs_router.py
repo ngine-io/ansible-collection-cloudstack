@@ -62,34 +62,30 @@ EXAMPLES = '''
 # Ensure the router has the desired service offering, no matter if
 # the router is running or not.
 - name: Present router
-  cs_router:
+  ngine_io.cloudstack.cs_router:
     name: r-40-VM
     service_offering: System Offering for Software Router
 
-
 - name: Ensure started
-  cs_router:
+  ngine_io.cloudstack.cs_router:
     name: r-40-VM
     state: started
-
 
 # Ensure started with desired service offering.
 # If the service offerings changes, router will be rebooted.
 - name: Ensure started with desired service offering
-  cs_router:
+  ngine_io.cloudstack.cs_router:
     name: r-40-VM
     service_offering: System Offering for Software Router
     state: started
 
-
 - name: Ensure stopped
-  cs_router:
+  ngine_io.cloudstack.cs_router:
     name: r-40-VM
     state: stopped
 
-
 - name: Remove a router
-  cs_router:
+  ngine_io.cloudstack.cs_router:
     name: r-40-VM
     state: absent
 '''

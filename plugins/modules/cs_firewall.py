@@ -107,14 +107,13 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Allow inbound port 80/tcp from 1.2.3.4 to 4.3.2.1
-  cs_firewall:
+  ngine_io.cloudstack.cs_firewall:
     ip_address: 4.3.2.1
     port: 80
     cidr: 1.2.3.4/32
 
-
 - name: Allow inbound tcp/udp port 53 to 4.3.2.1
-  cs_firewall:
+  ngine_io.cloudstack.cs_firewall:
     ip_address: 4.3.2.1
     port: 53
     protocol: '{{ item }}'
@@ -122,25 +121,22 @@ EXAMPLES = '''
   - tcp
   - udp
 
-
 - name: Ensure firewall rule is removed
-  cs_firewall:
+  ngine_io.cloudstack.cs_firewall:
     ip_address: 4.3.2.1
     start_port: 8000
     end_port: 8888
     cidr: 17.0.0.0/8
     state: absent
 
-
 - name: Allow all outbound traffic
-  cs_firewall:
+  ngine_io.cloudstack.cs_firewall:
     network: my_network
     type: egress
     protocol: all
 
-
 - name: Allow only HTTP outbound traffic for an IP
-  cs_firewall:
+  ngine_io.cloudstack.cs_firewall:
     network: my_network
     type: egress
     port: 80

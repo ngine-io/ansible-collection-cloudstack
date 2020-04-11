@@ -51,21 +51,20 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: create a new private / public key pair
-  cs_sshkeypair:
+  ngine_io.cloudstack.cs_sshkeypair:
     name: linus@example.com
-
   register: key
+
 - debug:
     msg: 'Private key is {{ key.private_key }}'
 
 - name: remove a public key by its name
-  cs_sshkeypair:
+  ngine_io.cloudstack.cs_sshkeypair:
     name: linus@example.com
     state: absent
 
-
 - name: register your existing local public key
-  cs_sshkeypair:
+  ngine_io.cloudstack.cs_sshkeypair:
     name: linus@example.com
     public_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 '''

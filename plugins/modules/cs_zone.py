@@ -94,27 +94,24 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Ensure a zone is present
-  cs_zone:
+  ngine_io.cloudstack.cs_zone:
     name: ch-zrh-ix-01
     dns1: 8.8.8.8
     dns2: 8.8.4.4
     network_type: basic
 
-
 - name: Ensure a zone is disabled
-  cs_zone:
+  ngine_io.cloudstack.cs_zone:
     name: ch-zrh-ix-01
     state: disabled
 
-
 - name: Ensure a zone is enabled
-  cs_zone:
+  ngine_io.cloudstack.cs_zone:
     name: ch-zrh-ix-01
     state: enabled
 
-
 - name: Ensure a zone is absent
-  cs_zone:
+  ngine_io.cloudstack.cs_zone:
     name: ch-zrh-ix-01
     state: absent
 '''

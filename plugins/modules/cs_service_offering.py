@@ -168,7 +168,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create a non-volatile compute service offering with local storage
-  cs_service_offering:
+  ngine_io.cloudstack.cs_service_offering:
     name: Micro
     display_text: Micro 512mb 1cpu
     cpu_number: 1
@@ -177,9 +177,8 @@ EXAMPLES = '''
     host_tags: eco
     storage_type: local
 
-
 - name: Create a volatile compute service offering with shared storage
-  cs_service_offering:
+  ngine_io.cloudstack.cs_service_offering:
     name: Tiny
     display_text: Tiny 1gb 1cpu
     cpu_number: 1
@@ -189,10 +188,9 @@ EXAMPLES = '''
     is_volatile: yes
     host_tags: eco
     storage_tags: eco
-
 
 - name: Create or update a volatile compute service offering with shared storage
-  cs_service_offering:
+  ngine_io.cloudstack.cs_service_offering:
     name: Tiny
     display_text: Tiny 1gb 1cpu
     cpu_number: 1
@@ -203,9 +201,8 @@ EXAMPLES = '''
     host_tags: eco
     storage_tags: eco
 
-
 - name: Create or update a custom compute service offering
-  cs_service_offering:
+  ngine_io.cloudstack.cs_service_offering:
     name: custom
     display_text: custom compute offer
     is_customized: yes
@@ -213,15 +210,13 @@ EXAMPLES = '''
     host_tags: eco
     storage_tags: eco
 
-
 - name: Remove a compute service offering
-  cs_service_offering:
+  ngine_io.cloudstack.cs_service_offering:
     name: Tiny
     state: absent
 
-
 - name: Create or update a system offering for the console proxy
-  cs_service_offering:
+  ngine_io.cloudstack.cs_service_offering:
     name: System Offering for Console Proxy 2GB
     display_text: System Offering for Console Proxy 2GB RAM
     is_system: yes
@@ -232,9 +227,8 @@ EXAMPLES = '''
     storage_type: shared
     storage_tags: perf
 
-
 - name: Remove a system offering
-  cs_service_offering:
+  ngine_io.cloudstack.cs_service_offering:
     name: System Offering for Console Proxy 2GB
     is_system: yes
     state: absent

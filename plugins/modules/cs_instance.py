@@ -195,7 +195,7 @@ extends_documentation_fragment:
 EXAMPLES = '''
 # NOTE: Names of offerings and ISOs depending on the CloudStack configuration.
 - name: create a instance from an ISO
-  cs_instance:
+  ngine_io.cloudstack.cs_instance:
     name: web-vm-1
     iso: Linux Debian 7 64-bit
     hypervisor: VMware
@@ -209,19 +209,17 @@ EXAMPLES = '''
       - Sync Integration
       - Storage Integration
 
-
 - name: for changing a running instance, use the 'force' parameter
-  cs_instance:
+  ngine_io.cloudstack.cs_instance:
     name: web-vm-1
     display_name: web-vm-01.example.com
     iso: Linux Debian 7 64-bit
     service_offering: 2cpu_2gb
     force: yes
 
-
 # NOTE: user_data can be used to kickstart the instance using cloud-init yaml config.
 - name: create or update a instance on Exoscale's public cloud using display_name.
-  cs_instance:
+  ngine_io.cloudstack.cs_instance:
     display_name: web-vm-1
     template: Linux Debian 7 64-bit
     service_offering: Tiny
@@ -236,9 +234,8 @@ EXAMPLES = '''
         packages:
           - nginx
 
-
 - name: create an instance with multiple interfaces specifying the IP addresses
-  cs_instance:
+  ngine_io.cloudstack.cs_instance:
     name: web-vm-1
     template: Linux Debian 7 64-bit
     service_offering: Tiny
@@ -248,21 +245,18 @@ EXAMPLES = '''
       - network: NetworkB
         ip: 192.0.2.1
 
-
 - name: ensure an instance is stopped
-  cs_instance:
+  ngine_io.cloudstack.cs_instance:
     name: web-vm-1
     state: stopped
 
-
 - name: ensure an instance is running
-  cs_instance:
+  ngine_io.cloudstack.cs_instance:
     name: web-vm-1
     state: started
 
-
 - name: remove an instance
-  cs_instance:
+  ngine_io.cloudstack.cs_instance:
     name: web-vm-1
     state: absent
 '''

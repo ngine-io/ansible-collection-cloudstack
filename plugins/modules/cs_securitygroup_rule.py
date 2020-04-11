@@ -81,14 +81,13 @@ extends_documentation_fragment:
 EXAMPLES = '''
 ---
 - name: allow inbound port 80/tcp from 1.2.3.4 added to security group 'default'
-  cs_securitygroup_rule:
+  ngine_io.cloudstack.cs_securitygroup_rule:
     security_group: default
     port: 80
     cidr: 1.2.3.4/32
 
-
 - name: allow tcp/udp outbound added to security group 'default'
-  cs_securitygroup_rule:
+  ngine_io.cloudstack.cs_securitygroup_rule:
     security_group: default
     type: egress
     start_port: 1
@@ -98,24 +97,21 @@ EXAMPLES = '''
   - tcp
   - udp
 
-
 - name: allow inbound icmp from 0.0.0.0/0 added to security group 'default'
-  cs_securitygroup_rule:
+  ngine_io.cloudstack.cs_securitygroup_rule:
     security_group: default
     protocol: icmp
     icmp_code: -1
     icmp_type: -1
 
-
 - name: remove rule inbound port 80/tcp from 0.0.0.0/0 from security group 'default'
-  cs_securitygroup_rule:
+  ngine_io.cloudstack.cs_securitygroup_rule:
     security_group: default
     port: 80
     state: absent
 
-
 - name: allow inbound port 80/tcp from security group web added to security group 'default'
-  cs_securitygroup_rule:
+  ngine_io.cloudstack.cs_securitygroup_rule:
     security_group: default
     port: 80
     user_security_group: web

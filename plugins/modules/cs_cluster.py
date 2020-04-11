@@ -112,29 +112,26 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Ensure a cluster is present
-  cs_cluster:
+  ngine_io.cloudstack.cs_cluster:
     name: kvm-cluster-01
     zone: ch-zrh-ix-01
     hypervisor: KVM
     cluster_type: CloudManaged
 
-
 - name: Ensure a cluster is disabled
-  cs_cluster:
+  ngine_io.cloudstack.cs_cluster:
     name: kvm-cluster-01
     zone: ch-zrh-ix-01
     state: disabled
 
-
 - name: Ensure a cluster is enabled
-  cs_cluster:
+  ngine_io.cloudstack.cs_cluster:
     name: kvm-cluster-01
     zone: ch-zrh-ix-01
     state: enabled
 
-
 - name: Ensure a cluster is absent
-  cs_cluster:
+  ngine_io.cloudstack.cs_cluster:
     name: kvm-cluster-01
     zone: ch-zrh-ix-01
     state: absent

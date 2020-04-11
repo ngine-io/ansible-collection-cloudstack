@@ -59,12 +59,12 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create a affinity group
-  cs_affinitygroup:
+  ngine_io.cloudstack.cs_affinitygroup:
     name: haproxy
     affinity_type: host anti-affinity
 
 - name: Remove a affinity group
-  cs_affinitygroup:
+  ngine_io.cloudstack.cs_affinitygroup:
     name: haproxy
     state: absent
 '''

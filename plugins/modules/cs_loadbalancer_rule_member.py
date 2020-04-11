@@ -70,15 +70,14 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Add VMs to an existing load balancer
-  cs_loadbalancer_rule_member:
+  ngine_io.cloudstack.cs_loadbalancer_rule_member:
     name: balance_http
     vms:
       - web01
       - web02
 
-
 - name: Remove a VM from an existing load balancer
-  cs_loadbalancer_rule_member:
+  ngine_io.cloudstack.cs_loadbalancer_rule_member:
     name: balance_http
     vms:
       - web01
@@ -91,16 +90,15 @@ EXAMPLES = '''
   serial: 1
   pre_tasks:
     - name: Remove from load balancer
-      cs_loadbalancer_rule_member:
+      ngine_io.cloudstack.cs_loadbalancer_rule_member:
         name: balance_http
         vm: "{{ ansible_hostname }}"
         state: absent
-
   tasks:
     # Perform update
   post_tasks:
     - name: Add to load balancer
-      cs_loadbalancer_rule_member:
+      ngine_io.cloudstack.cs_loadbalancer_rule_member:
         name: balance_http
         vm: "{{ ansible_hostname }}"
         state: present

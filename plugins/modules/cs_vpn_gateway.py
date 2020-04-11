@@ -55,12 +55,11 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Ensure a vpn gateway is present
-  cs_vpn_gateway:
+  ngine_io.cloudstack.cs_vpn_gateway:
     vpc: my VPC
 
-
 - name: Ensure a vpn gateway is absent
-  cs_vpn_gateway:
+  ngine_io.cloudstack.cs_vpn_gateway:
     vpc: my VPC
     state: absent
 '''

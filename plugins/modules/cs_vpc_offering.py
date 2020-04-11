@@ -61,7 +61,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create a vpc offering and enable it
-  cs_vpc_offering:
+  ngine_io.cloudstack.cs_vpc_offering:
     name: my_vpc_offering
     display_text: vpc offering description
     state: enabled
@@ -70,9 +70,8 @@ EXAMPLES = '''
       - {service: 'dns', provider: 'VpcVirtualRouter'}
       - {service: 'dhcp', provider: 'VpcVirtualRouter'}
 
-
 - name: Create a vpc offering with redundant router
-  cs_vpc_offering:
+  ngine_io.cloudstack.cs_vpc_offering:
     name: my_vpc_offering
     display_text: vpc offering description
     supported_services: [ Dns, Dhcp, SourceNat ]
@@ -83,9 +82,8 @@ EXAMPLES = '''
     service_capabilities:
       - {service: 'SourceNat', capabilitytype: 'RedundantRouter', capabilityvalue: true}
 
-
 - name: Create a region level vpc offering with distributed router
-  cs_vpc_offering:
+  ngine_io.cloudstack.cs_vpc_offering:
     name: my_vpc_offering
     display_text: vpc offering description
     state: present
@@ -98,9 +96,8 @@ EXAMPLES = '''
       - {service: 'Connectivity', capabilitytype: 'DistributedRouter', capabilityvalue: true}
       - {service: 'Connectivity', capabilitytype: 'RegionLevelVPC', capabilityvalue: true}
 
-
 - name: Remove a vpc offering
-  cs_vpc_offering:
+  ngine_io.cloudstack.cs_vpc_offering:
     name: my_vpc_offering
     state: absent
 '''

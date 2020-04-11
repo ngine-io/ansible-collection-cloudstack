@@ -110,7 +110,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: create a VLAN IP range for network test
-  cs_vlan_ip_range:
+  ngine_io.cloudstack.cs_vlan_ip_range:
     network: test
     vlan: 98
     start_ip: 10.2.4.10
@@ -119,9 +119,8 @@ EXAMPLES = '''
     netmask: 255.255.255.0
     zone: zone-02
 
-
 - name: remove a VLAN IP range for network test
-  cs_vlan_ip_range:
+  ngine_io.cloudstack.cs_vlan_ip_range:
     state: absent
     network: test
     start_ip: 10.2.4.10

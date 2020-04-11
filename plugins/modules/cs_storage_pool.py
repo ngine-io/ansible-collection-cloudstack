@@ -93,7 +93,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: ensure a zone scoped storage_pool is present
-  cs_storage_pool:
+  ngine_io.cloudstack.cs_storage_pool:
     zone: zone01
     storage_url: rbd://admin:SECRET@ceph-mons.domain/poolname
     provider: DefaultPrimary
@@ -101,9 +101,8 @@ EXAMPLES = '''
     scope: zone
     hypervisor: KVM
 
-
 - name: ensure a cluster scoped storage_pool is disabled
-  cs_storage_pool:
+  ngine_io.cloudstack.cs_storage_pool:
     name: Ceph RBD
     zone: zone01
     cluster: cluster01
@@ -113,9 +112,8 @@ EXAMPLES = '''
     scope: cluster
     allocation_state: disabled
 
-
 - name: ensure a cluster scoped storage_pool is in maintenance
-  cs_storage_pool:
+  ngine_io.cloudstack.cs_storage_pool:
     name: Ceph RBD
     zone: zone01
     cluster: cluster01
@@ -125,9 +123,8 @@ EXAMPLES = '''
     scope: cluster
     allocation_state: maintenance
 
-
 - name: ensure a storage_pool is absent
-  cs_storage_pool:
+  ngine_io.cloudstack.cs_storage_pool:
     name: Ceph RBD
     state: absent
 '''

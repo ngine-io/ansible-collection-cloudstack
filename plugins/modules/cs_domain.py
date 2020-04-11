@@ -49,19 +49,17 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create a domain
-  cs_domain:
+  ngine_io.cloudstack.cs_domain:
     path: ROOT/customers
     network_domain: customers.example.com
 
-
 - name: Create another subdomain
-  cs_domain:
+  ngine_io.cloudstack.cs_domain:
     path: ROOT/customers/xy
     network_domain: xy.customers.example.com
 
-
 - name: Remove a domain
-  cs_domain:
+  ngine_io.cloudstack.cs_domain:
     path: ROOT/customers/xy
     state: absent
 '''

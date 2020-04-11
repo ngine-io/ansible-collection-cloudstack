@@ -40,7 +40,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Gather instance information
-  cs_instance_info:
+  ngine_io.cloudstack.cs_instance_info:
     name: web-vm-1
   register: vm
 
@@ -48,9 +48,8 @@ EXAMPLES = '''
   debug:
     msg: "{{ vm }}"
 
-
 - name: Gather information from all instances
-  cs_instance_info:
+  ngine_io.cloudstack.cs_instance_info:
   register: vms
 
 - name: Show information on all instances

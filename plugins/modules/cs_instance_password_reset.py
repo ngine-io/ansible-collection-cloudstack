@@ -52,13 +52,12 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: stop the virtual machine before resetting the password
-  cs_instance:
+  ngine_io.cloudstack.cs_instance:
     name: myvirtualmachine
     state: stopped
 
-
 - name: reset and get new default password
-  cs_instance_password_reset:
+  ngine_io.cloudstack.cs_instance_password_reset:
     vm: myvirtualmachine
   register: root
 
@@ -66,10 +65,9 @@ EXAMPLES = '''
     msg: "new default password is {{ root.password }}"
 
 - name: boot the virtual machine to activate the new password
-  cs_instance:
+  ngine_io.cloudstack.cs_instance:
     name: myvirtualmachine
     state: started
-
   when: root is changed
 '''
 

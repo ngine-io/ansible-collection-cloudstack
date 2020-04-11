@@ -61,30 +61,27 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Ensure a pod is present
-  cs_pod:
+  ngine_io.cloudstack.cs_pod:
     name: pod1
     zone: ch-zrh-ix-01
     start_ip: 10.100.10.101
     gateway: 10.100.10.1
     netmask: 255.255.255.0
 
-
 - name: Ensure a pod is disabled
-  cs_pod:
+  ngine_io.cloudstack.cs_pod:
     name: pod1
     zone: ch-zrh-ix-01
     state: disabled
 
-
 - name: Ensure a pod is enabled
-  cs_pod:
+  ngine_io.cloudstack.cs_pod:
     name: pod1
     zone: ch-zrh-ix-01
     state: enabled
 
-
 - name: Ensure a pod is absent
-  cs_pod:
+  ngine_io.cloudstack.cs_pod:
     name: pod1
     zone: ch-zrh-ix-01
     state: absent
