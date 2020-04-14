@@ -51,6 +51,13 @@ options:
       - If not given, the C(CLOUDSTACK_REGION) env variable is considered.
     type: str
     default: cloudstack
+  api_ssl_verify:
+    description:
+      - CA authority cert file.
+      - If not given, the C(CLOUDSTACK_VERIFY) env variable is considered.
+      - As the last option, the value is taken from the ini config file, also see the notes.
+      - Fallback value is C(null) if not specified.
+    type: str
 requirements:
   - python >= 2.6
   - cs >= 0.6.10
