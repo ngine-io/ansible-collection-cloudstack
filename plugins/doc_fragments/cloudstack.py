@@ -51,9 +51,16 @@ options:
       - If not given, the C(CLOUDSTACK_REGION) env variable is considered.
     type: str
     default: cloudstack
+  api_verify_ssl_cert:
+    description:
+      - CA authority cert file.
+      - If not given, the C(CLOUDSTACK_VERIFY) env variable is considered.
+      - As the last option, the value is taken from the ini config file, also see the notes.
+      - Fallback value is C(null) if not specified.
+    type: str
 requirements:
   - python >= 2.6
-  - cs >= 0.6.10
+  - cs >= 0.9.0
 notes:
   - Ansible uses the C(cs) library's configuration method if credentials are not
     provided by the arguments C(api_url), C(api_key), C(api_secret).
