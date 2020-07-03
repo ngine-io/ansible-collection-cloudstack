@@ -15,6 +15,7 @@ short_description: Manages static NATs on Apache CloudStack based clouds.
 description:
     - Create, update and remove static NATs.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   ip_address:
     description:

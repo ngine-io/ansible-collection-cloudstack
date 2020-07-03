@@ -18,6 +18,7 @@ description:
     - Requires cloud-init to be installed in the virtual machine.
     - The passwordenabled flag must be set on the template associated with the VM.
 author: Gregor Riepl (@onitake)
+version_added: 0.1.0
 options:
   vm:
     description:

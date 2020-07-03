@@ -15,6 +15,7 @@ short_description: Manages domains on Apache CloudStack based clouds.
 description:
     - Create, update and remove domains.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   path:
     description:

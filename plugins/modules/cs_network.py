@@ -15,6 +15,7 @@ short_description: Manages networks on Apache CloudStack based clouds.
 description:
     - Create, update, restart and delete networks.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

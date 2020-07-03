@@ -15,6 +15,7 @@ short_description: Manages host clusters on Apache CloudStack based clouds.
 description:
     - Create, update and remove clusters.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

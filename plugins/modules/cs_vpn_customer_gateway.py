@@ -14,6 +14,7 @@ short_description: Manages site-to-site VPN customer gateway configurations on A
 description:
     - Create, update and remove VPN customer gateways.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

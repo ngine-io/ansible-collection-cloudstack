@@ -15,6 +15,7 @@ short_description: Gather facts on instances of Apache CloudStack based clouds.
 description:
      - This module fetches data from the metadata API in CloudStack. The module must be called from within the instance itself.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   filter:
     description:

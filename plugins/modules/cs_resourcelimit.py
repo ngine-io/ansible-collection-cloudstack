@@ -15,6 +15,7 @@ short_description: Manages resource limits on Apache CloudStack based clouds.
 description:
     - Manage limits of resources for domains, accounts and projects.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   resource_type:
     description:

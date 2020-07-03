@@ -15,6 +15,7 @@ short_description: Manages user roles on Apache CloudStack based clouds.
 description:
   - Create, update, delete user roles.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

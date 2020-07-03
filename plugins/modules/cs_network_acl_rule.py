@@ -15,6 +15,7 @@ short_description: Manages network access control list (ACL) rules on Apache Clo
 description:
     - Add, update and remove network ACL rules.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   network_acl:
     description:

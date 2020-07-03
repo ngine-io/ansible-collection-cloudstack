@@ -15,6 +15,7 @@ short_description: Manages projects on Apache CloudStack based clouds.
 description:
     - Create, update, suspend, activate and remove projects.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

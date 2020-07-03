@@ -17,6 +17,7 @@ description:
     - If no key was found and no public key was provided and a new SSH
       private/public key pair will be created and the private key will be returned.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

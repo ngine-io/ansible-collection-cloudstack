@@ -15,6 +15,7 @@ short_description: Manages instance groups on Apache CloudStack based clouds.
 description:
     - Create and remove instance groups.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

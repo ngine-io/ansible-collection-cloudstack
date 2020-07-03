@@ -15,6 +15,7 @@ short_description: Manages instances and virtual machines on Apache CloudStack b
 description:
     - Deploy, start, update, scale, restart, restore, stop and destroy instances.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

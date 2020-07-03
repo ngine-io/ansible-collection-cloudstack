@@ -15,6 +15,7 @@ short_description: Manages volume snapshot policies on Apache CloudStack based c
 description:
     - Create, update and delete volume snapshot policies.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   volume:
     description:

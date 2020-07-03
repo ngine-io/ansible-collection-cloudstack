@@ -19,6 +19,7 @@ description:
 author:
  - Netservers Ltd. (@netservers)
  - Patryk Cichy (@PatTheSilent)
+version_added: 0.1.0
 options:
   name:
     description:

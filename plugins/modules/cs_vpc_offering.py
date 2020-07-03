@@ -15,6 +15,7 @@ short_description: Manages vpc offerings on Apache CloudStack based clouds.
 description:
     - Create, update, enable, disable and remove CloudStack VPC offerings.
 author: David Passante (@dpassante)
+version_added: 0.1.0
 options:
   name:
     description:

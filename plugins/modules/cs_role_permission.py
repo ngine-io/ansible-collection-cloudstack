@@ -16,6 +16,7 @@ description:
     - Create, update and remove CloudStack role permissions.
     - Managing role permissions only supported in CloudStack >= 4.9.
 author: David Passante (@dpassante)
+version_added: 0.1.0
 options:
   name:
     description:

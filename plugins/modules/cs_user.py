@@ -15,6 +15,7 @@ short_description: Manages users on Apache CloudStack based clouds.
 description:
     - Create, update, disable, lock, enable and remove users.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   username:
     description:

@@ -15,6 +15,7 @@ short_description: Manages VLAN IP ranges on Apache CloudStack based clouds.
 description:
     - Create and delete VLAN IP range.
 author: David Passante (@dpassante)
+version_added: 0.1.0
 options:
   network:
     description:
