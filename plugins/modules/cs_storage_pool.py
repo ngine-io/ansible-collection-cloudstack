@@ -62,6 +62,7 @@ options:
     description:
       - Tags associated with this storage pool.
     type: list
+    elements: str
     aliases: [ storage_tag ]
   provider:
     description:
@@ -467,7 +468,7 @@ def main():
         capacity_bytes=dict(type='int'),
         capacity_iops=dict(type='int'),
         managed=dict(type='bool'),
-        storage_tags=dict(type='list', aliases=['storage_tag']),
+        storage_tags=dict(type='list', elements='str', aliases=['storage_tag']),
         allocation_state=dict(choices=['enabled', 'disabled', 'maintenance']),
         state=dict(choices=['present', 'absent'], default='present'),
     ))

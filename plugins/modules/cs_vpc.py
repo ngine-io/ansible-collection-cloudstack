@@ -81,6 +81,7 @@ options:
       - List of tags. Tags are a list of dictionaries having keys I(key) and I(value).
       - "For deleting all tags, set an empty list e.g. I(tags: [])."
     type: list
+    elements: dict
     aliases: [ tag ]
   poll_async:
     description:
@@ -357,7 +358,7 @@ def main():
         account=dict(),
         project=dict(),
         zone=dict(),
-        tags=dict(type='list', aliases=['tag']),
+        tags=dict(type='list', elements='dict', aliases=['tag']),
         poll_async=dict(type='bool', default=True),
     ))
 

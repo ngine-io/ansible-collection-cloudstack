@@ -42,6 +42,7 @@ options:
       - Services supported by the network offering.
       - A list of one or more items from the choice list.
     type: list
+    elements: str
     choices: [ Dns, PortForwarding, Dhcp, SourceNat, UserData, Firewall, StaticNat, Vpn, Lb ]
     aliases: [ supported_service ]
   traffic_type:
@@ -62,6 +63,7 @@ options:
       - Network offering details in key/value pairs.
       - with service provider as a value
     type: list
+    elements: dict
   egress_default_policy:
     description:
       - Whether the default egress policy is allow or to deny.
@@ -90,6 +92,7 @@ options:
     description:
       - Desired service capabilities as part of network offering.
     type: list
+    elements: str
     aliases: [ service_capability ]
   service_offering:
     description:
@@ -100,6 +103,7 @@ options:
       - Provider to service mapping.
       - If not specified, the provider for the service will be mapped to the default provider on the physical network.
     type: list
+    elements: dict
     aliases: [ service_provider ]
   specify_ip_ranges:
     description:
@@ -366,7 +370,7 @@ def main():
         display_text=dict(),
         guest_ip_type=dict(choices=['Shared', 'Isolated']),
         name=dict(required=True),
-        supported_services=dict(type='list', aliases=['supported_service'], choices=[
+        supported_services=dict(type='list', elements='str', aliases=['supported_service'], choices=[
             'Dns',
             'PortForwarding',
             'Dhcp',
@@ -380,15 +384,15 @@ def main():
         traffic_type=dict(default='Guest'),
         availability=dict(),
         conserve_mode=dict(type='bool'),
-        details=dict(type='list'),
+        details=dict(type='list', elements='dict'),
         egress_default_policy=dict(choices=['allow', 'deny']),
         persistent=dict(type='bool'),
         keepalive_enabled=dict(type='bool'),
         max_connections=dict(type='int'),
         network_rate=dict(type='int'),
-        service_capabilities=dict(type='list', aliases=['service_capability']),
+        service_capabilities=dict(type='list', elements='str', aliases=['service_capability']),
         service_offering=dict(),
-        service_providers=dict(type='list', aliases=['service_provider']),
+        service_providers=dict(type='list', elements='dict', aliases=['service_provider']),
         specify_ip_ranges=dict(type='bool'),
         specify_vlan=dict(type='bool'),
         for_vpc=dict(type='bool'),

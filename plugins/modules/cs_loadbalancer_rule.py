@@ -47,7 +47,6 @@ options:
       - Required when using I(state=present).
       - Can not be changed once the rule exists due API limitation.
     type: int
-    required: true
   ip_address:
     description:
       - Public IP address from where the network traffic will be load balanced from.
@@ -101,6 +100,7 @@ options:
       - List of tags. Tags are a list of dictionaries having keys I(key) and I(value).
       - "To delete all tags, set a empty list e.g. I(tags: [])."
     type: list
+    elements: dict
     aliases: [ tag ]
   network:
     description:
@@ -339,7 +339,7 @@ def main():
         cidr=dict(),
         project=dict(),
         open_firewall=dict(type='bool', default=False),
-        tags=dict(type='list', aliases=['tag']),
+        tags=dict(type='list', elements='dict', aliases=['tag']),
         zone=dict(),
         domain=dict(),
         account=dict(),

@@ -34,6 +34,7 @@ options:
     description:
       - List of VMs to assign to or remove from the rule.
     type: list
+    elements: str
     required: true
     aliases: [ vm ]
   state:
@@ -312,7 +313,7 @@ def main():
     argument_spec.update(dict(
         name=dict(required=True),
         ip_address=dict(aliases=['public_ip']),
-        vms=dict(required=True, aliases=['vm'], type='list'),
+        vms=dict(required=True, aliases=['vm'], type='list', elements='str'),
         state=dict(choices=['present', 'absent'], default='present'),
         zone=dict(),
         domain=dict(),

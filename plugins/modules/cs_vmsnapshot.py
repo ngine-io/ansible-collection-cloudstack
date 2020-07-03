@@ -68,6 +68,7 @@ options:
       - List of tags. Tags are a list of dictionaries having keys I(key) and I(value).
       - "To delete all tags, set a empty list e.g. I(tags: [])."
     type: list
+    elements: dict
     aliases: [ tag ]
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
@@ -249,7 +250,7 @@ def main():
         account=dict(),
         project=dict(),
         poll_async=dict(type='bool', default=True),
-        tags=dict(type='list', aliases=['tag']),
+        tags=dict(type='list', elements='dict', aliases=['tag']),
     ))
 
     module = AnsibleModule(

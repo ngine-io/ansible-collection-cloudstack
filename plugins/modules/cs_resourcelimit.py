@@ -178,7 +178,7 @@ class AnsibleCloudStackResourceLimit(AnsibleCloudStack):
 def main():
     argument_spec = cs_argument_spec()
     argument_spec.update(dict(
-        resource_type=dict(required=True, choices=RESOURCE_TYPES.keys(), aliases=['type']),
+        resource_type=dict(required=True, choices=list(RESOURCE_TYPES.keys()), aliases=['type']),
         limit=dict(default=-1, aliases=['max'], type='int'),
         domain=dict(),
         account=dict(),

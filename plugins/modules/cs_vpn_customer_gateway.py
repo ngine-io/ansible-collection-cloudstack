@@ -25,6 +25,7 @@ options:
       - List of guest CIDRs behind the gateway.
       - Required if I(state=present).
     type: list
+    elements: str
     aliases: [ cidr ]
   gateway:
     description:
@@ -307,7 +308,7 @@ def main():
         domain=dict(),
         account=dict(),
         project=dict(),
-        cidrs=dict(type='list', aliases=['cidr']),
+        cidrs=dict(type='list', elements='str', aliases=['cidr']),
         esp_policy=dict(),
         esp_lifetime=dict(type='int'),
         gateway=dict(),
