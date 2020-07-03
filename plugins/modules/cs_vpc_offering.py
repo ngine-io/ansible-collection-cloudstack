@@ -35,6 +35,7 @@ options:
     description:
       - Desired service capabilities as part of vpc offering.
     type: list
+    elements: dict
     aliases: [ service_capability ]
   service_offering:
     description:
@@ -44,11 +45,13 @@ options:
     description:
       - Services supported by the vpc offering
     type: list
+    elements: str
     aliases: [ supported_service ]
   service_providers:
     description:
       - provider to service mapping. If not specified, the provider for the service will be mapped to the default provider on the physical network
     type: list
+    elements: dict
     aliases: [ service_provider ]
   poll_async:
     description:
@@ -285,10 +288,10 @@ def main():
         name=dict(required=True),
         display_text=dict(),
         state=dict(choices=['enabled', 'present', 'disabled', 'absent'], default='present'),
-        service_capabilities=dict(type='list', aliases=['service_capability']),
+        service_capabilities=dict(type='list', elements='dict', aliases=['service_capability']),
         service_offering=dict(),
-        supported_services=dict(type='list', aliases=['supported_service']),
-        service_providers=dict(type='list', aliases=['service_provider']),
+        supported_services=dict(type='list', elements='str', aliases=['supported_service']),
+        service_providers=dict(type='list', elements='dict', aliases=['service_provider']),
         poll_async=dict(type='bool', default=True),
     ))
 

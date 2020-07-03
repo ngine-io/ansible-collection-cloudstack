@@ -93,6 +93,7 @@ options:
     description:
       - The storage tags for this disk offering.
     type: list
+    elements: str
     aliases: [ storage_tag ]
   display_offering:
     description:
@@ -348,7 +349,7 @@ def main():
         iops_min=dict(type='int'),
         provisioning_type=dict(choices=['thin', 'sparse', 'fat']),
         storage_type=dict(choices=['local', 'shared']),
-        storage_tags=dict(type='list', aliases=['storage_tag']),
+        storage_tags=dict(type='list', elements='str', aliases=['storage_tag']),
         state=dict(choices=['present', 'absent'], default='present'),
     ))
 

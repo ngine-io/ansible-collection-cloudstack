@@ -66,6 +66,7 @@ options:
       - Tags can be used as an unique identifier for the IP Addresses.
       - In this case, at least one of them must be unique to ensure idempotency.
     type: list
+    elements: dict
     aliases: [ tag ]
   poll_async:
     description:
@@ -243,7 +244,7 @@ def main():
         domain=dict(),
         account=dict(),
         project=dict(),
-        tags=dict(type='list', aliases=['tag']),
+        tags=dict(type='list', elements='dict', aliases=['tag']),
         poll_async=dict(type='bool', default=True),
     ))
 

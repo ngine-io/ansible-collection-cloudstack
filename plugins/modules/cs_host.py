@@ -62,6 +62,7 @@ options:
     description:
       - Tags of the host.
     type: list
+    elements: str
     aliases: [ host_tag ]
   state:
     description:
@@ -590,7 +591,7 @@ def main():
         allocation_state=dict(choices=['enabled', 'disabled', 'maintenance']),
         pod=dict(),
         cluster=dict(),
-        host_tags=dict(type='list', aliases=['host_tag']),
+        host_tags=dict(type='list', elements='str', aliases=['host_tag']),
         zone=dict(),
         state=dict(choices=['present', 'absent'], default='present'),
     ))

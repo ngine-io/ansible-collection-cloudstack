@@ -140,7 +140,7 @@ zones:
     tags:
       description: List of resource tags associated with the zone.
       returned: success
-      type: dict
+      type: list
       sample: [ { "key": "foo", "value": "bar" } ]
 '''
 

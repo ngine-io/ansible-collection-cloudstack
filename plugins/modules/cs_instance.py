@@ -92,6 +92,7 @@ options:
     description:
       - List of networks to use for the new instance.
     type: list
+    elements: str
     aliases: [ network ]
   ip_address:
     description:
@@ -106,6 +107,7 @@ options:
       - "List of mappings in the form I({'network': NetworkName, 'ip': 1.2.3.4})"
       - Mutually exclusive with I(networks) option.
     type: list
+    elements: dict
     aliases: [ ip_to_network ]
   disk_offering:
     description:
@@ -124,6 +126,7 @@ options:
     description:
       - List of security groups the instance to be applied to.
     type: list
+    elements: str
     aliases: [ security_group ]
   host:
     description:
@@ -156,6 +159,7 @@ options:
     description:
       - Affinity groups names to be applied to the new instance.
     type: list
+    elements: str
     aliases: [ affinity_group ]
   user_data:
     description:
@@ -178,6 +182,7 @@ options:
       - List of tags. Tags are a list of dictionaries having keys C(key) and C(value).
       - "If you want to delete all tags, set a empty list e.g. I(tags: [])."
     type: list
+    elements: dict
     aliases: [ tag ]
   poll_async:
     description:
@@ -1013,8 +1018,8 @@ def main():
             aliases=['iso_filter'],
             choices=['all', 'featured', 'self', 'selfexecutable', 'sharedexecutable', 'executable', 'community']
         ),
-        networks=dict(type='list', aliases=['network']),
-        ip_to_networks=dict(type='list', aliases=['ip_to_network']),
+        networks=dict(type='list', elements='str', aliases=['network']),
+        ip_to_networks=dict(type='list', elements='dict', aliases=['ip_to_network']),
         ip_address=dict(),
         ip6_address=dict(),
         disk_offering=dict(),
@@ -1023,8 +1028,8 @@ def main():
         keyboard=dict(type='str', choices=['de', 'de-ch', 'es', 'fi', 'fr', 'fr-be', 'fr-ch', 'is', 'it', 'jp', 'nl-be', 'no', 'pt', 'uk', 'us']),
         hypervisor=dict(),
         host=dict(),
-        security_groups=dict(type='list', aliases=['security_group']),
-        affinity_groups=dict(type='list', aliases=['affinity_group']),
+        security_groups=dict(type='list', elements='str', aliases=['security_group']),
+        affinity_groups=dict(type='list', elements='str', aliases=['affinity_group']),
         domain=dict(),
         account=dict(),
         project=dict(),
@@ -1032,7 +1037,7 @@ def main():
         zone=dict(),
         ssh_key=dict(),
         force=dict(type='bool', default=False),
-        tags=dict(type='list', aliases=['tag']),
+        tags=dict(type='list', elements='dict', aliases=['tag']),
         details=dict(type='dict'),
         poll_async=dict(type='bool', default=True),
         allow_root_disk_shrink=dict(type='bool', default=False),

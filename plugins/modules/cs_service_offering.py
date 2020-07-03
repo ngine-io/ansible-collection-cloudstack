@@ -58,6 +58,7 @@ options:
     description:
       - The host tags for this service offering.
     type: list
+    elements: str
     aliases:
       - host_tag
   hypervisor_snapshot_reserve:
@@ -128,6 +129,7 @@ options:
       - Details for planner, used to store specific parameters.
       - A list of dictionaries having keys C(key) and C(value).
     type: list
+    elements: dict
   state:
     description:
       - State of the service offering.
@@ -156,6 +158,7 @@ options:
     description:
       - The storage tags for this service offering.
     type: list
+    elements: str
     aliases:
       - storage_tag
   is_customized:
@@ -526,7 +529,7 @@ def main():
         limit_cpu_usage=dict(type='bool'),
         deployment_planner=dict(),
         domain=dict(),
-        host_tags=dict(type='list', aliases=['host_tag']),
+        host_tags=dict(type='list', elements='str', aliases=['host_tag']),
         hypervisor_snapshot_reserve=dict(type='int'),
         disk_bytes_read_rate=dict(type='int', aliases=['bytes_read_rate']),
         disk_bytes_write_rate=dict(type='int', aliases=['bytes_write_rate']),
@@ -541,10 +544,10 @@ def main():
         network_rate=dict(type='int'),
         offer_ha=dict(type='bool'),
         provisioning_type=dict(choices=['thin', 'sparse', 'fat']),
-        service_offering_details=dict(type='list'),
+        service_offering_details=dict(type='list', elements='dict'),
         storage_type=dict(choices=['local', 'shared']),
         system_vm_type=dict(choices=['domainrouter', 'consoleproxy', 'secondarystoragevm']),
-        storage_tags=dict(type='list', aliases=['storage_tag']),
+        storage_tags=dict(type='list', elements='str', aliases=['storage_tag']),
         state=dict(choices=['present', 'absent'], default='present'),
         is_customized=dict(type='bool'),
     ))

@@ -26,6 +26,7 @@ options:
     description:
       - CIDRs of the rule.
     type: list
+    elements: str
     default: [ 0.0.0.0/0 ]
     aliases: [ cidr ]
   rule_position:
@@ -90,6 +91,7 @@ options:
       - List of tags. Tags are a list of dictionaries having keys I(key) and I(value).
       - "If you want to delete all tags, set a empty list e.g. I(tags: [])."
     type: list
+    elements: dict
     aliases: [ tag ]
   domain:
     description:
@@ -404,7 +406,7 @@ def main():
         network_acl=dict(required=True, aliases=['acl']),
         rule_position=dict(required=True, type='int', aliases=['number']),
         vpc=dict(required=True),
-        cidrs=dict(type='list', default=['0.0.0.0/0'], aliases=['cidr']),
+        cidrs=dict(type='list', elements='str', default=['0.0.0.0/0'], aliases=['cidr']),
         protocol=dict(choices=['tcp', 'udp', 'icmp', 'all', 'by_number'], default='tcp'),
         protocol_number=dict(type='int'),
         traffic_type=dict(choices=['ingress', 'egress'], aliases=['type'], default='ingress'),
@@ -418,7 +420,7 @@ def main():
         domain=dict(),
         account=dict(),
         project=dict(),
-        tags=dict(type='list', aliases=['tag']),
+        tags=dict(type='list', elements='dict', aliases=['tag']),
         poll_async=dict(type='bool', default=True),
     ))
 

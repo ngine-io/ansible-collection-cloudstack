@@ -67,10 +67,12 @@ options:
     description:
       - List of Network Service Providers to enable.
     type: list
+    elements: str
   nsps_disabled:
     description:
       - List of Network Service Providers to disable.
     type: list
+    elements: str
   state:
     description:
       - State of the physical network.
@@ -418,8 +420,8 @@ def main():
         zone=dict(),
         domain=dict(),
         vlan=dict(),
-        nsps_disabled=dict(type='list'),
-        nsps_enabled=dict(type='list'),
+        nsps_disabled=dict(type='list', elements='str'),
+        nsps_enabled=dict(type='list', elements='str'),
         network_speed=dict(choices=['1G', '10G']),
         broadcast_domain_range=dict(choices=['POD', 'ZONE']),
         isolation_method=dict(choices=['VLAN', 'GRE', 'L3']),

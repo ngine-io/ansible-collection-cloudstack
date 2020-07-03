@@ -106,6 +106,7 @@ options:
       - Options to find a template uniquely.
       - More than one allowed.
     type: list
+    elements: str
     choices: [ display_text, checksum, cross_zones ]
     aliases: [ template_find_option ]
     default: []
@@ -178,6 +179,7 @@ options:
       - List of tags. Tags are a list of dictionaries having keys I(key) and I(value).
       - "To delete all tags, set a empty list e.g. I(tags: [])."
     type: list
+    elements: dict
     aliases: [ tag ]
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
@@ -679,7 +681,13 @@ def main():
         is_routing=dict(type='bool'),
         checksum=dict(),
         template_filter=dict(default='self', choices=['all', 'featured', 'self', 'selfexecutable', 'sharedexecutable', 'executable', 'community']),
-        template_find_options=dict(type='list', choices=['display_text', 'checksum', 'cross_zones'], aliases=['template_find_option'], default=[]),
+        template_find_options=dict(
+            type='list',
+            elements='str',
+            choices=['display_text', 'checksum', 'cross_zones'],
+            aliases=['template_find_option'],
+            default=[],
+        ),
         hypervisor=dict(),
         requires_hvm=dict(type='bool'),
         password_enabled=dict(type='bool'),
@@ -696,7 +704,7 @@ def main():
         account=dict(),
         project=dict(),
         poll_async=dict(type='bool', default=True),
-        tags=dict(type='list', aliases=['tag']),
+        tags=dict(type='list', elements='dict', aliases=['tag']),
     ))
 
     module = AnsibleModule(

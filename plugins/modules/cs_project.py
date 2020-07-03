@@ -45,6 +45,7 @@ options:
       - List of tags. Tags are a list of dictionaries having keys I(key) and I(value).
       - "If you want to delete all tags, set a empty list e.g. I(tags: [])."
     type: list
+    elements: dict
     aliases: [ tag ]
   poll_async:
     description:
@@ -240,7 +241,7 @@ def main():
         domain=dict(),
         account=dict(),
         poll_async=dict(type='bool', default=True),
-        tags=dict(type='list', aliases=['tag']),
+        tags=dict(type='list', elements='dict', aliases=['tag']),
     ))
 
     module = AnsibleModule(

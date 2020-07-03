@@ -49,6 +49,7 @@ options:
     description:
       - List of CIDRs (full notation) to be used for firewall rule.
       - Since version 2.5, it is a list of CIDR.
+    elements: str
     type: list
     default: 0.0.0.0/0
     aliases: [ cidr ]
@@ -100,6 +101,7 @@ options:
       - List of tags. Tags are a list of dictionaries having keys I(key) and I(value).
       - "To delete all tags, set an empty list e.g. I(tags: [])."
     type: list
+    elements: dict
     aliases: [ tag ]
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
@@ -384,7 +386,7 @@ def main():
     argument_spec.update(dict(
         ip_address=dict(),
         network=dict(),
-        cidrs=dict(type='list', default='0.0.0.0/0', aliases=['cidr']),
+        cidrs=dict(type='list', elements='str', default='0.0.0.0/0', aliases=['cidr']),
         protocol=dict(choices=['tcp', 'udp', 'icmp', 'all'], default='tcp'),
         type=dict(choices=['ingress', 'egress'], default='ingress'),
         icmp_type=dict(type='int'),
@@ -397,7 +399,7 @@ def main():
         account=dict(),
         project=dict(),
         poll_async=dict(type='bool', default=True),
-        tags=dict(type='list', aliases=['tag'], default=None),
+        tags=dict(type='list', elements='dict', aliases=['tag']),
     ))
 
     required_together = cs_required_together()
