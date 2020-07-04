@@ -15,6 +15,7 @@ short_description: Manages security groups on Apache CloudStack based clouds.
 description:
     - Create and remove security groups.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

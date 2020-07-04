@@ -15,6 +15,7 @@ short_description: Manages port forwarding rules on Apache CloudStack based clou
 description:
     - Create, update and remove port forwarding rules.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   ip_address:
     description:

@@ -15,6 +15,7 @@ short_description: Manages configuration on Apache CloudStack based clouds.
 description:
     - Manages global, zone, account, storage and cluster configurations.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

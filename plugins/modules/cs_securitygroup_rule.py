@@ -15,6 +15,7 @@ short_description: Manages security group rules on Apache CloudStack based cloud
 description:
     - Add and remove security group rules.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   security_group:
     description:

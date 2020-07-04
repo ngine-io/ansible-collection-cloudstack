@@ -17,6 +17,7 @@ description:
   - Create templates from a ROOT volume of a stopped VM or its snapshot.
   - Update, extract and delete templates.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

@@ -15,6 +15,7 @@ short_description: Gathering information from the API of instances from Apache C
 description:
     - Gathering information from the API of an instance.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

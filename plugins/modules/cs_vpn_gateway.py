@@ -15,6 +15,7 @@ short_description: Manages site-to-site VPN gateways on Apache CloudStack based 
 description:
     - Creates and removes VPN site-to-site gateways.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   vpc:
     description:

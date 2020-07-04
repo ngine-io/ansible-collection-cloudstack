@@ -17,6 +17,7 @@ short_description: Manages CloudStack Image Stores.
 description:
   - Deploy, remove, recreate CloudStack Image Stores.
 
+version_added: 0.1.0
 options:
   url:
     description:

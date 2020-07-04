@@ -15,6 +15,7 @@ short_description: Manages site-to-site VPN connections on Apache CloudStack bas
 description:
     - Create and remove VPN connections.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   vpc:
     description:

@@ -18,6 +18,7 @@ description:
 author:
   - Marc-Aurèle Brothier (@marcaurele)
   - René Moser (@resmo)
+version_added: 0.1.0
 options:
   vm:
     description:

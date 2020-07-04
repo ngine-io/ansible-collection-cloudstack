@@ -16,6 +16,7 @@ description:
   - Update display_text of existing service offering.
 short_description: Manages service offerings on Apache CloudStack based clouds.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   disk_bytes_read_rate:
     description:

@@ -15,6 +15,7 @@ short_description: Manages regions on Apache CloudStack based clouds.
 description:
     - Add, update and remove regions.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   id:
     description:

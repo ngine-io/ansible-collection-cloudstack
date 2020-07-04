@@ -15,6 +15,7 @@ short_description: Manages firewall rules on Apache CloudStack based clouds.
 description:
     - Creates and removes firewall rules.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   ip_address:
     description:

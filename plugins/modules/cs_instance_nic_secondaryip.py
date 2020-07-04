@@ -15,6 +15,7 @@ short_description: Manages secondary IPs of an instance on Apache CloudStack bas
 description:
     - Add and remove secondary IPs to and from a NIC of an instance.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   vm:
     description:

@@ -16,6 +16,7 @@ description:
     - Start, restart, stop and destroy routers.
     - I(state=present) is not able to create routers, use M(cs_network) instead.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   name:
     description:

@@ -18,6 +18,7 @@ extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
 author:
  - Patryk Cichy (@PatTheSilent)
+version_added: 0.1.0
 options:
   physical_network:
     description:

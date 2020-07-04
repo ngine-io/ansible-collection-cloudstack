@@ -19,6 +19,7 @@ short_description: Manages disk offerings on Apache CloudStack based clouds.
 author:
   - David Passante (@dpassante)
   - René Moser (@resmo)
+version_added: 0.1.0
 options:
   disk_size:
     description:

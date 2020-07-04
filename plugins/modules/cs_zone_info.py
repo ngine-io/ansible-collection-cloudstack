@@ -15,6 +15,7 @@ short_description: Gathering information about zones from Apache CloudStack base
 description:
   - Gathering information from the API of a zone.
 author: René Moser (@resmo)
+version_added: 0.1.0
 options:
   zone:
     description:
