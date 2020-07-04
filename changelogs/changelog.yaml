@@ -1,0 +1,9 @@
+ancestor: null
+releases:
+  0.3.0:
+    changes:
+      minor_changes:
+      - Added support for SSL CA cert verification (https://github.com/ngine-io/ansible-collection-cloudstack/pull/3)
+    fragments:
+    - 3-ca-cert-verification.yml
+    release_date: '2020-07-04'
