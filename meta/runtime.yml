@@ -58,9 +58,11 @@ plugin_routing:
   modules:
     cs_instance_facts:
       deprecation:
-        removal_version: 2.0.0
-        warning_text: module was renamed to cs_instance_info
+        removal_date: 2021-12-12
+        warning_text: module was renamed to ngine_io.cloudstack.cs_instance_info
+      redirect: ngine_io.cloudstack.cs_instance_info
     cs_zone_facts:
       deprecation:
-        removal_version: 2.0.0
-        warning_text: module was renamed to cs_zone_info
+        removal_date: 2021-12-12
+        warning_text: module was renamed to ngine_io.cloudstack.cs_zone_info
+      redirect: ngine_io.cloudstack.cs_zone_info
