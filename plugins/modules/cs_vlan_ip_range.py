@@ -105,8 +105,8 @@ options:
         VLAN range to the Physical Network with a Public traffic type.
     type: bool
     default: no
-  for_system_vms: 
-    description: 
+  for_system_vms:
+    description:
       - C(yes) if IP range is set to system vms, C(no) if not
     type: bool
     default: no
