@@ -105,6 +105,11 @@ options:
         VLAN range to the Physical Network with a Public traffic type.
     type: bool
     default: no
+  for_system_vms: 
+    description: 
+      - C(yes) if IP range is set to system vms, C(no) if not
+    type: bool
+    default: no
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
 '''
@@ -306,6 +311,7 @@ class AnsibleCloudStackVlanIpRange(AnsibleCloudStack):
             'vlan': self.get_network(key='vlan') if not vlan else vlan,
             'networkid': self.get_network(key='id'),
             'forvirtualnetwork': self.module.params.get('for_virtual_network'),
+            'forsystemvms': self.module.params.get('for_system_vms'),
         }
         if self.module.params.get('physical_network'):
             args['physicalnetworkid'] = self.get_physical_network(key='id')
@@ -353,6 +359,7 @@ def main():
         account=dict(type='str'),
         project=dict(type='str'),
         for_virtual_network=dict(type='bool', default=False),
+        for_system_vms=dict(type='bool', default=False),
     ))
 
     module = AnsibleModule(
