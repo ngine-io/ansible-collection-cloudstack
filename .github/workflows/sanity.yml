@@ -28,4 +28,4 @@ jobs:
       run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
     - name: Run sanity tests
-      run: ansible-test sanity --docker -v --color --python 3.6
+      run: ansible-test sanity --docker -v --color

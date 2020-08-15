@@ -63,6 +63,7 @@
   cs_cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
+    pod: "{{ cs_resource_prefix }}-pod"
     hypervisor: Simulator
     cluster_type: CloudManaged
   register: cluster_origin
@@ -77,6 +78,7 @@
   cs_cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
+    pod: "{{ cs_resource_prefix }}-pod"
     hypervisor: Simulator
     cluster_type: CloudManaged
   register: cluster_origin
@@ -95,6 +97,7 @@
   cs_cluster:
     name: "{{ cs_resource_prefix }}-Cluster"
     zone: "{{ cs_resource_prefix }}-Zone"
+    pod: "{{ cs_resource_prefix }}-pod"
     hypervisor: Simulator
     cluster_type: CloudManaged
   register: cluster

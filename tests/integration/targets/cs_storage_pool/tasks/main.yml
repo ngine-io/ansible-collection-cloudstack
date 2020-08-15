@@ -84,7 +84,7 @@
   assert:
     that:
       - sp is failed
-      - "sp.msg == 'Pod DNE not found'"
+      - "'Pod DNE not found' in sp.msg"
 
 - name: create storage pool in check mode
   cs_storage_pool:

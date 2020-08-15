@@ -77,6 +77,7 @@ options:
     description:
       - Name of the pod.
     type: str
+    version_added: 1.0.0
   state:
     description:
       - State of the network ip range.
@@ -109,6 +110,7 @@ options:
         VLAN range to the Physical Network with a Public traffic type.
     type: bool
     default: no
+    version_added: 1.0.0
   for_system_vms:
     description:
       - C(yes) if IP range is set to system vms, C(no) if not

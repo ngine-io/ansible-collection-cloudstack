@@ -415,20 +415,6 @@ class AnsibleCloudStackStoragePool(AnsibleCloudStack):
                 return provider
         self.fail_json(msg="Storage provider %s not found" % provider)
 
-    def get_pod(self, key=None):
-        pod = self.module.params.get('pod')
-        if not pod:
-            return None
-        args = {
-            'name': pod,
-            'zoneid': self.get_zone(key='id'),
-        }
-        pods = self.query_api('listPods', **args)
-        if pods:
-            return self._get_by_key(key, pods['pod'][0])
-
-        self.fail_json(msg="Pod %s not found" % self.module.params.get('pod'))
-
     def get_cluster(self, key=None):
         cluster = self.module.params.get('cluster')
         if not cluster:
