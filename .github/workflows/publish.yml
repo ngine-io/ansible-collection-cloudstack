@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+      with:
+        path: ansible_collections/ngine_io/cloudstack
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
