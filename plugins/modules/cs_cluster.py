@@ -232,16 +232,6 @@ class AnsibleCloudStackCluster(AnsibleCloudStack):
             args['allocationstate'] = state.capitalize()
         return args
 
-    def get_pod(self, key=None):
-        args = {
-            'name': self.module.params.get('pod'),
-            'zoneid': self.get_zone(key='id'),
-        }
-        pods = self.query_api('listPods', **args)
-        if pods:
-            return self._get_by_key(key, pods['pod'][0])
-        self.module.fail_json(msg="Pod %s not found in zone %s" % (self.module.params.get('pod'), self.get_zone(key='name')))
-
     def get_cluster(self):
         if not self.cluster:
             args = {}

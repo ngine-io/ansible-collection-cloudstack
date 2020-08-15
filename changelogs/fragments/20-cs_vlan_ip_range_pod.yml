@@ -1,0 +1,2 @@
+minor_changes:
+- cs_vlan_ip_range - Added support to specify pod name (https://github.com/ngine-io/ansible-collection-cloudstack/pull/20)
