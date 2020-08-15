@@ -7,3 +7,12 @@ releases:
     fragments:
     - 3-ca-cert-verification.yml
     release_date: '2020-07-04'
+  1.0.0:
+    changes:
+      minor_changes:
+      - cs_vlan_ip_range - Added support to set IP range for system VMs (https://github.com/ngine-io/ansible-collection-cloudstack/pull/18)
+      - cs_vlan_ip_range - Added support to specify pod name (https://github.com/ngine-io/ansible-collection-cloudstack/pull/20)
+    fragments:
+    - 18-for_system_vms_cs_vlan_ip_range.yml
+    - 20-cs_vlan_ip_range_pod.yml
+    release_date: '2020-08-15'
