@@ -422,6 +422,32 @@
       - public_range.zone == cszone.name
       - public_range.start_ip == '10.0.3.10'
       - public_range.end_ip == '10.0.3.250'
+      - public_range.for_systemvms == false
+
+- name: test adding a public IP range for System VMs
+  cs_vlan_ip_range:
+    end_ip: 10.0.4.250
+    start_ip: 10.0.4.10
+    zone: "{{ cszone.name }}"
+    netmask: 255.255.255.0
+    for_virtual_network: 'yes'
+    for_system_vms: 'yes'
+    gateway: 10.0.4.2
+    vlan: untagged
+  register: public_range
+- name: verify test adding a public IP range for System VMs
+  assert:
+    that:
+      - public_range is successful
+      - public_range is changed
+      - public_range.physical_network == public_network.id
+      - public_range.vlan == 'vlan://untagged'
+      - public_range.gateway == '10.0.4.2'
+      - public_range.netmask == '255.255.255.0'
+      - public_range.zone == cszone.name
+      - public_range.start_ip == '10.0.4.10'
+      - public_range.end_ip == '10.0.4.250'
+      - public_range.for_systemvms == true
 
 - name: cleanup the network
   cs_physical_network:
