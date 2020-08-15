@@ -378,7 +378,7 @@ class AnsibleCloudStack:
         pods = self.query_api('listPods', **args)
         if pods:
             return self._get_by_key(key, pods['pod'][0])
-        self.module.fail_json(msg="Pod %s not found" % pod_name)
+        self.module.fail_json(msg="Pod %s not found in zone %s" % (self.module.params.get('pod'), self.get_zone(key='name')))
 
     def get_ip_address(self, key=None):
         if self.ip_address:
