@@ -4,126 +4,16 @@ on:
   push:
     branches:
     - master
-  pull_request:
   schedule:
   - cron: 30 6 * * *
 
 jobs:
-  build-collection-artifact:
-    name: Build collection
-    runs-on: ${{ matrix.runner-os }}
-    strategy:
-      matrix:
-        runner-os:
-        - ubuntu-latest
-        ansible-version:
-        - git+https://github.com/ansible/ansible.git@devel
-        runner-python-version:
-        - 3.8
-    steps:
-    - uses: actions/checkout@v1
-    - name: Set up Python ${{ matrix.runner-python-version }}
-      uses: actions/setup-python@v1
-      with:
-        python-version: ${{ matrix.runner-python-version }}
-    - name: Set up pip cache
-      uses: actions/cache@v1
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ github.ref }}
-    - name: Install Ansible ${{ matrix.ansible-version }}
-      run: >-
-        python -m
-        pip
-        install
-        --user
-        ${{ matrix.ansible-version }}
-    - name: Build a collection tarball
-      run: >-
-        ~/.local/bin/ansible-galaxy
-        collection
-        build
-        --output-path
-        "${GITHUB_WORKSPACE}/.cache/collection-tarballs"
-    - name: Store migrated collection artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: >-
-          collection
-        path: .cache/collection-tarballs
-
-  sanity-test-collection-via-containers:
-    name: Sanity Py${{ matrix.python-version }}
-    needs:
-    - build-collection-artifact
-    runs-on: ${{ matrix.runner-os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        runner-os:
-        - ubuntu-latest
-        runner-python-version:
-        - 3.6
-        ansible-version:
-        - git+https://github.com/ansible/ansible.git@devel
-    steps:
-    - name: Set up Python ${{ matrix.runner-python-version }}
-      uses: actions/setup-python@v1
-      with:
-        python-version: ${{ matrix.runner-python-version }}
-    - name: Set up pip cache
-      uses: actions/cache@v1
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ github.ref }}-sanity-containers
-        restore-keys: |
-          ${{ runner.os }}-pip-
-          ${{ runner.os }}-
-    - name: Install Ansible ${{ matrix.ansible-version }}
-      run: >-
-        python -m
-        pip
-        install
-        --user
-        ${{ matrix.ansible-version }}
-    - name: Download migrated collection artifacts
-      uses: actions/download-artifact@v1
-      with:
-        name: >-
-          collection
-        path: .cache/collection-tarballs
-    - name: Install the collection tarball
-      run: >-
-        ~/.local/bin/ansible-galaxy
-        collection
-        install
-        .cache/collection-tarballs/*.tar.gz
-    - name: Run collection sanity tests
-      run: >-
-        ~/.local/bin/ansible-test
-        sanity
-        --color
-        --requirements
-        --docker
-        -vvv
-      working-directory: >-
-        /home/runner/.ansible/collections/ansible_collections/ngine_io/cloudstack
-
   integration-test:
     name: Integration test group${{matrix.group}} Py${{ matrix.python-version }}
-    needs:
-    - build-collection-artifact
-    - sanity-test-collection-via-containers
-    runs-on: ${{ matrix.runner-os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        runner-os:
-        - ubuntu-latest
-        runner-python-version:
-        - 3.6
-        ansible-version:
-        - git+https://github.com/ansible/ansible.git@devel
         python-version:
         - 3.6
         - 2.7
@@ -135,40 +25,26 @@ jobs:
       uses: actions/checkout@v1
       with:
         path: ansible_collections/ngine_io/cloudstack
-    - name: Set up pip cache
-      uses: actions/cache@v1
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
       with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ github.ref }}
-    - name: Install Ansible ${{ matrix.ansible-version }}
-      run: >-
-        python -m
-        pip
-        install
-        --user
-        ${{ matrix.ansible-version }}
-    - name: Install requirements
-      run: >-
-        python -m
-        pip
-        install
-        --user
-        -r requirements.txt
-    - name: Download migrated collection artifacts
-      uses: actions/download-artifact@v1
-      with:
-        name: >-
-          collection
-        path: .cache/collection-tarballs
-    - name: Install collection tarball
-      run: >-
-        ~/.local/bin/ansible-galaxy
-        collection
-        install
-        ${GITHUB_WORKSPACE}/.cache/collection-tarballs/*.gz
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install ansible and collection dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install ansible
+        pip install -r requirements.txt
+
+    - name: Build and install collection
+      run: |
+        ansible-galaxy collection build .
+        ansible-galaxy collection install *.gz
+
     - name: Run the tests
       run: >-
-        ~/.local/bin/ansible-test
+        ansible-test
         integration
         --docker
         -v
@@ -179,9 +55,10 @@ jobs:
         --continue-on-error
         --coverage
         shippable/cs/group${{ matrix.group }}/
+
     - name: Generate coverage report.
       run: >-
-        ~/.local/bin/ansible-test
+        ansible-test
         coverage xml
         -v
         --requirements
