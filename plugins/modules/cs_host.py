@@ -381,19 +381,6 @@ class AnsibleCloudStackHost(AnsibleCloudStack):
         }
         self.host = None
 
-    def get_pod(self, key=None):
-        pod_name = self.module.params.get('pod')
-        if not pod_name:
-            return None
-        args = {
-            'name': pod_name,
-            'zoneid': self.get_zone(key='id'),
-        }
-        pods = self.query_api('listPods', **args)
-        if pods:
-            return self._get_by_key(key, pods['pod'][0])
-        self.module.fail_json(msg="Pod %s not found" % pod_name)
-
     def get_cluster(self, key=None):
         cluster_name = self.module.params.get('cluster')
         if not cluster_name:

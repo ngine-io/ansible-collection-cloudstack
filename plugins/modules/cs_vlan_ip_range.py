@@ -73,6 +73,10 @@ options:
       - The ID or VID of the network.
       - If not specified, will be defaulted to the vlan of the network.
     type: str
+  pod:
+    description:
+      - Name of the pod.
+    type: str
   state:
     description:
       - State of the network ip range.
@@ -312,6 +316,7 @@ class AnsibleCloudStackVlanIpRange(AnsibleCloudStack):
             'networkid': self.get_network(key='id'),
             'forvirtualnetwork': self.module.params.get('for_virtual_network'),
             'forsystemvms': self.module.params.get('for_system_vms'),
+            'podid': self.get_pod(key='id'),
         }
         if self.module.params.get('physical_network'):
             args['physicalnetworkid'] = self.get_physical_network(key='id')
@@ -358,6 +363,7 @@ def main():
         domain=dict(type='str'),
         account=dict(type='str'),
         project=dict(type='str'),
+        pod=dict(type='str'),
         for_virtual_network=dict(type='bool', default=False),
         for_system_vms=dict(type='bool', default=False),
     ))
