@@ -7,8 +7,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ansible_collections/ngine_io/cloudstack
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
       with:
         path: ansible_collections/ngine_io/cloudstack
     - name: Set up Python
