@@ -11,6 +11,9 @@ on:
 jobs:
   integration-test:
     name: Integration test group${{matrix.group}} Py${{ matrix.python-version }}
+    defaults:
+      run:
+        working-directory: ansible_collections/ngine_io/cloudstack
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -23,12 +26,12 @@ jobs:
         - 2
     steps:
     - name: Check out code
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
       with:
         path: ansible_collections/ngine_io/cloudstack
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
 
