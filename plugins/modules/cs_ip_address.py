@@ -197,6 +197,8 @@ class AnsibleCloudStackIPAddress(AnsibleCloudStack):
     def associate_ip_address(self, ip_address):
         self.result['changed'] = True
         args = {
+            # ipaddress only works with CloudStack >=v4.13
+            'ipaddress': self.module.params.get('ip_address'),
             'account': self.get_account(key='name'),
             'domainid': self.get_domain(key='id'),
             'projectid': self.get_project(key='id'),
