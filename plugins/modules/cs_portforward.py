@@ -62,6 +62,7 @@ options:
   open_firewall:
     description:
       - Whether the firewall rule for public port should be created, while creating the new rule.
+      - Not supported when forwarding ports in an VPC.
       - Use M(cs_firewall) for managing firewall rules.
     default: no
     type: bool
@@ -71,7 +72,7 @@ options:
     type: str
   network:
     description:
-      - Name of the network.
+      - Name of the network/vpc tier. Required when forwarding the first port of an VPC tier.
     type: str
   vpc:
     description:
@@ -140,6 +141,15 @@ EXAMPLES = '''
     public_port: 22
     private_port: 22
     state: absent
+    
+- name: forward SSH in backend tier of VPC
+  ngine_io.cloudstack.cs_portforward:
+    ip_address: '{{ public_ip }}'
+    vm: '{{ inventory_hostname }}'
+    public_port: '{{ ansible_ssh_port }}'
+    private_port: 22
+    vpc: myVPC
+    network: backend
 '''
 
 RETURN = '''
