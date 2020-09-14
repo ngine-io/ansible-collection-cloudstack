@@ -141,7 +141,7 @@ EXAMPLES = '''
     public_port: 22
     private_port: 22
     state: absent
-    
+
 - name: forward SSH in backend tier of VPC
   ngine_io.cloudstack.cs_portforward:
     ip_address: '{{ public_ip }}'
