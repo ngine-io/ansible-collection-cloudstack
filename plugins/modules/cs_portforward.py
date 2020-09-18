@@ -62,7 +62,7 @@ options:
   open_firewall:
     description:
       - Whether the firewall rule for public port should be created, while creating the new rule.
-      - Not supported when forwarding ports in an VPC.
+      - Not supported when forwarding ports in a VPC.
       - Use M(cs_firewall) for managing firewall rules.
     default: no
     type: bool
@@ -72,7 +72,7 @@ options:
     type: str
   network:
     description:
-      - Name of the network/vpc tier. Required when forwarding the first port of an VPC tier.
+      - Name of the network. Required when forwarding ports in a VPC.
     type: str
   vpc:
     description:
