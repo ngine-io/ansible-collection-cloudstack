@@ -2,6 +2,7 @@
 - name: setup ensure running instance to get host infos
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     state: started
@@ -10,6 +11,7 @@
 - name: setup ensure stopped instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: stopped
 
 - name: setup zone facts
@@ -37,6 +39,7 @@
 - name: test starting instance on new host in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     host: "{{ host.name }}"
     state: started
   register: instance
@@ -53,6 +56,7 @@
 - name: test starting instance on new host
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     host: "{{ host.name }}"
     state: started
   register: instance
@@ -68,6 +72,7 @@
 - name: test starting instance on new host idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     host: "{{ host.name }}"
     state: started
   register: instance
@@ -90,6 +95,7 @@
 - name: test force update running instance in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     host: "{{ host.name }}"
     force: true
   register: instance
@@ -106,6 +112,7 @@
 - name: test force update running instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     host: "{{ host.name }}"
     force: true
   register: instance
@@ -121,6 +128,7 @@
 - name: test force update running instance idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     host: "{{ host.name }}"
     force: true
   register: instance

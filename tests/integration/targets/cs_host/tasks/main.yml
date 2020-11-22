@@ -1,6 +1,7 @@
 ---
 - name: test fail missing params
   cs_host:
+    zone: "{{ cs_common_zone_basic }}"
   register: host
   ignore_errors: true
 - name: verify test fail missing url if host is not existent
@@ -12,6 +13,7 @@
 - name: test fail missing params if host is not existent
   cs_host:
     name: sim
+    zone: "{{ cs_common_zone_basic }}"
   register: host
   ignore_errors: true
 - name: verify test fail missing params if host is not existent
@@ -23,6 +25,7 @@
 - name: test create a host in check mode
   cs_host:
     name: sim
+    zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
     cluster: C0-basic
     pod: POD0-basic
@@ -43,6 +46,7 @@
 - name: test create a host
   cs_host:
     name: sim
+    zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
     cluster: C0-basic
     pod: POD0-basic
@@ -77,6 +81,7 @@
 - name: test create a host idempotence
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
     cluster: C0-basic
     pod: POD0-basic
@@ -104,6 +109,7 @@
 - name: test update host in check mode
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
     cluster: C0-basic
     pod: POD0-basic
@@ -133,6 +139,7 @@
 - name: test update host
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
     cluster: C0-basic
     pod: POD0-basic
@@ -161,6 +168,7 @@
 - name: test update host idempotence
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
     cluster: C0-basic
     pod: POD0-basic
@@ -190,6 +198,7 @@
 - name: test update host remove host_tags
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
     cluster: C0-basic
     pod: POD0-basic
@@ -218,6 +227,7 @@
 - name: test update host remove host_tags idempotence
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
     cluster: C0-basic
     pod: POD0-basic
@@ -246,6 +256,7 @@
 - name: test put host in maintenance in check mode
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
     pod: POD0-basic
     allocation_state: maintenance
@@ -267,6 +278,7 @@
 - name: test put host in maintenance
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
     pod: POD0-basic
     allocation_state: maintenance
@@ -287,6 +299,7 @@
 - name: test put host in maintenance idempotence
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
     pod: POD0-basic
     allocation_state: maintenance
@@ -307,6 +320,7 @@
 - name: test put host out of maintenance in check mode
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
     pod: POD0-basic
     allocation_state: enabled
@@ -328,6 +342,7 @@
 - name: test put host out of maintenance
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
     pod: POD0-basic
     allocation_state: enabled
@@ -348,6 +363,7 @@
 - name: test put host out of maintenance idempotence
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
     pod: POD0-basic
     allocation_state: enabled
@@ -368,6 +384,7 @@
 - name: test remove host in check mode
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
     pod: POD0-basic
     state: absent
@@ -389,6 +406,7 @@
 - name: test remove host
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
     pod: POD0-basic
     state: absent
@@ -409,6 +427,7 @@
 - name: test remove host idempotence
   cs_host:
     name: "{{ host_hostname }}"
+    zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
     pod: POD0-basic
     state: absent

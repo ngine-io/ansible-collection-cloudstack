@@ -2,6 +2,7 @@
 - name: test destroy instance in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: instance
   check_mode: true
@@ -15,6 +16,7 @@
 - name: test destroy instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: instance
 - name: verify destroy instance
@@ -27,6 +29,7 @@
 - name: test destroy instance idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: instance
 - name: verify destroy instance idempotence
@@ -38,6 +41,7 @@
 - name: test recover to stopped state and update a deleted instance in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     state: stopped
   register: instance
@@ -51,6 +55,7 @@
 - name: test recover to stopped state and update a deleted instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     state: stopped
   register: instance
@@ -65,6 +70,7 @@
 - name: test recover to stopped state and update a deleted instance idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     state: stopped
   register: instance
@@ -79,6 +85,7 @@
 - name: test expunge instance in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: expunged
   register: instance
   check_mode: true
@@ -93,6 +100,7 @@
 - name: test expunge instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: expunged
   register: instance
 - name: verify test expunge instance
@@ -106,6 +114,7 @@
 - name: test expunge instance idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: expunged
   register: instance
 - name: verify test expunge instance idempotence

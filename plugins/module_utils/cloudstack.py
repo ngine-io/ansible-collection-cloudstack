@@ -478,6 +478,11 @@ class AnsibleCloudStack:
 
         # use the first zone if no zone param given
         if not zone:
+            self.module.deprecate(
+                msg="Using first zone as default is deprecated because of unreliable API, zone needs to be defined.",
+                version="2.0.0",
+                collection_name="ngine_io.cloudstack"
+            )
             self.zone = zones['zone'][0]
             self.result['zone'] = self.zone['name']
             return self._get_by_key(key, self.zone)

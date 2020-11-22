@@ -2,6 +2,7 @@
 - name: setup instance to be absent
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: expunged
   register: instance
 - name: verify instance to be absent
@@ -12,6 +13,7 @@
 - name: test create instance in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     affinity_group: "{{ cs_resource_prefix }}-ag"
@@ -34,6 +36,7 @@
 - name: test create instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     affinity_group: "{{ cs_resource_prefix }}-ag"
@@ -61,6 +64,7 @@
 - name: test create instance idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     affinity_group: "{{ cs_resource_prefix }}-ag"
@@ -92,6 +96,7 @@
 - name: test running instance not updated in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_2 }}"
   register: instance
   check_mode: true
@@ -108,6 +113,7 @@
 - name: test running instance not updated
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_2 }}"
   register: instance
 - name: verify running instance not updated
@@ -123,6 +129,7 @@
 - name: test stopping instance in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: stopped
   register: instance
   check_mode: true
@@ -139,6 +146,7 @@
 - name: test stopping instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: stopped
   register: instance
 - name: verify stopping instance
@@ -154,6 +162,7 @@
 - name: test stopping instance idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: stopped
   register: instance
 - name: verify stopping instance idempotence
@@ -166,6 +175,7 @@
 - name: test updating stopped instance in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     display_name: "{{ cs_resource_prefix }}-display-{{ instance_number }}"
     service_offering: "{{ test_cs_instance_offering_2 }}"
   register: instance
@@ -183,6 +193,7 @@
 - name: test updating stopped instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     display_name: "{{ cs_resource_prefix }}-display-{{ instance_number }}"
     service_offering: "{{ test_cs_instance_offering_2 }}"
   register: instance
@@ -199,6 +210,7 @@
 - name: test updating stopped instance idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     display_name: "{{ cs_resource_prefix }}-display-{{ instance_number }}"
     service_offering: "{{ test_cs_instance_offering_2 }}"
   register: instance
@@ -215,6 +227,7 @@
 - name: test starting instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: started
   register: instance
 - name: verify starting instance
@@ -230,6 +243,7 @@
 - name: test starting instance idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: started
   register: instance
 - name: verify starting instance idempotence
@@ -245,6 +259,7 @@
 - name: test force update running instance in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     force: true
   register: instance
@@ -262,6 +277,7 @@
 - name: test force update running instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     force: true
   register: instance
@@ -278,6 +294,7 @@
 - name: test force update running instance idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     force: true
   register: instance
@@ -294,6 +311,7 @@
 - name: test restore instance in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     state: restored
   register: instance
@@ -310,6 +328,7 @@
 - name: test restore instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     state: restored
   register: instance
