@@ -2,6 +2,7 @@
 - name: test destroy instance with display_name
   cs_instance:
     display_name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: instance
 - name: verify destroy instance with display_name
@@ -14,6 +15,7 @@
 - name: test destroy instance with display_name idempotence
   cs_instance:
     display_name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: instance
 - name: verify destroy instance with display_name idempotence
@@ -25,6 +27,7 @@
 - name: test recover to stopped state and update a deleted instance with display_name
   cs_instance:
     display_name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     state: stopped
   register: instance
@@ -39,5 +42,6 @@
 # force expunge, only works with admin permissions
 - cs_instance:
     display_name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: expunged
   failed_when: false

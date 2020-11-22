@@ -691,7 +691,7 @@ def main():
         ),
         hypervisor=dict(),
         requires_hvm=dict(type='bool'),
-        password_enabled=dict(type='bool'),
+        password_enabled=dict(type='bool', no_log=False),
         template_tag=dict(),
         sshkey_enabled=dict(type='bool'),
         format=dict(choices=['QCOW2', 'RAW', 'VHD', 'OVA']),

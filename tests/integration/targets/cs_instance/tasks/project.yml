@@ -11,6 +11,7 @@
 - name: setup instance in project to be absent
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: absent
   register: instance
@@ -52,6 +53,7 @@
 - name: test create instance in project in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     affinity_group: "{{ cs_resource_prefix }}-ag-prj"
@@ -70,6 +72,7 @@
 - name: test create instance in project
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     affinity_group: "{{ cs_resource_prefix }}-ag-prj"
@@ -94,6 +97,7 @@
 - name: test create instance in project idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     affinity_group: "{{ cs_resource_prefix }}-ag-prj"
@@ -118,6 +122,7 @@
 - name: test running instance in project not updated in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_2 }}"
     project: "{{ cs_resource_prefix }}-prj"
   register: instance
@@ -137,6 +142,7 @@
 - name: test running instance in project not updated
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_2 }}"
     project: "{{ cs_resource_prefix }}-prj"
   register: instance
@@ -154,6 +160,7 @@
 - name: test stopping instance in project in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: stopped
   register: instance
@@ -172,6 +179,7 @@
 - name: test stopping instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: stopped
   register: instance
@@ -189,6 +197,7 @@
 - name: test stopping instance in project idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: stopped
   register: instance
@@ -202,6 +211,7 @@
 - name: test updating stopped instance in project in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     display_name: "{{ cs_resource_prefix }}-display-{{ instance_number }}"
     project: "{{ cs_resource_prefix }}-prj"
     service_offering: "{{ test_cs_instance_offering_2 }}"
@@ -221,6 +231,7 @@
 - name: test updating stopped instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     display_name: "{{ cs_resource_prefix }}-display-{{ instance_number }}"
     project: "{{ cs_resource_prefix }}-prj"
     service_offering: "{{ test_cs_instance_offering_2 }}"
@@ -239,6 +250,7 @@
 - name: test updating stopped instance in project idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     display_name: "{{ cs_resource_prefix }}-display-{{ instance_number }}"
     project: "{{ cs_resource_prefix }}-prj"
     service_offering: "{{ test_cs_instance_offering_2 }}"
@@ -257,6 +269,7 @@
 - name: test starting instance in project in check mdoe
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: started
   register: instance
@@ -275,6 +288,7 @@
 - name: test starting instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: started
   register: instance
@@ -292,6 +306,7 @@
 - name: test starting instance in project idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: started
   register: instance
@@ -309,6 +324,7 @@
 - name: test force update running instance in project in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     project: "{{ cs_resource_prefix }}-prj"
     force: true
@@ -328,6 +344,7 @@
 - name: test force update running instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     project: "{{ cs_resource_prefix }}-prj"
     force: true
@@ -346,6 +363,7 @@
 - name: test force update running instance in project idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     project: "{{ cs_resource_prefix }}-prj"
     force: true
@@ -364,6 +382,7 @@
 - name: test restore instance in project in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: restored
@@ -382,6 +401,7 @@
 - name: test restore instance in project
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: restored
@@ -399,6 +419,7 @@
 - name: test destroy instance in project in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: absent
   register: instance
@@ -413,6 +434,7 @@
 - name: test destroy instance in project
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: absent
   register: instance
@@ -426,6 +448,7 @@
 - name: test destroy instance in project idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: absent
   register: instance
@@ -438,6 +461,7 @@
 - name: test recover in project to stopped state and update a deleted instance in project in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     state: stopped
@@ -452,6 +476,7 @@
 - name: test recover to stopped state and update a deleted instance in project
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     state: stopped
@@ -467,6 +492,7 @@
 - name: test recover to stopped state and update a deleted instance in project idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     state: stopped
@@ -482,6 +508,7 @@
 - name: test expunge instance in project in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: expunged
   register: instance
@@ -497,6 +524,7 @@
 - name: test expunge instance in project
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: expunged
   register: instance
@@ -511,6 +539,7 @@
 - name: test expunge instance in project idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     project: "{{ cs_resource_prefix }}-prj"
     state: expunged
   register: instance

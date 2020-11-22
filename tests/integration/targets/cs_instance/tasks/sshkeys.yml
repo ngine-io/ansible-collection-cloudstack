@@ -2,20 +2,22 @@
 - name: test update instance ssh key non existent
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-sshkey"
-    ssh_key: "{{ cs_resource_prefix }}-sshkey2"
+    zone: "{{ cs_common_zone_basic }}"
+    ssh_key: "{{ cs_resource_prefix }}-sshkey-does-not-exist"
     template: "{{ test_cs_instance_template }}"
     force: true
   register: instance
   ignore_errors: true
-- name: verify  update instance ssh key non existent
+- name: verify update instance ssh key non existent
   assert:
     that:
     - instance is failed
-    - 'instance.msg == "SSH key not found: {{ cs_resource_prefix }}-sshkey2"'
+    - 'instance.msg == "SSH key not found: {{ cs_resource_prefix }}-sshkey-does-not-exist"'
 
 - name: test create instance without keypair in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-sshkey"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
   check_mode: true
@@ -29,6 +31,7 @@
 - name: test create instance without keypair
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-sshkey"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
   register: instance
@@ -42,6 +45,7 @@
 - name: test create instance without keypair idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-sshkey"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
   register: instance
@@ -53,7 +57,8 @@
     - instance.ssh_key is not defined
 
 - name: setup ssh key2
-  cs_sshkeypair: name={{ cs_resource_prefix }}-sshkey2
+  cs_sshkeypair:
+    name: "{{ cs_resource_prefix }}-sshkey2"
   register: sshkey
 - name: verify setup ssh key2
   assert:
@@ -63,6 +68,7 @@
 - name: test update instance ssh key2 in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-sshkey"
+    zone: "{{ cs_common_zone_basic }}"
     ssh_key: "{{ cs_resource_prefix }}-sshkey2"
     force: true
   check_mode: true
@@ -76,6 +82,7 @@
 - name: test update instance ssh key2
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-sshkey"
+    zone: "{{ cs_common_zone_basic }}"
     ssh_key: "{{ cs_resource_prefix }}-sshkey2"
     force: true
   register: instance
@@ -88,6 +95,7 @@
 - name: test update instance ssh key2 idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-sshkey"
+    zone: "{{ cs_common_zone_basic }}"
     ssh_key: "{{ cs_resource_prefix }}-sshkey2"
     force: true
   register: instance
@@ -110,6 +118,7 @@
 - name: test update instance ssh key2 idempotence2
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-sshkey"
+    zone: "{{ cs_common_zone_basic }}"
     ssh_key: "{{ cs_resource_prefix }}-sshkey2"
     force: true
   register: instance
@@ -123,6 +132,7 @@
 - name: test update instance ssh key in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-sshkey"
+    zone: "{{ cs_common_zone_basic }}"
     ssh_key: "{{ cs_resource_prefix }}-sshkey"
     force: true
   check_mode: true
@@ -136,6 +146,7 @@
 - name: test update instance ssh key
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-sshkey"
+    zone: "{{ cs_common_zone_basic }}"
     ssh_key: "{{ cs_resource_prefix }}-sshkey"
     force: true
   register: instance
@@ -148,6 +159,7 @@
 - name: test update instance ssh key idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-sshkey"
+    zone: "{{ cs_common_zone_basic }}"
     ssh_key: "{{ cs_resource_prefix }}-sshkey"
     force: true
   register: instance
@@ -160,6 +172,7 @@
 - name: cleanup expunge instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-sshkey"
+    zone: "{{ cs_common_zone_basic }}"
     state: expunged
   register: instance
 - name: verify cleanup expunge instance

@@ -2,6 +2,7 @@
 - name: setup cluster is absent
   cs_cluster:
     name: "{{ cs_resource_prefix }}-cluster"
+    zone: "{{ cs_resource_prefix }}-zone"
     state: absent
   register: cluster
 - name: verify setup cluster is absent
@@ -36,6 +37,7 @@
 
 - name: test fail if missing name
   cs_cluster:
+    zone: "{{ cs_resource_prefix }}-zone"
   register: cluster
   ignore_errors: true
 - name: verify results of fail if missing name
@@ -170,6 +172,7 @@
 - name: test disable cluster in check mode
   cs_cluster:
     name: "{{ cs_resource_prefix }}-cluster"
+    zone: "{{ cs_resource_prefix }}-zone"
     state: disabled
   register: cluster
   check_mode: true
@@ -187,6 +190,7 @@
 - name: test disable cluster
   cs_cluster:
     name: "{{ cs_resource_prefix }}-cluster"
+    zone: "{{ cs_resource_prefix }}-zone"
     state: disabled
   register: cluster
 - name: verify test disable cluster
@@ -203,6 +207,7 @@
 - name: test disable cluster idempotence
   cs_cluster:
     name: "{{ cs_resource_prefix }}-cluster"
+    zone: "{{ cs_resource_prefix }}-zone"
     state: disabled
   register: cluster
 - name: verify test disable cluster idempotence
@@ -218,6 +223,7 @@
 - name: test enable cluster in check mode
   cs_cluster:
     name: "{{ cs_resource_prefix }}-cluster"
+    zone: "{{ cs_resource_prefix }}-zone"
     state: enabled
   register: cluster
   check_mode: true
@@ -235,6 +241,7 @@
 - name: test enable cluster
   cs_cluster:
     name: "{{ cs_resource_prefix }}-cluster"
+    zone: "{{ cs_resource_prefix }}-zone"
     state: enabled
   register: cluster
 - name: verify test enable cluster
@@ -251,6 +258,7 @@
 - name: test enable cluster idempotence
   cs_cluster:
     name: "{{ cs_resource_prefix }}-cluster"
+    zone: "{{ cs_resource_prefix }}-zone"
     state: enabled
   register: cluster
 - name: verify test enable cluster idempotence

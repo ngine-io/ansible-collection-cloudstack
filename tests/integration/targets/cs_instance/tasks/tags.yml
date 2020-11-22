@@ -2,6 +2,7 @@
 - name: test add tags to instance in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     tags:
@@ -19,6 +20,7 @@
 - name: test add tags to instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
     tags:
@@ -39,6 +41,7 @@
 - name: test tags to instance idempotence
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     tags:
      - { key: "{{ cs_resource_prefix }}-tag1", value: "{{ cs_resource_prefix }}-value1" }
      - { key: "{{ cs_resource_prefix }}-tag2", value: "{{ cs_resource_prefix }}-value2" }
@@ -57,6 +60,7 @@
 - name: test change tags of instance in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     tags:
      - { key: "{{ cs_resource_prefix }}-tag2", value: "{{ cs_resource_prefix }}-value2" }
      - { key: "{{ cs_resource_prefix }}-tag3", value: "{{ cs_resource_prefix }}-value3" }
@@ -76,6 +80,7 @@
 - name: test change tags of instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     tags:
      - { key: "{{ cs_resource_prefix }}-tag2", value: "{{ cs_resource_prefix }}-value2" }
      - { key: "{{ cs_resource_prefix }}-tag3", value: "{{ cs_resource_prefix }}-value3" }
@@ -94,6 +99,7 @@
 - name: test not touch tags of instance if no param tags
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
   register: instance
 - name: verify not touch tags of instance if no param tags
   assert:
@@ -109,6 +115,7 @@
 - name: test remove tags in check mode
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     tags: []
   register: instance
   check_mode: true
@@ -122,6 +129,7 @@
 - name: test remove tags
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
+    zone: "{{ cs_common_zone_basic }}"
     tags: []
   register: instance
 - name: verify remove tags

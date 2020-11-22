@@ -5,7 +5,7 @@
     zone: "{{ cs_common_zone_adv }}"
     network_offering: DefaultSharedNetworkOffering
     network_domain: example.com
-    vlan: 1234
+    vlan: "1234"
     start_ip: 10.100.123.11
     end_ip: 10.100.123.250
     gateway: 10.100.123.1
@@ -39,7 +39,7 @@
     zone: "{{ cs_common_zone_adv }}"
     network_offering: DefaultSharedNetworkOffering
     network_domain: example.com
-    vlan: 1235
+    vlan: "1235"
     start_ip: 10.100.124.11
     end_ip: 10.100.124.250
     gateway: 10.100.124.1
@@ -190,6 +190,7 @@
 - name: cleanup instance
   cs_instance:
     name: "instance-nic-vm"
+    zone: "{{ cs_common_zone_adv }}"
     state: expunged
   register: instance
 - name: verify cleanup instance

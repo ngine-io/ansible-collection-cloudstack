@@ -26,6 +26,7 @@
 
 - name: fail on missing params
   cs_traffic_type:
+    zone: "{{ pn.zone }}"
   ignore_errors: true
   register: tt
 - name: validate fail on missing params

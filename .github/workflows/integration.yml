@@ -10,7 +10,7 @@ on:
 
 jobs:
   integration-test:
-    name: Integration test group${{matrix.group}} Py${{ matrix.python-version }}
+    name: Integration v${{ matrix.container-version }} Ansible-${{ matrix.ansible-branch }} group${{ matrix.group }} Py${{ matrix.python-version }}
     defaults:
       run:
         working-directory: ansible_collections/ngine_io/cloudstack
@@ -24,6 +24,11 @@ jobs:
         group:
         - 1
         - 2
+        ansible-branch:
+        - devel
+        container-version:
+        - 1.4.0
+        - 1.2.0
     steps:
     - name: Check out code
       uses: actions/checkout@v2
@@ -38,7 +43,7 @@ jobs:
     - name: Install ansible and collection dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install ansible
+        pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible-branch }}.tar.gz
         pip install -r requirements.txt
 
     - name: Build and install collection
@@ -59,6 +64,8 @@ jobs:
         --continue-on-error
         --coverage
         shippable/cs/group${{ matrix.group }}/
+      env:
+        ANSIBLE_CLOUDSTACK_CONTAINER: quay.io/ansible/cloudstack-test-container:${{ matrix.container-version }}
 
     - name: Generate coverage report.
       run: >-
