@@ -1,6 +1,9 @@
 ---
 - name: setup
-  cs_volume: name={{ cs_resource_prefix }}_vol state=absent
+  cs_volume:
+    name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
+    state: absent
   register: vol
 - name: verify setup
   assert:
@@ -12,6 +15,7 @@
     name: "{{ test_cs_instance_1 }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
+    zone: "{{ cs_common_zone_basic }}"
   register: instance
 - name: verify create instance
   assert:
@@ -23,6 +27,7 @@
     name: "{{ test_cs_instance_2 }}"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
+    zone: "{{ cs_common_zone_basic }}"
   register: instance
 - name: verify create instance
   assert:
@@ -30,7 +35,8 @@
     - instance is successful
 
 - name: test fail if missing name
-  action: cs_volume
+  cs_volume:
+    zone: "{{ cs_common_zone_basic }}"
   register: vol
   ignore_errors: true
 - name: verify results of fail if missing name
@@ -42,6 +48,7 @@
 - name: test create volume in check mode
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     disk_offering: "{{ test_cs_disk_offering_1 }}"
     size: 20
   register: vol
@@ -54,6 +61,7 @@
 - name: test create volume
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     disk_offering: "{{ test_cs_disk_offering_1 }}"
     size: 20
   register: vol
@@ -67,6 +75,7 @@
 - name: test create volume idempotence
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     disk_offering: "{{ test_cs_disk_offering_1 }}"
     size: 20
   register: vol
@@ -80,6 +89,7 @@
 - name: test shrink volume in check mode
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     disk_offering: "{{ test_cs_disk_offering_1 }}"
     size: 10
     shrink_ok: yes
@@ -95,6 +105,7 @@
 - name: test shrink volume
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     disk_offering: "{{ test_cs_disk_offering_1 }}"
     size: 10
     shrink_ok: yes
@@ -109,6 +120,7 @@
 - name: test shrink volume idempotence
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     disk_offering: "{{ test_cs_disk_offering_1 }}"
     size: 10
     shrink_ok: yes
@@ -123,6 +135,7 @@
 - name: test attach volume in check mode
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     vm: "{{ test_cs_instance_1 }}"
     state: attached
   register: vol
@@ -137,6 +150,7 @@
 - name: test attach volume
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     vm: "{{ test_cs_instance_1 }}"
     state: attached
   register: vol
@@ -151,6 +165,7 @@
 - name: test attach volume idempotence
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     vm: "{{ test_cs_instance_1 }}"
     state: attached
   register: vol
@@ -165,6 +180,7 @@
 - name: test attach attached volume to another vm in check mdoe
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     vm: "{{ test_cs_instance_2 }}"
     state: attached
   register: vol
@@ -180,6 +196,7 @@
 - name: test attach attached volume to another vm
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     vm: "{{ test_cs_instance_2 }}"
     state: attached
   register: vol
@@ -194,6 +211,7 @@
 - name: test attach attached volume to another vm idempotence
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     vm: "{{ test_cs_instance_2 }}"
     state: attached
   register: vol
@@ -208,6 +226,7 @@
 - name: test detach volume in check mode
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     state: detached
   register: vol
   check_mode: true
@@ -221,6 +240,7 @@
 - name: test detach volume
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     state: detached
   register: vol
 - name: verify results test detach volume
@@ -233,6 +253,7 @@
 - name: test detach volume idempotence
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     state: detached
   register: vol
 - name: verify results test detach volume idempotence
@@ -245,6 +266,7 @@
 - name: test delete volume in check mode
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: vol
   check_mode: true
@@ -257,6 +279,7 @@
 - name: test delete volume
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: vol
 - name: verify results test create volume
@@ -268,6 +291,7 @@
 - name: test delete volume idempotence
   cs_volume:
     name: "{{ cs_resource_prefix }}_vol"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: vol
 - name: verify results test delete volume idempotence
@@ -278,6 +302,7 @@
 - name: cleanup instance 1
   cs_instance:
     name: "{{ test_cs_instance_1 }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: instance
 - name: verify create instance
@@ -288,6 +313,7 @@
 - name: cleanup instance 2
   cs_instance:
     name: "{{ test_cs_instance_2 }}"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: instance
 - name: verify create instance
