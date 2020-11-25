@@ -2,6 +2,7 @@
 - name: setup iso
   cs_iso:
     name: "{{ cs_resource_prefix }}-iso"
+    cross_zones: true
     state: absent
   register: iso
 - name: verify setup iso
@@ -12,7 +13,7 @@
 - name: test download iso in check mode
   cs_iso:
     name: "{{ cs_resource_prefix }}-iso"
-    url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
+    url: "{{ cs_iso_url }}"
     os_type: Debian GNU/Linux 7(64-bit)
     cross_zones: true
   register: iso
@@ -25,7 +26,7 @@
 - name: test download iso
   cs_iso:
     name: "{{ cs_resource_prefix }}-iso"
-    url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
+    url: "{{ cs_iso_url }}"
     os_type: Debian GNU/Linux 7(64-bit)
     cross_zones: true
   register: iso
@@ -40,7 +41,7 @@
 - name: test download iso idempotence
   cs_iso:
     name: "{{ cs_resource_prefix }}-iso"
-    url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
+    url: "{{ cs_iso_url }}"
     os_type: Debian GNU/Linux 7(64-bit)
     cross_zones: true
   register: iso
@@ -56,7 +57,7 @@
   cs_iso:
     name: "{{ cs_resource_prefix }}-iso"
     display_text: "{{ cs_resource_prefix }}-iso display_text"
-    url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
+    url: "{{ cs_iso_url }}"
     os_type: CentOS 7
     cross_zones: true
   register: iso
@@ -73,7 +74,7 @@
   cs_iso:
     name: "{{ cs_resource_prefix }}-iso"
     display_text: "{{ cs_resource_prefix }}-iso display_text"
-    url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
+    url: "{{ cs_iso_url }}"
     os_type: CentOS 7
     cross_zones: true
   register: iso
@@ -89,7 +90,7 @@
   cs_iso:
     name: "{{ cs_resource_prefix }}-iso"
     display_text: "{{ cs_resource_prefix }}-iso display_text"
-    url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
+    url: "{{ cs_iso_url }}"
     os_type: CentOS 7
     cross_zones: true
   register: iso

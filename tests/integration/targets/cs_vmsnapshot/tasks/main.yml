@@ -4,6 +4,7 @@
     name: "{{ cs_resource_prefix }}-vm-snapshot"
     template: "{{ test_cs_instance_template }}"
     service_offering: "{{ test_cs_instance_offering_1 }}"
+    zone: "{{ cs_common_zone_basic }}"
   register: instance
 - name: verify create instance
   assert:
@@ -14,6 +15,7 @@
   cs_vmsnapshot:
     name: "{{ cs_resource_prefix }}_snapshot"
     vm: "{{ cs_resource_prefix }}-vm-snapshot"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: snap
 - name: verify setup
@@ -22,7 +24,8 @@
     - snap is successful
 
 - name: test fail if missing name
-  action: cs_vmsnapshot
+  cs_vmsnapshot:
+    zone: "{{ cs_common_zone_basic }}"
   register: snap
   ignore_errors: true
 - name: verify results of fail if missing params
@@ -35,6 +38,7 @@
   cs_vmsnapshot:
     name: "{{ cs_resource_prefix }}_snapshot"
     vm: "{{ cs_resource_prefix }}-vm-snapshot"
+    zone: "{{ cs_common_zone_basic }}"
     snapshot_memory: yes
   register: snap
   check_mode: true
@@ -47,6 +51,7 @@
   cs_vmsnapshot:
     name: "{{ cs_resource_prefix }}_snapshot"
     vm: "{{ cs_resource_prefix }}-vm-snapshot"
+    zone: "{{ cs_common_zone_basic }}"
     snapshot_memory: yes
   register: snap
 - name: verify test create snapshot
@@ -59,6 +64,7 @@
   cs_vmsnapshot:
     name: "{{ cs_resource_prefix }}_snapshot"
     vm: "{{ cs_resource_prefix }}-vm-snapshot"
+    zone: "{{ cs_common_zone_basic }}"
     snapshot_memory: yes
   register: snap
 - name: verify test create snapshot idempotence
@@ -71,6 +77,7 @@
   cs_vmsnapshot:
     name: "{{ cs_resource_prefix }}_snapshot"
     vm: "{{ cs_resource_prefix }}-vm-snapshot"
+    zone: "{{ cs_common_zone_basic }}"
     state: revert
   register: snap
   check_mode: true
@@ -84,6 +91,7 @@
   cs_vmsnapshot:
     name: "{{ cs_resource_prefix }}_snapshot_unknown"
     vm: "{{ cs_resource_prefix }}-vm-snapshot"
+    zone: "{{ cs_common_zone_basic }}"
     state: revert
   register: snap
   ignore_errors: true
@@ -97,6 +105,7 @@
   cs_vmsnapshot:
     name: "{{ cs_resource_prefix }}_snapshot"
     vm: "{{ cs_resource_prefix }}-vm-snapshot"
+    zone: "{{ cs_common_zone_basic }}"
     state: revert
   register: snap
 - name: verify test revert snapshot
@@ -109,6 +118,7 @@
   cs_vmsnapshot:
     name: "{{ cs_resource_prefix }}_snapshot"
     vm: "{{ cs_resource_prefix }}-vm-snapshot"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: snap
   check_mode: true
@@ -122,6 +132,7 @@
   cs_vmsnapshot:
     name: "{{ cs_resource_prefix }}_snapshot"
     vm: "{{ cs_resource_prefix }}-vm-snapshot"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: snap
 - name: verify test remove snapshot
@@ -134,6 +145,7 @@
   cs_vmsnapshot:
     name: "{{ cs_resource_prefix }}_snapshot"
     vm: "{{ cs_resource_prefix }}-vm-snapshot"
+    zone: "{{ cs_common_zone_basic }}"
     state: absent
   register: snap
 - name: verify test remove snapshot idempotence
@@ -144,6 +156,7 @@
 - name: cleanup instance
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-snapshot"
+    zone: "{{ cs_common_zone_basic }}"
     state: expunged
   register: instance
 - name: verify destroy instance
