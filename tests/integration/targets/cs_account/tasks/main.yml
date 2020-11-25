@@ -1,11 +1,9 @@
 ---
 - name: setup
-  cs_account: name={{ cs_resource_prefix }}_user state=absent
+  cs_account:
+    name: "{{ cs_resource_prefix }}_username"
+    state: absent
   register: acc
-- name: verify setup
-  assert:
-    that:
-    - acc is successful
 
 - name: test fail if missing name
   action: cs_account
@@ -42,7 +40,6 @@
 - name: verify results of create account in check mode
   assert:
     that:
-    - acc is successful
     - acc is changed
 
 - name: test create user account
@@ -58,7 +55,6 @@
 - name: verify results of create account
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -79,7 +75,6 @@
 - name: verify results of create account idempotence
   assert:
     that:
-    - acc is successful
     - acc is not changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -96,7 +91,6 @@
 - name: verify results of lock user account in check mode
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -112,7 +106,6 @@
 - name: verify results of lock user account
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -128,7 +121,6 @@
 - name: verify results of lock user account idempotence
   assert:
     that:
-    - acc is successful
     - acc is not changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -145,7 +137,6 @@
 - name: verify results of disable user account in check mode
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -161,7 +152,6 @@
 - name: verify results of disable user account
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -177,7 +167,6 @@
 - name: verify results of disable user account idempotence
   assert:
     that:
-    - acc is successful
     - acc is not changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -194,7 +183,6 @@
 - name: verify results of lock disabled user account in check mode
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -210,7 +198,6 @@
 - name: verify results of lock disabled user account
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -226,7 +213,6 @@
 - name: verify results of lock disabled user account idempotence
   assert:
     that:
-    - acc is successful
     - acc is not changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -243,7 +229,6 @@
 - name: verify results of enable user account in check mode
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -259,7 +244,6 @@
 - name: verify results of enable user account
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -275,7 +259,6 @@
 - name: verify results of enable user account idempotence
   assert:
     that:
-    - acc is successful
     - acc is not changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -292,7 +275,6 @@
 - name: verify results of remove user account in check mode
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -308,7 +290,6 @@
 - name: verify results of remove user account
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -324,7 +305,6 @@
 - name: verify results of remove user account idempotence
   assert:
     that:
-    - acc is successful
     - acc is not changed
 
 - name: test create user disabled account
@@ -341,7 +321,6 @@
 - name: verify results of create disabled account
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -357,7 +336,6 @@
 - name: verify results of remove disabled user account
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -379,7 +357,6 @@
 - name: verify results of create locked account
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -395,7 +372,6 @@
 - name: verify results of remove locked user account
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -417,7 +393,6 @@
 - name: verify results of create unlocked/enabled account
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"
@@ -433,7 +408,6 @@
 - name: verify results of remove unlocked/enabled user account
   assert:
     that:
-    - acc is successful
     - acc is changed
     - acc.name == "{{ cs_resource_prefix }}_user"
     - acc.network_domain == "example.com"

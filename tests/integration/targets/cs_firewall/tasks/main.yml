@@ -6,10 +6,6 @@
     network_domain: example.com
     zone: "{{ cs_common_zone_adv }}"
   register: net
-- name: verify network setup
-  assert:
-    that:
-    - net is successful
 
 - name: setup instance to get network in implementation state
   cs_instance:
@@ -48,11 +44,6 @@
     ip_address: "{{ cs_firewall_ip_address }}"
     zone: "{{ cs_common_zone_adv }}"
     state: absent
-  register: fw
-- name: verify setup
-  assert:
-    that:
-    - fw is successful
 
 - name: setup 5300
   cs_firewall:
@@ -65,11 +56,6 @@
     - 4.5.6.0/24
     zone: "{{ cs_common_zone_adv }}"
     state: absent
-  register: fw
-- name: verify setup
-  assert:
-    that:
-    - fw is successful
 
 - name: setup all
   cs_firewall:
@@ -78,11 +64,6 @@
     type: egress
     zone: "{{ cs_common_zone_adv }}"
     state: absent
-  register: fw
-- name: verify setup
-  assert:
-    that:
-    - fw is successful
 
 - name: test fail if missing params
   action: cs_firewall
@@ -128,7 +109,6 @@
 - name: verify results of present firewall rule ingress 80 in check mode
   assert:
     that:
-    - fw is successful
     - fw is changed
 
 - name: test present firewall rule ingress 80
@@ -140,7 +120,6 @@
 - name: verify results of present firewall rule ingress 80
   assert:
     that:
-    - fw is successful
     - fw is changed
     - fw.cidr == "0.0.0.0/0"
     - fw.cidrs == [ '0.0.0.0/0' ]
@@ -159,7 +138,6 @@
 - name: verify results of present firewall rule ingress 80 idempotence
   assert:
     that:
-    - fw is successful
     - fw is not changed
     - fw.cidr == "0.0.0.0/0"
     - fw.cidrs == [ '0.0.0.0/0' ]
@@ -184,7 +162,6 @@
 - name: verify results of present firewall rule ingress 5300 in check mode
   assert:
     that:
-    - fw is successful
     - fw is changed
 
 - name: test present firewall rule ingress 5300
@@ -201,7 +178,6 @@
 - name: verify results of present firewall rule ingress 5300
   assert:
     that:
-    - fw is successful
     - fw is changed
     - fw.cidr == "1.2.3.0/24,4.5.6.0/24"
     - fw.cidrs == [ '1.2.3.0/24', '4.5.6.0/24' ]
@@ -225,7 +201,6 @@
 - name: verify results of present firewall rule ingress 5300 idempotence
   assert:
     that:
-    - fw is successful
     - fw is not changed
     - fw.cidr == "1.2.3.0/24,4.5.6.0/24"
     - fw.cidrs == [ '1.2.3.0/24', '4.5.6.0/24' ]
@@ -246,7 +221,6 @@
 - name: verify results of present firewall rule egress all in check mode
   assert:
     that:
-    - fw is successful
     - fw is changed
 
 - name: test present firewall rule egress all
@@ -259,7 +233,6 @@
 - name: verify results of present firewall rule egress all
   assert:
     that:
-    - fw is successful
     - fw is changed
     - fw.cidr == "0.0.0.0/0" or fw.cidr == "10.1.1.0/24"
     - fw.cidrs == [ '0.0.0.0/0' ] or fw.cidrs == [ '10.1.1.0/24' ]
@@ -277,7 +250,6 @@
 - name: verify results of present firewall rule egress all idempotence
   assert:
     that:
-    - fw is successful
     - fw is not changed
     - fw.cidr == "0.0.0.0/0" or fw.cidr == "10.1.1.0/24"
     - fw.cidrs == [ '0.0.0.0/0' ] or fw.cidrs == [ '10.1.1.0/24' ]
@@ -296,7 +268,6 @@
 - name: verify results of absent firewall rule ingress 80 in check mode
   assert:
     that:
-    - fw is successful
     - fw is changed
     - fw.cidr == "0.0.0.0/0"
     - fw.cidrs == [ '0.0.0.0/0' ]
@@ -316,7 +287,6 @@
 - name: verify results of absent firewall rule ingress 80
   assert:
     that:
-    - fw is successful
     - fw is changed
     - fw.cidr == "0.0.0.0/0"
     - fw.cidrs == [ '0.0.0.0/0' ]
@@ -336,7 +306,6 @@
 - name: verify results of absent firewall rule ingress 80 idempotence
   assert:
     that:
-    - fw is successful
     - fw is not changed
 
 - name: test absent firewall rule ingress 5300 in check mode
@@ -355,7 +324,6 @@
 - name: verify results of absent firewall rule ingress 5300 in check mode
   assert:
     that:
-    - fw is successful
     - fw is changed
     - fw.cidr == "1.2.3.0/24,4.5.6.0/24"
     - fw.cidrs == [ '1.2.3.0/24', '4.5.6.0/24' ]
@@ -380,7 +348,6 @@
 - name: verify results of absent firewall rule ingress 5300
   assert:
     that:
-    - fw is successful
     - fw is changed
     - fw.cidr == "1.2.3.0/24,4.5.6.0/24"
     - fw.cidrs == [ '1.2.3.0/24', '4.5.6.0/24' ]
@@ -405,7 +372,6 @@
 - name: verify results of absent firewall rule ingress 5300 idempotence
   assert:
     that:
-    - fw is successful
     - fw is not changed
 
 - name: test absent firewall rule egress all in check mode
@@ -420,7 +386,6 @@
 - name: verify results of absent firewall rule egress all in check mode
   assert:
     that:
-    - fw is successful
     - fw is changed
     - fw.cidr == "0.0.0.0/0" or fw.cidr == "10.1.1.0/24"
     - fw.cidrs == [ '0.0.0.0/0' ] or fw.cidrs == [ '10.1.1.0/24' ]
@@ -439,7 +404,6 @@
 - name: verify results of absent firewall rule egress all
   assert:
     that:
-    - fw is successful
     - fw is changed
     - fw.cidr == "0.0.0.0/0" or fw.cidr == "10.1.1.0/24"
     - fw.cidrs == [ '0.0.0.0/0' ] or fw.cidrs == [ '10.1.1.0/24' ]
@@ -458,7 +422,6 @@
 - name: verify results of absent firewall rule egress all idempotence
   assert:
     that:
-    - fw is successful
     - fw is not changed
 
 - name: cleanup instance

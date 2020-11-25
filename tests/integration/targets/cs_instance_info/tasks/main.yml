@@ -1,27 +1,16 @@
 ---
 - name: setup ssh key
-  cs_sshkeypair: name={{ cs_resource_prefix }}-sshkey
+  cs_sshkeypair:
+    name: "{{ cs_resource_prefix }}-sshkey"
   register: sshkey
-- name: verify setup ssh key
-  assert:
-    that:
-    - sshkey is successful
 
 - name: setup affinity group
-  cs_affinitygroup: name={{ cs_resource_prefix }}-ag
-  register: ag
-- name: verify setup affinity group
-  assert:
-    that:
-    - ag is successful
+  cs_affinitygroup:
+    name: "{{ cs_resource_prefix }}-ag"
 
 - name: setup security group
-  cs_securitygroup: name={{ cs_resource_prefix }}-sg
-  register: sg
-- name: verify setup security group
-  assert:
-    that:
-    - sg is successful
+  cs_securitygroup:
+    name: "{{ cs_resource_prefix }}-sg"
 
 - name: setup instance
   cs_instance:
@@ -32,11 +21,11 @@
     security_group: "{{ cs_resource_prefix }}-sg"
     ssh_key: "{{ cs_resource_prefix }}-sshkey"
     tags: []
+    zone: "{{ cs_common_zone_basic }}"
   register: instance
-- name: verify create instance
-  assert:
-    that:
-    - instance is successful
+  until: instance is successful
+  retries: 20
+  delay: 5
 
 - name: test instance info in check mode
   cs_instance_info:
