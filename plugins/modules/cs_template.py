@@ -619,6 +619,9 @@ class AnsibleCloudStackTemplate(AnsibleCloudStack):
         if not template:
             self.module.fail_json(msg="Failed: template not found")
 
+        if self.module.params.get('cross_zones'):
+            self.module.warn('cross_zones parameter is ignored when state is extracted')
+
         args = {
             'id': template['id'],
             'url': self.module.params.get('url'),
