@@ -11,3 +11,5 @@ coverage:
     patch:
       default:
         threshold: 10%
+fixes:
+  - "/ansible_collections/ngine_io/cloudstack/::"
