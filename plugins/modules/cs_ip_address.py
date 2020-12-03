@@ -95,7 +95,7 @@ EXAMPLES = '''
     network: My Network
     tags:
       - key: myCustomID
-      - value: 5510c31a-416e-11e8-9013-02000a6b00bf
+        value: 5510c31a-416e-11e8-9013-02000a6b00bf
   register: ip_address
 
 - name: Disassociate an IP address with tags
@@ -103,7 +103,7 @@ EXAMPLES = '''
     state: absent
     tags:
       - key: myCustomID
-      - value: 5510c31a-416e-11e8-9013-02000a6b00bf
+        value: 5510c31a-416e-11e8-9013-02000a6b00bf
 '''
 
 RETURN = '''
