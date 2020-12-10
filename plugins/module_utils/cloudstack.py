@@ -117,7 +117,7 @@ class AnsibleCloudStack:
         api_region = self.module.params.get('api_region') or os.environ.get('CLOUDSTACK_REGION')
         try:
             config = read_config(api_region)
-        except KeyError:
+        except (KeyError, SystemExit):
             config = {}
 
         api_config = {
