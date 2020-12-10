@@ -494,7 +494,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             templates = self.query_api('listTemplates', **args)
             if templates:
                 for t in templates:
-                    if template in [t['displaytext'], t['name'], t['id']]:
+                    if template in [t.get('displaytext', None), t['name'], t['id']]:
                         if rootdisksize and t['size'] > rootdisksize * 1024 ** 3:
                             continue
                         self.template = t
