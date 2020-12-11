@@ -17,6 +17,12 @@ class InventoryModuleMock(InventoryModule):
         self._redirected_names = ['cloudstack']
         self._load_name = self.NAME
 
+    def get_api_config_from_path(self, path):
+        # We want to test get_api_config but we have mocked
+        # How the configuration is read
+        config = self._read_config_data(path)
+        return self.get_api_config(config)
+
 
 class InventoryTestCase(unittest.TestCase):
 
@@ -39,25 +45,25 @@ class InventoryTestCase(unittest.TestCase):
     def test_full_configured_inventory_plugin(self):
         # We check that it is possible to configure all required settings in the inventory
         # plugin file
-        api_config = InventoryModuleMock().get_api_config('fixtures/test-configured.cloudstack.yml')
+        api_config = InventoryModuleMock().get_api_config_from_path('fixtures/test-configured.cloudstack.yml')
         self.assertTrue(all([api_config['endpoint'], api_config['key'], api_config['secret']]))
 
     def test_missing_ini_configured_inventory_plugin(self):
         # We check that if the ini file requested is missing and the plugin configuration
         # file does not include connection parameters we get the right exception
         # should include both missing params and missing ini file
-        with self.assertRaises(SystemExit) as cxt:
+        with self.assertRaises(ValueError) as cxt:
             os.environ['CLOUDSTACK_CONFIG'] = 'fixtures/missing-cloudstack.ini'
-            InventoryModuleMock().get_api_config('fixtures/test-not-configured.cloudstack.yml')
+            InventoryModuleMock().get_api_config_from_path('fixtures/test-not-configured.cloudstack.yml')
         self.assertIn('file not found', str(cxt.exception))
         self.assertIn('Missing api credentials', str(cxt.exception))
 
     def test_incomplete_ini_configured_inventory_plugin(self):
         # We check that if ini is partially configured and plugin not configured we get
         # message talking about missing keys
-        with self.assertRaises(SystemExit) as cxt:
+        with self.assertRaises(ValueError) as cxt:
             os.environ['CLOUDSTACK_CONFIG'] = 'fixtures/partial-cloudstack.ini'
-            InventoryModuleMock().get_api_config('fixtures/test-not-configured.cloudstack.yml')
+            InventoryModuleMock().get_api_config_from_path('fixtures/test-not-configured.cloudstack.yml')
         self.assertIn('missing the following keys', str(cxt.exception))
 
     def test_environment_configuration_inventory_plugin(self):
@@ -68,7 +74,7 @@ class InventoryTestCase(unittest.TestCase):
         os.environ['CLOUDSTACK_ENDPOINT'] = 'http://localhost'
         os.environ['CLOUDSTACK_KEY'] = 'mykey'
         os.environ['CLOUDSTACK_SECRET'] = 'mysecret'
-        api_config = InventoryModuleMock().get_api_config('fixtures/test-not-configured.cloudstack.yml')
+        api_config = InventoryModuleMock().get_api_config_from_path('fixtures/test-not-configured.cloudstack.yml')
         self.assertTrue(all([api_config['endpoint'], api_config['key'], api_config['secret']]))
 
 
