@@ -1,0 +1,4 @@
+---
+
+- import_playbook: basic-configuration.yml
+- import_playbook: common-cloudstack-objects.yml
