@@ -62,7 +62,7 @@ def cs_get_api_config(params):
     }
 
     if not all([api_config['endpoint'], api_config['key'], api_config['secret']]):
-        raise SystemExit("Missing api credentials: can not authenticate. " + api_config_error)
+        raise ValueError("Missing api credentials: can not authenticate. " + api_config_error)
 
     return api_config
 
@@ -140,7 +140,7 @@ class AnsibleCloudStack:
     def get_api_config(self):
         try:
             api_config = cs_get_api_config(self.module.params)
-        except CloudStackException as e:
+        except ValueError as e:
             self.fail_json(msg=str(e))
 
         api_region = self.module.params.get('api_region') or os.environ.get('CLOUDSTACK_REGION')
