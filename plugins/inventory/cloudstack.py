@@ -10,6 +10,7 @@ __metaclass__ = type
 import sys
 import os
 import traceback
+import yaml
 
 DOCUMENTATION = r'''
     name: cloudstack
@@ -28,18 +29,43 @@ DOCUMENTATION = r'''
             description: Token that ensures this is a source file for the 'cloudstack' plugin.
             type: string
             required: True
-            choices: [ cloudstack ]   
+            choices: [ cloudstack ]
+        hostname:
+            description: |
+                Field to match the hostname. Note v4_main_ip corresponds to the primary ipv4address of the first nic 
+                adapter of the instance.
+            type: string
+            default: v4_main_ip
+            choices:
+                - v4_main_ip
+                - hostname
+        filter_by_zone:
+            description: Only return servers filtered in the provided zone
+            type: string
     extends_documentation_fragment:
+        - constructed
         - ngine_io.cloudstack.cloudstack                 
 '''
 
 EXAMPLES = '''
 '''
 
+# The J2 Template takes 'instance' object as returned from ACS and returns 'instance' object as returned by
+# This inventory plugin.
+INVENTORY_NORMALIZATION_J2 = '''
+---
+instance:
+  name: {{instance.instancename}}
+  v4_main_ip: {{instance.nic[0].ipaddress}}
+  hostname: {{instance.hostname | lower }}
+'''
+
 
 from ansible.plugins.inventory import BaseInventoryPlugin, Constructable, AnsibleError
 from ansible.module_utils.basic import missing_required_lib
 from ..module_utils.cloudstack import HAS_LIB_CS, cs_get_api_config
+from jinja2 import Template
+
 
 try:
     from cs import CloudStack, CloudStackException
@@ -52,9 +78,11 @@ class InventoryModule(BaseInventoryPlugin, Constructable):
     NAME = 'ngine_io.cloudstack.cloudstack'
 
     def __init__(self):
+        super().__init__()
         if not HAS_LIB_CS:
             raise AnsibleError(missing_required_lib('cs'))
         self._cs=None
+        self._normalization_template = Template(INVENTORY_NORMALIZATION_J2)
 
     def init_cs(self, config):
         api_config = self.get_api_config(config)
@@ -94,6 +122,11 @@ class InventoryModule(BaseInventoryPlugin, Constructable):
 
         return args
 
+    def normalize_instance_data(self, instance):
+        inventory_instance_str = self._normalization_template.render(instance=instance)
+        inventory_instance = yaml.load(inventory_instance_str)
+        return inventory_instance['instance']
+
     def parse(self, inventory, loader, path, cache=False):
 
         # call base method to ensure properties are available for use with other helper methods
@@ -109,37 +142,34 @@ class InventoryModule(BaseInventoryPlugin, Constructable):
         self.inventory.add_group('cloudstack')
 
         # The ansible_host preference
-        #hostname_preference = self.get_option('hostname')
+        hostname_preference = self.get_option('hostname')
 
         # Retrieve the filtered list of instances
         instances = self.query_api('listVirtualMachines', **self.get_filters())
 
-        # Normalize its data
-        # server = Vultr.normalize_result(server, SCHEMA)
+        for instance in instances:
 
-        if instances:
-            for v in instances:
-                host = v['instancename']
-                self.inventory.add_host(host, group='cloudstack')
+            # we normalize the instance data using the embedded J2 template
+            instance = self.normalize_instance_data(instance)
 
-                for attribute, value in v.items():
-                    # Add all available attributes
-                    self.inventory.set_variable(host, attribute, value)
-'''
-                # ip4v here is something like nic[0].ip
-                #if hostname_preference != 'name':
-                #    self.inventory.set_variable(server['name'], 'ansible_host', server[hostname_preference])
+            inventory_name = instance['name']
+            self.inventory.add_host(inventory_name, group='cloudstack')
 
-                # Use constructed if applicable
-                strict = self.get_option('strict')
+            for attribute, value in instance.items():
+                # Add all available attributes
+                self.inventory.set_variable(inventory_name, attribute, value)
 
-                # Composed variables
-                self._set_composite_vars(self.get_option('compose'), server, server['name'], strict=strict)
+            # set hostname preference
+            self.inventory.set_variable(inventory_name, 'ansible_host', instance[hostname_preference])
 
-                # Complex groups based on jinja2 conditionals, hosts that meet the conditional are added to group
-                self._add_host_to_composed_groups(self.get_option('groups'), server, server['name'], strict=strict)
+            # Use constructed if applicable
+            strict = self.get_option('strict')
 
-                # Create groups based on variable values and add the corresponding hosts to it
-                self._add_host_to_keyed_groups(self.get_option('keyed_groups'), server, server['name'], strict=strict)
-                
-'''
+            # Composed variables
+            self._set_composite_vars(self.get_option('compose'), instance, inventory_name, strict=strict)
+
+            # Complex groups based on jinja2 conditionals, hosts that meet the conditional are added to group
+            self._add_host_to_composed_groups(self.get_option('groups'), instance, inventory_name, strict=strict)
+
+            # Create groups based on variable values and add the corresponding hosts to it
+            self._add_host_to_keyed_groups(self.get_option('keyed_groups'), instance, inventory_name, strict=strict)
