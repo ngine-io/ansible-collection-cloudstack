@@ -58,6 +58,14 @@ instance:
   name: {{instance.instancename}}
   v4_main_ip: {{instance.nic[0].ipaddress}}
   hostname: {{instance.hostname | lower }}
+  zone: {{instance.zonename}}
+  template: {{instance.templatename}}
+  password_enabled: {{instance.passwordenabled}}
+  ha_enabled: {{instance.haenable}}
+  service_offering: {{instance.serviceofferingname}}
+  account: {{instance.account}}
+  domain: {{instance.domain | lower}}
+  hypervisor: {{instance.hypervisor | lower}}
 '''
 
 
