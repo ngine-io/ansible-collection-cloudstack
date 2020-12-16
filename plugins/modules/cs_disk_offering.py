@@ -52,7 +52,6 @@ options:
     description:
       - Whether disk offering iops is custom or not.
     type: bool
-    default: no
   iops_read_rate:
     description:
       - IO requests read rate of the disk offering.

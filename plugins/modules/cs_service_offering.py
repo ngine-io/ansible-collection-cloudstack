@@ -116,7 +116,6 @@ options:
     description:
       - Whether HA is set for the service offering.
     type: bool
-    default: no
   provisioning_type:
     description:
       - Provisioning type used to create volumes.
