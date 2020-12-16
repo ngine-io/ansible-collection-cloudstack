@@ -1,6 +1,8 @@
 name: Sanity
 on:
-- pull_request
+  schedule:
+  - cron: "* 12 * * *"
+  pull_request:
 
 jobs:
   sanity:
