@@ -164,6 +164,15 @@ EXAMPLES = '''
     network_offering: DefaultIsolatedNetworkOfferingWithSourceNatService
     network_domain: example.com
 
+- name: Create a network with start and end IP
+  ngine_io.cloudstack.cs_network:
+    name: Private Network
+    network_offering: PrivNet
+    start_ip: 10.12.9.10
+    end_ip: 10.12.9.100
+    netmask: 255.255.255.0
+    zone: gva-01
+
 - name: Create a VPC tier
   ngine_io.cloudstack.cs_network:
     name: my VPC tier 1
@@ -597,14 +606,10 @@ def main():
         poll_async=dict(type='bool', default=True),
         tags=dict(type='list', elements='dict', aliases=['tag']),
     ))
-    required_together = cs_required_together()
-    required_together.extend([
-        ['netmask', 'gateway'],
-    ])
 
     module = AnsibleModule(
         argument_spec=argument_spec,
-        required_together=required_together,
+        required_together=cs_required_together(),
         supports_check_mode=True
     )
 
