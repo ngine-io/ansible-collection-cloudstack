@@ -1,0 +1,2 @@
+minor_changes:
+  - cs_instance - Fixed an edge case caused by `displaytext` not available (https://github.com/ngine-io/ansible-collection-cloudstack/pull/49).
