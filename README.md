@@ -58,7 +58,7 @@ For existing Ansible roles, please also reference the full namespace, collection
 
 ### Plugins
 
-To use a pluign, please reference the full namespace, collection name, and plugins name that you want to use:
+To use a plugin, please reference the full namespace, collection name, and plugin name that you want to use:
 
 ```yaml
 plugin: ngine_io.cloudstack.cloudstack
