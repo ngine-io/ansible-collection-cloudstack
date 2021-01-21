@@ -8,7 +8,8 @@ PYTHON=${ANSIBLE_TEST_PYTHON_INTERPRETER:-python}
 # TODO: the test environment is bit setup when running this integration test on its own.
 ${PYTHON} -m pip install cs
 
-export CLOUDSTACK_CONFIG=$(pwd)/cloudstack.ini
+CLOUDSTACK_CONFIG=$(pwd)/cloudstack.ini
+export CLOUDSTACK_CONFIG
 
 # TODO: why is it looking for cloudstack conf section?
 ansible-playbook playbooks/cloudstack-inventory-test.yml "$@"

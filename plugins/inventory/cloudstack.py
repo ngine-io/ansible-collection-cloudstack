@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
 # Copyright (c) 2020, Rafael del valle <rafael@privaz.io>
@@ -44,7 +43,7 @@ DOCUMENTATION = r'''
             type: string
     extends_documentation_fragment:
         - constructed
-        - ngine_io.cloudstack.cloudstack            
+        - ngine_io.cloudstack.cloudstack
 '''
 
 EXAMPLES = '''
