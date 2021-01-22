@@ -48,29 +48,10 @@ class InventoryTestCase(unittest.TestCase):
         api_config = InventoryModuleMock().get_api_config_from_path('fixtures/test-configured.cloudstack.yml')
         self.assertTrue(all([api_config['endpoint'], api_config['key'], api_config['secret']]))
 
-    def test_missing_ini_configured_inventory_plugin(self):
-        # We check that if the ini file requested is missing and the plugin configuration
-        # file does not include connection parameters we get the right exception
-        # should include both missing params and missing ini file
-        with self.assertRaises(ValueError) as cxt:
-            os.environ['CLOUDSTACK_CONFIG'] = 'fixtures/missing-cloudstack.ini'
-            InventoryModuleMock().get_api_config_from_path('fixtures/test-not-configured.cloudstack.yml')
-        self.assertIn('file not found', str(cxt.exception))
-        self.assertIn('Missing api credentials', str(cxt.exception))
-
-    def test_incomplete_ini_configured_inventory_plugin(self):
-        # We check that if ini is partially configured and plugin not configured we get
-        # message talking about missing keys
-        with self.assertRaises(ValueError) as cxt:
-            os.environ['CLOUDSTACK_CONFIG'] = 'fixtures/partial-cloudstack.ini'
-            InventoryModuleMock().get_api_config_from_path('fixtures/test-not-configured.cloudstack.yml')
-        self.assertIn('missing the following keys', str(cxt.exception))
-
     def test_environment_configuration_inventory_plugin(self):
         # We check that when using a not configured inventory plugin file
         # With environment variables providing the configuration a valid
         # configuration is achieved
-        os.environ['CLOUDSTACK_CONFIG'] = 'fixtures/missing-cloudstack.ini'
         os.environ['CLOUDSTACK_ENDPOINT'] = 'http://localhost'
         os.environ['CLOUDSTACK_KEY'] = 'mykey'
         os.environ['CLOUDSTACK_SECRET'] = 'mysecret'
