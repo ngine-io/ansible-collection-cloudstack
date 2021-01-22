@@ -30,7 +30,7 @@ class InventoryTestCase(unittest.TestCase):
         # We clean up the cloudstack process environment after each test
         # As different test use different configurations
         for param in ['CONFIG', 'ENDPOINT', 'KEY', 'SECRET']:
-            env_param = "CLOUDSTACK_{}".format(param)
+            env_param = "CLOUDSTACK_{setting}".format(setting=param)
             if env_param in os.environ:
                 os.environ.pop(env_param)
 

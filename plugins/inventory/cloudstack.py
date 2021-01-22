@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
 # Copyright (c) 2020, Rafael del valle <rafael@privaz.io>
@@ -22,7 +21,7 @@ DOCUMENTATION = r'''
         - Get inventory hosts from Apache CloudStack
         - Allows filtering and grouping inventory hosts.
         - |
-            Uses an YAML configuration file ending with either I(cloudstack.yml) or I(cloudstack.yaml) 
+            Uses an YAML configuration file ending with either I(cloudstack.yml) or I(cloudstack.yaml)
             to set parameter values (also see examples).
     options:
         plugin:
@@ -32,7 +31,7 @@ DOCUMENTATION = r'''
             choices: [ cloudstack ]
         hostname:
             description: |
-                Field to match the hostname. Note v4_main_ip corresponds to the primary ipv4address of the first nic 
+                Field to match the hostname. Note v4_main_ip corresponds to the primary ipv4address of the first nic
                 adapter of the instance.
             type: string
             default: v4_main_ip
@@ -44,7 +43,7 @@ DOCUMENTATION = r'''
             type: string
     extends_documentation_fragment:
         - constructed
-        - ngine_io.cloudstack.cloudstack                 
+        - ngine_io.cloudstack.cloudstack
 '''
 
 EXAMPLES = '''
@@ -89,7 +88,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable):
         super().__init__()
         if not HAS_LIB_CS:
             raise AnsibleError(missing_required_lib('cs'))
-        self._cs=None
+        self._cs = None
         self._normalization_template = Template(INVENTORY_NORMALIZATION_J2)
 
     def init_cs(self, config):
