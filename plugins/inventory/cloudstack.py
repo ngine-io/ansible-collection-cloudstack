@@ -34,9 +34,9 @@ DOCUMENTATION = r'''
                 Field to match the hostname. Note v4_main_ip corresponds to the primary ipv4address of the first nic
                 adapter of the instance.
             type: string
-            default: v4_main_ip
+            default: v4_default_ip
             choices:
-                - v4_main_ip
+                - v4_default_ip
                 - hostname
         filter_by_zone:
             description: Only return servers filtered in the provided zone
@@ -54,17 +54,38 @@ EXAMPLES = '''
 INVENTORY_NORMALIZATION_J2 = '''
 ---
 instance:
-  name: {{instance.instancename}}
-  v4_main_ip: {{instance.nic[0].ipaddress}}
+
+  name: {{instance.name}}
   hostname: {{instance.hostname | lower }}
+  v4_default_ip: {{instance.nic[0].ipaddress}}
+
   zone: {{instance.zonename}}
-  template: {{instance.templatename}}
-  password_enabled: {{instance.passwordenabled}}
-  ha_enabled: {{instance.haenable}}
-  service_offering: {{instance.serviceofferingname}}
-  account: {{instance.account}}
   domain: {{instance.domain | lower}}
+  account: {{instance.account}}
+  username: {{instance.username}}
+  tags: {{instance.tags}}
+
+  template: {{instance.templatename}}
+  service_offering: {{instance.serviceofferingname}}
+  disk_offering: {{instance.diskofferingname | default(omit)}}
+  affinity_groups: {{instance.affinitygroup}}
+  networks:
+    {% for nic in instance.nic %}
+    - {{nic.networkname}}
+    {% endfor %}
+
+  ha_enabled: {{instance.haenable}}
+  password_enabled: {{instance.passwordenabled}}
+
   hypervisor: {{instance.hypervisor | lower}}
+  cpu_speed: {{instance.cpuspeed}}
+  cpu_number: {{instance.cpunumber}}
+  memory: {{instance.memory}}
+  dynamically_scalable: {{instance.isdynamicallyscalable}}
+
+  state: {{instance.state}}
+  cpu_usage: {{instance.cpuused}}
+  created: {{instance.created}}
 '''
 
 
