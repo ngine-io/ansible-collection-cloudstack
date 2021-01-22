@@ -11,10 +11,10 @@
         return_content: yes
       register: admin
 
-    - name: Create cloudstack.ini
+    - name: Create cloudstack.env
       template:
-        src: templates/cloudstack.ini.j2
-        dest: ../cloudstack.ini
+        src: templates/cloudstack.env.j2
+        dest: ../cloudstack.env
 
     - name: Create test.cloudstack.yml
       template:
