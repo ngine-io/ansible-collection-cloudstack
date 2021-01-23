@@ -63,7 +63,13 @@ instance:
   domain: {{instance.domain | lower}}
   account: {{instance.account}}
   username: {{instance.username}}
-  tags: {{instance.tags}}
+
+  {% if instance.tags %}
+  tags:
+  {% for tag in instance.tags %}
+    {{tag.key}}: {{tag.value}}
+  {% endfor %}
+  {% endif %}
 
   template: {{instance.templatename}}
   service_offering: {{instance.serviceofferingname}}
