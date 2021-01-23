@@ -56,7 +56,7 @@ INVENTORY_NORMALIZATION_J2 = '''
 instance:
 
   name: {{instance.name}}
-  hostname: {{instance.hostname | lower }}
+  hostname: {{instance.hostname or instance.name | lower }}
   v4_default_ip: {{instance.nic[0].ipaddress}}
 
   zone: {{instance.zonename}}
