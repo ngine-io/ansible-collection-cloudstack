@@ -67,7 +67,9 @@ instance:
 
   template: {{instance.templatename}}
   service_offering: {{instance.serviceofferingname}}
-  disk_offering: {{instance.diskofferingname | default(omit)}}
+  {% if instance.diskofferingname is defined %}
+  disk_offering: {{instance.diskofferingname}}
+  {% endif %}
   affinity_groups: {{instance.affinitygroup}}
   networks:
     {% for nic in instance.nic %}
