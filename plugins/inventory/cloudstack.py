@@ -63,6 +63,9 @@ instance:
   domain: {{instance.domain | lower}}
   account: {{instance.account}}
   username: {{instance.username}}
+  {% if instance.group %}
+  group: {{instance.group}}
+  {% endif %}
 
   {% if instance.tags %}
   tags:
