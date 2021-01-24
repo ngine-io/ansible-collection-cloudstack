@@ -76,7 +76,12 @@ instance:
   {% if instance.diskofferingname is defined %}
   disk_offering: {{instance.diskofferingname}}
   {% endif %}
-  affinity_groups: {{instance.affinitygroup}}
+  {% if instance.affinitygroup %}
+  affinity_groups:
+    {% for ag in instance.affinitygroup %}
+    - {{ ag.name }}
+    {% endfor %}
+  {% endif %}
   networks:
     {% for nic in instance.nic %}
     - {{nic.networkname}}
