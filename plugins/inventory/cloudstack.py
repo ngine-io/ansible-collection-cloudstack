@@ -39,7 +39,16 @@ DOCUMENTATION = r'''
                 - v4_default_ip
                 - hostname
         filter_by_zone:
-            description: Only return servers filtered in the provided zone
+            description: Only return instances in the provided zone.
+            type: string
+        filter_by_domain:
+            description: Only return instances in the provided domain.
+            type: string
+        filter_by_project:
+            description: Only return instances in the provided project.
+            type: string
+        filter_by_vpc:
+            description: Only return instances in the provided VPC.
             type: string
     extends_documentation_fragment:
         - constructed
@@ -111,7 +120,6 @@ instance:
   created: {{instance.created}}
 '''
 
-
 from ansible.plugins.inventory import BaseInventoryPlugin, Constructable, AnsibleError
 from ansible.module_utils.basic import missing_required_lib
 from ..module_utils.cloudstack import HAS_LIB_CS, cs_get_api_config
@@ -165,11 +173,38 @@ class InventoryModule(BaseInventoryPlugin, Constructable):
                 valid = True
         return valid
 
+    def add_filter(self, args, filter_option, query, arg):
+        # is there a value to filter by? we will search with it
+        search = self.get_option('filter_by_' + filter_option)
+        if search:
+            found = False
+            # we return all items related to the query involved in the filtering
+            result = self.query_api(query, listItems=True)
+            for item in result[filter_option]:
+                # if we find the searched value as either an id or a name
+                if search in [item['id'], item['name']]:
+                    # we add the corresponding filter as query argument
+                    args[arg] = item['id']
+                    found = True
+            if not found:
+                raise AnsibleError(
+                    "Could not apply filter_by_{fo}. No {fo} with id or name {s} found".format(
+                        fo=filter_option, s=search
+                    )
+                )
+
+        return args
+
     def get_filters(self):
         # Filtering as supported by ACS goes here
         args = {
             'fetch_list': True
         }
+
+        self.add_filter(args, 'domain', 'listDomains', 'domainid')
+        self.add_filter(args, 'project', 'listProjects', 'projectid')
+        self.add_filter(args, 'zone', 'listZones', 'zoneid')
+        self.add_filter(args, 'vpc', 'listVPCs', 'vpcid')
 
         return args
 
