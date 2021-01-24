@@ -51,6 +51,13 @@ EXAMPLES = '''
 
 # The J2 Template takes 'instance' object as returned from ACS and returns 'instance' object as returned by
 # This inventory plugin.
+# The data structure of this inventory has been designed according to the following criteria:
+# - do not duplicate/compete with Ansible instance facts
+# - do not duplicate/compete with Cloudstack facts modules
+# - hide internal ACS structures and identifiers
+# - if possible use similar naming to previous inventory script
+# - prefer non-existing attributes over null values
+# - populate the data required to group and filter instances
 INVENTORY_NORMALIZATION_J2 = '''
 ---
 instance:
