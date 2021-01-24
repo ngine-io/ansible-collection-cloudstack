@@ -55,7 +55,34 @@ DOCUMENTATION = r'''
         - ngine_io.cloudstack.cloudstack
 '''
 
+#TODO: plugin should work as 'cloudstack' only
 EXAMPLES = '''
+# inventory_cloudstack.yml file in YAML format
+# Example command line: ansible-inventory --list -i inventory_cloudstack.yml
+plugin: ngine_io.cloudstack.cloudstack
+
+# Use the default ip as ansible_host
+hostname: v4_default_ip
+
+# Return only instances related to the VPC vpc1 and in the zone EU
+filter_by_vpc: vpc1
+filter_by_zone: EU
+
+# Group instances with a disk_offering as storage
+# Create a group dmz for instances connected to the dmz network
+groups:
+  storage: disk_offering is defined
+  dmz: "'dmz' in networks"
+
+# Group the instances by network, with net_network1 as name of the groups
+# Group the instanes by custom tag sla, groups like sla_value for tag sla
+keyed_groups:
+  - prefix: net
+    key: networks
+  - prefix: sla
+    key: tags.sla
+
+
 '''
 
 # The J2 Template takes 'instance' object as returned from ACS and returns 'instance' object as returned by
