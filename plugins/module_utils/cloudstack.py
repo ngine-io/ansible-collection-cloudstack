@@ -481,7 +481,7 @@ class AnsibleCloudStack:
         # Some modules benefit form the check anyway like those where zone if effectively optional like
         # template registration (local/cross zone) or configuration (zone or global)
         if not zone:
-            self.fail_json("Zone is required due to unreliable API.")
+            self.fail_json(msg="Zone is required due to unreliable API.")
 
         if zones:
             for z in zones['zone']:
