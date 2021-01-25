@@ -476,16 +476,11 @@ class AnsibleCloudStack:
         if not zones:
             self.fail_json(msg="No zones available. Please create a zone first")
 
-        # use the first zone if no zone param given
+        # this check is theoretically not required, as module argument specification should take care of it
+        # however, due to deprecated default zone is left behind just in case
+        # will be removed later on.
         if not zone:
-            self.module.deprecate(
-                msg="Using first zone as default is deprecated because of unreliable API, zone needs to be defined.",
-                version="2.0.0",
-                collection_name="ngine_io.cloudstack"
-            )
-            self.zone = zones['zone'][0]
-            self.result['zone'] = self.zone['name']
-            return self._get_by_key(key, self.zone)
+            self.fail_json("Zone is required due to unreliable API.")
 
         if zones:
             for z in zones['zone']:
