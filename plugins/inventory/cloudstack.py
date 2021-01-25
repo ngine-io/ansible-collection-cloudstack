@@ -55,7 +55,7 @@ DOCUMENTATION = r'''
         - ngine_io.cloudstack.cloudstack
 '''
 
-#TODO: plugin should work as 'cloudstack' only
+# TODO: plugin should work as 'cloudstack' only
 EXAMPLES = '''
 # inventory_cloudstack.yml file in YAML format
 # Example command line: ansible-inventory --list -i inventory_cloudstack.yml
