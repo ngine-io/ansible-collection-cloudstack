@@ -1,0 +1,39 @@
+{
+    "targets": {
+        "cs_host": {
+            "aliases": [
+                "cloud/", 
+                "cloud/cs/", 
+                "cloud/cs/cs_host", 
+                "cloud/cs_host", 
+                "cs_host", 
+                "module/", 
+                "module/cs_host/", 
+                "module/cs_host/cs_host", 
+                "non_destructive/", 
+                "non_destructive/cs_host", 
+                "posix/", 
+                "role/", 
+                "role/cs_host", 
+                "shippable/", 
+                "shippable/cs/", 
+                "shippable/cs/cs_host", 
+                "shippable/cs/group1/", 
+                "shippable/cs/group1/cs_host", 
+                "shippable/cs_host"
+            ], 
+            "coverage": false, 
+            "coverage_label": "", 
+            "modules": [
+                "cs_host"
+            ], 
+            "name": "cs_host", 
+            "python_version": "3.6", 
+            "run_time_seconds": 31, 
+            "setup_always": [], 
+            "setup_once": [], 
+            "type": "role", 
+            "validation_seconds": 0
+        }
+    }
+}

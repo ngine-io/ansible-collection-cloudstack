@@ -1,0 +1,1730 @@
+<?xml version="1.0" ?>
+<testsuites disabled="0" errors="0" failures="0" tests="39" time="10.639784812927246">
+	<testsuite disabled="0" errors="0" failures="0" name="cs_pod-22cccsrl" skipped="0" tests="39" time="10.639784812927246">
+		<testcase name="[testhost] testhost: Gathering Facts gather_subset=['all'], gather_timeout=10" time="0.837452">
+			<system-out>{
+&quot;ansible_facts&quot;: {
+&quot;ansible_apparmor&quot;: {
+&quot;status&quot;: &quot;disabled&quot;
+},
+&quot;ansible_architecture&quot;: &quot;x86_64&quot;,
+&quot;ansible_bios_date&quot;: &quot;04/17/2019&quot;,
+&quot;ansible_bios_vendor&quot;: &quot;American Megatrends Inc.&quot;,
+&quot;ansible_bios_version&quot;: &quot;UX303UB.302&quot;,
+&quot;ansible_board_asset_tag&quot;: &quot;ATN12345678901234567&quot;,
+&quot;ansible_board_name&quot;: &quot;UX303UB&quot;,
+&quot;ansible_board_serial&quot;: &quot;BSN12345678901234567&quot;,
+&quot;ansible_board_vendor&quot;: &quot;ASUSTeK COMPUTER INC.&quot;,
+&quot;ansible_board_version&quot;: &quot;1.0&quot;,
+&quot;ansible_chassis_asset_tag&quot;: &quot;ATN12345678901234567&quot;,
+&quot;ansible_chassis_serial&quot;: &quot;G1N0CJ020652033&quot;,
+&quot;ansible_chassis_vendor&quot;: &quot;ASUSTeK COMPUTER INC.&quot;,
+&quot;ansible_chassis_version&quot;: &quot;1.0&quot;,
+&quot;ansible_cmdline&quot;: {
+&quot;BOOT_IMAGE&quot;: &quot;/vmlinuz-5.8.0-38-generic&quot;,
+&quot;quiet&quot;: true,
+&quot;ro&quot;: true,
+&quot;root&quot;: &quot;/dev/mapper/vgubuntu-root&quot;,
+&quot;splash&quot;: true
+},
+&quot;ansible_date_time&quot;: {
+&quot;date&quot;: &quot;2021-01-22&quot;,
+&quot;day&quot;: &quot;22&quot;,
+&quot;epoch&quot;: &quot;1611318906&quot;,
+&quot;hour&quot;: &quot;12&quot;,
+&quot;iso8601&quot;: &quot;2021-01-22T12:35:06Z&quot;,
+&quot;iso8601_basic&quot;: &quot;20210122T123506494618&quot;,
+&quot;iso8601_basic_short&quot;: &quot;20210122T123506&quot;,
+&quot;iso8601_micro&quot;: &quot;2021-01-22T12:35:06.494618Z&quot;,
+&quot;minute&quot;: &quot;35&quot;,
+&quot;month&quot;: &quot;01&quot;,
+&quot;second&quot;: &quot;06&quot;,
+&quot;time&quot;: &quot;12:35:06&quot;,
+&quot;tz&quot;: &quot;UTC&quot;,
+&quot;tz_offset&quot;: &quot;+0000&quot;,
+&quot;weekday&quot;: &quot;Friday&quot;,
+&quot;weekday_number&quot;: &quot;5&quot;,
+&quot;weeknumber&quot;: &quot;03&quot;,
+&quot;year&quot;: &quot;2021&quot;
+},
+&quot;ansible_device_links&quot;: {
+&quot;ids&quot;: {},
+&quot;labels&quot;: {},
+&quot;masters&quot;: {
+&quot;dm-0&quot;: [
+&quot;dm-1&quot;,
+&quot;dm-2&quot;,
+&quot;dm-3&quot;,
+&quot;dm-4&quot;,
+&quot;dm-5&quot;
+],
+&quot;sda3&quot;: [
+&quot;dm-0&quot;
+]
+},
+&quot;uuids&quot;: {}
+},
+&quot;ansible_devices&quot;: {
+&quot;dm-0&quot;: {
+&quot;holders&quot;: [
+&quot;vgubuntu-root&quot;,
+&quot;vgubuntu-docker&quot;,
+&quot;vgubuntu-swap_1&quot;,
+&quot;vgubuntu-snaps&quot;,
+&quot;vgubuntu-home&quot;
+],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [
+&quot;dm-1&quot;,
+&quot;dm-2&quot;,
+&quot;dm-3&quot;,
+&quot;dm-4&quot;,
+&quot;dm-5&quot;
+],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;497534976&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;237.24 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;dm-1&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;52428800&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;25.00 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;dm-2&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;8388608&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;4.00 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;dm-3&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;251658240&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;120.00 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;dm-4&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;83886080&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;40.00 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;dm-5&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;31457280&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;15.00 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop0&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;242432&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;118.38 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop1&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;200416&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;97.86 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop10&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;280&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;140.00 KB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop11&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;225912&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;110.31 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop12&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;104496&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;51.02 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop13&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;446248&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;217.89 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop14&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;198528&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;96.94 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop15&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;63616&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;31.06 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop16&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;63672&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;31.09 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop17&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;1307528&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;638.44 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop18&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;167048&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;81.57 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop19&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;1273304&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;621.73 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop2&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;200464&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;97.88 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop20&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;174000&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;84.96 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop21&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;132648&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;64.77 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop22&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;131792&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;64.35 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop23&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;448920&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;219.20 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop24&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;448888&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;219.18 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop25&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;242568&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;118.44 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop26&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;104536&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;51.04 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop27&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;168984&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;82.51 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop28&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;0&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;0.00 Bytes&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop3&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;113424&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;55.38 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop4&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;225912&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;110.31 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop5&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;113384&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;55.36 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop6&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;333552&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;162.87 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop7&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;330576&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;161.41 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop8&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;448496&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;218.99 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop9&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;198448&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;96.90 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;sda&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: &quot;HFS256G32MND-220&quot;,
+&quot;partitions&quot;: {
+&quot;sda1&quot;: {
+&quot;holders&quot;: [],
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;sectors&quot;: &quot;1048576&quot;,
+&quot;sectorsize&quot;: 512,
+&quot;size&quot;: &quot;512.00 MB&quot;,
+&quot;start&quot;: &quot;2048&quot;,
+&quot;uuid&quot;: null
+},
+&quot;sda2&quot;: {
+&quot;holders&quot;: [],
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;sectors&quot;: &quot;1499136&quot;,
+&quot;sectorsize&quot;: 512,
+&quot;size&quot;: &quot;732.00 MB&quot;,
+&quot;start&quot;: &quot;1050624&quot;,
+&quot;uuid&quot;: null
+},
+&quot;sda3&quot;: {
+&quot;holders&quot;: [
+&quot;sda3_crypt&quot;
+],
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [
+&quot;dm-0&quot;
+],
+&quot;uuids&quot;: []
+},
+&quot;sectors&quot;: &quot;497567744&quot;,
+&quot;sectorsize&quot;: 512,
+&quot;size&quot;: &quot;237.26 GB&quot;,
+&quot;start&quot;: &quot;2549760&quot;,
+&quot;uuid&quot;: null
+}
+},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;500118192&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;238.47 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: &quot;ATA&quot;,
+&quot;virtual&quot;: 1
+}
+},
+&quot;ansible_distribution&quot;: &quot;Ubuntu&quot;,
+&quot;ansible_distribution_file_parsed&quot;: true,
+&quot;ansible_distribution_file_path&quot;: &quot;/etc/os-release&quot;,
+&quot;ansible_distribution_file_variety&quot;: &quot;Debian&quot;,
+&quot;ansible_distribution_major_version&quot;: &quot;18&quot;,
+&quot;ansible_distribution_release&quot;: &quot;bionic&quot;,
+&quot;ansible_distribution_version&quot;: &quot;18.04&quot;,
+&quot;ansible_dns&quot;: {
+&quot;nameservers&quot;: [
+&quot;10.63.0.1&quot;
+]
+},
+&quot;ansible_domain&quot;: &quot;&quot;,
+&quot;ansible_effective_group_id&quot;: 0,
+&quot;ansible_effective_user_id&quot;: 0,
+&quot;ansible_env&quot;: {
+&quot;ANSIBLE_CALLBACK_WHITELIST&quot;: &quot;junit&quot;,
+&quot;ANSIBLE_COLLECTIONS_PATH&quot;: &quot;/root&quot;,
+&quot;ANSIBLE_CONFIG&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/integration.cfg&quot;,
+&quot;ANSIBLE_DEPRECATION_WARNINGS&quot;: &quot;false&quot;,
+&quot;ANSIBLE_DEVEL_WARNING&quot;: &quot;false&quot;,
+&quot;ANSIBLE_FORCE_COLOR&quot;: &quot;true&quot;,
+&quot;ANSIBLE_FORCE_HANDLERS&quot;: &quot;true&quot;,
+&quot;ANSIBLE_HOST_KEY_CHECKING&quot;: &quot;false&quot;,
+&quot;ANSIBLE_HOST_PATTERN_MISMATCH&quot;: &quot;error&quot;,
+&quot;ANSIBLE_INVENTORY&quot;: &quot;/dev/null&quot;,
+&quot;ANSIBLE_LIBRARY&quot;: &quot;/dev/null&quot;,
+&quot;ANSIBLE_PLAYBOOK_DIR&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration&quot;,
+&quot;ANSIBLE_PYTHON_INTERPRETER&quot;: &quot;/set/ansible_python_interpreter/in/inventory&quot;,
+&quot;ANSIBLE_PYTHON_MODULE_RLIMIT_NOFILE&quot;: &quot;1024&quot;,
+&quot;ANSIBLE_RETRY_FILES_ENABLED&quot;: &quot;false&quot;,
+&quot;ANSIBLE_ROLES_PATH&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets&quot;,
+&quot;ANSIBLE_TEST_CI&quot;: &quot;&quot;,
+&quot;ANSIBLE_TEST_COVERAGE&quot;: &quot;&quot;,
+&quot;ANSIBLE_TEST_PYTHON_INTERPRETER&quot;: &quot;/usr/bin/python3.6&quot;,
+&quot;ANSIBLE_TEST_PYTHON_VERSION&quot;: &quot;3.6&quot;,
+&quot;ANSIBLE_WORKER_SHUTDOWN_POLL_COUNT&quot;: &quot;100&quot;,
+&quot;ANSIBLE_WORKER_SHUTDOWN_POLL_DELAY&quot;: &quot;0.1&quot;,
+&quot;CLOUDSTACK_ENDPOINT&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;CLOUDSTACK_KEY&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;CLOUDSTACK_SECRET&quot;: &quot;-wkrHErJnQdGH2-R0-AkkYMi3RGdA3k4cXjjiUF5MW320xJjkd__yGkAD4SOLIgAYbPTLhWS4PamTdYvXcnJQA&quot;,
+&quot;CLOUDSTACK_TIMEOUT&quot;: &quot;60&quot;,
+&quot;HOME&quot;: &quot;/root&quot;,
+&quot;INVENTORY_PATH&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/inventory&quot;,
+&quot;JUNIT_OUTPUT_DIR&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/junit&quot;,
+&quot;LC_ALL&quot;: &quot;en_US.UTF-8&quot;,
+&quot;OUTPUT_DIR&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/output_dir&quot;,
+&quot;PAGER&quot;: &quot;/bin/cat&quot;,
+&quot;PATH&quot;: &quot;/tmp/python-s31d9_te-ansible:/root/ansible/test/lib/ansible_test/_data/injector:/root/ansible/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;,
+&quot;PWD&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration&quot;,
+&quot;PYTHONPATH&quot;: &quot;/root/ansible/lib&quot;
+},
+&quot;ansible_fibre_channel_wwn&quot;: [],
+&quot;ansible_fips&quot;: false,
+&quot;ansible_form_factor&quot;: &quot;Notebook&quot;,
+&quot;ansible_fqdn&quot;: &quot;59c586717e56&quot;,
+&quot;ansible_hostname&quot;: &quot;59c586717e56&quot;,
+&quot;ansible_hostnqn&quot;: &quot;&quot;,
+&quot;ansible_is_chroot&quot;: false,
+&quot;ansible_iscsi_iqn&quot;: &quot;&quot;,
+&quot;ansible_kernel&quot;: &quot;5.8.0-38-generic&quot;,
+&quot;ansible_kernel_version&quot;: &quot;#43~20.04.1-Ubuntu SMP Tue Jan 12 16:39:47 UTC 2021&quot;,
+&quot;ansible_local&quot;: {},
+&quot;ansible_lsb&quot;: {
+&quot;codename&quot;: &quot;bionic&quot;,
+&quot;description&quot;: &quot;Ubuntu 18.04.5 LTS&quot;,
+&quot;id&quot;: &quot;Ubuntu&quot;,
+&quot;major_release&quot;: &quot;18&quot;,
+&quot;release&quot;: &quot;18.04&quot;
+},
+&quot;ansible_machine&quot;: &quot;x86_64&quot;,
+&quot;ansible_machine_id&quot;: &quot;8bab3c65459e4582b95ca278b459dc10&quot;,
+&quot;ansible_memfree_mb&quot;: 197,
+&quot;ansible_memory_mb&quot;: {
+&quot;nocache&quot;: {
+&quot;free&quot;: 3784,
+&quot;used&quot;: 8100
+},
+&quot;real&quot;: {
+&quot;free&quot;: 197,
+&quot;total&quot;: 11884,
+&quot;used&quot;: 11687
+},
+&quot;swap&quot;: {
+&quot;cached&quot;: 45,
+&quot;free&quot;: 468,
+&quot;total&quot;: 4095,
+&quot;used&quot;: 3627
+}
+},
+&quot;ansible_memtotal_mb&quot;: 11884,
+&quot;ansible_mounts&quot;: [
+{
+&quot;block_available&quot;: 654597,
+&quot;block_size&quot;: 4096,
+&quot;block_total&quot;: 10255672,
+&quot;block_used&quot;: 9601075,
+&quot;device&quot;: &quot;/dev/mapper/vgubuntu-docker&quot;,
+&quot;fstype&quot;: &quot;ext4&quot;,
+&quot;inode_available&quot;: 1338843,
+&quot;inode_total&quot;: 2621440,
+&quot;inode_used&quot;: 1282597,
+&quot;mount&quot;: &quot;/run&quot;,
+&quot;options&quot;: &quot;rw,relatime,bind&quot;,
+&quot;size_available&quot;: 2681229312,
+&quot;size_total&quot;: 42007232512,
+&quot;uuid&quot;: &quot;N/A&quot;
+},
+{
+&quot;block_available&quot;: 654597,
+&quot;block_size&quot;: 4096,
+&quot;block_total&quot;: 10255672,
+&quot;block_used&quot;: 9601075,
+&quot;device&quot;: &quot;/dev/mapper/vgubuntu-docker&quot;,
+&quot;fstype&quot;: &quot;ext4&quot;,
+&quot;inode_available&quot;: 1338843,
+&quot;inode_total&quot;: 2621440,
+&quot;inode_used&quot;: 1282597,
+&quot;mount&quot;: &quot;/tmp&quot;,
+&quot;options&quot;: &quot;rw,relatime,bind&quot;,
+&quot;size_available&quot;: 2681229312,
+&quot;size_total&quot;: 42007232512,
+&quot;uuid&quot;: &quot;N/A&quot;
+},
+{
+&quot;block_available&quot;: 654597,
+&quot;block_size&quot;: 4096,
+&quot;block_total&quot;: 10255672,
+&quot;block_used&quot;: 9601075,
+&quot;device&quot;: &quot;/dev/mapper/vgubuntu-docker&quot;,
+&quot;fstype&quot;: &quot;ext4&quot;,
+&quot;inode_available&quot;: 1338843,
+&quot;inode_total&quot;: 2621440,
+&quot;inode_used&quot;: 1282597,
+&quot;mount&quot;: &quot;/run/lock&quot;,
+&quot;options&quot;: &quot;rw,relatime,bind&quot;,
+&quot;size_available&quot;: 2681229312,
+&quot;size_total&quot;: 42007232512,
+&quot;uuid&quot;: &quot;N/A&quot;
+},
+{
+&quot;block_available&quot;: 654597,
+&quot;block_size&quot;: 4096,
+&quot;block_total&quot;: 10255672,
+&quot;block_used&quot;: 9601075,
+&quot;device&quot;: &quot;/dev/mapper/vgubuntu-docker&quot;,
+&quot;fstype&quot;: &quot;ext4&quot;,
+&quot;inode_available&quot;: 1338843,
+&quot;inode_total&quot;: 2621440,
+&quot;inode_used&quot;: 1282597,
+&quot;mount&quot;: &quot;/etc/resolv.conf&quot;,
+&quot;options&quot;: &quot;rw,relatime,bind&quot;,
+&quot;size_available&quot;: 2681229312,
+&quot;size_total&quot;: 42007232512,
+&quot;uuid&quot;: &quot;N/A&quot;
+},
+{
+&quot;block_available&quot;: 654597,
+&quot;block_size&quot;: 4096,
+&quot;block_total&quot;: 10255672,
+&quot;block_used&quot;: 9601075,
+&quot;device&quot;: &quot;/dev/mapper/vgubuntu-docker&quot;,
+&quot;fstype&quot;: &quot;ext4&quot;,
+&quot;inode_available&quot;: 1338843,
+&quot;inode_total&quot;: 2621440,
+&quot;inode_used&quot;: 1282597,
+&quot;mount&quot;: &quot;/etc/hostname&quot;,
+&quot;options&quot;: &quot;rw,relatime,bind&quot;,
+&quot;size_available&quot;: 2681229312,
+&quot;size_total&quot;: 42007232512,
+&quot;uuid&quot;: &quot;N/A&quot;
+},
+{
+&quot;block_available&quot;: 654597,
+&quot;block_size&quot;: 4096,
+&quot;block_total&quot;: 10255672,
+&quot;block_used&quot;: 9601075,
+&quot;device&quot;: &quot;/dev/mapper/vgubuntu-docker&quot;,
+&quot;fstype&quot;: &quot;ext4&quot;,
+&quot;inode_available&quot;: 1338843,
+&quot;inode_total&quot;: 2621440,
+&quot;inode_used&quot;: 1282597,
+&quot;mount&quot;: &quot;/etc/hosts&quot;,
+&quot;options&quot;: &quot;rw,relatime,bind&quot;,
+&quot;size_available&quot;: 2681229312,
+&quot;size_total&quot;: 42007232512,
+&quot;uuid&quot;: &quot;N/A&quot;
+}
+],
+&quot;ansible_nodename&quot;: &quot;59c586717e56&quot;,
+&quot;ansible_os_family&quot;: &quot;Debian&quot;,
+&quot;ansible_pkg_mgr&quot;: &quot;apt&quot;,
+&quot;ansible_proc_cmdline&quot;: {
+&quot;BOOT_IMAGE&quot;: &quot;/vmlinuz-5.8.0-38-generic&quot;,
+&quot;quiet&quot;: true,
+&quot;ro&quot;: true,
+&quot;root&quot;: &quot;/dev/mapper/vgubuntu-root&quot;,
+&quot;splash&quot;: true
+},
+&quot;ansible_processor&quot;: [
+&quot;0&quot;,
+&quot;GenuineIntel&quot;,
+&quot;Intel(R) Core(TM) i7-6500U CPU @ 2.50GHz&quot;,
+&quot;1&quot;,
+&quot;GenuineIntel&quot;,
+&quot;Intel(R) Core(TM) i7-6500U CPU @ 2.50GHz&quot;,
+&quot;2&quot;,
+&quot;GenuineIntel&quot;,
+&quot;Intel(R) Core(TM) i7-6500U CPU @ 2.50GHz&quot;,
+&quot;3&quot;,
+&quot;GenuineIntel&quot;,
+&quot;Intel(R) Core(TM) i7-6500U CPU @ 2.50GHz&quot;
+],
+&quot;ansible_processor_cores&quot;: 2,
+&quot;ansible_processor_count&quot;: 1,
+&quot;ansible_processor_nproc&quot;: 4,
+&quot;ansible_processor_threads_per_core&quot;: 2,
+&quot;ansible_processor_vcpus&quot;: 4,
+&quot;ansible_product_name&quot;: &quot;UX303UB&quot;,
+&quot;ansible_product_serial&quot;: &quot;G1N0CJ020652033&quot;,
+&quot;ansible_product_uuid&quot;: &quot;d4d7f964-52d3-f945-80dc-a9a095694c74&quot;,
+&quot;ansible_product_version&quot;: &quot;1.0&quot;,
+&quot;ansible_python&quot;: {
+&quot;executable&quot;: &quot;/tmp/python-s31d9_te-ansible/python&quot;,
+&quot;has_sslcontext&quot;: true,
+&quot;type&quot;: &quot;cpython&quot;,
+&quot;version&quot;: {
+&quot;major&quot;: 3,
+&quot;micro&quot;: 9,
+&quot;minor&quot;: 6,
+&quot;releaselevel&quot;: &quot;final&quot;,
+&quot;serial&quot;: 0
+},
+&quot;version_info&quot;: [
+3,
+6,
+9,
+&quot;final&quot;,
+0
+]
+},
+&quot;ansible_python_version&quot;: &quot;3.6.9&quot;,
+&quot;ansible_real_group_id&quot;: 0,
+&quot;ansible_real_user_id&quot;: 0,
+&quot;ansible_selinux&quot;: {
+&quot;status&quot;: &quot;Missing selinux Python library&quot;
+},
+&quot;ansible_selinux_python_present&quot;: false,
+&quot;ansible_service_mgr&quot;: &quot;systemd&quot;,
+&quot;ansible_ssh_host_key_ecdsa_public&quot;: &quot;AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKXFFhScxe+xztmWiEzCRrS33+gQnEBnUZEdGfZzV849lAQZRcK0YSCjce3dvMs7rV4FulR1UqA9fSJGtUfCO6A=&quot;,
+&quot;ansible_ssh_host_key_ecdsa_public_keytype&quot;: &quot;ecdsa-sha2-nistp256&quot;,
+&quot;ansible_ssh_host_key_ed25519_public&quot;: &quot;AAAAC3NzaC1lZDI1NTE5AAAAIDQw7DVlh6zXPucmio1fvrd5X1pTIovmDPBbr9oQ7DsF&quot;,
+&quot;ansible_ssh_host_key_ed25519_public_keytype&quot;: &quot;ssh-ed25519&quot;,
+&quot;ansible_ssh_host_key_rsa_public&quot;: &quot;AAAAB3NzaC1yc2EAAAADAQABAAABAQDXZrK4B3u/pq7Y+YfaFPr+5QEzcN+JLg/RlYXqQtLPjI3E19pNY27mGlaLm726NDbA4ouPIkqCo9y0Rkqyeaprn8EQO2gCqr06qZ7M3o4jaksHxNqo7uVxeFRQhvt3Q566bj/11uGOy01BlBRHi07G+IO9e02bNn55jR8rZURj4navuEgr0+l4CvuSrIbcEMB/qAYFAW4B1oNrsH4g09kIJxY9d3/JsOGUddOkwHwfP1+YmFAPZFruWXi/WPOnlWdaHtW4LCOdJMbHZxAGKiQtdEpWZBmNIdH2JfcVB9vjBv/WJtOgRpPhJEJIIJU6kZvipGxicPz3kj/nBUqyY4M5&quot;,
+&quot;ansible_ssh_host_key_rsa_public_keytype&quot;: &quot;ssh-rsa&quot;,
+&quot;ansible_swapfree_mb&quot;: 468,
+&quot;ansible_swaptotal_mb&quot;: 4095,
+&quot;ansible_system&quot;: &quot;Linux&quot;,
+&quot;ansible_system_vendor&quot;: &quot;ASUSTeK COMPUTER INC.&quot;,
+&quot;ansible_uptime_seconds&quot;: 268931,
+&quot;ansible_user_dir&quot;: &quot;/root&quot;,
+&quot;ansible_user_gecos&quot;: &quot;root&quot;,
+&quot;ansible_user_gid&quot;: 0,
+&quot;ansible_user_id&quot;: &quot;root&quot;,
+&quot;ansible_user_shell&quot;: &quot;/bin/bash&quot;,
+&quot;ansible_user_uid&quot;: 0,
+&quot;ansible_userspace_architecture&quot;: &quot;x86_64&quot;,
+&quot;ansible_userspace_bits&quot;: &quot;64&quot;,
+&quot;ansible_virtualization_role&quot;: &quot;guest&quot;,
+&quot;ansible_virtualization_type&quot;: &quot;docker&quot;,
+&quot;gather_subset&quot;: [
+&quot;all&quot;
+],
+&quot;module_setup&quot;: true
+},
+&quot;changed&quot;: false,
+&quot;deprecations&quot;: [],
+&quot;warnings&quot;: []
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_common/tasks/main.yml:2" name="[testhost] testhost: cs_common : wait for system template available name={{ cs_common_template }}, state=absent, cross_zones=True, template_filter=all" time="0.521171">
+			<system-out>{
+&quot;account&quot;: &quot;system&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;attempts&quot;: 1,
+&quot;changed&quot;: true,
+&quot;checksum&quot;: &quot;&quot;,
+&quot;created&quot;: &quot;2021-01-22T10:10:04+0000&quot;,
+&quot;cross_zones&quot;: true,
+&quot;display_text&quot;: &quot;CentOS 5.6 (64-bit) no GUI (Simulator)&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;format&quot;: &quot;VHD&quot;,
+&quot;hypervisor&quot;: &quot;Simulator&quot;,
+&quot;id&quot;: &quot;882d501c-aa16-11e8-bbe5-0242ac110003&quot;,
+&quot;is_extractable&quot;: false,
+&quot;is_featured&quot;: true,
+&quot;is_public&quot;: true,
+&quot;is_ready&quot;: true,
+&quot;name&quot;: &quot;CentOS 5.6 (64-bit) no GUI (Simulator)&quot;,
+&quot;os_type&quot;: &quot;CentOS 5.6 (64-bit)&quot;,
+&quot;password_enabled&quot;: true,
+&quot;sshkey_enabled&quot;: false,
+&quot;status&quot;: &quot;Download Complete&quot;,
+&quot;tags&quot;: [],
+&quot;template_type&quot;: &quot;BUILTIN&quot;,
+&quot;zone&quot;: &quot;Sandbox-simulator-advanced&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_common/tasks/main.yml:14" name="[testhost] testhost: cs_common : smoke test instance name=smoke-test-vm, template={{ cs_common_template }}, service_offering={{ cs_common_service_offering }}, zone={{ cs_common_zone_adv }}" time="0.605920">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;affinity_groups&quot;: [],
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;attempts&quot;: 1,
+&quot;changed&quot;: false,
+&quot;created&quot;: &quot;2021-01-22T10:10:58+0000&quot;,
+&quot;default_ip&quot;: &quot;10.1.1.183&quot;,
+&quot;display_name&quot;: &quot;smoke-test-vm&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;host&quot;: &quot;SimulatedAgent.434893da-08ab-41b6-a0fc-907c690313fd&quot;,
+&quot;hypervisor&quot;: &quot;Simulator&quot;,
+&quot;id&quot;: &quot;a28c9abc-38d7-4aed-bbf2-b892273bb5e3&quot;,
+&quot;instance_name&quot;: &quot;i-2-5-QA&quot;,
+&quot;name&quot;: &quot;smoke-test-vm&quot;,
+&quot;password_enabled&quot;: true,
+&quot;security_groups&quot;: [],
+&quot;service_offering&quot;: &quot;Small Instance&quot;,
+&quot;state&quot;: &quot;Running&quot;,
+&quot;tags&quot;: [],
+&quot;template&quot;: &quot;CentOS 5.6 (64-bit) no GUI (Simulator)&quot;,
+&quot;template_display_text&quot;: &quot;CentOS 5.6 (64-bit) no GUI (Simulator)&quot;,
+&quot;user_data&quot;: &quot;&quot;,
+&quot;zone&quot;: &quot;Sandbox-simulator-advanced&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:2" name="[testhost] testhost: cs_pod : setup zone is present name={{ cs_resource_prefix }}-zone, dns1=8.8.8.8, dns2=8.8.4.4, network_type=Basic" time="0.493746">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Disabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;dhcp_provider&quot;: &quot;VirtualRouter&quot;,
+&quot;dns1&quot;: &quot;8.8.8.8&quot;,
+&quot;dns2&quot;: &quot;8.8.4.4&quot;,
+&quot;id&quot;: &quot;da758ec9-37a8-45b5-bd52-3295dd4b033c&quot;,
+&quot;internal_dns1&quot;: &quot;8.8.8.8&quot;,
+&quot;internal_dns2&quot;: &quot;8.8.4.4&quot;,
+&quot;local_storage_enabled&quot;: false,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;,
+&quot;network_type&quot;: &quot;Basic&quot;,
+&quot;securitygroups_enabled&quot;: true,
+&quot;tags&quot;: [],
+&quot;zone_token&quot;: &quot;1e838f25-10bf-3ea4-9a13-ec4d03bb9c71&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:9" name="[testhost] testhost: cs_pod : verify setup zone is present that=['zone is successful']" time="0.029587">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:14" name="[testhost] testhost: cs_pod : setup pod is absent name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, state=absent" time="0.599874">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Enabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.1&quot;,
+&quot;id&quot;: &quot;e1a750ef-9926-44d5-9743-576c9230ddf3&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:20" name="[testhost] testhost: cs_pod : verify setup pod is absent that=['pod is successful']" time="0.031312">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:25" name="[testhost] testhost: cs_pod : test fail if missing name" time="0.518538">
+			<system-out>{
+&quot;changed&quot;: false,
+&quot;msg&quot;: &quot;missing required arguments: name&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:29" name="[testhost] testhost: cs_pod : verify results of fail if missing name that=['pod is failed', &quot;pod.msg == 'missing required arguments: name'&quot;]" time="0.033313">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:36" name="[testhost] testhost: cs_pod : test create pod in check mode name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, start_ip=10.100.10.101, gateway=10.100.10.1, netmask=255.255.255.0" time="0.398225">
+			<system-out>{
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:45" name="[testhost] testhost: cs_pod : verify test create pod  in check mode that=['pod_origin is changed', 'pod_origin.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.060091">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:51" name="[testhost] testhost: cs_pod : test create pod name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, start_ip=10.100.10.101, gateway=10.100.10.1, netmask=255.255.255.0" time="0.795173">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Enabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.1&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:59" name="[testhost] testhost: cs_pod : verify test create pod that=['pod_origin is changed', 'pod_origin.allocation_state == &quot;Enabled&quot;', 'pod_origin.start_ip == &quot;10.100.10.101&quot;', 'pod_origin.end_ip == &quot;10.100.10.254&quot;', 'pod_origin.gateway == &quot;10.100.10.1&quot;', 'pod_origin.netmask == &quot;255.255.255.0&quot;', 'pod_origin.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.049300">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:70" name="[testhost] testhost: cs_pod : test create pod idempotence name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, start_ip=10.100.10.101, gateway=10.100.10.1, netmask=255.255.255.0" time="0.386618">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Enabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.1&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:78" name="[testhost] testhost: cs_pod : verify test create pod idempotence that=['pod is not changed', 'pod.allocation_state == &quot;Enabled&quot;', 'pod.start_ip == &quot;10.100.10.101&quot;', 'pod.end_ip == &quot;10.100.10.254&quot;', 'pod.gateway == &quot;10.100.10.1&quot;', 'pod.netmask == &quot;255.255.255.0&quot;', 'pod.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.047751">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:89" name="[testhost] testhost: cs_pod : test update pod in check mode name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, gateway=10.100.10.2, netmask=255.255.255.0" time="0.380519">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Enabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.1&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:97" name="[testhost] testhost: cs_pod : verify test update pod in check mode that=['pod is changed', 'pod.allocation_state == &quot;Enabled&quot;', 'pod.start_ip == &quot;10.100.10.101&quot;', 'pod.end_ip == &quot;10.100.10.254&quot;', 'pod.gateway == &quot;10.100.10.1&quot;', 'pod.netmask == &quot;255.255.255.0&quot;', 'pod.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.044474">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:108" name="[testhost] testhost: cs_pod : test update pod name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, gateway=10.100.10.2, netmask=255.255.255.0" time="0.395949">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Enabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.2&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:115" name="[testhost] testhost: cs_pod : verify test update pod that=['pod is changed', 'pod.allocation_state == &quot;Enabled&quot;', 'pod.start_ip == &quot;10.100.10.101&quot;', 'pod.end_ip == &quot;10.100.10.254&quot;', 'pod.gateway == &quot;10.100.10.2&quot;', 'pod.netmask == &quot;255.255.255.0&quot;', 'pod.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.044168">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:126" name="[testhost] testhost: cs_pod : test update pod idempotence name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, gateway=10.100.10.2, netmask=255.255.255.0" time="0.373754">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Enabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.2&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:133" name="[testhost] testhost: cs_pod : verify test update pod idempotence that=['pod is not changed', 'pod.allocation_state == &quot;Enabled&quot;', 'pod.start_ip == &quot;10.100.10.101&quot;', 'pod.end_ip == &quot;10.100.10.254&quot;', 'pod.gateway == &quot;10.100.10.2&quot;', 'pod.netmask == &quot;255.255.255.0&quot;', 'pod.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.044411">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:144" name="[testhost] testhost: cs_pod : test disable pod in check mode name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, state=disabled" time="0.401666">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Enabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.2&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:151" name="[testhost] testhost: cs_pod : verify test enable pod in check mode that=['pod is changed', 'pod.allocation_state == &quot;Enabled&quot;', 'pod.id == pod_origin.id', 'pod.start_ip == &quot;10.100.10.101&quot;', 'pod.end_ip == &quot;10.100.10.254&quot;', 'pod.gateway == &quot;10.100.10.2&quot;', 'pod.netmask == &quot;255.255.255.0&quot;', 'pod.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.046678">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:163" name="[testhost] testhost: cs_pod : test disable pod name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, state=disabled" time="0.416383">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Disabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.2&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:169" name="[testhost] testhost: cs_pod : verify test enable pod that=['pod is changed', 'pod.allocation_state == &quot;Disabled&quot;', 'pod.id == pod_origin.id', 'pod.start_ip == &quot;10.100.10.101&quot;', 'pod.end_ip == &quot;10.100.10.254&quot;', 'pod.gateway == &quot;10.100.10.2&quot;', 'pod.netmask == &quot;255.255.255.0&quot;', 'pod.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.047450">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:181" name="[testhost] testhost: cs_pod : test disable pod idempotence name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, state=disabled" time="0.377133">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Disabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.2&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:187" name="[testhost] testhost: cs_pod : verify test enable pod idempotence that=['pod is not changed', 'pod.allocation_state == &quot;Disabled&quot;', 'pod.id == pod_origin.id', 'pod.start_ip == &quot;10.100.10.101&quot;', 'pod.end_ip == &quot;10.100.10.254&quot;', 'pod.gateway == &quot;10.100.10.2&quot;', 'pod.netmask == &quot;255.255.255.0&quot;', 'pod.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.049484">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:199" name="[testhost] testhost: cs_pod : test enable pod in check mode name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, state=enabled" time="0.396707">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Disabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.2&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:206" name="[testhost] testhost: cs_pod : verify test disable pod in check mode that=['pod is changed', 'pod.allocation_state == &quot;Disabled&quot;', 'pod.id == pod_origin.id', 'pod.start_ip == &quot;10.100.10.101&quot;', 'pod.end_ip == &quot;10.100.10.254&quot;', 'pod.gateway == &quot;10.100.10.2&quot;', 'pod.netmask == &quot;255.255.255.0&quot;', 'pod.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.046793">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:218" name="[testhost] testhost: cs_pod : test enable pod name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, state=enabled" time="0.393437">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Enabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.2&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:224" name="[testhost] testhost: cs_pod : verify test disable pod that=['pod is changed', 'pod.allocation_state == &quot;Enabled&quot;', 'pod.id == pod_origin.id', 'pod.start_ip == &quot;10.100.10.101&quot;', 'pod.end_ip == &quot;10.100.10.254&quot;', 'pod.gateway == &quot;10.100.10.2&quot;', 'pod.netmask == &quot;255.255.255.0&quot;', 'pod.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.046585">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:237" name="[testhost] testhost: cs_pod : test enable pod idempotence name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, state=enabled" time="0.387288">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Enabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.2&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:243" name="[testhost] testhost: cs_pod : verify test enabled pod idempotence that=['pod is not changed', 'pod.allocation_state == &quot;Enabled&quot;', 'pod.id == pod_origin.id', 'pod.start_ip == &quot;10.100.10.101&quot;', 'pod.end_ip == &quot;10.100.10.254&quot;', 'pod.gateway == &quot;10.100.10.2&quot;', 'pod.netmask == &quot;255.255.255.0&quot;', 'pod.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.046725">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:255" name="[testhost] testhost: cs_pod : test absent pod in check mode name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, state=absent" time="0.376700">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Enabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.2&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:262" name="[testhost] testhost: cs_pod : verify test create pod in check mode that=['pod is changed', 'pod.id == pod_origin.id', 'pod.allocation_state == &quot;Enabled&quot;', 'pod.start_ip == &quot;10.100.10.101&quot;', 'pod.end_ip == &quot;10.100.10.254&quot;', 'pod.gateway == &quot;10.100.10.2&quot;', 'pod.netmask == &quot;255.255.255.0&quot;', 'pod.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.046401">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:274" name="[testhost] testhost: cs_pod : test absent pod name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, state=absent" time="0.422014">
+			<system-out>{
+&quot;allocation_state&quot;: &quot;Enabled&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;end_ip&quot;: &quot;10.100.10.254&quot;,
+&quot;gateway&quot;: &quot;10.100.10.2&quot;,
+&quot;id&quot;: &quot;86c8962b-95b5-4126-96c9-de5ad217da12&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-26952587-pod&quot;,
+&quot;netmask&quot;: &quot;255.255.255.0&quot;,
+&quot;start_ip&quot;: &quot;10.100.10.101&quot;,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:280" name="[testhost] testhost: cs_pod : verify test create pod that=['pod is changed', 'pod.id == pod_origin.id', 'pod.allocation_state == &quot;Enabled&quot;', 'pod.start_ip == &quot;10.100.10.101&quot;', 'pod.end_ip == &quot;10.100.10.254&quot;', 'pod.gateway == &quot;10.100.10.2&quot;', 'pod.netmask == &quot;255.255.255.0&quot;', 'pod.zone == &quot;{{ cs_resource_prefix }}-zone&quot;']" time="0.046231">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:292" name="[testhost] testhost: cs_pod : test absent pod idempotence name={{ cs_resource_prefix }}-pod, zone={{ cs_resource_prefix }}-zone, state=absent" time="0.370772">
+			<system-out>{
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;zone&quot;: &quot;ansible-test-asusraf-26952587-zone&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_pod-nryq2zmw-ÅÑŚÌβŁÈ/tests/integration/targets/cs_pod/tasks/main.yml:298" name="[testhost] testhost: cs_pod : verify test absent pod idempotence that=['pod is not changed']" time="0.029988">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+	</testsuite>
+</testsuites>

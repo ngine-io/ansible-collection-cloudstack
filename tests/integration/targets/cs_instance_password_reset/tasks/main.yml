@@ -1,6 +1,19 @@
 ---
+
+- name: reset without giving a VM or Zone
+  cs_instance_password_reset:
+  ignore_errors: yes
+  register: reset1
+- name: verify that the argument was missing
+  assert:
+    that:
+    - reset1 is failed
+    - "reset1.msg == 'missing required arguments: vm, zone'"
+
+
 - name: reset without giving a VM
-  action: cs_instance_password_reset
+  cs_instance_password_reset:
+    zone: "{{ cs_common_zone_adv }}"
   ignore_errors: yes
   register: reset1
 - name: verify that the argument was missing

@@ -1,0 +1,10 @@
+{
+    "docs": "https://docs.ansible.com/ansible/2.10/dev_guide/testing/sanity/shellcheck.html", 
+    "results": [
+        {
+            "message": "The test `ansible-test sanity --test shellcheck` [[explain](https://docs.ansible.com/ansible/2.10/dev_guide/testing/sanity/shellcheck.html)] failed with 1 error:", 
+            "output": "tests/integration/targets/inventory_cloudstack/runme.sh:11:8: SC2155: Declare and assign separately to avoid masking return values."
+        }
+    ], 
+    "verified": false
+}

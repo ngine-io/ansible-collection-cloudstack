@@ -1,0 +1,41 @@
+{
+    "targets": {
+        "cs_zone_info": {
+            "aliases": [
+                "cloud/", 
+                "cloud/cs/", 
+                "cloud/cs/cs_zone_info", 
+                "cloud/cs_zone_info", 
+                "cs_zone_info", 
+                "module/", 
+                "module/cs_zone_info/", 
+                "module/cs_zone_info/cs_zone_info", 
+                "non_destructive/", 
+                "non_destructive/cs_zone_info", 
+                "posix/", 
+                "role/", 
+                "role/cs_zone_info", 
+                "shippable/", 
+                "shippable/cs/", 
+                "shippable/cs/cs_zone_info", 
+                "shippable/cs/group2/", 
+                "shippable/cs/group2/cs_zone_info", 
+                "shippable/cs/smoketest/", 
+                "shippable/cs/smoketest/cs_zone_info", 
+                "shippable/cs_zone_info"
+            ], 
+            "coverage": false, 
+            "coverage_label": "", 
+            "modules": [
+                "cs_zone_info"
+            ], 
+            "name": "cs_zone_info", 
+            "python_version": "3.6", 
+            "run_time_seconds": 5, 
+            "setup_always": [], 
+            "setup_once": [], 
+            "type": "role", 
+            "validation_seconds": 0
+        }
+    }
+}

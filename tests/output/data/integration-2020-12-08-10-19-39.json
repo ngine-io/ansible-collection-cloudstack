@@ -1,0 +1,11 @@
+{
+    "clouds": {
+        "cs": {
+            "platform": "cs", 
+            "setup_seconds": 0, 
+            "targets": [
+                "cs_volume"
+            ]
+        }
+    }
+}

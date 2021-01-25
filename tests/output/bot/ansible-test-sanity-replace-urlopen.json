@@ -1,0 +1,10 @@
+{
+    "docs": "https://docs.ansible.com/ansible/2.10/dev_guide/testing/sanity/replace-urlopen.html", 
+    "results": [
+        {
+            "message": "The test `ansible-test sanity --test replace-urlopen` [[explain](https://docs.ansible.com/ansible/2.10/dev_guide/testing/sanity/replace-urlopen.html)] failed with 1 error:", 
+            "output": "tests/unit/plugins/inventory/manual_test_cs_navigation.py:11:21: use `ansible.module_utils.urls.open_url` instead of `urlopen`"
+        }
+    ], 
+    "verified": false
+}

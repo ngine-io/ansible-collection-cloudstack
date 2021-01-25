@@ -53,7 +53,7 @@
     - iso.display_text == "{{ cs_resource_prefix }}-iso"
     - iso.cross_zones == true
 
-- name: test update iso in check mdoe
+- name: test update iso in check mode
   cs_iso:
     name: "{{ cs_resource_prefix }}-iso"
     display_text: "{{ cs_resource_prefix }}-iso display_text"

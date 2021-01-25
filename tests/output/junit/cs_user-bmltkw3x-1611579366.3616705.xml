@@ -1,0 +1,2243 @@
+<?xml version="1.0" ?>
+<testsuites disabled="0" errors="0" failures="0" tests="71" time="27.22217345237732">
+	<testsuite disabled="0" errors="0" failures="0" name="cs_user-bmltkw3x" skipped="0" tests="71" time="27.22217345237732">
+		<testcase name="[testhost] testhost: Gathering Facts gather_subset=['all'], gather_timeout=10" time="0.882481">
+			<system-out>{
+&quot;ansible_facts&quot;: {
+&quot;ansible_apparmor&quot;: {
+&quot;status&quot;: &quot;disabled&quot;
+},
+&quot;ansible_architecture&quot;: &quot;x86_64&quot;,
+&quot;ansible_bios_date&quot;: &quot;04/17/2019&quot;,
+&quot;ansible_bios_vendor&quot;: &quot;American Megatrends Inc.&quot;,
+&quot;ansible_bios_version&quot;: &quot;UX303UB.302&quot;,
+&quot;ansible_board_asset_tag&quot;: &quot;ATN12345678901234567&quot;,
+&quot;ansible_board_name&quot;: &quot;UX303UB&quot;,
+&quot;ansible_board_serial&quot;: &quot;BSN12345678901234567&quot;,
+&quot;ansible_board_vendor&quot;: &quot;ASUSTeK COMPUTER INC.&quot;,
+&quot;ansible_board_version&quot;: &quot;1.0&quot;,
+&quot;ansible_chassis_asset_tag&quot;: &quot;ATN12345678901234567&quot;,
+&quot;ansible_chassis_serial&quot;: &quot;G1N0CJ020652033&quot;,
+&quot;ansible_chassis_vendor&quot;: &quot;ASUSTeK COMPUTER INC.&quot;,
+&quot;ansible_chassis_version&quot;: &quot;1.0&quot;,
+&quot;ansible_cmdline&quot;: {
+&quot;BOOT_IMAGE&quot;: &quot;/vmlinuz-5.8.0-38-generic&quot;,
+&quot;quiet&quot;: true,
+&quot;ro&quot;: true,
+&quot;root&quot;: &quot;/dev/mapper/vgubuntu-root&quot;,
+&quot;splash&quot;: true
+},
+&quot;ansible_date_time&quot;: {
+&quot;date&quot;: &quot;2021-01-25&quot;,
+&quot;day&quot;: &quot;25&quot;,
+&quot;epoch&quot;: &quot;1611579338&quot;,
+&quot;hour&quot;: &quot;12&quot;,
+&quot;iso8601&quot;: &quot;2021-01-25T12:55:38Z&quot;,
+&quot;iso8601_basic&quot;: &quot;20210125T125538427547&quot;,
+&quot;iso8601_basic_short&quot;: &quot;20210125T125538&quot;,
+&quot;iso8601_micro&quot;: &quot;2021-01-25T12:55:38.427547Z&quot;,
+&quot;minute&quot;: &quot;55&quot;,
+&quot;month&quot;: &quot;01&quot;,
+&quot;second&quot;: &quot;38&quot;,
+&quot;time&quot;: &quot;12:55:38&quot;,
+&quot;tz&quot;: &quot;UTC&quot;,
+&quot;tz_offset&quot;: &quot;+0000&quot;,
+&quot;weekday&quot;: &quot;Monday&quot;,
+&quot;weekday_number&quot;: &quot;1&quot;,
+&quot;weeknumber&quot;: &quot;04&quot;,
+&quot;year&quot;: &quot;2021&quot;
+},
+&quot;ansible_device_links&quot;: {
+&quot;ids&quot;: {},
+&quot;labels&quot;: {},
+&quot;masters&quot;: {
+&quot;dm-0&quot;: [
+&quot;dm-1&quot;,
+&quot;dm-2&quot;,
+&quot;dm-3&quot;,
+&quot;dm-4&quot;,
+&quot;dm-5&quot;
+],
+&quot;sda3&quot;: [
+&quot;dm-0&quot;
+],
+&quot;sdb1&quot;: [
+&quot;dm-6&quot;
+]
+},
+&quot;uuids&quot;: {}
+},
+&quot;ansible_devices&quot;: {
+&quot;dm-0&quot;: {
+&quot;holders&quot;: [
+&quot;vgubuntu-root&quot;,
+&quot;vgubuntu-docker&quot;,
+&quot;vgubuntu-swap_1&quot;,
+&quot;vgubuntu-snaps&quot;,
+&quot;vgubuntu-home&quot;
+],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [
+&quot;dm-1&quot;,
+&quot;dm-2&quot;,
+&quot;dm-3&quot;,
+&quot;dm-4&quot;,
+&quot;dm-5&quot;
+],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;497534976&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;237.24 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;dm-1&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;52428800&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;25.00 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;dm-2&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;8388608&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;4.00 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;dm-3&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;251658240&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;120.00 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;dm-4&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;83886080&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;40.00 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;dm-5&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;31457280&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;15.00 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;dm-6&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;1&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;&quot;,
+&quot;sectors&quot;: &quot;3907022848&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;1.82 TB&quot;,
+&quot;support_discard&quot;: &quot;0&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop0&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;0&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;0.00 Bytes&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop1&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;200416&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;97.86 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop10&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;280&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;140.00 KB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop11&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;225912&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;110.31 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop12&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;104496&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;51.02 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop13&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;446248&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;217.89 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop14&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;198528&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;96.94 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop15&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;63616&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;31.06 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop16&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;63672&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;31.09 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop17&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;1307528&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;638.44 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop18&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;167048&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;81.57 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop19&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;1273304&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;621.73 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop2&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;200464&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;97.88 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop20&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;174000&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;84.96 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop21&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;132648&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;64.77 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop22&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;131792&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;64.35 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop23&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;448920&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;219.20 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop24&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;448888&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;219.18 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop25&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;242568&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;118.44 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop26&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;104536&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;51.04 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop27&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;168984&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;82.51 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop28&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;278008&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;135.75 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop3&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;113424&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;55.38 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop4&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;225912&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;110.31 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop5&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;113384&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;55.36 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop6&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;333552&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;162.87 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop7&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;330576&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;161.41 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop8&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;448496&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;218.99 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;loop9&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: null,
+&quot;partitions&quot;: {},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;198448&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;96.90 MB&quot;,
+&quot;support_discard&quot;: &quot;4096&quot;,
+&quot;vendor&quot;: null,
+&quot;virtual&quot;: 1
+},
+&quot;sda&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: &quot;HFS256G32MND-220&quot;,
+&quot;partitions&quot;: {
+&quot;sda1&quot;: {
+&quot;holders&quot;: [],
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;sectors&quot;: &quot;1048576&quot;,
+&quot;sectorsize&quot;: 512,
+&quot;size&quot;: &quot;512.00 MB&quot;,
+&quot;start&quot;: &quot;2048&quot;,
+&quot;uuid&quot;: null
+},
+&quot;sda2&quot;: {
+&quot;holders&quot;: [],
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;sectors&quot;: &quot;1499136&quot;,
+&quot;sectorsize&quot;: 512,
+&quot;size&quot;: &quot;732.00 MB&quot;,
+&quot;start&quot;: &quot;1050624&quot;,
+&quot;uuid&quot;: null
+},
+&quot;sda3&quot;: {
+&quot;holders&quot;: [
+&quot;sda3_crypt&quot;
+],
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [
+&quot;dm-0&quot;
+],
+&quot;uuids&quot;: []
+},
+&quot;sectors&quot;: &quot;497567744&quot;,
+&quot;sectorsize&quot;: 512,
+&quot;size&quot;: &quot;237.26 GB&quot;,
+&quot;start&quot;: &quot;2549760&quot;,
+&quot;uuid&quot;: null
+}
+},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;0&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;500118192&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;238.47 GB&quot;,
+&quot;support_discard&quot;: &quot;512&quot;,
+&quot;vendor&quot;: &quot;ATA&quot;,
+&quot;virtual&quot;: 1
+},
+&quot;sdb&quot;: {
+&quot;holders&quot;: [],
+&quot;host&quot;: &quot;&quot;,
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [],
+&quot;uuids&quot;: []
+},
+&quot;model&quot;: &quot;External USB 3.0&quot;,
+&quot;partitions&quot;: {
+&quot;sdb1&quot;: {
+&quot;holders&quot;: [
+&quot;luks-ec4e3795-9a97-46d9-af8d-cd42955e48b4&quot;
+],
+&quot;links&quot;: {
+&quot;ids&quot;: [],
+&quot;labels&quot;: [],
+&quot;masters&quot;: [
+&quot;dm-6&quot;
+],
+&quot;uuids&quot;: []
+},
+&quot;sectors&quot;: &quot;3907026944&quot;,
+&quot;sectorsize&quot;: 512,
+&quot;size&quot;: &quot;1.82 TB&quot;,
+&quot;start&quot;: &quot;2048&quot;,
+&quot;uuid&quot;: null
+}
+},
+&quot;removable&quot;: &quot;0&quot;,
+&quot;rotational&quot;: &quot;1&quot;,
+&quot;sas_address&quot;: null,
+&quot;sas_device_handle&quot;: null,
+&quot;scheduler_mode&quot;: &quot;mq-deadline&quot;,
+&quot;sectors&quot;: &quot;3907029168&quot;,
+&quot;sectorsize&quot;: &quot;512&quot;,
+&quot;size&quot;: &quot;1.82 TB&quot;,
+&quot;support_discard&quot;: &quot;0&quot;,
+&quot;vendor&quot;: &quot;TOSHIBA&quot;,
+&quot;virtual&quot;: 1
+}
+},
+&quot;ansible_distribution&quot;: &quot;Ubuntu&quot;,
+&quot;ansible_distribution_file_parsed&quot;: true,
+&quot;ansible_distribution_file_path&quot;: &quot;/etc/os-release&quot;,
+&quot;ansible_distribution_file_variety&quot;: &quot;Debian&quot;,
+&quot;ansible_distribution_major_version&quot;: &quot;18&quot;,
+&quot;ansible_distribution_release&quot;: &quot;bionic&quot;,
+&quot;ansible_distribution_version&quot;: &quot;18.04&quot;,
+&quot;ansible_dns&quot;: {
+&quot;nameservers&quot;: [
+&quot;10.63.0.1&quot;
+]
+},
+&quot;ansible_domain&quot;: &quot;&quot;,
+&quot;ansible_effective_group_id&quot;: 0,
+&quot;ansible_effective_user_id&quot;: 0,
+&quot;ansible_env&quot;: {
+&quot;ANSIBLE_CALLBACK_WHITELIST&quot;: &quot;junit&quot;,
+&quot;ANSIBLE_COLLECTIONS_PATH&quot;: &quot;/root&quot;,
+&quot;ANSIBLE_CONFIG&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/integration.cfg&quot;,
+&quot;ANSIBLE_DEPRECATION_WARNINGS&quot;: &quot;false&quot;,
+&quot;ANSIBLE_DEVEL_WARNING&quot;: &quot;false&quot;,
+&quot;ANSIBLE_FORCE_COLOR&quot;: &quot;true&quot;,
+&quot;ANSIBLE_FORCE_HANDLERS&quot;: &quot;true&quot;,
+&quot;ANSIBLE_HOST_KEY_CHECKING&quot;: &quot;false&quot;,
+&quot;ANSIBLE_HOST_PATTERN_MISMATCH&quot;: &quot;error&quot;,
+&quot;ANSIBLE_INVENTORY&quot;: &quot;/dev/null&quot;,
+&quot;ANSIBLE_LIBRARY&quot;: &quot;/dev/null&quot;,
+&quot;ANSIBLE_PLAYBOOK_DIR&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration&quot;,
+&quot;ANSIBLE_PYTHON_INTERPRETER&quot;: &quot;/set/ansible_python_interpreter/in/inventory&quot;,
+&quot;ANSIBLE_PYTHON_MODULE_RLIMIT_NOFILE&quot;: &quot;1024&quot;,
+&quot;ANSIBLE_RETRY_FILES_ENABLED&quot;: &quot;false&quot;,
+&quot;ANSIBLE_ROLES_PATH&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets&quot;,
+&quot;ANSIBLE_TEST_CI&quot;: &quot;&quot;,
+&quot;ANSIBLE_TEST_COVERAGE&quot;: &quot;&quot;,
+&quot;ANSIBLE_TEST_PYTHON_INTERPRETER&quot;: &quot;/usr/bin/python3.6&quot;,
+&quot;ANSIBLE_TEST_PYTHON_VERSION&quot;: &quot;3.6&quot;,
+&quot;ANSIBLE_WORKER_SHUTDOWN_POLL_COUNT&quot;: &quot;100&quot;,
+&quot;ANSIBLE_WORKER_SHUTDOWN_POLL_DELAY&quot;: &quot;0.1&quot;,
+&quot;CLOUDSTACK_ENDPOINT&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;CLOUDSTACK_KEY&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;CLOUDSTACK_SECRET&quot;: &quot;-wkrHErJnQdGH2-R0-AkkYMi3RGdA3k4cXjjiUF5MW320xJjkd__yGkAD4SOLIgAYbPTLhWS4PamTdYvXcnJQA&quot;,
+&quot;CLOUDSTACK_TIMEOUT&quot;: &quot;60&quot;,
+&quot;HOME&quot;: &quot;/root&quot;,
+&quot;INVENTORY_PATH&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/inventory&quot;,
+&quot;JUNIT_OUTPUT_DIR&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/junit&quot;,
+&quot;LC_ALL&quot;: &quot;en_US.UTF-8&quot;,
+&quot;OUTPUT_DIR&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/output_dir&quot;,
+&quot;PAGER&quot;: &quot;/bin/cat&quot;,
+&quot;PATH&quot;: &quot;/tmp/python-tq8v9siq-ansible:/root/ansible/test/lib/ansible_test/_data/injector:/root/ansible/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;,
+&quot;PWD&quot;: &quot;/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration&quot;,
+&quot;PYTHONPATH&quot;: &quot;/root/ansible/lib&quot;
+},
+&quot;ansible_fibre_channel_wwn&quot;: [],
+&quot;ansible_fips&quot;: false,
+&quot;ansible_form_factor&quot;: &quot;Notebook&quot;,
+&quot;ansible_fqdn&quot;: &quot;05d603928d85&quot;,
+&quot;ansible_hostname&quot;: &quot;05d603928d85&quot;,
+&quot;ansible_hostnqn&quot;: &quot;&quot;,
+&quot;ansible_is_chroot&quot;: false,
+&quot;ansible_iscsi_iqn&quot;: &quot;&quot;,
+&quot;ansible_kernel&quot;: &quot;5.8.0-38-generic&quot;,
+&quot;ansible_kernel_version&quot;: &quot;#43~20.04.1-Ubuntu SMP Tue Jan 12 16:39:47 UTC 2021&quot;,
+&quot;ansible_local&quot;: {},
+&quot;ansible_lsb&quot;: {
+&quot;codename&quot;: &quot;bionic&quot;,
+&quot;description&quot;: &quot;Ubuntu 18.04.5 LTS&quot;,
+&quot;id&quot;: &quot;Ubuntu&quot;,
+&quot;major_release&quot;: &quot;18&quot;,
+&quot;release&quot;: &quot;18.04&quot;
+},
+&quot;ansible_machine&quot;: &quot;x86_64&quot;,
+&quot;ansible_machine_id&quot;: &quot;8bab3c65459e4582b95ca278b459dc10&quot;,
+&quot;ansible_memfree_mb&quot;: 137,
+&quot;ansible_memory_mb&quot;: {
+&quot;nocache&quot;: {
+&quot;free&quot;: 3439,
+&quot;used&quot;: 8445
+},
+&quot;real&quot;: {
+&quot;free&quot;: 137,
+&quot;total&quot;: 11884,
+&quot;used&quot;: 11747
+},
+&quot;swap&quot;: {
+&quot;cached&quot;: 90,
+&quot;free&quot;: 0,
+&quot;total&quot;: 4095,
+&quot;used&quot;: 4095
+}
+},
+&quot;ansible_memtotal_mb&quot;: 11884,
+&quot;ansible_mounts&quot;: [
+{
+&quot;block_available&quot;: 594026,
+&quot;block_size&quot;: 4096,
+&quot;block_total&quot;: 10255672,
+&quot;block_used&quot;: 9661646,
+&quot;device&quot;: &quot;/dev/mapper/vgubuntu-docker&quot;,
+&quot;fstype&quot;: &quot;ext4&quot;,
+&quot;inode_available&quot;: 1334159,
+&quot;inode_total&quot;: 2621440,
+&quot;inode_used&quot;: 1287281,
+&quot;mount&quot;: &quot;/tmp&quot;,
+&quot;options&quot;: &quot;rw,relatime,bind&quot;,
+&quot;size_available&quot;: 2433130496,
+&quot;size_total&quot;: 42007232512,
+&quot;uuid&quot;: &quot;N/A&quot;
+},
+{
+&quot;block_available&quot;: 594026,
+&quot;block_size&quot;: 4096,
+&quot;block_total&quot;: 10255672,
+&quot;block_used&quot;: 9661646,
+&quot;device&quot;: &quot;/dev/mapper/vgubuntu-docker&quot;,
+&quot;fstype&quot;: &quot;ext4&quot;,
+&quot;inode_available&quot;: 1334159,
+&quot;inode_total&quot;: 2621440,
+&quot;inode_used&quot;: 1287281,
+&quot;mount&quot;: &quot;/run&quot;,
+&quot;options&quot;: &quot;rw,relatime,bind&quot;,
+&quot;size_available&quot;: 2433130496,
+&quot;size_total&quot;: 42007232512,
+&quot;uuid&quot;: &quot;N/A&quot;
+},
+{
+&quot;block_available&quot;: 594026,
+&quot;block_size&quot;: 4096,
+&quot;block_total&quot;: 10255672,
+&quot;block_used&quot;: 9661646,
+&quot;device&quot;: &quot;/dev/mapper/vgubuntu-docker&quot;,
+&quot;fstype&quot;: &quot;ext4&quot;,
+&quot;inode_available&quot;: 1334159,
+&quot;inode_total&quot;: 2621440,
+&quot;inode_used&quot;: 1287281,
+&quot;mount&quot;: &quot;/run/lock&quot;,
+&quot;options&quot;: &quot;rw,relatime,bind&quot;,
+&quot;size_available&quot;: 2433130496,
+&quot;size_total&quot;: 42007232512,
+&quot;uuid&quot;: &quot;N/A&quot;
+},
+{
+&quot;block_available&quot;: 594026,
+&quot;block_size&quot;: 4096,
+&quot;block_total&quot;: 10255672,
+&quot;block_used&quot;: 9661646,
+&quot;device&quot;: &quot;/dev/mapper/vgubuntu-docker&quot;,
+&quot;fstype&quot;: &quot;ext4&quot;,
+&quot;inode_available&quot;: 1334159,
+&quot;inode_total&quot;: 2621440,
+&quot;inode_used&quot;: 1287281,
+&quot;mount&quot;: &quot;/etc/resolv.conf&quot;,
+&quot;options&quot;: &quot;rw,relatime,bind&quot;,
+&quot;size_available&quot;: 2433130496,
+&quot;size_total&quot;: 42007232512,
+&quot;uuid&quot;: &quot;N/A&quot;
+},
+{
+&quot;block_available&quot;: 594026,
+&quot;block_size&quot;: 4096,
+&quot;block_total&quot;: 10255672,
+&quot;block_used&quot;: 9661646,
+&quot;device&quot;: &quot;/dev/mapper/vgubuntu-docker&quot;,
+&quot;fstype&quot;: &quot;ext4&quot;,
+&quot;inode_available&quot;: 1334159,
+&quot;inode_total&quot;: 2621440,
+&quot;inode_used&quot;: 1287281,
+&quot;mount&quot;: &quot;/etc/hostname&quot;,
+&quot;options&quot;: &quot;rw,relatime,bind&quot;,
+&quot;size_available&quot;: 2433130496,
+&quot;size_total&quot;: 42007232512,
+&quot;uuid&quot;: &quot;N/A&quot;
+},
+{
+&quot;block_available&quot;: 594026,
+&quot;block_size&quot;: 4096,
+&quot;block_total&quot;: 10255672,
+&quot;block_used&quot;: 9661646,
+&quot;device&quot;: &quot;/dev/mapper/vgubuntu-docker&quot;,
+&quot;fstype&quot;: &quot;ext4&quot;,
+&quot;inode_available&quot;: 1334159,
+&quot;inode_total&quot;: 2621440,
+&quot;inode_used&quot;: 1287281,
+&quot;mount&quot;: &quot;/etc/hosts&quot;,
+&quot;options&quot;: &quot;rw,relatime,bind&quot;,
+&quot;size_available&quot;: 2433130496,
+&quot;size_total&quot;: 42007232512,
+&quot;uuid&quot;: &quot;N/A&quot;
+}
+],
+&quot;ansible_nodename&quot;: &quot;05d603928d85&quot;,
+&quot;ansible_os_family&quot;: &quot;Debian&quot;,
+&quot;ansible_pkg_mgr&quot;: &quot;apt&quot;,
+&quot;ansible_proc_cmdline&quot;: {
+&quot;BOOT_IMAGE&quot;: &quot;/vmlinuz-5.8.0-38-generic&quot;,
+&quot;quiet&quot;: true,
+&quot;ro&quot;: true,
+&quot;root&quot;: &quot;/dev/mapper/vgubuntu-root&quot;,
+&quot;splash&quot;: true
+},
+&quot;ansible_processor&quot;: [
+&quot;0&quot;,
+&quot;GenuineIntel&quot;,
+&quot;Intel(R) Core(TM) i7-6500U CPU @ 2.50GHz&quot;,
+&quot;1&quot;,
+&quot;GenuineIntel&quot;,
+&quot;Intel(R) Core(TM) i7-6500U CPU @ 2.50GHz&quot;,
+&quot;2&quot;,
+&quot;GenuineIntel&quot;,
+&quot;Intel(R) Core(TM) i7-6500U CPU @ 2.50GHz&quot;,
+&quot;3&quot;,
+&quot;GenuineIntel&quot;,
+&quot;Intel(R) Core(TM) i7-6500U CPU @ 2.50GHz&quot;
+],
+&quot;ansible_processor_cores&quot;: 2,
+&quot;ansible_processor_count&quot;: 1,
+&quot;ansible_processor_nproc&quot;: 4,
+&quot;ansible_processor_threads_per_core&quot;: 2,
+&quot;ansible_processor_vcpus&quot;: 4,
+&quot;ansible_product_name&quot;: &quot;UX303UB&quot;,
+&quot;ansible_product_serial&quot;: &quot;G1N0CJ020652033&quot;,
+&quot;ansible_product_uuid&quot;: &quot;d4d7f964-52d3-f945-80dc-a9a095694c74&quot;,
+&quot;ansible_product_version&quot;: &quot;1.0&quot;,
+&quot;ansible_python&quot;: {
+&quot;executable&quot;: &quot;/tmp/python-tq8v9siq-ansible/python&quot;,
+&quot;has_sslcontext&quot;: true,
+&quot;type&quot;: &quot;cpython&quot;,
+&quot;version&quot;: {
+&quot;major&quot;: 3,
+&quot;micro&quot;: 9,
+&quot;minor&quot;: 6,
+&quot;releaselevel&quot;: &quot;final&quot;,
+&quot;serial&quot;: 0
+},
+&quot;version_info&quot;: [
+3,
+6,
+9,
+&quot;final&quot;,
+0
+]
+},
+&quot;ansible_python_version&quot;: &quot;3.6.9&quot;,
+&quot;ansible_real_group_id&quot;: 0,
+&quot;ansible_real_user_id&quot;: 0,
+&quot;ansible_selinux&quot;: {
+&quot;status&quot;: &quot;Missing selinux Python library&quot;
+},
+&quot;ansible_selinux_python_present&quot;: false,
+&quot;ansible_service_mgr&quot;: &quot;systemd&quot;,
+&quot;ansible_ssh_host_key_ecdsa_public&quot;: &quot;AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKXFFhScxe+xztmWiEzCRrS33+gQnEBnUZEdGfZzV849lAQZRcK0YSCjce3dvMs7rV4FulR1UqA9fSJGtUfCO6A=&quot;,
+&quot;ansible_ssh_host_key_ecdsa_public_keytype&quot;: &quot;ecdsa-sha2-nistp256&quot;,
+&quot;ansible_ssh_host_key_ed25519_public&quot;: &quot;AAAAC3NzaC1lZDI1NTE5AAAAIDQw7DVlh6zXPucmio1fvrd5X1pTIovmDPBbr9oQ7DsF&quot;,
+&quot;ansible_ssh_host_key_ed25519_public_keytype&quot;: &quot;ssh-ed25519&quot;,
+&quot;ansible_ssh_host_key_rsa_public&quot;: &quot;AAAAB3NzaC1yc2EAAAADAQABAAABAQDXZrK4B3u/pq7Y+YfaFPr+5QEzcN+JLg/RlYXqQtLPjI3E19pNY27mGlaLm726NDbA4ouPIkqCo9y0Rkqyeaprn8EQO2gCqr06qZ7M3o4jaksHxNqo7uVxeFRQhvt3Q566bj/11uGOy01BlBRHi07G+IO9e02bNn55jR8rZURj4navuEgr0+l4CvuSrIbcEMB/qAYFAW4B1oNrsH4g09kIJxY9d3/JsOGUddOkwHwfP1+YmFAPZFruWXi/WPOnlWdaHtW4LCOdJMbHZxAGKiQtdEpWZBmNIdH2JfcVB9vjBv/WJtOgRpPhJEJIIJU6kZvipGxicPz3kj/nBUqyY4M5&quot;,
+&quot;ansible_ssh_host_key_rsa_public_keytype&quot;: &quot;ssh-rsa&quot;,
+&quot;ansible_swapfree_mb&quot;: 0,
+&quot;ansible_swaptotal_mb&quot;: 4095,
+&quot;ansible_system&quot;: &quot;Linux&quot;,
+&quot;ansible_system_vendor&quot;: &quot;ASUSTeK COMPUTER INC.&quot;,
+&quot;ansible_uptime_seconds&quot;: 529363,
+&quot;ansible_user_dir&quot;: &quot;/root&quot;,
+&quot;ansible_user_gecos&quot;: &quot;root&quot;,
+&quot;ansible_user_gid&quot;: 0,
+&quot;ansible_user_id&quot;: &quot;root&quot;,
+&quot;ansible_user_shell&quot;: &quot;/bin/bash&quot;,
+&quot;ansible_user_uid&quot;: 0,
+&quot;ansible_userspace_architecture&quot;: &quot;x86_64&quot;,
+&quot;ansible_userspace_bits&quot;: &quot;64&quot;,
+&quot;ansible_virtualization_role&quot;: &quot;guest&quot;,
+&quot;ansible_virtualization_type&quot;: &quot;docker&quot;,
+&quot;gather_subset&quot;: [
+&quot;all&quot;
+],
+&quot;module_setup&quot;: true
+},
+&quot;changed&quot;: false,
+&quot;deprecations&quot;: [],
+&quot;warnings&quot;: []
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_common/tasks/main.yml:2" name="[testhost] testhost: cs_common : wait for system template available name={{ cs_common_template }}, state=absent, cross_zones=True, template_filter=all" time="0.569040">
+			<system-out>{
+&quot;account&quot;: &quot;system&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;attempts&quot;: 1,
+&quot;changed&quot;: true,
+&quot;checksum&quot;: &quot;&quot;,
+&quot;created&quot;: &quot;2021-01-25T12:54:00+0000&quot;,
+&quot;cross_zones&quot;: true,
+&quot;display_text&quot;: &quot;CentOS 5.6 (64-bit) no GUI (Simulator)&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;format&quot;: &quot;VHD&quot;,
+&quot;hypervisor&quot;: &quot;Simulator&quot;,
+&quot;id&quot;: &quot;882d501c-aa16-11e8-bbe5-0242ac110003&quot;,
+&quot;is_extractable&quot;: false,
+&quot;is_featured&quot;: true,
+&quot;is_public&quot;: true,
+&quot;is_ready&quot;: true,
+&quot;name&quot;: &quot;CentOS 5.6 (64-bit) no GUI (Simulator)&quot;,
+&quot;os_type&quot;: &quot;CentOS 5.6 (64-bit)&quot;,
+&quot;password_enabled&quot;: false,
+&quot;sshkey_enabled&quot;: false,
+&quot;status&quot;: &quot;Download Complete&quot;,
+&quot;tags&quot;: [],
+&quot;template_type&quot;: &quot;BUILTIN&quot;,
+&quot;zone&quot;: &quot;Sandbox-simulator-advanced&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_common/tasks/main.yml:14" name="[testhost] testhost: cs_common : smoke test instance name=smoke-test-vm, template={{ cs_common_template }}, service_offering={{ cs_common_service_offering }}, zone={{ cs_common_zone_adv }}" time="0.586118">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;affinity_groups&quot;: [],
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;attempts&quot;: 1,
+&quot;changed&quot;: false,
+&quot;created&quot;: &quot;2021-01-25T12:54:48+0000&quot;,
+&quot;default_ip&quot;: &quot;10.1.1.70&quot;,
+&quot;display_name&quot;: &quot;smoke-test-vm&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;host&quot;: &quot;SimulatedAgent.5695f591-c6b5-48e7-b5c2-8f814f503bde&quot;,
+&quot;hypervisor&quot;: &quot;Simulator&quot;,
+&quot;id&quot;: &quot;69ea0e99-70fd-4749-b508-ea1055a34028&quot;,
+&quot;instance_name&quot;: &quot;i-2-5-QA&quot;,
+&quot;name&quot;: &quot;smoke-test-vm&quot;,
+&quot;password_enabled&quot;: false,
+&quot;security_groups&quot;: [],
+&quot;service_offering&quot;: &quot;Small Instance&quot;,
+&quot;state&quot;: &quot;Running&quot;,
+&quot;tags&quot;: [],
+&quot;template&quot;: &quot;CentOS 5.6 (64-bit) no GUI (Simulator)&quot;,
+&quot;template_display_text&quot;: &quot;CentOS 5.6 (64-bit) no GUI (Simulator)&quot;,
+&quot;user_data&quot;: &quot;&quot;,
+&quot;zone&quot;: &quot;Sandbox-simulator-advanced&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:2" name="[testhost] testhost: cs_user : setup username={{ cs_resource_prefix }}_user, state=absent" time="0.568537">
+			<system-out>{
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;domain&quot;: &quot;ROOT&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:5" name="[testhost] testhost: cs_user : verify setup that=['user is successful']" time="0.066021">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:10" name="[testhost] testhost: cs_user : test fail if missing username" time="0.422725">
+			<system-out>{
+&quot;changed&quot;: false,
+&quot;msg&quot;: &quot;missing required arguments: username&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:14" name="[testhost] testhost: cs_user : verify results of fail if missing params that=['user is failed', 'user.msg == &quot;missing required arguments: username&quot;']" time="0.059472">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:20" name="[testhost] testhost: cs_user : test fail if missing params if state=present username={{ cs_resource_prefix }}_user" time="0.392945">
+			<system-out>{
+&quot;changed&quot;: false,
+&quot;msg&quot;: &quot;missing required arguments: account, email, password, first_name, last_name&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:25" name="[testhost] testhost: cs_user : verify results of fail if missing params if state=present that=['user is failed', 'user.msg == &quot;missing required arguments: account, email, password, first_name, last_name&quot;']" time="0.065619">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:31" name="[testhost] testhost: cs_user : test create user in check mode username={{ cs_resource_prefix }}_user, password={{ cs_resource_prefix }}_password, last_name={{ cs_resource_prefix }}_last_name, first_name={{ cs_resource_prefix }}_first_name, email={{ cs_resource_prefix }}@example.com, account=admin" time="0.490457">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;domain&quot;: &quot;ROOT&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:41" name="[testhost] testhost: cs_user : verify results of create user in check mode that=['user is successful', 'user is changed']" time="0.071969">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:47" name="[testhost] testhost: cs_user : test create user username={{ cs_resource_prefix }}_user, password={{ cs_resource_prefix }}_password, last_name={{ cs_resource_prefix }}_last_name, first_name={{ cs_resource_prefix }}_first_name, email={{ cs_resource_prefix }}@example.com, account=admin" time="0.978010">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:56" name="[testhost] testhost: cs_user : verify results of create user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.first_name == &quot;{{ cs_resource_prefix }}_first_name&quot;', 'user.last_name == &quot;{{ cs_resource_prefix }}_last_name&quot;', 'user.email == &quot;{{ cs_resource_prefix }}@example.com&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;', 'user.user_api_key is not defined']" time="0.096751">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:71" name="[testhost] testhost: cs_user : test create user idempotence username={{ cs_resource_prefix }}_user, password={{ cs_resource_prefix }}_password, last_name={{ cs_resource_prefix }}_last_name, first_name={{ cs_resource_prefix }}_first_name, email={{ cs_resource_prefix }}@example.com, account=admin" time="0.426673">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:80" name="[testhost] testhost: cs_user : verify results of create user idempotence that=['user is successful', 'user is not changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.first_name == &quot;{{ cs_resource_prefix }}_first_name&quot;', 'user.last_name == &quot;{{ cs_resource_prefix }}_last_name&quot;', 'user.email == &quot;{{ cs_resource_prefix }}@example.com&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;', 'user.user_api_key is not defined']" time="0.085441">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:95" name="[testhost] testhost: cs_user : test create account name={{ cs_resource_prefix }}_acc, username={{ cs_resource_prefix }}_acc_username, password={{ cs_resource_prefix }}_acc_password, last_name={{ cs_resource_prefix }}_acc_last_name, first_name={{ cs_resource_prefix }}_acc_first_name, email={{ cs_resource_prefix }}@example.com, network_domain=example.com" time="1.028609">
+			<system-out>{
+&quot;account_type&quot;: &quot;user&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;id&quot;: &quot;fc4433b7-7ba7-4c64-8604-d571a3354d62&quot;,
+&quot;name&quot;: &quot;ansible-test-asusraf-58088657_acc&quot;,
+&quot;network_domain&quot;: &quot;example.com&quot;,
+&quot;role&quot;: &quot;User&quot;,
+&quot;state&quot;: &quot;enabled&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:105" name="[testhost] testhost: cs_user : verify results of create account that=['acc is successful', 'acc is changed', 'acc.name == &quot;{{ cs_resource_prefix }}_acc&quot;', 'acc.network_domain == &quot;example.com&quot;', 'acc.account_type == &quot;user&quot;', 'acc.state == &quot;enabled&quot;', 'acc.domain == &quot;ROOT&quot;', 'acc is changed']" time="0.089921">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:117" name="[testhost] testhost: cs_user : test create user2 in check mode username={{ cs_resource_prefix }}_user2, password={{ cs_resource_prefix }}_password2, last_name={{ cs_resource_prefix }}_last_name2, first_name={{ cs_resource_prefix }}_first_name2, email={{ cs_resource_prefix }}@example2.com, account={{ cs_resource_prefix }}_acc, keys_registered=True" time="0.459102">
+			<system-out>{
+&quot;account&quot;: &quot;ansible-test-asusraf-58088657_acc&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;domain&quot;: &quot;ROOT&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:128" name="[testhost] testhost: cs_user : verify results of create user idempotence that=['user is successful', 'user is changed']" time="0.069642">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:134" name="[testhost] testhost: cs_user : test create user2 username={{ cs_resource_prefix }}_user2, password={{ cs_resource_prefix }}_password2, last_name={{ cs_resource_prefix }}_last_name2, first_name={{ cs_resource_prefix }}_first_name2, email={{ cs_resource_prefix }}@example2.com, account={{ cs_resource_prefix }}_acc, keys_registered=True" time="0.951778">
+			<system-out>{
+&quot;account&quot;: &quot;ansible-test-asusraf-58088657_acc&quot;,
+&quot;account_type&quot;: &quot;user&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:46+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example2.com&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name2&quot;,
+&quot;id&quot;: &quot;1e0edb0c-1286-41f5-91db-18f37a366872&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name2&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;user_api_key&quot;: &quot;0IpQOqhden_zqvym1vhkEfRELvsAqzfiKeJQKZDbR7f2uW3Qxd7FEefBOXAqfg9AVHhzLVB84JUok-6_AcCcYg&quot;,
+&quot;user_api_secret&quot;: &quot;gbppGKfp4uM-LuCd9CZANsBv-SXwtirdh34YVJsSBPFcsj_YyfOJ16hCWrTGOTsb8x90tNRUI3fJmL_1TUgmIA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user2&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:144" name="[testhost] testhost: cs_user : verify results of create user idempotence that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user2&quot;', 'user.first_name == &quot;{{ cs_resource_prefix }}_first_name2&quot;', 'user.last_name == &quot;{{ cs_resource_prefix }}_last_name2&quot;', 'user.email == &quot;{{ cs_resource_prefix }}@example2.com&quot;', 'user.account_type == &quot;user&quot;', 'user.account == &quot;{{ cs_resource_prefix }}_acc&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;', 'user.user_api_key is defined']" time="0.107427">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:159" name="[testhost] testhost: cs_user : test create user2 idempotence username={{ cs_resource_prefix }}_user2, password={{ cs_resource_prefix }}_password2, last_name={{ cs_resource_prefix }}_last_name2, first_name={{ cs_resource_prefix }}_first_name2, email={{ cs_resource_prefix }}@example2.com, account={{ cs_resource_prefix }}_acc, keys_registered=True" time="0.439583">
+			<system-out>{
+&quot;account&quot;: &quot;ansible-test-asusraf-58088657_acc&quot;,
+&quot;account_type&quot;: &quot;user&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;created&quot;: &quot;2021-01-25T12:55:46+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example2.com&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name2&quot;,
+&quot;id&quot;: &quot;1e0edb0c-1286-41f5-91db-18f37a366872&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name2&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;user_api_key&quot;: &quot;0IpQOqhden_zqvym1vhkEfRELvsAqzfiKeJQKZDbR7f2uW3Qxd7FEefBOXAqfg9AVHhzLVB84JUok-6_AcCcYg&quot;,
+&quot;user_api_secret&quot;: &quot;gbppGKfp4uM-LuCd9CZANsBv-SXwtirdh34YVJsSBPFcsj_YyfOJ16hCWrTGOTsb8x90tNRUI3fJmL_1TUgmIA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user2&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:169" name="[testhost] testhost: cs_user : verify results of create user idempotence that=['user is successful', 'user is not changed', 'user.username == &quot;{{ cs_resource_prefix }}_user2&quot;', 'user.first_name == &quot;{{ cs_resource_prefix }}_first_name2&quot;', 'user.last_name == &quot;{{ cs_resource_prefix }}_last_name2&quot;', 'user.email == &quot;{{ cs_resource_prefix }}@example2.com&quot;', 'user.account_type == &quot;user&quot;', 'user.account == &quot;{{ cs_resource_prefix }}_acc&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;', 'user.user_api_key is defined']" time="0.097825">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:184" name="[testhost] testhost: cs_user : test update user in check mode username={{ cs_resource_prefix }}_user, password={{ cs_resource_prefix }}_password, last_name={{ cs_resource_prefix }}_last_name1, first_name={{ cs_resource_prefix }}_first_name1, email={{ cs_resource_prefix }}@example.com1, account=admin, keys_registered=True" time="0.474921">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:195" name="[testhost] testhost: cs_user : verify results of update user in check mode that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.first_name == &quot;{{ cs_resource_prefix }}_first_name&quot;', 'user.last_name == &quot;{{ cs_resource_prefix }}_last_name&quot;', 'user.email == &quot;{{ cs_resource_prefix }}@example.com&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;', 'user.user_api_key is not defined']" time="0.106088">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:210" name="[testhost] testhost: cs_user : test update user username={{ cs_resource_prefix }}_user, password={{ cs_resource_prefix }}_password, last_name={{ cs_resource_prefix }}_last_name1, first_name={{ cs_resource_prefix }}_first_name1, email={{ cs_resource_prefix }}@example.com1, account=admin, keys_registered=True" time="0.493170">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;user_api_secret&quot;: &quot;Oj2sCxl_d5i2hRLjfcRmbCyNv3xX4h36hA38JWXR63sKBNt6mD2nsDirPHFrF1WrszkxYH6yVzYdTlCwvvSaDQ&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:220" name="[testhost] testhost: cs_user : verify results of update user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.first_name == &quot;{{ cs_resource_prefix }}_first_name1&quot;', 'user.last_name == &quot;{{ cs_resource_prefix }}_last_name1&quot;', 'user.email == &quot;{{ cs_resource_prefix }}@example.com1&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;', 'user.user_api_key is defined']" time="0.088649">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:235" name="[testhost] testhost: cs_user : test update user idempotence username={{ cs_resource_prefix }}_user, password={{ cs_resource_prefix }}_password, last_name={{ cs_resource_prefix }}_last_name1, first_name={{ cs_resource_prefix }}_first_name1, email={{ cs_resource_prefix }}@example.com1, account=admin, keys_registered=True" time="0.436995">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;user_api_secret&quot;: &quot;Oj2sCxl_d5i2hRLjfcRmbCyNv3xX4h36hA38JWXR63sKBNt6mD2nsDirPHFrF1WrszkxYH6yVzYdTlCwvvSaDQ&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:245" name="[testhost] testhost: cs_user : verify results of update user idempotence that=['user is successful', 'user is not changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.first_name == &quot;{{ cs_resource_prefix }}_first_name1&quot;', 'user.last_name == &quot;{{ cs_resource_prefix }}_last_name1&quot;', 'user.email == &quot;{{ cs_resource_prefix }}@example.com1&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;', 'user.user_api_key is defined']" time="0.089088">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:260" name="[testhost] testhost: cs_user : test lock user in check mode username={{ cs_resource_prefix }}_user, state=locked" time="0.414827">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:266" name="[testhost] testhost: cs_user : verify results of lock user in check mode that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state != &quot;locked&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.075111">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:277" name="[testhost] testhost: cs_user : test lock user username={{ cs_resource_prefix }}_user, state=locked" time="0.460727">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;locked&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:282" name="[testhost] testhost: cs_user : verify results of lock user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;locked&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.075925">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:293" name="[testhost] testhost: cs_user : test lock user idempotence username={{ cs_resource_prefix }}_user, state=locked" time="0.435097">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;locked&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:298" name="[testhost] testhost: cs_user : verify results of lock user idempotence that=['user is successful', 'user is not changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;locked&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.087276">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:309" name="[testhost] testhost: cs_user : test disable user in check mode username={{ cs_resource_prefix }}_user, state=disabled" time="0.489800">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;locked&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:315" name="[testhost] testhost: cs_user : verify results of disable user in check mode that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state != &quot;disabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.069115">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:326" name="[testhost] testhost: cs_user : test disable user username={{ cs_resource_prefix }}_user, state=disabled" time="2.572585">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;disabled&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:331" name="[testhost] testhost: cs_user : verify results of disable user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;disabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.092599">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:342" name="[testhost] testhost: cs_user : test disable user idempotence username={{ cs_resource_prefix }}_user, state=disabled" time="0.414138">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;disabled&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:347" name="[testhost] testhost: cs_user : verify results of disable user idempotence that=['user is successful', 'user is not changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;disabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.074774">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:358" name="[testhost] testhost: cs_user : test lock disabled user in check mode username={{ cs_resource_prefix }}_user, state=locked" time="0.423007">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;disabled&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:364" name="[testhost] testhost: cs_user : verify results of lock disabled user in check mode that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;disabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.077630">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:375" name="[testhost] testhost: cs_user : test lock disabled user username={{ cs_resource_prefix }}_user, state=locked" time="0.503994">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;locked&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:380" name="[testhost] testhost: cs_user : verify results of lock disabled user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;locked&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.082164">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:391" name="[testhost] testhost: cs_user : test lock disabled user idempotence username={{ cs_resource_prefix }}_user, state=locked" time="0.419737">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;locked&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:396" name="[testhost] testhost: cs_user : verify results of lock disabled user idempotence that=['user is successful', 'user is not changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;locked&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.080264">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:407" name="[testhost] testhost: cs_user : test enable user in check mode username={{ cs_resource_prefix }}_user, state=enabled" time="0.420363">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;locked&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:413" name="[testhost] testhost: cs_user : verify results of enable user in check mode that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state != &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.077420">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:424" name="[testhost] testhost: cs_user : test enable user username={{ cs_resource_prefix }}_user, state=enabled" time="0.457313">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:429" name="[testhost] testhost: cs_user : verify results of enable user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.074830">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:440" name="[testhost] testhost: cs_user : test enable user idempotence using unlocked username={{ cs_resource_prefix }}_user, state=unlocked" time="0.488156">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:445" name="[testhost] testhost: cs_user : verify results of enable user idempotence that=['user is successful', 'user is not changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.088491">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:456" name="[testhost] testhost: cs_user : test remove user in check mode username={{ cs_resource_prefix }}_user, state=absent" time="0.412800">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:462" name="[testhost] testhost: cs_user : verify results of remove user in check mode that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.075982">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:473" name="[testhost] testhost: cs_user : test remove user username={{ cs_resource_prefix }}_user, state=absent" time="0.479330">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:55:42+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com1&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name1&quot;,
+&quot;id&quot;: &quot;398abb6c-2f4c-4ef5-82db-829314e620d4&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name1&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;user_api_key&quot;: &quot;oiNkBQYjEnKS8Ve1n075tT6x-u8UXQNdgw4vkuRsozgm22zOz4Y5GDkwRSxAnodECAKWWGIBOOXF8sWPo5jEFA&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:478" name="[testhost] testhost: cs_user : verify results of remove user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.078697">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:489" name="[testhost] testhost: cs_user : test remove user idempotence username={{ cs_resource_prefix }}_user, state=absent" time="0.415052">
+			<system-out>{
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: false,
+&quot;domain&quot;: &quot;ROOT&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:494" name="[testhost] testhost: cs_user : verify results of remove user idempotence that=['user is successful', 'user is not changed']" time="0.073735">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:500" name="[testhost] testhost: cs_user : test create locked user username={{ cs_resource_prefix }}_user, password={{ cs_resource_prefix }}_password, last_name={{ cs_resource_prefix }}_last_name, first_name={{ cs_resource_prefix }}_first_name, email={{ cs_resource_prefix }}@example.com, account=admin, state=locked" time="0.868350">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:56:00+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name&quot;,
+&quot;id&quot;: &quot;2ce606ac-86a6-4a56-a837-4cecf5561ba7&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name&quot;,
+&quot;state&quot;: &quot;locked&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:510" name="[testhost] testhost: cs_user : verify results of create locked user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.first_name == &quot;{{ cs_resource_prefix }}_first_name&quot;', 'user.last_name == &quot;{{ cs_resource_prefix }}_last_name&quot;', 'user.email == &quot;{{ cs_resource_prefix }}@example.com&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;locked&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.121274">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:524" name="[testhost] testhost: cs_user : test remove locked user username={{ cs_resource_prefix }}_user, state=absent" time="0.441320">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:56:00+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name&quot;,
+&quot;id&quot;: &quot;2ce606ac-86a6-4a56-a837-4cecf5561ba7&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name&quot;,
+&quot;state&quot;: &quot;locked&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:529" name="[testhost] testhost: cs_user : verify results of remove locked user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;locked&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.082167">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:540" name="[testhost] testhost: cs_user : test create disabled user username={{ cs_resource_prefix }}_user, password={{ cs_resource_prefix }}_password, last_name={{ cs_resource_prefix }}_last_name, first_name={{ cs_resource_prefix }}_first_name, email={{ cs_resource_prefix }}@example.com, account=admin, state=disabled" time="2.938667">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:56:01+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name&quot;,
+&quot;id&quot;: &quot;d0ebcbf6-4d09-46ff-a4cb-91c301f1c150&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name&quot;,
+&quot;state&quot;: &quot;disabled&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:550" name="[testhost] testhost: cs_user : verify results of create disabled user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.first_name == &quot;{{ cs_resource_prefix }}_first_name&quot;', 'user.last_name == &quot;{{ cs_resource_prefix }}_last_name&quot;', 'user.email == &quot;{{ cs_resource_prefix }}@example.com&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;disabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.095405">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:564" name="[testhost] testhost: cs_user : test remove disabled user username={{ cs_resource_prefix }}_user, state=absent" time="0.449559">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:56:01+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name&quot;,
+&quot;id&quot;: &quot;d0ebcbf6-4d09-46ff-a4cb-91c301f1c150&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name&quot;,
+&quot;state&quot;: &quot;disabled&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:569" name="[testhost] testhost: cs_user : verify results of remove disabled user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;disabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.075857">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:580" name="[testhost] testhost: cs_user : test create enabled user username={{ cs_resource_prefix }}_user, password={{ cs_resource_prefix }}_password, last_name={{ cs_resource_prefix }}_last_name, first_name={{ cs_resource_prefix }}_first_name, email={{ cs_resource_prefix }}@example.com, account=admin, state=enabled" time="0.812594">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:56:05+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name&quot;,
+&quot;id&quot;: &quot;389a3572-b77a-4c2b-adbc-2f92e47fa92e&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:590" name="[testhost] testhost: cs_user : verify results of create enabled user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.first_name == &quot;{{ cs_resource_prefix }}_first_name&quot;', 'user.last_name == &quot;{{ cs_resource_prefix }}_last_name&quot;', 'user.email == &quot;{{ cs_resource_prefix }}@example.com&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.085996">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:604" name="[testhost] testhost: cs_user : test remove enabled user username={{ cs_resource_prefix }}_user, state=absent" time="0.478334">
+			<system-out>{
+&quot;account&quot;: &quot;admin&quot;,
+&quot;account_type&quot;: &quot;root_admin&quot;,
+&quot;api_http_method&quot;: &quot;get&quot;,
+&quot;api_key&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;api_region&quot;: &quot;cloudstack&quot;,
+&quot;api_timeout&quot;: 60,
+&quot;api_url&quot;: &quot;http://cloudstack-sim:8888/client/api&quot;,
+&quot;api_verify_ssl_cert&quot;: null,
+&quot;changed&quot;: true,
+&quot;created&quot;: &quot;2021-01-25T12:56:05+0000&quot;,
+&quot;domain&quot;: &quot;ROOT&quot;,
+&quot;email&quot;: &quot;ansible-test-asusraf-58088657@example.com&quot;,
+&quot;first_name&quot;: &quot;ansible-test-asusraf-58088657_first_name&quot;,
+&quot;id&quot;: &quot;389a3572-b77a-4c2b-adbc-2f92e47fa92e&quot;,
+&quot;last_name&quot;: &quot;ansible-test-asusraf-58088657_last_name&quot;,
+&quot;state&quot;: &quot;enabled&quot;,
+&quot;username&quot;: &quot;ansible-test-asusraf-58088657_user&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/cs_user-_96c5zrb-ÅÑŚÌβŁÈ/tests/integration/targets/cs_user/tasks/main.yml:609" name="[testhost] testhost: cs_user : verify results of remove enabled user that=['user is successful', 'user is changed', 'user.username == &quot;{{ cs_resource_prefix }}_user&quot;', 'user.account_type == &quot;root_admin&quot;', 'user.account == &quot;admin&quot;', 'user.state == &quot;enabled&quot;', 'user.domain == &quot;ROOT&quot;']" time="0.086656">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;All assertions passed&quot;
+}</system-out>
+		</testcase>
+	</testsuite>
+</testsuites>

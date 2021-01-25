@@ -1,0 +1,10 @@
+{
+    "docs": "https://docs.ansible.com/ansible/2.10/dev_guide/testing/sanity/no-get-exception.html", 
+    "results": [
+        {
+            "message": "The test `ansible-test sanity --test no-get-exception` [[explain](https://docs.ansible.com/ansible/2.10/dev_guide/testing/sanity/no-get-exception.html)] failed with 7 errors:", 
+            "output": ".venv/lib/python3.8/site-packages/ansible/module_utils/basic.py:157:44: do not use `get_exception`\n.venv/lib/python3.8/site-packages/ansible/module_utils/pycompat24.py:35:4: do not use `get_exception`\n.venv/lib/python3.8/site-packages/ansible/module_utils/pycompat24.py:44:16: do not use `get_exception`\n.venv/lib/python3.8/site-packages/ansible/module_utils/pycompat24.py:91:12: do not use `get_exception`\n.venv/lib/python3.8/site-packages/ansible_test/_data/sanity/code-smell/no-get-exception.py:15:50: do not use `get_exception`\n.venv/lib/python3.8/site-packages/ansible_test/_data/sanity/code-smell/no-get-exception.py:19:56: do not use `get_exception`\n.venv/lib/python3.8/site-packages/ansible_test/_data/sanity/code-smell/no-get-exception.py:23:49: do not use `get_exception`"
+        }
+    ], 
+    "verified": false
+}

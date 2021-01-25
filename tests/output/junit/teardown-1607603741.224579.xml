@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<testsuites disabled="0" errors="0" failures="0" tests="1" time="0.013109445571899414">
+	<testsuite disabled="0" errors="0" failures="0" name="teardown" skipped="0" tests="1" time="0.013109445571899414">
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/inventory_cloudstack-mbj55_de-ÅÑŚÌβŁÈ/tests/integration/targets/inventory_cloudstack/playbooks/teardown.yml:6" name="[127.0.0.1] 127.0.0.1: debug msg=TEARDOWN" time="0.013109">
+			<system-out>{
+    &quot;changed&quot;: false,
+    &quot;msg&quot;: &quot;TEARDOWN&quot;
+}</system-out>
+		</testcase>
+	</testsuite>
+</testsuites>

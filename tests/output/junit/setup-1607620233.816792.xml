@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<testsuites disabled="0" errors="0" failures="0" tests="3" time="1.8387179374694824">
+	<testsuite disabled="0" errors="0" failures="0" name="setup" skipped="0" tests="3" time="1.8387179374694824">
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/inventory_cloudstack-bujhxgx7-ÅÑŚÌβŁÈ/tests/integration/targets/inventory_cloudstack/playbooks/setup.yml:8" name="[127.0.0.1] 127.0.0.1: Retrieve Simulator Keys url={{simulator}}/admin.json, return_content=True" time="0.578270">
+			<system-out>{
+&quot;accept_ranges&quot;: &quot;bytes&quot;,
+&quot;changed&quot;: false,
+&quot;connection&quot;: &quot;close&quot;,
+&quot;content&quot;: &quot;{\n  \&quot;apikey\&quot;: \&quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw\&quot;,\n  \&quot;secretkey\&quot;: \&quot;-wkrHErJnQdGH2-R0-AkkYMi3RGdA3k4cXjjiUF5MW320xJjkd__yGkAD4SOLIgAYbPTLhWS4PamTdYvXcnJQA\&quot;\n}\n&quot;,
+&quot;content_length&quot;: &quot;210&quot;,
+&quot;content_type&quot;: &quot;application/json&quot;,
+&quot;cookies&quot;: {},
+&quot;cookies_string&quot;: &quot;&quot;,
+&quot;date&quot;: &quot;Thu, 10 Dec 2020 17:10:32 GMT&quot;,
+&quot;elapsed&quot;: 0,
+&quot;etag&quot;: &quot;\&quot;5fd1f218-d2\&quot;&quot;,
+&quot;json&quot;: {
+&quot;apikey&quot;: &quot;s7T2jkUw4lZNJd8d3931KuCDYcSS0TtbFDTZR-DQoL9-3jn_11UqE1LekwGXzPJLx87xF7nU-fi5yZzpDkOpIw&quot;,
+&quot;secretkey&quot;: &quot;-wkrHErJnQdGH2-R0-AkkYMi3RGdA3k4cXjjiUF5MW320xJjkd__yGkAD4SOLIgAYbPTLhWS4PamTdYvXcnJQA&quot;
+},
+&quot;last_modified&quot;: &quot;Thu, 10 Dec 2020 10:02:00 GMT&quot;,
+&quot;msg&quot;: &quot;OK (210 bytes)&quot;,
+&quot;redirected&quot;: false,
+&quot;server&quot;: &quot;nginx/1.10.3 (Ubuntu)&quot;,
+&quot;status&quot;: 200,
+&quot;url&quot;: &quot;http://cloudstack-sim:8888/admin.json&quot;
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/inventory_cloudstack-bujhxgx7-ÅÑŚÌβŁÈ/tests/integration/targets/inventory_cloudstack/playbooks/setup.yml:14" name="[127.0.0.1] 127.0.0.1: Create cloudstack.ini src=../templates/cloudstack.ini.j2, dest=../cloudstack.ini" time="0.695236">
+			<system-out>{
+&quot;changed&quot;: true,
+&quot;checksum&quot;: &quot;4e3b1a1b15ff1733487bdaa96ba9bb174bc8d4a9&quot;,
+&quot;dest&quot;: &quot;../cloudstack.ini&quot;,
+&quot;gid&quot;: 0,
+&quot;group&quot;: &quot;root&quot;,
+&quot;md5sum&quot;: &quot;45ad0c2db332beed70e39abf2cec6baa&quot;,
+&quot;mode&quot;: &quot;0644&quot;,
+&quot;owner&quot;: &quot;root&quot;,
+&quot;size&quot;: 261,
+&quot;src&quot;: &quot;/root/.ansible/tmp/ansible-tmp-1607620232.558008-34132-59182491211685/source&quot;,
+&quot;state&quot;: &quot;file&quot;,
+&quot;uid&quot;: 0
+}</system-out>
+		</testcase>
+		<testcase classname="/root/ansible_collections/ngine_io/cloudstack/tests/output/.tmp/integration/inventory_cloudstack-bujhxgx7-ÅÑŚÌβŁÈ/tests/integration/targets/inventory_cloudstack/playbooks/setup.yml:19" name="[127.0.0.1] 127.0.0.1: Create cloudstack.ini src=../templates/cloudstack.ini.j2, dest=../cloudstack.ini" time="0.565212">
+			<system-out>{
+&quot;changed&quot;: false,
+&quot;checksum&quot;: &quot;4e3b1a1b15ff1733487bdaa96ba9bb174bc8d4a9&quot;,
+&quot;dest&quot;: &quot;../cloudstack.ini&quot;,
+&quot;gid&quot;: 0,
+&quot;group&quot;: &quot;root&quot;,
+&quot;mode&quot;: &quot;0644&quot;,
+&quot;owner&quot;: &quot;root&quot;,
+&quot;path&quot;: &quot;../cloudstack.ini&quot;,
+&quot;size&quot;: 261,
+&quot;state&quot;: &quot;file&quot;,
+&quot;uid&quot;: 0
+}</system-out>
+		</testcase>
+	</testsuite>
+</testsuites>

@@ -3,6 +3,7 @@
   cs_instance:
     name: "{{ cs_resource_prefix }}-vm-snapshot-policy"
     template: "{{ cs_common_template }}"
+    zone: "{{ cs_common_zone_adv }}"
     service_offering: "{{ cs_common_service_offering }}"
   register: instance
 - name: verify setup instance

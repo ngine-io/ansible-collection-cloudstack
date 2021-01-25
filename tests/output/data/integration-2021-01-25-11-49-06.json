@@ -1,0 +1,39 @@
+{
+    "targets": {
+        "cs_iso": {
+            "aliases": [
+                "cloud/", 
+                "cloud/cs/", 
+                "cloud/cs/cs_iso", 
+                "cloud/cs_iso", 
+                "cs_iso", 
+                "module/", 
+                "module/cs_iso/", 
+                "module/cs_iso/cs_iso", 
+                "non_destructive/", 
+                "non_destructive/cs_iso", 
+                "posix/", 
+                "role/", 
+                "role/cs_iso", 
+                "shippable/", 
+                "shippable/cs/", 
+                "shippable/cs/cs_iso", 
+                "shippable/cs/group1/", 
+                "shippable/cs/group1/cs_iso", 
+                "shippable/cs_iso"
+            ], 
+            "coverage": false, 
+            "coverage_label": "", 
+            "modules": [
+                "cs_iso"
+            ], 
+            "name": "cs_iso", 
+            "python_version": "3.6", 
+            "run_time_seconds": 21, 
+            "setup_always": [], 
+            "setup_once": [], 
+            "type": "role", 
+            "validation_seconds": 0
+        }
+    }
+}

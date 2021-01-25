@@ -1,0 +1,74 @@
+{
+    "targets": {
+        "cs_snapshot_policy": {
+            "aliases": [
+                "cloud/", 
+                "cloud/cs/", 
+                "cloud/cs/cs_snapshot_policy", 
+                "cloud/cs_snapshot_policy", 
+                "cs_snapshot_policy", 
+                "module/", 
+                "module/cs_snapshot_policy/", 
+                "module/cs_snapshot_policy/cs_snapshot_policy", 
+                "non_destructive/", 
+                "non_destructive/cs_snapshot_policy", 
+                "posix/", 
+                "role/", 
+                "role/cs_snapshot_policy", 
+                "shippable/", 
+                "shippable/cs/", 
+                "shippable/cs/cs_snapshot_policy", 
+                "shippable/cs/group2/", 
+                "shippable/cs/group2/cs_snapshot_policy", 
+                "shippable/cs_snapshot_policy"
+            ], 
+            "coverage": false, 
+            "coverage_label": "", 
+            "modules": [
+                "cs_snapshot_policy"
+            ], 
+            "name": "cs_snapshot_policy", 
+            "python_version": "3.6", 
+            "run_time_seconds": 18, 
+            "setup_always": [], 
+            "setup_once": [], 
+            "type": "role", 
+            "validation_seconds": 0
+        }, 
+        "cs_sshkeypair": {
+            "aliases": [
+                "cloud/", 
+                "cloud/cs/", 
+                "cloud/cs/cs_sshkeypair", 
+                "cloud/cs_sshkeypair", 
+                "cs_sshkeypair", 
+                "module/", 
+                "module/cs_sshkeypair/", 
+                "module/cs_sshkeypair/cs_sshkeypair", 
+                "non_destructive/", 
+                "non_destructive/cs_sshkeypair", 
+                "posix/", 
+                "role/", 
+                "role/cs_sshkeypair", 
+                "shippable/", 
+                "shippable/cs/", 
+                "shippable/cs/cs_sshkeypair", 
+                "shippable/cs/group2/", 
+                "shippable/cs/group2/cs_sshkeypair", 
+                "shippable/cs_sshkeypair"
+            ], 
+            "coverage": false, 
+            "coverage_label": "", 
+            "modules": [
+                "cs_sshkeypair"
+            ], 
+            "name": "cs_sshkeypair", 
+            "python_version": "3.6", 
+            "run_time_seconds": 13, 
+            "setup_always": [], 
+            "setup_once": [], 
+            "type": "role", 
+            "validation_seconds": 0
+        }
+    }
+}

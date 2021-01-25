@@ -24,6 +24,7 @@
 
 - name: test fail if missing name
   cs_pod:
+    zone: "{{ cs_resource_prefix }}-zone"
   register: pod
   ignore_errors: true
 - name: verify results of fail if missing name

@@ -276,6 +276,7 @@
 - name: cleanup instance
   cs_instance:
     name: "instance-nic-vm"
+    zone: "{{ cs_common_zone_adv }}"
     state: expunged
   register: instance
 - name: verify cleanup instance
