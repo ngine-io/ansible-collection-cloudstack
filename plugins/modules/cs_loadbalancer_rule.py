@@ -89,8 +89,8 @@ options:
   zone:
     description:
       - Name of the zone in which the rule should be created.
+      - Required when the LB provider is ElasticLoadBalancerVm
     type: str
-    required: true
   poll_async:
     description:
       - Poll async jobs until job has finished.
@@ -120,7 +120,6 @@ EXAMPLES = '''
   ngine_io.cloudstack.cs_loadbalancer_rule:
     name: balance_http
     public_ip: 1.2.3.4
-    zone: zone01
     algorithm: leastconn
     public_port: 80
     private_port: 8080
@@ -129,7 +128,6 @@ EXAMPLES = '''
   ngine_io.cloudstack.cs_loadbalancer_rule:
     name: balance_http
     public_ip: 1.2.3.4
-    zone: zone01
     algorithm: roundrobin
     public_port: 80
     private_port: 8080
@@ -138,7 +136,6 @@ EXAMPLES = '''
   ngine_io.cloudstack.cs_loadbalancer_rule:
     name: balance_http
     public_ip: 1.2.3.4
-    zone: zone01
     state: absent
 '''
 
@@ -344,7 +341,7 @@ def main():
         project=dict(),
         open_firewall=dict(type='bool', default=False),
         tags=dict(type='list', elements='dict', aliases=['tag']),
-        zone=dict(required=True),
+        zone=dict(),
         domain=dict(),
         account=dict(),
         vpc=dict(),
