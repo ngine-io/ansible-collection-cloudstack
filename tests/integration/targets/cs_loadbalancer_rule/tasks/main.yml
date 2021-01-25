@@ -67,7 +67,6 @@
   cs_loadbalancer_rule:
     name: "{{ cs_resource_prefix }}_lb"
     public_ip: "{{ ip_address.ip_address }}"
-    zone: "{{ cs_common_zone_adv }}"
     state: absent
   register: lb
 - name: verify setup lb rule absent
@@ -90,7 +89,6 @@
   cs_loadbalancer_rule:
     name: "{{ cs_resource_prefix }}_lb"
     public_ip: "{{ ip_address.ip_address }}"
-    zone: "{{ cs_common_zone_adv }}"
     algorithm: roundrobin
     public_port: 80
     private_port: 8080
@@ -106,7 +104,6 @@
   cs_loadbalancer_rule:
     name: "{{ cs_resource_prefix }}_lb"
     public_ip: "{{ ip_address.ip_address }}"
-    zone: "{{ cs_common_zone_adv }}"
     algorithm: roundrobin
     public_port: 80
     private_port: 8080
@@ -126,7 +123,6 @@
   cs_loadbalancer_rule:
     name: "{{ cs_resource_prefix }}_lb"
     public_ip: "{{ ip_address.ip_address }}"
-    zone: "{{ cs_common_zone_adv }}"
     algorithm: roundrobin
     public_port: 80
     private_port: 8080
@@ -146,7 +142,6 @@
   cs_loadbalancer_rule:
     name: "{{ cs_resource_prefix }}_lb"
     public_ip: "{{ ip_address.ip_address }}"
-    zone: "{{ cs_common_zone_adv }}"
     algorithm: source
     public_port: 80
     private_port: 8080
@@ -167,7 +162,6 @@
   cs_loadbalancer_rule:
     name: "{{ cs_resource_prefix }}_lb"
     public_ip: "{{ ip_address.ip_address }}"
-    zone: "{{ cs_common_zone_adv }}"
     algorithm: source
     public_port: 80
     private_port: 8080
@@ -187,7 +181,6 @@
   cs_loadbalancer_rule:
     name: "{{ cs_resource_prefix }}_lb"
     public_ip: "{{ ip_address.ip_address }}"
-    zone: "{{ cs_common_zone_adv }}"
     algorithm: source
     public_port: 80
     private_port: 8080
@@ -216,7 +209,6 @@
 - name: test add members to rule in check mode
   cs_loadbalancer_rule_member:
     name: "{{ cs_resource_prefix }}_lb"
-    zone: "{{ cs_common_zone_adv }}"
     vm: "{{ cs_resource_prefix }}-vm-lb"
   register: lb
   check_mode: true
@@ -235,7 +227,6 @@
 - name: test add members to rule
   cs_loadbalancer_rule_member:
     name: "{{ cs_resource_prefix }}_lb"
-    zone: "{{ cs_common_zone_adv }}"
     vm: "{{ cs_resource_prefix }}-vm-lb"
   register: lb
 - name: verify add members to rule
@@ -253,7 +244,6 @@
 - name: test add members to rule idempotence
   cs_loadbalancer_rule_member:
     name: "{{ cs_resource_prefix }}_lb"
-    zone: "{{ cs_common_zone_adv }}"
     vm: "{{ cs_resource_prefix }}-vm-lb"
   register: lb
 - name: verify add members to rule idempotence
@@ -271,7 +261,6 @@
 - name: test remove members to rule in check mode
   cs_loadbalancer_rule_member:
     name: "{{ cs_resource_prefix }}_lb"
-    zone: "{{ cs_common_zone_adv }}"
     vm: "{{ cs_resource_prefix }}-vm-lb"
     state: absent
   register: lb
@@ -291,7 +280,6 @@
 - name: test remove members to rule
   cs_loadbalancer_rule_member:
     name: "{{ cs_resource_prefix }}_lb"
-    zone: "{{ cs_common_zone_adv }}"
     vm: "{{ cs_resource_prefix }}-vm-lb"
     state: absent
   register: lb
@@ -310,7 +298,6 @@
 - name: test remove members to rule idempotence
   cs_loadbalancer_rule_member:
     name: "{{ cs_resource_prefix }}_lb"
-    zone: "{{ cs_common_zone_adv }}"
     vm: "{{ cs_resource_prefix }}-vm-lb"
     state: absent
   register: lb
@@ -323,7 +310,6 @@
 - name: test remove rule in check mode
   cs_loadbalancer_rule:
     name: "{{ cs_resource_prefix }}_lb"
-    zone: "{{ cs_common_zone_adv }}"
     public_ip: "{{ ip_address.ip_address }}"
     state: absent
   register: lb
@@ -342,7 +328,6 @@
 - name: test remove rule
   cs_loadbalancer_rule:
     name: "{{ cs_resource_prefix }}_lb"
-    zone: "{{ cs_common_zone_adv }}"
     public_ip: "{{ ip_address.ip_address }}"
     state: absent
   register: lb
@@ -360,7 +345,6 @@
 - name: test remove rule idempotence
   cs_loadbalancer_rule:
     name: "{{ cs_resource_prefix }}_lb"
-    zone: "{{ cs_common_zone_adv }}"
     public_ip: "{{ ip_address.ip_address }}"
     state: absent
   register: lb
