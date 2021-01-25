@@ -76,8 +76,8 @@ options:
   zone:
     description:
       - Name of the zone you wish the ISO to be registered or deleted from.
+      - Required when I(cross_zones) is C(no)
     type: str
-    required: true
   cross_zones:
     description:
       - Whether the ISO should be synced or removed across zones.
@@ -398,7 +398,7 @@ def main():
         display_text=dict(),
         url=dict(),
         os_type=dict(),
-        zone=dict(required=True),
+        zone=dict(),
         cross_zones=dict(type='bool', default=False),
         iso_filter=dict(default='self', choices=['featured', 'self', 'selfexecutable', 'sharedexecutable', 'executable', 'community']),
         domain=dict(),
