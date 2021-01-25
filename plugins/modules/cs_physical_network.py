@@ -31,8 +31,8 @@ options:
   zone:
     description:
       - Name of the zone in which the network belongs.
-      - If not set, default zone is used.
     type: str
+    required: true
   broadcast_domain_range:
     description:
       - broadcast domain range for the physical network[Pod or Zone].
@@ -100,11 +100,13 @@ EXAMPLES = '''
 - name: Set a tag on a network
   ngine_io.cloudstack.cs_physical_network:
     name: net01
+    zone: zone01
     tag: overlay
 
 - name: Remove tag on a network
   ngine_io.cloudstack.cs_physical_network:
     name: net01
+    zone: zone01
     tag: ""
 
 - name: Ensure a network is enabled with specific nsps enabled
@@ -418,7 +420,7 @@ def main():
     argument_spec = cs_argument_spec()
     argument_spec.update(dict(
         name=dict(required=True, aliases=['physical_network']),
-        zone=dict(),
+        zone=dict(required=True),
         domain=dict(),
         vlan=dict(),
         nsps_disabled=dict(type='list', elements='str'),

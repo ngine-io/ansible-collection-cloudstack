@@ -165,7 +165,7 @@ class AnsibleCloudStackConfiguration(AnsibleCloudStack):
         return args
 
     def get_zone(self, key=None):
-        # make sure we do net use the default zone
+        # zone is optional as it means that the configuration is aimed at a global setting.
         zone = self.module.params.get('zone')
         if zone:
             return super(AnsibleCloudStackConfiguration, self).get_zone(key=key)

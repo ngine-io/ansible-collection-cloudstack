@@ -40,8 +40,8 @@ options:
   zone:
     description:
       - Name of the zone in which the instance is deployed.
-      - If not set, the default zone is used.
     type: str
+    required: true
   poll_async:
     description:
       - Poll async jobs until job has finished.
@@ -55,11 +55,13 @@ EXAMPLES = '''
 - name: stop the virtual machine before resetting the password
   ngine_io.cloudstack.cs_instance:
     name: myvirtualmachine
+    zone: zone01
     state: stopped
 
 - name: reset and get new default password
   ngine_io.cloudstack.cs_instance_password_reset:
     vm: myvirtualmachine
+    zone: zone01
   register: root
 
 - debug:
@@ -68,6 +70,7 @@ EXAMPLES = '''
 - name: boot the virtual machine to activate the new password
   ngine_io.cloudstack.cs_instance:
     name: myvirtualmachine
+    zone: zone01
     state: started
   when: root is changed
 '''
@@ -130,7 +133,7 @@ def main():
         domain=dict(),
         account=dict(),
         project=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         poll_async=dict(type='bool', default=True),
     ))
 

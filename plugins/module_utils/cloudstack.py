@@ -477,8 +477,9 @@ class AnsibleCloudStack:
             self.fail_json(msg="No zones available. Please create a zone first")
 
         # this check is theoretically not required, as module argument specification should take care of it
-        # however, due to deprecated default zone is left behind just in case
-        # will be removed later on.
+        # however, due to deprecated default zone is left behind just in case non obvious callers.
+        # Some modules benefit form the check anyway like those where zone if effectively optional like
+        # template registration (local/cross zone) or configuration (zone or global)
         if not zone:
             self.fail_json("Zone is required due to unreliable API.")
 

@@ -53,8 +53,8 @@ options:
   zone:
     description:
       - Name of the zone in which the IP address is in.
-      - If not set, default zone is used.
     type: str
+    required: true
   state:
     description:
       - State of the IP address.
@@ -82,17 +82,20 @@ EXAMPLES = '''
 - name: Associate an IP address conditionally
   ngine_io.cloudstack.cs_ip_address:
     network: My Network
+    zone: zone01
   register: ip_address
   when: instance.public_ip is undefined
 
 - name: Disassociate an IP address
   ngine_io.cloudstack.cs_ip_address:
     ip_address: 1.2.3.4
+    zone: zone01
     state: absent
 
 - name: Associate an IP address with tags
   ngine_io.cloudstack.cs_ip_address:
     network: My Network
+    zone: zone01
     tags:
       - key: myCustomID
         value: 5510c31a-416e-11e8-9013-02000a6b00bf
@@ -101,6 +104,7 @@ EXAMPLES = '''
 - name: Disassociate an IP address with tags
   ngine_io.cloudstack.cs_ip_address:
     state: absent
+    zone: zone01
     tags:
       - key: myCustomID
         value: 5510c31a-416e-11e8-9013-02000a6b00bf
@@ -243,7 +247,7 @@ def main():
         state=dict(choices=['present', 'absent'], default='present'),
         vpc=dict(),
         network=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         domain=dict(),
         account=dict(),
         project=dict(),

@@ -25,8 +25,8 @@ options:
   zone:
     description:
       - Name of the zone in which the cluster belongs to.
-      - If not set, default zone is used.
     type: str
+    required: true
   pod:
     description:
       - Name of the pod in which the cluster belongs to.
@@ -332,7 +332,7 @@ def main():
     argument_spec = cs_argument_spec()
     argument_spec.update(dict(
         name=dict(required=True),
-        zone=dict(),
+        zone=dict(required=True),
         pod=dict(),
         cluster_type=dict(choices=['CloudManaged', 'ExternalManaged']),
         hypervisor=dict(),

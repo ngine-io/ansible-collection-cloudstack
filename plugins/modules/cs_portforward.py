@@ -93,8 +93,8 @@ options:
   zone:
     description:
       - Name of the zone in which the virtual machine is in.
-      - If not set, default zone is used.
     type: str
+    required: true
   poll_async:
     description:
       - Poll async jobs until job has finished.
@@ -115,6 +115,7 @@ EXAMPLES = '''
 - name: 1.2.3.4:80 -> web01:8080
   ngine_io.cloudstack.cs_portforward:
     ip_address: 1.2.3.4
+    zone: zone01
     vm: web01
     public_port: 80
     private_port: 8080
@@ -122,6 +123,7 @@ EXAMPLES = '''
 - name: forward SSH and open firewall
   ngine_io.cloudstack.cs_portforward:
     ip_address: '{{ public_ip }}'
+    zone: zone01
     vm: '{{ inventory_hostname }}'
     public_port: '{{ ansible_ssh_port }}'
     private_port: 22
@@ -130,6 +132,7 @@ EXAMPLES = '''
 - name: forward DNS traffic, but do not open firewall
   ngine_io.cloudstack.cs_portforward:
     ip_address: 1.2.3.4
+    zone: zone01
     vm: '{{ inventory_hostname }}'
     public_port: 53
     private_port: 53
@@ -138,6 +141,7 @@ EXAMPLES = '''
 - name: remove ssh port forwarding
   ngine_io.cloudstack.cs_portforward:
     ip_address: 1.2.3.4
+    zone: zone01
     public_port: 22
     private_port: 22
     state: absent
@@ -145,6 +149,7 @@ EXAMPLES = '''
 - name: forward SSH in backend tier of VPC
   ngine_io.cloudstack.cs_portforward:
     ip_address: '{{ public_ip }}'
+    zone: zone01
     vm: '{{ inventory_hostname }}'
     public_port: '{{ ansible_ssh_port }}'
     private_port: 22
@@ -369,7 +374,7 @@ def main():
         vm=dict(),
         vpc=dict(),
         network=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         domain=dict(),
         account=dict(),
         project=dict(),

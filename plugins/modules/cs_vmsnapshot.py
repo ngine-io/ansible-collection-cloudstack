@@ -39,8 +39,9 @@ options:
     type: bool
   zone:
     description:
-      - Name of the zone in which the VM is in. If not set, default zone is used.
+      - Name of the zone in which the VM is in. If not set.
     type: str
+    required: true
   project:
     description:
       - Name of the project the VM is assigned to.
@@ -80,18 +81,21 @@ EXAMPLES = '''
   ngine_io.cloudstack.cs_vmsnapshot:
     name: Snapshot before upgrade
     vm: web-01
+    zone: zone01
     snapshot_memory: yes
 
 - name: Revert a VM to a snapshot after a failed upgrade
   ngine_io.cloudstack.cs_vmsnapshot:
     name: Snapshot before upgrade
     vm: web-01
+    zone: zone01
     state: revert
 
 - name: Remove a VM snapshot after successful upgrade
   ngine_io.cloudstack.cs_vmsnapshot:
     name: Snapshot before upgrade
     vm: web-01
+    zone: zone01
     state: absent
 '''
 
@@ -244,7 +248,7 @@ def main():
         name=dict(required=True, aliases=['display_name']),
         vm=dict(required=True),
         description=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         snapshot_memory=dict(type='bool', default=False),
         state=dict(choices=['present', 'absent', 'revert'], default='present'),
         domain=dict(),

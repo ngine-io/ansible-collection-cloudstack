@@ -60,8 +60,8 @@ options:
   zone:
     description:
       - Name of the zone in which the virtual machine is in.
-      - If not set, default zone is used.
     type: str
+    required: true
   poll_async:
     description:
       - Poll async jobs until job has finished.
@@ -75,11 +75,13 @@ EXAMPLES = '''
 - name: Create a static NAT for IP 1.2.3.4 to web01
   ngine_io.cloudstack.cs_staticnat:
     ip_address: 1.2.3.4
+    zone: zone01
     vm: web01
 
 - name: Remove a static NAT
   ngine_io.cloudstack.cs_staticnat:
     ip_address: 1.2.3.4
+    zone: zone01
     state: absent
 '''
 
@@ -219,7 +221,7 @@ def main():
         network=dict(),
         vpc=dict(),
         state=dict(choices=['present', 'absent'], default='present'),
-        zone=dict(),
+        zone=dict(required=True),
         domain=dict(),
         account=dict(),
         project=dict(),

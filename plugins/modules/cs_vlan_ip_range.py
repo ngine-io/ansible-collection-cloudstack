@@ -87,8 +87,8 @@ options:
   zone:
     description:
       - The Zone ID of the VLAN IP range.
-      - If not set, default zone is used.
     type: str
+    required: true
   domain:
     description:
       - Domain of the account owning the VLAN.
@@ -351,7 +351,7 @@ def main():
     argument_spec.update(dict(
         network=dict(type='str'),
         physical_network=dict(type='str'),
-        zone=dict(type='str'),
+        zone=dict(type='str', required=True),
         start_ip=dict(type='str', required=True),
         end_ip=dict(type='str'),
         gateway=dict(type='str'),

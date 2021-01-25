@@ -59,8 +59,8 @@ options:
   zone:
     description:
       - Name of the zone in which the rule should be located.
-      - If not set, default zone is used.
     type: str
+    required: true
   poll_async:
     description:
       - Poll async jobs until job has finished.
@@ -74,6 +74,7 @@ EXAMPLES = '''
 - name: Add VMs to an existing load balancer
   ngine_io.cloudstack.cs_loadbalancer_rule_member:
     name: balance_http
+    zone: zone01
     vms:
       - web01
       - web02
@@ -81,6 +82,7 @@ EXAMPLES = '''
 - name: Remove a VM from an existing load balancer
   ngine_io.cloudstack.cs_loadbalancer_rule_member:
     name: balance_http
+    zone: zone01
     vms:
       - web01
       - web02
@@ -94,6 +96,7 @@ EXAMPLES = '''
     - name: Remove from load balancer
       ngine_io.cloudstack.cs_loadbalancer_rule_member:
         name: balance_http
+        zone: zone01
         vm: "{{ ansible_hostname }}"
         state: absent
   tasks:
@@ -102,6 +105,7 @@ EXAMPLES = '''
     - name: Add to load balancer
       ngine_io.cloudstack.cs_loadbalancer_rule_member:
         name: balance_http
+        zone: zone01
         vm: "{{ ansible_hostname }}"
         state: present
 
@@ -316,7 +320,7 @@ def main():
         ip_address=dict(aliases=['public_ip']),
         vms=dict(required=True, aliases=['vm'], type='list', elements='str'),
         state=dict(choices=['present', 'absent'], default='present'),
-        zone=dict(),
+        zone=dict(required=True),
         domain=dict(),
         project=dict(),
         account=dict(),

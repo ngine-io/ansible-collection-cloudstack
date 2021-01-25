@@ -76,8 +76,8 @@ options:
   zone:
     description:
       - Name of the zone you wish the ISO to be registered or deleted from.
-      - If not specified, first zone found will be used.
     type: str
+    required: true
   cross_zones:
     description:
       - Whether the ISO should be synced or removed across zones.
@@ -116,12 +116,14 @@ EXAMPLES = '''
 - name: Register an ISO if ISO name does not already exist
   ngine_io.cloudstack.cs_iso:
     name: Debian 7 64-bit
+    zone: zone01
     url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
     os_type: Debian GNU/Linux 7(64-bit)
 
 - name: Register an ISO with given name if ISO md5 checksum does not already exist
   ngine_io.cloudstack.cs_iso:
     name: Debian 7 64-bit
+    zone: zone01
     url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
     os_type: Debian GNU/Linux 7(64-bit)
     checksum: 0b31bccccb048d20b551f70830bb7ad0
@@ -129,11 +131,13 @@ EXAMPLES = '''
 - name: Remove an ISO by name
   ngine_io.cloudstack.cs_iso:
     name: Debian 7 64-bit
+    zone: zone01
     state: absent
 
 - name: Remove an ISO by checksum
   ngine_io.cloudstack.cs_iso:
     name: Debian 7 64-bit
+    zone: zone01
     checksum: 0b31bccccb048d20b551f70830bb7ad0
     state: absent
 '''
@@ -394,7 +398,7 @@ def main():
         display_text=dict(),
         url=dict(),
         os_type=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         cross_zones=dict(type='bool', default=False),
         iso_filter=dict(default='self', choices=['featured', 'self', 'selfexecutable', 'sharedexecutable', 'executable', 'community']),
         domain=dict(),

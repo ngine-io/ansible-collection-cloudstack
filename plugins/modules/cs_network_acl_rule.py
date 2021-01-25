@@ -109,8 +109,8 @@ options:
   zone:
     description:
       - Name of the zone the VPC related to.
-      - If not set, default zone is used.
     type: str
+    required: true
   state:
     description:
       - State of the network ACL rule.
@@ -132,6 +132,7 @@ EXAMPLES = '''
     network_acl: web
     rule_position: 1
     vpc: my vpc
+    zone: zone01
     traffic_type: ingress
     action_policy: allow
     port: 80
@@ -142,6 +143,7 @@ EXAMPLES = '''
     network_acl: web
     rule_position: 1
     vpc: my vpc
+    zone: zone01
     traffic_type: ingress
     action_policy: deny
     start_port: 8000
@@ -155,6 +157,7 @@ EXAMPLES = '''
     network_acl: web
     rule_position: 1
     vpc: my vpc
+    zone: zone01
     state: absent
 '''
 
@@ -417,7 +420,7 @@ def main():
         start_port=dict(type='int', aliases=['port']),
         end_port=dict(type='int'),
         state=dict(choices=['present', 'absent'], default='present'),
-        zone=dict(),
+        zone=dict(required=True),
         domain=dict(),
         account=dict(),
         project=dict(),

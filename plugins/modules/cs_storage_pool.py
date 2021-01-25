@@ -28,8 +28,8 @@ options:
   zone:
     description:
       - Name of the zone in which the host should be deployed.
-      - If not set, default zone is used.
     type: str
+    required: true
   storage_url:
     description:
       - URL of the storage pool.
@@ -128,6 +128,7 @@ EXAMPLES = '''
 - name: ensure a storage_pool is absent
   ngine_io.cloudstack.cs_storage_pool:
     name: Ceph RBD
+    zone: zone01
     state: absent
 '''
 
@@ -446,7 +447,7 @@ def main():
     argument_spec.update(dict(
         name=dict(required=True),
         storage_url=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         pod=dict(),
         cluster=dict(),
         scope=dict(choices=['zone', 'cluster']),
