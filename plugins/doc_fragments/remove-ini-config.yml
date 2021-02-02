@@ -1,0 +1,3 @@
+breaking_changes:
+  - Authentication option using INI files e.g. ``cloudstack.ini`` has been removed. The only supported option to authenticate
+    is by using the module params with fallback to the ENV variables.
