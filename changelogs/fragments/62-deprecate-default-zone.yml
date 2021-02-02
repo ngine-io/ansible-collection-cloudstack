@@ -1,2 +1,0 @@
-breaking_changes:
-  - default zone deprecation - The `zone` param default value, across multiple modules, has been deprecated due to unreliable API (https://github.com/ngine-io/ansible-collection-cloudstack/pull/62).
