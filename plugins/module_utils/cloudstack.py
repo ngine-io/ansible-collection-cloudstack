@@ -12,11 +12,11 @@ import time
 import traceback
 
 from ansible.module_utils._text import to_text, to_native
-from ansible.module_utils.basic import missing_required_lib
+from ansible.module_utils.basic import missing_required_lib, env_fallback
 
 CS_IMP_ERR = None
 try:
-    from cs import CloudStack, CloudStackException, read_config
+    from cs import CloudStack, CloudStackException
     HAS_LIB_CS = True
 except ImportError:
     CS_IMP_ERR = traceback.format_exc()
@@ -29,18 +29,17 @@ if sys.version_info > (3,):
 
 def cs_argument_spec():
     return dict(
-        api_key=dict(default=os.environ.get('CLOUDSTACK_KEY')),
-        api_secret=dict(default=os.environ.get('CLOUDSTACK_SECRET'), no_log=True),
-        api_url=dict(default=os.environ.get('CLOUDSTACK_ENDPOINT')),
-        api_http_method=dict(choices=['get', 'post'], default=os.environ.get('CLOUDSTACK_METHOD')),
-        api_timeout=dict(type='int', default=os.environ.get('CLOUDSTACK_TIMEOUT')),
-        api_region=dict(default=os.environ.get('CLOUDSTACK_REGION') or 'cloudstack'),
-        api_verify_ssl_cert=dict(default=os.environ.get('CLOUDSTACK_VERIFY')),
+        api_key=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_KEY']), required=True),
+        api_secret=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_SECRET']), required=True, no_log=True),
+        api_url=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_ENDPOINT']), required=True),
+        api_http_method=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_METHOD']), choices=['get', 'post'], default='get'),
+        api_timeout=dict(type='int', fallback=(env_fallback, ['CLOUDSTACK_TIMEOUT']), default=10),
+        api_verify_ssl_cert=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_VERIFY'])),
     )
 
 
 def cs_required_together():
-    return [['api_key', 'api_secret']]
+    return []
 
 
 class AnsibleCloudStack:
@@ -114,30 +113,21 @@ class AnsibleCloudStack:
         return self._cs
 
     def get_api_config(self):
-        api_region = self.module.params.get('api_region') or os.environ.get('CLOUDSTACK_REGION')
-        try:
-            config = read_config(api_region)
-        except KeyError:
-            config = {}
-
         api_config = {
-            'endpoint': self.module.params.get('api_url') or config.get('endpoint'),
-            'key': self.module.params.get('api_key') or config.get('key'),
-            'secret': self.module.params.get('api_secret') or config.get('secret'),
-            'timeout': self.module.params.get('api_timeout') or config.get('timeout') or 10,
-            'method': self.module.params.get('api_http_method') or config.get('method') or 'get',
-            'verify': self.module.params.get('api_verify_ssl_cert') or config.get('verify'),
+            'endpoint': self.module.params.get('api_url'),
+            'key': self.module.params.get('api_key'),
+            'secret': self.module.params.get('api_secret'),
+            'timeout': self.module.params.get('api_timeout'),
+            'method': self.module.params.get('api_http_method'),
+            'verify': self.module.params.get('api_verify_ssl_cert'),
         }
         self.result.update({
-            'api_region': api_region,
             'api_url': api_config['endpoint'],
             'api_key': api_config['key'],
             'api_timeout': int(api_config['timeout']),
             'api_http_method': api_config['method'],
             'api_verify_ssl_cert': api_config['verify'],
         })
-        if not all([api_config['endpoint'], api_config['key'], api_config['secret']]):
-            self.fail_json(msg="Missing api credentials: can not authenticate")
         return api_config
 
     def fail_json(self, **kwargs):
