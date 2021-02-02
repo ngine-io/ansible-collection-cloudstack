@@ -5,6 +5,15 @@ Apache CloudStack Collection Release Notes
 .. contents:: Topics
 
 
+v1.2.0
+======
+
+Minor Changes
+-------------
+
+- cs_instance - Fixed an edge case caused by `displaytext` not available (https://github.com/ngine-io/ansible-collection-cloudstack/pull/49).
+- cs_network - Fixed constraints when creating networks. The param `gateway` is no longer required if the param `netmask` is given (https://github.com/ngine-io/ansible-collection-cloudstack/pull/54).
+
 v1.1.0
 ======
 
