@@ -45,3 +45,15 @@ releases:
     - 49-cs_instance-fix-keyerror.yml
     - 54-cs_network-fix-constraints.yml
     release_date: '2021-02-02'
+  2.0.0:
+    changes:
+      breaking_changes:
+      - Authentication option using INI files e.g. ``cloudstack.ini`` has been removed.
+        The only supported option to authenticate is by using the module params with
+        fallback to the ENV variables.
+      - default zone deprecation - The `zone` param default value, across multiple
+        modules, has been deprecated due to unreliable API (https://github.com/ngine-io/ansible-collection-cloudstack/pull/62).
+    fragments:
+    - 62-deprecate-default-zone.yml
+    - remove-ini-config.yml
+    release_date: '2021-02-02'

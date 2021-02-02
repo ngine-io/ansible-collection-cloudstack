@@ -5,6 +5,15 @@ Apache CloudStack Collection Release Notes
 .. contents:: Topics
 
 
+v2.0.0
+======
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Authentication option using INI files e.g. ``cloudstack.ini`` has been removed. The only supported option to authenticate is by using the module params with fallback to the ENV variables.
+- default zone deprecation - The `zone` param default value, across multiple modules, has been deprecated due to unreliable API (https://github.com/ngine-io/ansible-collection-cloudstack/pull/62).
+
 v1.2.0
 ======
 
