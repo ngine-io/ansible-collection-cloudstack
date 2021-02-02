@@ -89,7 +89,7 @@ options:
   zone:
     description:
       - Name of the zone in which the rule should be created.
-      - If not set, default zone is used.
+      - Required when the LB provider is ElasticLoadBalancerVm
     type: str
   poll_async:
     description:

@@ -48,8 +48,8 @@ options:
   zone:
     description:
       - Name of the zone in which the pod belongs to.
-      - If not set, default zone is used.
     type: str
+    required: true
   state:
     description:
       - State of the pod.
@@ -263,7 +263,7 @@ def main():
         netmask=dict(),
         start_ip=dict(),
         end_ip=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         state=dict(choices=['present', 'enabled', 'disabled', 'absent'], default='present'),
     ))
 

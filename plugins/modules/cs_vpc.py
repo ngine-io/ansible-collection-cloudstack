@@ -75,8 +75,8 @@ options:
   zone:
     description:
       - Name of the zone.
-      - If not set, default zone is used.
     type: str
+    required: true
   tags:
     description:
       - List of tags. Tags are a list of dictionaries having keys I(key) and I(value).
@@ -97,6 +97,7 @@ EXAMPLES = '''
 - name: Ensure a VPC is present but not started after creating
   ngine_io.cloudstack.cs_vpc:
     name: my_vpc
+    zone: zone01
     display_text: My example VPC
     cidr: 10.10.0.0/16
     state: stopped
@@ -104,17 +105,20 @@ EXAMPLES = '''
 - name: Ensure a VPC is present and started after creating
   ngine_io.cloudstack.cs_vpc:
     name: my_vpc
+    zone: zone01
     display_text: My example VPC
     cidr: 10.10.0.0/16
 
 - name: Ensure a VPC is absent
   ngine_io.cloudstack.cs_vpc:
     name: my_vpc
+    zone: zone01
     state: absent
 
 - name: Ensure a VPC is restarted with clean up
   ngine_io.cloudstack.cs_vpc:
     name: my_vpc
+    zone: zone01
     clean_up: yes
     state: restarted
 '''
@@ -358,7 +362,7 @@ def main():
         domain=dict(),
         account=dict(),
         project=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         tags=dict(type='list', elements='dict', aliases=['tag']),
         poll_async=dict(type='bool', default=True),
     ))

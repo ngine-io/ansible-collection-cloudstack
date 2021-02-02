@@ -20,7 +20,7 @@ options:
   zone:
     description:
       - Name of the zone.
-      - If not specified, all zones are returned
+      - If not specified information about all zones is gathered.
     type: str
     aliases: [ name ]
 extends_documentation_fragment:

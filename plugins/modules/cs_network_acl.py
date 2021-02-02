@@ -53,8 +53,8 @@ options:
   zone:
     description:
       - Name of the zone the VPC is related to.
-      - If not set, default zone is used.
     type: str
+    required: true
   poll_async:
     description:
       - Poll async jobs until job has finished.
@@ -70,11 +70,13 @@ EXAMPLES = '''
     name: Webserver ACL
     description: a more detailed description of the ACL
     vpc: customers
+    zone: zone01
 
 - name: remove a network ACL
   ngine_io.cloudstack.cs_network_acl:
     name: Webserver ACL
     vpc: customers
+    zone: zone01
     state: absent
 '''
 
@@ -167,7 +169,7 @@ def main():
         description=dict(),
         vpc=dict(required=True),
         state=dict(choices=['present', 'absent'], default='present'),
-        zone=dict(),
+        zone=dict(required=True),
         domain=dict(),
         account=dict(),
         project=dict(),

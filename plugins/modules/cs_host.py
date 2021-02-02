@@ -74,8 +74,8 @@ options:
   zone:
     description:
       - Name of the zone in which the host should be deployed.
-      - If not set, default zone is used.
     type: str
+    required: true
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
 '''
@@ -580,7 +580,7 @@ def main():
         pod=dict(),
         cluster=dict(),
         host_tags=dict(type='list', elements='str', aliases=['host_tag']),
-        zone=dict(),
+        zone=dict(required=True),
         state=dict(choices=['present', 'absent'], default='present'),
     ))
 

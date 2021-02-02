@@ -48,8 +48,8 @@ options:
   zone:
     description:
       - Name of the zone the VPC is related to.
-      - If not set, default zone is used.
     type: str
+    required: true
   domain:
     description:
       - Domain the VPN connection is related to.
@@ -76,17 +76,20 @@ EXAMPLES = r'''
   ngine_io.cloudstack.cs_vpn_connection:
     vpn_customer_gateway: my vpn connection
     vpc: my vpc
+    zone: zone01
 
 - name: Create a VPN connection and force VPN gateway activation
   ngine_io.cloudstack.cs_vpn_connection:
     vpn_customer_gateway: my vpn connection
     vpc: my vpc
+    zone: zone01
     force: yes
 
 - name: Remove a vpn connection
   ngine_io.cloudstack.cs_vpn_connection:
     vpn_customer_gateway: my vpn connection
     vpc: my vpc
+    zone: zone01
     state: absent
 '''
 
@@ -320,7 +323,7 @@ def main():
         domain=dict(),
         account=dict(),
         project=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         passive=dict(type='bool', default=False),
         force=dict(type='bool', default=False),
         state=dict(choices=['present', 'absent'], default='present'),

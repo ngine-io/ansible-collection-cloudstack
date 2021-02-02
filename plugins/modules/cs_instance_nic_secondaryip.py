@@ -53,8 +53,8 @@ options:
   zone:
     description:
       - Name of the zone in which the instance is deployed in.
-      - If not set, default zone is used.
     type: str
+    required: true
   state:
     description:
       - State of the ipaddress.
@@ -75,16 +75,19 @@ EXAMPLES = '''
 - name: Assign a specific IP to the default NIC of the VM
   ngine_io.cloudstack.cs_instance_nic_secondaryip:
     vm: customer_xy
+    zone: zone01
     vm_guest_ip: 10.10.10.10
 
 # Note: If vm_guest_ip is not set, you will get a new IP address on every run.
 - name: Assign an IP to the default NIC of the VM
   ngine_io.cloudstack.cs_instance_nic_secondaryip:
     vm: customer_xy
+    zone: zone01
 
 - name: Remove a specific IP from the default NIC
   ngine_io.cloudstack.cs_instance_nic_secondaryip:
     vm: customer_xy
+    zone: zone01
     vm_guest_ip: 10.10.10.10
     state: absent
 '''
@@ -238,7 +241,7 @@ def main():
         domain=dict(),
         account=dict(),
         project=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         poll_async=dict(type='bool', default=True),
     ))
 

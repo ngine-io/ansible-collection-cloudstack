@@ -2,6 +2,7 @@
 - name: setup template
   cs_template:
     name: "ansible-template-test1"
+    cross_zones: yes
     state: absent
   register: template
 - name: verify setup template

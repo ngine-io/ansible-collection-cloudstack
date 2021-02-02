@@ -93,7 +93,7 @@ options:
   zone:
     description:
       - Name of the zone you wish the template to be registered or deleted from.
-      - If not specified, first found zone will be used.
+      - Required when I(cross_zones) is C(no)
     type: str
   template_filter:
     description:

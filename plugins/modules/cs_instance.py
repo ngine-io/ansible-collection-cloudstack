@@ -150,8 +150,8 @@ options:
   zone:
     description:
       - Name of the zone in which the instance should be deployed.
-      - If not set, default zone is used.
     type: str
+    required: true
   ssh_key:
     description:
       - Name of the SSH key to be deployed on the new instance.
@@ -218,6 +218,7 @@ EXAMPLES = '''
 - name: for changing a running instance, use the 'force' parameter
   ngine_io.cloudstack.cs_instance:
     name: web-vm-1
+    zone: zone01
     display_name: web-vm-01.example.com
     iso: Linux Debian 7 64-bit
     service_offering: 2cpu_2gb
@@ -227,6 +228,7 @@ EXAMPLES = '''
 - name: create or update a instance on Exoscale's public cloud using display_name.
   ngine_io.cloudstack.cs_instance:
     display_name: web-vm-1
+    zone: zone01
     template: Linux Debian 7 64-bit
     service_offering: Tiny
     ssh_key: john@example.com
@@ -243,6 +245,7 @@ EXAMPLES = '''
 - name: create an instance with multiple interfaces specifying the IP addresses
   ngine_io.cloudstack.cs_instance:
     name: web-vm-1
+    zone: zone01
     template: Linux Debian 7 64-bit
     service_offering: Tiny
     ip_to_networks:
@@ -254,16 +257,19 @@ EXAMPLES = '''
 - name: ensure an instance is stopped
   ngine_io.cloudstack.cs_instance:
     name: web-vm-1
+    zone: zone01
     state: stopped
 
 - name: ensure an instance is running
   ngine_io.cloudstack.cs_instance:
     name: web-vm-1
+    zone: zone01
     state: started
 
 - name: remove an instance
   ngine_io.cloudstack.cs_instance:
     name: web-vm-1
+    zone: zone01
     state: absent
 '''
 
@@ -1035,7 +1041,7 @@ def main():
         account=dict(),
         project=dict(),
         user_data=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         ssh_key=dict(),
         force=dict(type='bool', default=False),
         tags=dict(type='list', elements='dict', aliases=['tag']),

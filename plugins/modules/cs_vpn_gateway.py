@@ -43,8 +43,8 @@ options:
   zone:
     description:
       - Name of the zone the VPC is related to.
-      - If not set, default zone is used.
     type: str
+    required: true
   poll_async:
     description:
       - Poll async jobs until job has finished.
@@ -58,10 +58,12 @@ EXAMPLES = '''
 - name: Ensure a vpn gateway is present
   ngine_io.cloudstack.cs_vpn_gateway:
     vpc: my VPC
+    zone: zone01
 
 - name: Ensure a vpn gateway is absent
   ngine_io.cloudstack.cs_vpn_gateway:
     vpc: my VPC
+    zone: zone01
     state: absent
 '''
 
@@ -177,7 +179,7 @@ def main():
         domain=dict(),
         account=dict(),
         project=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         poll_async=dict(type='bool', default=True),
     ))
 

@@ -93,8 +93,8 @@ options:
   zone:
     description:
       - Name of the zone in which the volume should be deployed.
-      - If not set, default zone is used.
     type: str
+    required: true
   state:
     description:
       - State of the volume.
@@ -148,6 +148,7 @@ EXAMPLES = '''
 - name: create/attach volume to instance
   ngine_io.cloudstack.cs_volume:
     name: web-vm-1-volume
+    zone: zone01
     disk_offering: PerfPlus Storage
     size: 20
     vm: web-vm-1
@@ -156,23 +157,27 @@ EXAMPLES = '''
 - name: detach volume
   ngine_io.cloudstack.cs_volume:
     name: web-vm-1-volume
+    zone: zone01
     state: detached
 
 - name: remove volume
   ngine_io.cloudstack.cs_volume:
     name: web-vm-1-volume
+    zone: zone01
     state: absent
 
 - name: Extract DATA volume to make it downloadable
   ngine_io.cloudstack.cs_volume:
     state: extracted
     name: web-vm-1-volume
+    zone: zone01
   register: data_vol_out
 
 - name: Create new volume by downloading source volume
   ngine_io.cloudstack.cs_volume:
     state: uploaded
     name: web-vm-1-volume-2
+    zone: zone01
     format: VHD
     url: "{{ data_vol_out.url }}"
 '''
@@ -512,7 +517,7 @@ def main():
             'extracted',
             'uploaded',
         ]),
-        zone=dict(),
+        zone=dict(required=True),
         domain=dict(),
         account=dict(),
         project=dict(),

@@ -76,7 +76,7 @@ options:
   zone:
     description:
       - Name of the zone you wish the ISO to be registered or deleted from.
-      - If not specified, first zone found will be used.
+      - Required when I(cross_zones) is C(no)
     type: str
   cross_zones:
     description:
@@ -116,12 +116,14 @@ EXAMPLES = '''
 - name: Register an ISO if ISO name does not already exist
   ngine_io.cloudstack.cs_iso:
     name: Debian 7 64-bit
+    zone: zone01
     url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
     os_type: Debian GNU/Linux 7(64-bit)
 
 - name: Register an ISO with given name if ISO md5 checksum does not already exist
   ngine_io.cloudstack.cs_iso:
     name: Debian 7 64-bit
+    zone: zone01
     url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
     os_type: Debian GNU/Linux 7(64-bit)
     checksum: 0b31bccccb048d20b551f70830bb7ad0
@@ -129,11 +131,13 @@ EXAMPLES = '''
 - name: Remove an ISO by name
   ngine_io.cloudstack.cs_iso:
     name: Debian 7 64-bit
+    zone: zone01
     state: absent
 
 - name: Remove an ISO by checksum
   ngine_io.cloudstack.cs_iso:
     name: Debian 7 64-bit
+    zone: zone01
     checksum: 0b31bccccb048d20b551f70830bb7ad0
     state: absent
 '''

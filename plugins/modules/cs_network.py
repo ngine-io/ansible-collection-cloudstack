@@ -126,8 +126,8 @@ options:
   zone:
     description:
       - Name of the zone in which the network should be deployed.
-      - If not set, default zone is used.
     type: str
+    required: true
   project:
     description:
       - Name of the project the network to be deployed in.
@@ -186,18 +186,21 @@ EXAMPLES = '''
 - name: Update a network
   ngine_io.cloudstack.cs_network:
     name: my network
+    zone: zone01
     display_text: network of domain example.local
     network_domain: example.local
 
 - name: Restart a network with clean up
   ngine_io.cloudstack.cs_network:
     name: my network
+    zone: zone01
     clean_up: yes
     state: restarted
 
 - name: Remove a network
   ngine_io.cloudstack.cs_network:
     name: my network
+    zone: zone01
     state: absent
 '''
 
@@ -582,7 +585,7 @@ def main():
         name=dict(required=True),
         display_text=dict(),
         network_offering=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         start_ip=dict(),
         end_ip=dict(),
         gateway=dict(),

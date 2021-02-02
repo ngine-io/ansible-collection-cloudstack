@@ -90,8 +90,8 @@ options:
   zone:
     description:
       - Name of the zone in which the virtual machine is in.
-      - If not set, default zone is used.
     type: str
+    required: true
   poll_async:
     description:
       - Poll async jobs until job has finished.
@@ -112,12 +112,14 @@ EXAMPLES = '''
 - name: Allow inbound port 80/tcp from 1.2.3.4 to 4.3.2.1
   ngine_io.cloudstack.cs_firewall:
     ip_address: 4.3.2.1
+    zone: zone01
     port: 80
     cidr: 1.2.3.4/32
 
 - name: Allow inbound tcp/udp port 53 to 4.3.2.1
   ngine_io.cloudstack.cs_firewall:
     ip_address: 4.3.2.1
+    zone: zone01
     port: 53
     protocol: '{{ item }}'
   with_items:
@@ -127,6 +129,7 @@ EXAMPLES = '''
 - name: Ensure firewall rule is removed
   ngine_io.cloudstack.cs_firewall:
     ip_address: 4.3.2.1
+    zone: zone01
     start_port: 8000
     end_port: 8888
     cidr: 17.0.0.0/8
@@ -135,12 +138,14 @@ EXAMPLES = '''
 - name: Allow all outbound traffic
   ngine_io.cloudstack.cs_firewall:
     network: my_network
+    zone: zone01
     type: egress
     protocol: all
 
 - name: Allow only HTTP outbound traffic for an IP
   ngine_io.cloudstack.cs_firewall:
     network: my_network
+    zone: zone01
     type: egress
     port: 80
     cidr: 10.101.1.20
@@ -395,7 +400,7 @@ def main():
         start_port=dict(type='int', aliases=['port']),
         end_port=dict(type='int'),
         state=dict(choices=['present', 'absent'], default='present'),
-        zone=dict(),
+        zone=dict(required=True),
         domain=dict(),
         account=dict(),
         project=dict(),

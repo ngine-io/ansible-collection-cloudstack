@@ -705,6 +705,7 @@
 - name: test remove vpc with default offering idempotence
   cs_vpc:
     name: "{{ cs_resource_prefix }}_vpc"
+    zone: "{{ cs_common_zone_adv }}"
     state: absent
   register: vpc
 - name: verify test remove vpc idempotence

@@ -28,8 +28,8 @@ options:
   zone:
     description:
       - Name of the zone with the physical network.
-      - Default zone will be used if this is empty.
     type: str
+    required: true
   traffic_type:
     description:
       - the trafficType to be added to the physical network.
@@ -278,7 +278,7 @@ def setup_module_object():
     argument_spec = cs_argument_spec()
     argument_spec.update(dict(
         physical_network=dict(required=True),
-        zone=dict(),
+        zone=dict(required=True),
         state=dict(choices=['present', 'absent'], default='present'),
         traffic_type=dict(required=True, choices=['Management', 'Guest', 'Public', 'Storage']),
         hyperv_networklabel=dict(),

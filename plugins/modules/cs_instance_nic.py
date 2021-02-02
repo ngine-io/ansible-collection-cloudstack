@@ -54,8 +54,8 @@ options:
   zone:
     description:
       - Name of the zone in which the instance is deployed in.
-      - If not set, default zone is used.
     type: str
+    required: true
   state:
     description:
       - State of the nic.
@@ -76,18 +76,21 @@ EXAMPLES = '''
   ngine_io.cloudstack.cs_instance_nic:
     vm: privnet
     network: privNetForBasicZone
+    zone: zone01
 
 - name: Ensure IP address on a nic
   ngine_io.cloudstack.cs_instance_nic:
     vm: privnet
     ip_address: 10.10.11.32
     network: privNetForBasicZone
+    zone: zone01
 
 - name: Remove a secondary nic
   ngine_io.cloudstack.cs_instance_nic:
     vm: privnet
     state: absent
     network: privNetForBasicZone
+    zone: zone01
 '''
 
 RETURN = '''
@@ -258,7 +261,7 @@ def main():
         domain=dict(),
         account=dict(),
         project=dict(),
-        zone=dict(),
+        zone=dict(required=True),
         poll_async=dict(type='bool', default=True),
     ))
 

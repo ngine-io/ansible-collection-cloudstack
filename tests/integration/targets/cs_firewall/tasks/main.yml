@@ -66,9 +66,22 @@
     state: absent
 
 - name: test fail if missing params
-  action: cs_firewall
+  cs_firewall:
   register: fw
   ignore_errors: true
+
+- name: verify results of fail if missing params
+  assert:
+    that:
+    - fw is failed
+    - "fw.msg == 'missing required arguments: zone'"
+
+- name: test fail if missing params
+  cs_firewall:
+    zone: "{{ cs_common_zone_adv }}"
+  register: fw
+  ignore_errors: true
+
 - name: verify results of fail if missing params
   assert:
     that:
