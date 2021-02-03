@@ -1,6 +1,0 @@
-breaking_changes
-  - api credentials - The usage of `cloudstack.ini` file has been deprecated due to error prone module configuration (https://github.com/ngine-io/ansible-collection-cloudstack/pull/61)
-minor_changes:
-  - cloudstack - New style inventory plugin implemented (https://github.com/ngine-io/ansible-collection-cloudstack/pull/61)
-bugfixes
-  - module utils - Fixes issue that prevented module level api configuration (https://github.com/ngine-io/ansible-collection-cloudstack/pull/61)

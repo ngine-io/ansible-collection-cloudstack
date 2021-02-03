@@ -149,7 +149,7 @@ instance:
 
 from ansible.plugins.inventory import BaseInventoryPlugin, Constructable, AnsibleError
 from ansible.module_utils.basic import missing_required_lib
-from ..module_utils.cloudstack import HAS_LIB_CS, cs_get_api_config
+from ..module_utils.cloudstack import HAS_LIB_CS
 from jinja2 import Template
 
 
@@ -171,17 +171,22 @@ class InventoryModule(BaseInventoryPlugin, Constructable):
         self._normalization_template = Template(INVENTORY_NORMALIZATION_J2)
 
     def init_cs(self, config):
-        api_config = self.get_api_config(config)
+
+        # The configuration logic matches modules specification
+        api_config = {
+            'endpoint': config.get('api_url') or os.environ.get('CLOUDSTACK_ENDPOINT'),
+            'key': config.get('api_key') or os.environ.get('CLOUDSTACK_KEY'),
+            'secret': config.get('api_secret') or os.environ.get('CLOUDSTACK_SECRET'),
+            'timeout': config.get('api_timeout') or os.environ.get('CLOUDSTACK_TIMEOUT') or 10,
+            'method': config.get('api_http_method') or os.environ.get('CLOUDSTACK_METHOD') or 'get',
+            'verify': config.get('api_verify_ssl_cert') or os.environ.get('CLOUDSTACK_VERIFY'),
+        }
+
         self._cs = CloudStack(**api_config)
 
     @property
     def cs(self):
         return self._cs
-
-    def get_api_config(self, inventory_config):
-        # TODO: this should work with self._options
-        api_config = cs_get_api_config(inventory_config)
-        return api_config
 
     def query_api(self, command, **args):
         res = getattr(self.cs, command)(**args)
