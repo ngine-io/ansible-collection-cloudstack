@@ -242,7 +242,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable):
 
     def normalize_instance_data(self, instance):
         inventory_instance_str = self._normalization_template.render(instance=instance)
-        inventory_instance = yaml.load(inventory_instance_str)
+        inventory_instance = yaml.load(inventory_instance_str, Loader=yaml.FullLoader)
         return inventory_instance['instance']
 
     def parse(self, inventory, loader, path, cache=False):
