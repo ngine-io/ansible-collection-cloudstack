@@ -170,16 +170,16 @@ class InventoryModule(BaseInventoryPlugin, Constructable):
         self._cs = None
         self._normalization_template = Template(INVENTORY_NORMALIZATION_J2)
 
-    def init_cs(self, config):
+    def init_cs(self):
 
         # The configuration logic matches modules specification
         api_config = {
-            'endpoint': config.get('api_url') or os.environ.get('CLOUDSTACK_ENDPOINT'),
-            'key': config.get('api_key') or os.environ.get('CLOUDSTACK_KEY'),
-            'secret': config.get('api_secret') or os.environ.get('CLOUDSTACK_SECRET'),
-            'timeout': config.get('api_timeout') or os.environ.get('CLOUDSTACK_TIMEOUT') or 10,
-            'method': config.get('api_http_method') or os.environ.get('CLOUDSTACK_METHOD') or 'get',
-            'verify': config.get('api_verify_ssl_cert') or os.environ.get('CLOUDSTACK_VERIFY'),
+            'endpoint': self.get_option('api_url'),
+            'key': self.get_option('api_key'),
+            'secret': self.get_option('api_secret'),
+            'timeout': self.get_option('api_timeout'),
+            'method': self.get_option('api_http_method'),
+            'verify': self.get_option('api_verify_ssl_cert')
         }
 
         self._cs = CloudStack(**api_config)
@@ -251,10 +251,10 @@ class InventoryModule(BaseInventoryPlugin, Constructable):
         super(InventoryModule, self).parse(inventory, loader, path, cache)
 
         # This is the inventory Config
-        config = self._read_config_data(path)
+        self._read_config_data(path)
 
         # We Initialize the query_api
-        self.init_cs(config)
+        self.init_cs()
 
         # All Hosts from
         self.inventory.add_group('cloudstack')
