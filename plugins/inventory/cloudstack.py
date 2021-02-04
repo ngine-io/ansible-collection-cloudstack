@@ -16,7 +16,7 @@ DOCUMENTATION = r'''
     plugin_type: inventory
     short_description: Apache CloudStack inventory source
     author: Rafael del Valle (@rvalle)
-    version_added: 1.2.0
+    version_added: 2.1.0
     description:
         - Get inventory hosts from Apache CloudStack
         - Allows filtering and grouping inventory hosts.
