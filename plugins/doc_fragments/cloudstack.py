@@ -18,24 +18,18 @@ options:
       - If not given, the C(CLOUDSTACK_KEY) env variable is considered.
     type: str
     required: true
-    env:
-      - name: CLOUDSTACK_KEY
   api_secret:
     description:
       - Secret key of the CloudStack API.
       - If not set, the C(CLOUDSTACK_SECRET) env variable is considered.
     type: str
     required: true
-    env:
-      - name: CLOUDSTACK_SECRET
   api_url:
     description:
       - URL of the CloudStack API e.g. https://cloud.example.com/client/api.
       - If not given, the C(CLOUDSTACK_ENDPOINT) env variable is considered.
     type: str
     required: true
-    env:
-      - name: CLOUDSTACK_ENDPOINT
   api_http_method:
     description:
       - HTTP method used to query the API endpoint.
@@ -43,23 +37,17 @@ options:
     type: str
     choices: [ get, post ]
     default: get
-    env:
-      - name: CLOUDSTACK_METHOD
   api_timeout:
     description:
       - HTTP timeout in seconds.
       - If not given, the C(CLOUDSTACK_TIMEOUT) env variable is considered.
     type: int
     default: 10
-    env:
-      - name: CLOUDSTACK_TIMEOUT
   api_verify_ssl_cert:
     description:
       - Verify CA authority cert file.
       - If not given, the C(CLOUDSTACK_VERIFY) env variable is considered.
     type: str
-    env:
-      - name: CLOUDSTACK_VERIFY
 requirements:
   - python >= 2.6
   - cs >= 0.9.0

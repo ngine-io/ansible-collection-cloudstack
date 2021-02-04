@@ -53,6 +53,7 @@ DOCUMENTATION = r'''
     extends_documentation_fragment:
         - constructed
         - ngine_io.cloudstack.cloudstack
+        - ngine_io.cloudstack.cloudstack_environment
 '''
 
 # TODO: plugin should work as 'cloudstack' only
