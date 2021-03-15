@@ -16,5 +16,5 @@ source cloudstack.env
 
 ansible-playbook playbooks/cloudstack-inventory-test.yml "$@"
 
-ansible-inventory --list -i test.cloudstack.yml "$@"
+ansible-inventory --list -i test.cloudstack.yml 
 
