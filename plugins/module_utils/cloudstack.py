@@ -29,7 +29,7 @@ if sys.version_info > (3,):
 
 def cs_argument_spec():
     return dict(
-        api_key=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_KEY']), required=True),
+        api_key=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_KEY']), required=True, no_log=False),
         api_secret=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_SECRET']), required=True, no_log=True),
         api_url=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_ENDPOINT']), required=True),
         api_http_method=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_METHOD']), choices=['get', 'post'], default='get'),

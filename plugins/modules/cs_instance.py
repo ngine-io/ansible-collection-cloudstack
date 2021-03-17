@@ -1042,7 +1042,7 @@ def main():
         project=dict(),
         user_data=dict(),
         zone=dict(required=True),
-        ssh_key=dict(),
+        ssh_key=dict(no_log=False),
         force=dict(type='bool', default=False),
         tags=dict(type='list', elements='dict', aliases=['tag']),
         details=dict(type='dict'),
