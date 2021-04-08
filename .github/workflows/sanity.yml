@@ -1,7 +1,7 @@
 name: Sanity
 on:
   schedule:
-  - cron: "* 12 * * *"
+  - cron: "5 12 * * *"
   pull_request:
 
 jobs:
