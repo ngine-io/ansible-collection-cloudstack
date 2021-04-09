@@ -1,0 +1,3 @@
+---
+
+- import_playbook: common-cloudstack-objects.yml

@@ -1,0 +1,22 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: no
+  vars:
+    simulator: http://cloudstack-sim:8888
+  tasks:
+    - name: Retrieve Simulator Keys
+      uri:
+        url: "{{simulator}}/admin.json"
+        return_content: yes
+      register: admin
+
+    - name: Create cloudstack.env
+      template:
+        src: templates/cloudstack.env.j2
+        dest: ../cloudstack.env
+
+    - name: Create cloudstack-instances.yml
+      template:
+        src: templates/cloudstack-instances.yml.j2
+        dest: ../cloudstack-instances.yml
