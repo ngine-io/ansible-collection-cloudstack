@@ -1,0 +1,2 @@
+minor_changes:
+- cs_physical_network - Added VXLAN as an option of isolation methods (https://github.com/ngine-io/ansible-collection-cloudstack/pull/73).
