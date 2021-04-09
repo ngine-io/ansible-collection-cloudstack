@@ -99,29 +99,29 @@ INVENTORY_NORMALIZATION_J2 = '''
 ---
 instance:
 
-  name: {{instance.name}}
-  hostname: {{instance.hostname or instance.name | lower }}
-  v4_default_ip: {{instance.nic[0].ipaddress}}
+  name: {{ instance.name }}
+  hostname: {{ instance.hostname or instance.name | lower }}
+  v4_default_ip: {{ instance.nic[0].ipaddress }}
 
-  zone: {{instance.zonename}}
-  domain: {{instance.domain | lower}}
-  account: {{instance.account}}
-  username: {{instance.username}}
+  zone: {{ instance.zonename }}
+  domain: {{ instance.domain | lower }}
+  account: {{ instance.account }}
+  username: {{ instance.username }}
   {% if instance.group %}
-  group: {{instance.group}}
+  group: {{ instance.group }}
   {% endif %}
 
   {% if instance.tags %}
   tags:
   {% for tag in instance.tags %}
-    {{tag.key}}: {{tag.value}}
+    {{ tag.key }}: {{ tag.value }}
   {% endfor %}
   {% endif %}
 
-  template: {{instance.templatename}}
-  service_offering: {{instance.serviceofferingname}}
+  template: {{ instance.templatename }}
+  service_offering: {{ instance.serviceofferingname }}
   {% if instance.diskofferingname is defined %}
-  disk_offering: {{instance.diskofferingname}}
+  disk_offering: {{ instance.diskofferingname }}
   {% endif %}
   {% if instance.affinitygroup %}
   affinity_groups:
@@ -131,21 +131,21 @@ instance:
   {% endif %}
   networks:
     {% for nic in instance.nic %}
-    - {{nic.networkname}}
+    - {{ nic.networkname }}
     {% endfor %}
 
-  ha_enabled: {{instance.haenable}}
-  password_enabled: {{instance.passwordenabled}}
+  ha_enabled: {{ instance.haenable }}
+  password_enabled: {{ instance.passwordenabled }}
 
-  hypervisor: {{instance.hypervisor | lower}}
-  cpu_speed: {{instance.cpuspeed}}
-  cpu_number: {{instance.cpunumber}}
-  memory: {{instance.memory}}
-  dynamically_scalable: {{instance.isdynamicallyscalable}}
+  hypervisor: {{ instance.hypervisor | lower }}
+  cpu_speed: {{ instance.cpuspeed }}
+  cpu_number: {{ instance.cpunumber }}
+  memory: {{ instance.memory }}
+  dynamically_scalable: {{ instance.isdynamicallyscalable }}
 
-  state: {{instance.state}}
-  cpu_usage: {{instance.cpuused}}
-  created: {{instance.created}}
+  state: {{ instance.state }}
+  cpu_usage: {{ instance.cpuused }}
+  created: {{ instance.created }}
 '''
 
 from ansible.plugins.inventory import BaseInventoryPlugin, Constructable, AnsibleError
