@@ -1,2 +1,0 @@
-minor_changes:
-  - cloudstack - New style inventory plugin implemented (https://github.com/ngine-io/ansible-collection-cloudstack/pull/66)

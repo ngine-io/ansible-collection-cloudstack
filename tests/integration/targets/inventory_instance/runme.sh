@@ -14,7 +14,7 @@ ansible-playbook playbooks/basic-configuration.yml "$@"
 # Configure simulator endpoint
 source cloudstack.env
 
-ansible-playbook playbooks/cloudstack-inventory-test.yml "$@"
+ansible-playbook playbooks/instance-inventory-test.yml "$@"
 
-ansible-inventory --list -i test.cloudstack.yml 
+ansible-inventory --list -i cloudstack-instances.yml
 

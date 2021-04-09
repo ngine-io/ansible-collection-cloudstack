@@ -16,7 +16,7 @@
         src: templates/cloudstack.env.j2
         dest: ../cloudstack.env
 
-    - name: Create test.cloudstack.yml
+    - name: Create cloudstack-instances.yml
       template:
-        src: templates/inventory.cloudstack.yml.j2
-        dest: ../test.cloudstack.yml
+        src: templates/cloudstack-instances.yml.j2
+        dest: ../cloudstack-instances.yml

@@ -12,23 +12,23 @@ import traceback
 import yaml
 
 DOCUMENTATION = r'''
-    name: cloudstack
+    name: instance
     plugin_type: inventory
-    short_description: Apache CloudStack inventory source
+    short_description: Apache CloudStack instance inventory source
     author: Rafael del Valle (@rvalle)
     version_added: 2.1.0
     description:
         - Get inventory hosts from Apache CloudStack
         - Allows filtering and grouping inventory hosts.
         - |
-            Uses an YAML configuration file ending with either I(cloudstack.yml) or I(cloudstack.yaml)
+            Uses an YAML configuration file ending with either I(cloudstack-instances.yml) or I(cloudstack-instances.yaml)
             to set parameter values (also see examples).
     options:
         plugin:
-            description: Token that ensures this is a source file for the 'cloudstack' plugin.
+            description: Token that ensures this is a source file for the 'instance' plugin.
             type: string
             required: True
-            choices: [ ngine_io.cloudstack.cloudstack ]
+            choices: [ ngine_io.cloudstack.instance ]
         hostname:
             description: |
                 Field to match the hostname. Note v4_main_ip corresponds to the primary ipv4address of the first nic
@@ -59,8 +59,8 @@ DOCUMENTATION = r'''
 # TODO: plugin should work as 'cloudstack' only
 EXAMPLES = '''
 # inventory_cloudstack.yml file in YAML format
-# Example command line: ansible-inventory --list -i inventory_cloudstack.yml
-plugin: ngine_io.cloudstack.cloudstack
+# Example command line: ansible-inventory --list -i cloudstack-instances.yml
+plugin: ngine_io.cloudstack.instance
 
 # Use the default ip as ansible_host
 hostname: v4_default_ip
@@ -162,7 +162,7 @@ except ImportError:
 
 class InventoryModule(BaseInventoryPlugin, Constructable):
 
-    NAME = 'ngine_io.cloudstack.cloudstack'
+    NAME = 'ngine_io.cloudstack.instance'
 
     def __init__(self):
         super().__init__()
@@ -202,7 +202,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable):
         valid = False
         if super(InventoryModule, self).verify_file(path):
             # base class verifies that file exists and is readable by current user
-            if path.endswith(('cloudstack.yaml', 'cloudstack.yml')):
+            if path.endswith(('cloudstack-instances.yaml', 'cloudstack-instances.yml')):
                 valid = True
         return valid
 
