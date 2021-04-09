@@ -45,7 +45,7 @@ options:
   isolation_method:
     description:
       - Isolation method for the physical network.
-    choices: [ VLAN, GRE, L3 ]
+    choices: [ VLAN, VXLAN, GRE, L3 ]
     type: str
   network_speed:
     description:
@@ -122,6 +122,15 @@ EXAMPLES = '''
       - internallbvm
       - vpcvirtualrouter
 
+- name: Ensure a network is enabled with VXLAN isolation
+  ngine_io.cloudstack.cs_physical_network:
+    name: net01
+    zone: zone01
+    isolation_method: VXLAN
+    vlan: 42-8192
+    broadcast_domain_range: ZONE
+    state: enabled
+
 - name: Ensure a network is disabled
   ngine_io.cloudstack.cs_physical_network:
     name: net01
@@ -164,7 +173,7 @@ broadcast_domain_range:
   type: str
   sample: ZONE
 isolation_method:
-  description: isolationmethod of the network [VLAN/GRE/L3].
+  description: isolationmethod of the network [VLAN/VXLAN/GRE/L3].
   returned: success
   type: str
   sample: VLAN
@@ -427,7 +436,7 @@ def main():
         nsps_enabled=dict(type='list', elements='str'),
         network_speed=dict(choices=['1G', '10G']),
         broadcast_domain_range=dict(choices=['POD', 'ZONE']),
-        isolation_method=dict(choices=['VLAN', 'GRE', 'L3']),
+        isolation_method=dict(choices=['VLAN', 'VXLAN', 'GRE', 'L3']),
         state=dict(choices=['present', 'enabled', 'disabled', 'absent'], default='present'),
         tags=dict(aliases=['tag']),
         poll_async=dict(type='bool', default=True),
