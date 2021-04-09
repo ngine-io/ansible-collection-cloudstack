@@ -28,7 +28,7 @@ DOCUMENTATION = r'''
             description: Token that ensures this is a source file for the 'cloudstack' plugin.
             type: string
             required: True
-            choices: [ cloudstack ]
+            choices: [ ngine_io.cloudstack.cloudstack ]
         hostname:
             description: |
                 Field to match the hostname. Note v4_main_ip corresponds to the primary ipv4address of the first nic
