@@ -57,3 +57,17 @@ releases:
     - 62-deprecate-default-zone.yml
     - remove-ini-config.yml
     release_date: '2021-02-02'
+  2.1.0:
+    changes:
+      minor_changes:
+      - cs_physical_network - Added VXLAN as an option of isolation methods (https://github.com/ngine-io/ansible-collection-cloudstack/pull/73).
+      - instance - New style inventory plugin implemented for instances (https://github.com/ngine-io/ansible-collection-cloudstack/pull/66)
+    fragments:
+    - 66-instance-inventory-plugin.yml
+    - cs_physical_network_isolation_methods.yml
+    plugins:
+      inventory:
+      - description: Apache CloudStack instance inventory source
+        name: instance
+        namespace: null
+    release_date: '2021-04-12'

@@ -5,6 +5,23 @@ Apache CloudStack Collection Release Notes
 .. contents:: Topics
 
 
+v2.1.0
+======
+
+Minor Changes
+-------------
+
+- cs_physical_network - Added VXLAN as an option of isolation methods (https://github.com/ngine-io/ansible-collection-cloudstack/pull/73).
+- instance - New style inventory plugin implemented for instances (https://github.com/ngine-io/ansible-collection-cloudstack/pull/66)
+
+New Plugins
+-----------
+
+Inventory
+~~~~~~~~~
+
+- instance - Apache CloudStack instance inventory source
+
 v2.0.0
 ======
 

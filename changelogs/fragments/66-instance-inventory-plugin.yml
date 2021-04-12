@@ -1,2 +1,0 @@
-minor_changes:
-  - instance - New style inventory plugin implemented for instances (https://github.com/ngine-io/ansible-collection-cloudstack/pull/66)
