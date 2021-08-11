@@ -1,0 +1,2 @@
+minor_changes:
+- cs_firewall - implemented support for ``dest_cidrs`` (https://github.com/ngine-io/ansible-collection-cloudstack/issues/76).
