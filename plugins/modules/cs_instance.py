@@ -695,6 +695,9 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         cpu_speed = self.module.params.get('cpu_speed')
         memory = self.module.params.get('memory')
         if all([cpu, cpu_speed, memory]):
+            if details is None:
+                details = dict()
+
             details.extends({
                 'cpuNumber': cpu,
                 'cpuSpeed': cpu_speed,
