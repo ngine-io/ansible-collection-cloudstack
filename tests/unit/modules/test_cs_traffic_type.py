@@ -1,7 +1,7 @@
 from __future__ import (absolute_import, division, print_function)
 import sys
 import pytest
-import units.compat.unittest as unittest
+from units.compat import unittest
 from units.compat.mock import MagicMock
 from units.compat.unittest import TestCase
 from units.modules.utils import set_module_args
