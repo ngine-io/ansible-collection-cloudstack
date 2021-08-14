@@ -119,6 +119,30 @@ options:
     description:
       - Whether the offering is meant to be used for VPC or not.
     type: bool
+  tags:
+    description:
+      - List of tags. Tags are a list of strings.
+      - "To delete all tags, set an empty list e.g. I(tags: [])."
+    type: list
+    elements: str
+    aliases: [ tag ]
+    version_added: 2.2.0
+  domains:
+    description:
+      - List of domains the network offering is related to.
+      - Use C(public) for public offerings.
+    type: list
+    elements: str
+    aliases: [ domain ]
+    version_added: 2.2.0
+  zones:
+    description:
+      - List of zones the network offering is related to.
+      - Use C(all) for all zones offering.
+    type: list
+    elements: str
+    aliases: [ zone ]
+    version_added: 2.2.0
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
 '''
@@ -213,6 +237,24 @@ for_vpc:
   returned: success
   type: bool
   sample: false
+tags:
+  description: List of tags associated with the network offering.
+  returned: success
+  type: list
+  sample: [ tag1, tag2 ]
+  version_added: 2.2.0
+domains:
+  description: List of domains associated with the network offering.
+  returned: success
+  type: list
+  sample: [ public ]
+  version_added: 2.2.0
+zones:
+  description: List of zones associated with the network offering.
+  returned: success
+  type: list
+  sample: [ all ]
+  version_added: 2.2.0
 '''
 
 from ansible.module_utils.basic import AnsibleModule
@@ -270,13 +312,16 @@ class AnsibleCloudStackNetworkOffering(AnsibleCloudStack):
 
         return self.network_offering
 
-    def create_or_update(self):
+    def present(self):
         network_offering = self.get_network_offering()
 
         if not network_offering:
             network_offering = self.create_network_offering()
 
-        return self.update_network_offering(network_offering=network_offering)
+        if network_offering:
+            network_offering = self.update_network_offering(network_offering=network_offering)
+
+        return network_offering
 
     def create_network_offering(self):
         network_offering = None
@@ -303,6 +348,10 @@ class AnsibleCloudStackNetworkOffering(AnsibleCloudStack):
             'specifyipranges': self.module.params.get('specify_ip_ranges'),
             'specifyvlan': self.module.params.get('specify_vlan'),
             'forvpc': self.module.params.get('for_vpc'),
+            # Tags are comma separated strings in network offerings
+            'tags': self.module.params.get('tags'),
+            'domainid': self.module.params.get('domains'),
+            'zoneid': self.module.params.get('zones'),
         }
 
         required_params = [
@@ -320,7 +369,7 @@ class AnsibleCloudStackNetworkOffering(AnsibleCloudStack):
 
         return network_offering
 
-    def delete_network_offering(self):
+    def absent(self):
         network_offering = self.get_network_offering()
 
         if network_offering:
@@ -331,8 +380,10 @@ class AnsibleCloudStackNetworkOffering(AnsibleCloudStack):
         return network_offering
 
     def update_network_offering(self, network_offering):
-        if not network_offering:
-            return network_offering
+
+        tags = self.module.params.get('tags')
+        domains = self.module.params.get('domains')
+        zones = self.module.params.get('zones')
 
         args = {
             'id': network_offering['id'],
@@ -341,6 +392,9 @@ class AnsibleCloudStackNetworkOffering(AnsibleCloudStack):
             'name': self.module.params.get('name'),
             'availability': self.module.params.get('availability'),
             'maxconnections': self.module.params.get('max_connections'),
+            'tags': ','.join(tags) if tags else None,
+            'domainid': ','.join(domains) if domains else None,
+            'zoneid': ','.join(zones) if zones else None,
         }
 
         if args['state'] in ['enabled', 'disabled']:
@@ -361,6 +415,17 @@ class AnsibleCloudStackNetworkOffering(AnsibleCloudStack):
         super(AnsibleCloudStackNetworkOffering, self).get_result(network_offering)
         if network_offering:
             self.result['egress_default_policy'] = 'allow' if network_offering.get('egressdefaultpolicy') else 'deny'
+
+            # Return a list of comma separated network offering tags
+            tags = network_offering.get('tags')
+            self.result['tags'] = tags.split(',') if tags else []
+
+            zone_id = network_offering.get('zoneid')
+            self.result['zones'] = zone_id.split(',') if zone_id else []
+
+            domain_id = network_offering.get('domainid')
+            self.result['domains'] = zone_id.split(',') if domain_id else []
+
         return self.result
 
 
@@ -397,6 +462,10 @@ def main():
         specify_ip_ranges=dict(type='bool'),
         specify_vlan=dict(type='bool'),
         for_vpc=dict(type='bool'),
+        # Tags are comma separated strings in network offerings
+        tags=dict(type='list', elements='str', aliases=['tag']),
+        domains=dict(type='list', elements='str', aliases=['domain']),
+        zones=dict(type='list', elements='str', aliases=['zone']),
     ))
 
     module = AnsibleModule(
@@ -408,10 +477,10 @@ def main():
     acs_network_offering = AnsibleCloudStackNetworkOffering(module)
 
     state = module.params.get('state')
-    if state in ['absent']:
-        network_offering = acs_network_offering.delete_network_offering()
+    if state == "absent":
+        network_offering = acs_network_offering.absent()
     else:
-        network_offering = acs_network_offering.create_or_update()
+        network_offering = acs_network_offering.present()
 
     result = acs_network_offering.get_result(network_offering)
 
