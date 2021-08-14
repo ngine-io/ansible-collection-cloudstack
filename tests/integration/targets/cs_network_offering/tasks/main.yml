@@ -56,9 +56,9 @@
     service_providers:
       - { service: 'dns', provider: 'virtualrouter' }
       - { service: 'dhcp', provider: 'virtualrouter' }
-    tags:
-      - "{{ cs_resource_prefix }}-tag1"
-      - "{{ cs_resource_prefix }}-tag2"
+    # tags:
+    #   - "{{ cs_resource_prefix }}-tag1"
+    #   - "{{ cs_resource_prefix }}-tag2"
   register: netoffer
 - name: verify results of network offer
   assert:
@@ -68,9 +68,9 @@
     - netoffer.guest_ip_type == "Isolated"
     - netoffer.state == "Disabled"
     - netoffer.display_text == "network offering description"
-    - netoffer.tags | length == 2
-    - '"{{ cs_resource_prefix }}-tag1" in netoffer.tags'
-    - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
+    # - netoffer.tags | length == 2
+    # - '"{{ cs_resource_prefix }}-tag1" in netoffer.tags'
+    # - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
 
 - name: test create network offer idempotence
   cs_network_offering:
@@ -82,9 +82,9 @@
     service_providers:
       - { service: 'dns', provider: 'virtualrouter' }
       - { service: 'dhcp', provider: 'virtualrouter' }
-    tags:
-      - "{{ cs_resource_prefix }}-tag1"
-      - "{{ cs_resource_prefix }}-tag2"
+    # tags:
+    #   - "{{ cs_resource_prefix }}-tag1"
+    #   - "{{ cs_resource_prefix }}-tag2"
 
   register: netoffer
 - name: verify results of create network offer idempotence
@@ -95,9 +95,9 @@
     - netoffer.guest_ip_type == "Isolated"
     - netoffer.state == "Disabled"
     - netoffer.display_text == "network offering description"
-    - netoffer.tags | length == 2
-    - '"{{ cs_resource_prefix }}-tag1" in netoffer.tags'
-    - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
+    # - netoffer.tags | length == 2
+    # - '"{{ cs_resource_prefix }}-tag1" in netoffer.tags'
+    # - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
 
 - name: test enabling existing network offer in check_mode
   cs_network_offering:
@@ -269,9 +269,9 @@
     name: "{{ cs_resource_prefix }}_name"
     display_text: "network offering description update"
     max_connections: 400
-    tags:
-      - "{{ cs_resource_prefix }}-tag2"
-      - "{{ cs_resource_prefix }}-tag3"
+    # tags:
+    #   - "{{ cs_resource_prefix }}-tag2"
+    #   - "{{ cs_resource_prefix }}-tag3"
   register: netoffer
   check_mode: true
 - name: verify results of update offer with minimal params in check_mode
@@ -283,18 +283,18 @@
     - netoffer.state == "Disabled"
     - netoffer.display_text == "network offering description renamed"
     - netoffer.max_connections == 300
-    - netoffer.tags | length == 2
-    - '"{{ cs_resource_prefix }}-tag1" in netoffer.tags'
-    - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
+    # - netoffer.tags | length == 2
+    # - '"{{ cs_resource_prefix }}-tag1" in netoffer.tags'
+    # - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
 
 - name: test update offer with minimal params
   cs_network_offering:
     name: "{{ cs_resource_prefix }}_name"
     display_text: "network offering description update"
     max_connections: 400
-    tags:
-      - "{{ cs_resource_prefix }}-tag2"
-      - "{{ cs_resource_prefix }}-tag3"
+    # tags:
+    #   - "{{ cs_resource_prefix }}-tag2"
+    #   - "{{ cs_resource_prefix }}-tag3"
   register: netoffer
 - name: verify results of update offer with minimal params
   assert:
@@ -305,18 +305,18 @@
     - netoffer.state == "Disabled"
     - netoffer.display_text == "network offering description update"
     - netoffer.max_connections == 400
-    - netoffer.tags | length == 2
-    - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
-    - '"{{ cs_resource_prefix }}-tag3" in netoffer.tags'
+    # - netoffer.tags | length == 2
+    # - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
+    # - '"{{ cs_resource_prefix }}-tag3" in netoffer.tags'
 
 - name: test update offer with minimal params idempotency
   cs_network_offering:
     name: "{{ cs_resource_prefix }}_name"
     display_text: "network offering description update"
     max_connections: 400
-    tags:
-      - "{{ cs_resource_prefix }}-tag2"
-      - "{{ cs_resource_prefix }}-tag3"
+    # tags:
+    #   - "{{ cs_resource_prefix }}-tag2"
+    #   - "{{ cs_resource_prefix }}-tag3"
   register: netoffer
 - name: verify results of update offer with minimal params idempotency
   assert:
@@ -327,9 +327,9 @@
     - netoffer.state == "Disabled"
     - netoffer.display_text == "network offering description update"
     - netoffer.max_connections == 400
-    - netoffer.tags | length == 2
-    - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
-    - '"{{ cs_resource_prefix }}-tag3" in netoffer.tags'
+    # - netoffer.tags | length == 2
+    # - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
+    # - '"{{ cs_resource_prefix }}-tag3" in netoffer.tags'
 
 - name: test remove network offer in check_mode
   cs_network_offering:
