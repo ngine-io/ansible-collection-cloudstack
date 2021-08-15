@@ -570,7 +570,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         ids = self.get_network_ids(network_names)
         res = []
         for i, data in enumerate(network_mappings):
-            res.append({'networkid': ids[i], 'ip': data['ip']})
+            res.append(dict(networkid=ids[i], **data))
         return res
 
     def get_ssh_keypair(self, key=None, name=None, fail_on_missing=True):
