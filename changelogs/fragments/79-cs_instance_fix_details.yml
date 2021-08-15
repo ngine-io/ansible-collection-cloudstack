@@ -1,0 +1,2 @@
+bugfixes:
+- cs_instance - Fixed custom service offerings usage (https://github.com/ngine-io/ansible-collection-cloudstack/issues/79).
