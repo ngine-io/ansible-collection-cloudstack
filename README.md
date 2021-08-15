@@ -73,6 +73,35 @@ There are many ways in which you can participate in the project, for example:
 - Review the documentation and make pull requests for anything from typos to new content
 - If you are interested in fixing issues and contributing directly to the code base, please see the [CONTRIBUTING](CONTRIBUTING.md) document.
 
+## Run tests
+
+Activate env setup of ansible core:
+
+```
+git clone git@github.com:ansible/ansible.git
+cd ansible
+source hacking/env-setup
+```
+
+Clone the repo:
+
+```
+git clone git@github.com:ngine-io/ansible-collection-cloudstack.git
+cd ansible-collection-cloudstack
+```
+
+Run tests in docker with cloudstack simulator:
+```
+# All tests (note the trailing slash in `cloud/cs/`)
+ansible-test integration --docker --color --diff -v cloud/cs/
+
+# One test e.g. cs_instance (note no trailing slash in `cloud/cs/cs_instance`)
+ansible-test integration --docker --color --diff -v cloud/cs/cs_instance
+
+# Run tests for code you changed
+ansible-test integration --docker --color --diff -v --changed cloud/cs/
+```
+
 ## License
 
 GNU General Public License v3.0
