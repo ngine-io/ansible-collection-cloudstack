@@ -4,10 +4,6 @@
     name: "{{ cs_resource_prefix }}_name"
     state: absent
   register: netoffer
-- name: verify setup
-  assert:
-    that:
-    - netoffer is successful
 
 - name: test fail if missing name
   action: cs_network_offering
@@ -40,12 +36,14 @@
     service_providers:
       - { service: 'dns', provider: 'virtualrouter' }
       - { service: 'dhcp', provider: 'virtualrouter' }
+    tags:
+      - "{{ cs_resource_prefix }}-tag1"
+      - "{{ cs_resource_prefix }}-tag2"
   register: netoffer
-  check_mode: yes
+  check_mode: true
 - name: verify results of network offer in check mode
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
 
 - name: test create network offer
@@ -58,16 +56,21 @@
     service_providers:
       - { service: 'dns', provider: 'virtualrouter' }
       - { service: 'dhcp', provider: 'virtualrouter' }
+    # tags:
+    #   - "{{ cs_resource_prefix }}-tag1"
+    #   - "{{ cs_resource_prefix }}-tag2"
   register: netoffer
 - name: verify results of network offer
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
     - netoffer.state == "Disabled"
     - netoffer.display_text == "network offering description"
+    # - netoffer.tags | length == 2
+    # - '"{{ cs_resource_prefix }}-tag1" in netoffer.tags'
+    # - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
 
 - name: test create network offer idempotence
   cs_network_offering:
@@ -79,27 +82,32 @@
     service_providers:
       - { service: 'dns', provider: 'virtualrouter' }
       - { service: 'dhcp', provider: 'virtualrouter' }
+    # tags:
+    #   - "{{ cs_resource_prefix }}-tag1"
+    #   - "{{ cs_resource_prefix }}-tag2"
+
   register: netoffer
 - name: verify results of create network offer idempotence
   assert:
     that:
-    - netoffer is successful
     - netoffer is not changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
     - netoffer.state == "Disabled"
     - netoffer.display_text == "network offering description"
+    # - netoffer.tags | length == 2
+    # - '"{{ cs_resource_prefix }}-tag1" in netoffer.tags'
+    # - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
 
 - name: test enabling existing network offer in check_mode
   cs_network_offering:
     name: "{{ cs_resource_prefix }}_name"
     state: enabled
   register: netoffer
-  check_mode: yes
+  check_mode: true
 - name: verify results of enabling existing network offer in check_mode
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -114,7 +122,6 @@
 - name: verify results of enabling existing network offer
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -129,7 +136,6 @@
 - name: verify results of enabling existing network idempotence
   assert:
     that:
-    - netoffer is successful
     - netoffer is not changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -147,11 +153,10 @@
       - { service: 'dhcp', provider: 'virtualrouter' }
     state: disabled
   register: netoffer
-  check_mode: yes
+  check_mode: true
 - name: verify results of disabling network offer in check_mode
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -172,7 +177,6 @@
 - name: verify results of disabling network offer
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -193,7 +197,6 @@
 - name: verify results of disabling network idempotence
   assert:
     that:
-    - netoffer is successful
     - netoffer is not changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -211,11 +214,10 @@
       - { service: 'dhcp', provider: 'virtualrouter' }
     state: disabled
   register: netoffer
-  check_mode: yes
+  check_mode: true
 - name: verify results of rename network offer in check_mode
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -236,7 +238,6 @@
 - name: verify results of rename network offer
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -257,7 +258,6 @@
 - name: verify results of rename network offer idempotence
   assert:
     that:
-    - netoffer is successful
     - netoffer is not changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -269,63 +269,77 @@
     name: "{{ cs_resource_prefix }}_name"
     display_text: "network offering description update"
     max_connections: 400
+    # tags:
+    #   - "{{ cs_resource_prefix }}-tag2"
+    #   - "{{ cs_resource_prefix }}-tag3"
   register: netoffer
-  check_mode: yes
+  check_mode: true
 - name: verify results of update offer with minimal params in check_mode
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
     - netoffer.state == "Disabled"
     - netoffer.display_text == "network offering description renamed"
     - netoffer.max_connections == 300
+    # - netoffer.tags | length == 2
+    # - '"{{ cs_resource_prefix }}-tag1" in netoffer.tags'
+    # - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
 
 - name: test update offer with minimal params
   cs_network_offering:
     name: "{{ cs_resource_prefix }}_name"
     display_text: "network offering description update"
     max_connections: 400
+    # tags:
+    #   - "{{ cs_resource_prefix }}-tag2"
+    #   - "{{ cs_resource_prefix }}-tag3"
   register: netoffer
 - name: verify results of update offer with minimal params
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
     - netoffer.state == "Disabled"
     - netoffer.display_text == "network offering description update"
     - netoffer.max_connections == 400
+    # - netoffer.tags | length == 2
+    # - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
+    # - '"{{ cs_resource_prefix }}-tag3" in netoffer.tags'
 
 - name: test update offer with minimal params idempotency
   cs_network_offering:
     name: "{{ cs_resource_prefix }}_name"
     display_text: "network offering description update"
     max_connections: 400
+    # tags:
+    #   - "{{ cs_resource_prefix }}-tag2"
+    #   - "{{ cs_resource_prefix }}-tag3"
   register: netoffer
 - name: verify results of update offer with minimal params idempotency
   assert:
     that:
-    - netoffer is successful
     - netoffer is not changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
     - netoffer.state == "Disabled"
     - netoffer.display_text == "network offering description update"
     - netoffer.max_connections == 400
+    # - netoffer.tags | length == 2
+    # - '"{{ cs_resource_prefix }}-tag2" in netoffer.tags'
+    # - '"{{ cs_resource_prefix }}-tag3" in netoffer.tags'
 
 - name: test remove network offer in check_mode
   cs_network_offering:
     name: "{{ cs_resource_prefix }}_name"
     state: absent
   register: netoffer
-  check_mode: yes
+  check_mode: true
 - name: verify results of rename network offer in check_mode
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -340,7 +354,6 @@
 - name: verify results of rename network offer
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -355,7 +368,6 @@
 - name: verify results of rename network offer idempotence
   assert:
     that:
-    - netoffer is successful
     - netoffer is not changed
 
 - name: test create enabled network offer in check mode
@@ -369,11 +381,10 @@
       - { service: 'dhcp', provider: 'virtualrouter' }
     state: enabled
   register: netoffer
-  check_mode: yes
+  check_mode: true
 - name: verify results of create enabled network offer in check mode
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
 
 - name: test create enabled network offer
@@ -390,7 +401,6 @@
 - name: verify results of create enabled network offer
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -411,7 +421,6 @@
 - name: verify results of create enabled network offer idempotence
   assert:
     that:
-    - netoffer is successful
     - netoffer is not changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"
@@ -426,7 +435,6 @@
 - name: verify results of remove network offer
   assert:
     that:
-    - netoffer is successful
     - netoffer is changed
     - netoffer.name == "{{ cs_resource_prefix }}_name"
     - netoffer.guest_ip_type == "Isolated"

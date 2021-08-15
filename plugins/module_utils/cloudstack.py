@@ -70,6 +70,7 @@ class AnsibleCloudStack:
             'displaytext': 'display_text',
             'displayname': 'display_name',
             'description': 'description',
+            'tags': 'tags',
         }
 
         # Init returns dict for use in subclasses
@@ -158,10 +159,13 @@ class AnsibleCloudStack:
                     # ensure we compare the same type
                     if isinstance(value, int):
                         current_dict[key] = int(current_dict[key])
+
                     elif isinstance(value, float):
                         current_dict[key] = float(current_dict[key])
+
                     elif isinstance(value, long):
                         current_dict[key] = long(current_dict[key])
+
                     elif isinstance(value, complex):
                         current_dict[key] = complex(current_dict[key])
 
@@ -650,8 +654,6 @@ class AnsibleCloudStack:
                 if search_key in resource:
                     result[return_key] = int(resource[search_key])
 
-            if 'tags' in resource:
-                result['tags'] = resource['tags']
         return result
 
     def get_result(self, resource):
