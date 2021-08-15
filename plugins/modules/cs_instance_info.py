@@ -35,6 +35,11 @@ options:
     description:
       - Project the instance is related to.
     type: str
+  host:
+    description:
+      - Filter by host name.
+    type: str
+    version_added: 2.2.0
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
 '''
@@ -56,6 +61,11 @@ EXAMPLES = '''
 - name: Show information on all instances
   debug:
     msg: "{{ vms }}"
+
+- name: Gather information from all instances on a host
+  ngine_io.cloudstack.cs_instance_info:
+    host: host01.example.com
+  register: vms
 '''
 
 RETURN = '''
@@ -279,6 +289,21 @@ class AnsibleCloudStackInstanceInfo(AnsibleCloudStack):
             'hostname': 'host',
         }
 
+    def get_host(self, key=None):
+        host = self.module.params.get('host')
+        if not host:
+            return
+
+        args = {
+            'fetch_list': True,
+        }
+        res = self.query_api('listHosts', **args)
+        if res:
+            for h in res:
+                if host.lower() in [h['id'], h['ipaddress'], h['name'].lower()]:
+                    return self._get_by_key(key, h)
+        self.fail_json(msg="Host not found: %s" % host)
+
     def get_instances(self):
         instance_name = self.module.params.get('name')
 
@@ -286,6 +311,7 @@ class AnsibleCloudStackInstanceInfo(AnsibleCloudStack):
             'account': self.get_account(key='name'),
             'domainid': self.get_domain(key='id'),
             'projectid': self.get_project(key='id'),
+            'hostid': self.get_host(key='id'),
             'fetch_list': True,
         }
         # Do not pass zoneid, as the instance name must be unique across zones.
@@ -354,6 +380,7 @@ def main():
         domain=dict(),
         account=dict(),
         project=dict(),
+        host=dict(),
     ))
 
     module = AnsibleModule(

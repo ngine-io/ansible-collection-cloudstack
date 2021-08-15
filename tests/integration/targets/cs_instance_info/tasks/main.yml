@@ -78,3 +78,16 @@
     - '"name" in instance_info.instances[0]'
     - '"service_offering" in instance_info.instances[0]'
     - '"host" in instance_info.instances[0]'
+
+- name: remember host
+  set_fact:
+    host: "{{ instance_info.instances[0]['host']}}"
+
+- name: test instance info for all instances of a host
+  cs_instance_info:
+    host: "{{ host }}"
+  register: instance_info
+- name: verify test instance info
+  assert:
+    that:
+    - instance_info.instances[0]['host'] == host
