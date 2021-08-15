@@ -1,0 +1,2 @@
+minor_changes:
+  - cs_instance_info - implemented support for ``host`` filter (https://github.com/ngine-io/ansible-collection-cloudstack/pull/83).
