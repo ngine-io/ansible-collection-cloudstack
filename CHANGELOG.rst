@@ -5,6 +5,21 @@ Apache CloudStack Collection Release Notes
 .. contents:: Topics
 
 
+v2.2.0
+======
+
+Minor Changes
+-------------
+
+- cs_instance - add support for MAC address and IPv6 in ``ip_to_networks`` (https://github.com/ngine-io/ansible-collection-cloudstack/issues/78).
+- cs_instance_info - implemented support for ``host`` filter (https://github.com/ngine-io/ansible-collection-cloudstack/pull/83).
+- cs_network_offering - implemented support for ``tags``, ``zones`` and ``domains`` (https://github.com/ngine-io/ansible-collection-cloudstack/pull/82).
+
+Bugfixes
+--------
+
+- cs_instance - Fixed custom service offerings usage (https://github.com/ngine-io/ansible-collection-cloudstack/issues/79).
+
 v2.1.0
 ======
 
