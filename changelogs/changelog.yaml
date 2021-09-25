@@ -71,3 +71,18 @@ releases:
         name: instance
         namespace: null
     release_date: '2021-04-12'
+  2.2.0:
+    changes:
+      bugfixes:
+      - cs_instance - Fixed custom service offerings usage (https://github.com/ngine-io/ansible-collection-cloudstack/issues/79).
+      minor_changes:
+      - cs_instance - add support for MAC address and IPv6 in ``ip_to_networks`` (https://github.com/ngine-io/ansible-collection-cloudstack/issues/78).
+      - cs_instance_info - implemented support for ``host`` filter (https://github.com/ngine-io/ansible-collection-cloudstack/pull/83).
+      - cs_network_offering - implemented support for ``tags``, ``zones`` and ``domains``
+        (https://github.com/ngine-io/ansible-collection-cloudstack/pull/82).
+    fragments:
+    - 78-cs_instance_extend_ip_to_networks.yml
+    - 79-cs_instance_fix_details.yml
+    - 82-cs_network_offering_new_args.yml
+    - 83-cs_instance_info_host_filter.yml
+    release_date: '2021-09-01'

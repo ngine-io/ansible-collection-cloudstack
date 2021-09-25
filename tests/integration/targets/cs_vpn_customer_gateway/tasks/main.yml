@@ -14,9 +14,9 @@
     name: ansible_vpn_customer_gw
     cidr: 192.168.123.0/24
     esp_policy: aes256-sha1;modp1536
-    gateway: 10.10.0.1
+    gateway: 10.123.1.1
     ike_policy: aes256-sha1;modp1536
-    ipsec_psk: ~S3¢r3Tk3Y¼
+    ipsec_psk: verysecurepassphrase
     esp_lifetime: 3600
   check_mode: true
   register: vcg
@@ -30,9 +30,9 @@
     name: ansible_vpn_customer_gw
     cidr: 192.168.123.0/24
     esp_policy: aes256-sha1;modp1536
-    gateway: 10.10.0.1
+    gateway: 10.123.1.1
     ike_policy: aes256-sha1;modp1536
-    ipsec_psk: ~S3¢r3Tk3Y¼
+    ipsec_psk: verysecurepassphrase
     esp_lifetime: 3600
   register: vcg
 - name: verify test create vpn customer gateway
@@ -45,7 +45,7 @@
     - vcg.esp_policy == 'aes256-sha1;modp1536'
     - vcg.force_encap == false
     - vcg.ike_policy == 'aes256-sha1;modp1536'
-    - vcg.gateway == '10.10.0.1'
+    - vcg.gateway == '10.123.1.1'
     - vcg.name == 'ansible_vpn_customer_gw'
     - vcg.ike_lifetime == 86400
 
@@ -54,9 +54,9 @@
     name: ansible_vpn_customer_gw
     cidr: 192.168.123.0/24
     esp_policy: aes256-sha1;modp1536
-    gateway: 10.10.0.1
+    gateway: 10.123.1.1
     ike_policy: aes256-sha1;modp1536
-    ipsec_psk: ~S3¢r3Tk3Y¼
+    ipsec_psk: verysecurepassphrase
     esp_lifetime: 3600
   register: vcg
 - name: verify test create vpn customer gateway idempotency
@@ -69,7 +69,7 @@
     - vcg.esp_policy == 'aes256-sha1;modp1536'
     - vcg.force_encap == false
     - vcg.ike_policy == 'aes256-sha1;modp1536'
-    - vcg.gateway == '10.10.0.1'
+    - vcg.gateway == '10.123.1.1'
     - vcg.name == 'ansible_vpn_customer_gw'
     - vcg.ike_lifetime == 86400
 
@@ -80,9 +80,9 @@
     - 192.168.123.0/24
     - 192.168.124.0/24
     esp_policy: aes256-sha1;modp1536
-    gateway: 10.10.1.1
+    gateway: 10.123.1.1
     ike_policy: aes256-sha1;modp1536
-    ipsec_psk: ~S3¢r3Tk3Y@
+    ipsec_psk: verysecurepassphrase
     esp_lifetime: 1800
     ike_lifetime: 23200
     force_encap: true
@@ -98,7 +98,7 @@
     - vcg.esp_policy == 'aes256-sha1;modp1536'
     - vcg.force_encap == false
     - vcg.ike_policy == 'aes256-sha1;modp1536'
-    - vcg.gateway == '10.10.0.1'
+    - vcg.gateway == '10.123.1.1'
     - vcg.name == 'ansible_vpn_customer_gw'
     - vcg.ike_lifetime == 86400
 
@@ -109,9 +109,9 @@
     - 192.168.123.0/24
     - 192.168.124.0/24
     esp_policy: aes256-sha1;modp1536
-    gateway: 10.10.1.1
+    gateway: 10.123.1.1
     ike_policy: aes256-sha1;modp1536
-    ipsec_psk: ~S3¢r3Tk3Y@
+    ipsec_psk: verysecurepassphrase
     esp_lifetime: 1800
     ike_lifetime: 23200
     force_encap: true
@@ -126,7 +126,7 @@
     - vcg.esp_policy == 'aes256-sha1;modp1536'
     - vcg.force_encap == true
     - vcg.ike_policy == 'aes256-sha1;modp1536'
-    - vcg.gateway == '10.10.1.1'
+    - vcg.gateway == '10.123.1.1'
     - vcg.name == 'ansible_vpn_customer_gw'
     - vcg.ike_lifetime == 23200
 
@@ -137,9 +137,9 @@
     - 192.168.123.0/24
     - 192.168.124.0/24
     esp_policy: aes256-sha1;modp1536
-    gateway: 10.10.1.1
+    gateway: 10.123.1.1
     ike_policy: aes256-sha1;modp1536
-    ipsec_psk: ~S3¢r3Tk3Y@
+    ipsec_psk: verysecurepassphrase
     esp_lifetime: 1800
     ike_lifetime: 23200
     force_encap: true
@@ -154,7 +154,7 @@
     - vcg.esp_policy == 'aes256-sha1;modp1536'
     - vcg.force_encap == true
     - vcg.ike_policy == 'aes256-sha1;modp1536'
-    - vcg.gateway == '10.10.1.1'
+    - vcg.gateway == '10.123.1.1'
     - vcg.name == 'ansible_vpn_customer_gw'
     - vcg.ike_lifetime == 23200
 
@@ -174,7 +174,7 @@
     - vcg.esp_policy == 'aes256-sha1;modp1536'
     - vcg.force_encap == true
     - vcg.ike_policy == 'aes256-sha1;modp1536'
-    - vcg.gateway == '10.10.1.1'
+    - vcg.gateway == '10.123.1.1'
     - vcg.name == 'ansible_vpn_customer_gw'
     - vcg.ike_lifetime == 23200
 
@@ -193,7 +193,7 @@
     - vcg.esp_policy == 'aes256-sha1;modp1536'
     - vcg.force_encap == true
     - vcg.ike_policy == 'aes256-sha1;modp1536'
-    - vcg.gateway == '10.10.1.1'
+    - vcg.gateway == '10.123.1.1'
     - vcg.name == 'ansible_vpn_customer_gw'
     - vcg.ike_lifetime == 23200
 
