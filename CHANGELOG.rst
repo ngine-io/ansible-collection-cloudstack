@@ -5,6 +5,14 @@ Apache CloudStack Collection Release Notes
 .. contents:: Topics
 
 
+v2.2.1
+======
+
+Bugfixes
+--------
+
+- cs_instance - Fixed attribute error in custom service offerings handling (https://github.com/ngine-io/ansible-collection-cloudstack/pull/87).
+
 v2.2.0
 ======
 

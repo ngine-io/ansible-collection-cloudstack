@@ -86,3 +86,10 @@ releases:
     - 82-cs_network_offering_new_args.yml
     - 83-cs_instance_info_host_filter.yml
     release_date: '2021-09-01'
+  2.2.1:
+    changes:
+      bugfixes:
+      - cs_instance - Fixed attribute error in custom service offerings handling (https://github.com/ngine-io/ansible-collection-cloudstack/pull/87).
+    fragments:
+    - cs_instance-attribute-error.yml
+    release_date: '2021-09-27'
