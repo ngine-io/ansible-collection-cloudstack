@@ -1,0 +1,2 @@
+bugfixes:
+- cs_instance - Fixed attribute error in custom service offerings handling (https://github.com/ngine-io/ansible-collection-cloudstack/pull/87).
