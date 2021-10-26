@@ -1,0 +1,2 @@
+bugfixes:
+- cs_instance - Fixed missing project ID to volume query when checking root disk size. (https://github.com/ngine-io/ansible-collection-cloudstack/pull/90).
