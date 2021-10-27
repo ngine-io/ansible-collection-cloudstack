@@ -93,3 +93,11 @@ releases:
     fragments:
     - cs_instance-attribute-error.yml
     release_date: '2021-09-27'
+  2.2.2:
+    changes:
+      bugfixes:
+      - cs_instance - Fixed missing project ID to volume query when checking root
+        disk size. (https://github.com/ngine-io/ansible-collection-cloudstack/pull/90).
+    fragments:
+    - 90-cs_instance-project-id-volume-query.yml
+    release_date: '2021-10-27'
