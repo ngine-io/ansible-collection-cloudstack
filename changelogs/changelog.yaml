@@ -101,3 +101,10 @@ releases:
     fragments:
     - 90-cs_instance-project-id-volume-query.yml
     release_date: '2021-10-27'
+  2.2.3:
+    changes:
+      bugfixes:
+      - cs_instance - Fixed regression project ID KeyError if no project is used (https://github.com/ngine-io/ansible-collection-cloudstack/pull/94).
+    fragments:
+    - cs_insance.md
+    release_date: '2022-02-04'

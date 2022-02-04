@@ -5,6 +5,14 @@ Apache CloudStack Collection Release Notes
 .. contents:: Topics
 
 
+v2.2.3
+======
+
+Bugfixes
+--------
+
+- cs_instance - Fixed regression project ID KeyError if no project is used (https://github.com/ngine-io/ansible-collection-cloudstack/pull/94).
+
 v2.2.2
 ======
 
