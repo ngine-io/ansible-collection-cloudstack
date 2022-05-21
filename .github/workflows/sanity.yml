@@ -1,7 +1,7 @@
 name: Sanity
 on:
   schedule:
-  - cron: "5 12 * * *"
+    - cron: "5 12 * * 2"
   pull_request:
 
 jobs:
@@ -13,24 +13,24 @@ jobs:
     strategy:
       matrix:
         ansible:
-        - stable-2.11
-        - stable-2.10
-        - stable-2.9
-        - devel
+          - stable-2.12
+          - stable-2.11
+          - stable-2.10
+          - devel
     runs-on: ubuntu-latest
     steps:
-    - name: Check out code
-      uses: actions/checkout@v2
-      with:
-        path: ansible_collections/ngine_io/cloudstack
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          path: ansible_collections/ngine_io/cloudstack
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
 
-    - name: Install ansible-base (${{ matrix.ansible }})
-      run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
+      - name: Install ansible-base (${{ matrix.ansible }})
+        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
-    - name: Run sanity tests
-      run: ansible-test sanity --docker -v --color
+      - name: Run sanity tests
+        run: ansible-test sanity --docker -v --color
