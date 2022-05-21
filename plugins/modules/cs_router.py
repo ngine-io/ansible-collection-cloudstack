@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -14,7 +15,7 @@ module: cs_router
 short_description: Manages routers on Apache CloudStack based clouds.
 description:
     - Start, restart, stop and destroy routers.
-    - I(state=present) is not able to create routers, use M(cs_network) instead.
+    - I(state=present) is not able to create routers, use M(ngine_io.cloudstack.cs_network) instead.
 author: René Moser (@resmo)
 version_added: 0.1.0
 options:
@@ -156,11 +157,9 @@ account:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackRouter(AnsibleCloudStack):

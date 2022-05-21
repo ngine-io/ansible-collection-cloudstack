@@ -4,16 +4,11 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
-__metaclass__ = type
 
-import sys
-import os
-import traceback
-import yaml
+__metaclass__ = type
 
 DOCUMENTATION = r'''
     name: instance
-    plugin_type: inventory
     short_description: Apache CloudStack instance inventory source
     author: Rafael del Valle (@rvalle)
     version_added: 2.1.0
@@ -148,11 +143,13 @@ instance:
   created: {{ instance.created }}
 '''
 
-from ansible.plugins.inventory import BaseInventoryPlugin, Constructable, AnsibleError
+import yaml
 from ansible.module_utils.basic import missing_required_lib
-from ..module_utils.cloudstack import HAS_LIB_CS
+from ansible.plugins.inventory import (AnsibleError, BaseInventoryPlugin,
+                                       Constructable)
 from jinja2 import Template
 
+from ..module_utils.cloudstack import HAS_LIB_CS
 
 try:
     from cs import CloudStack, CloudStackException

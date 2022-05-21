@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -36,7 +37,7 @@ options:
   force:
     description:
       - Activate the VPN gateway if not already activated on I(state=present).
-      - Also see M(cs_vpn_gateway).
+      - Also see M(ngine_io.cloudstack.cs_vpn_gateway).
     default: no
     type: bool
   state:
@@ -183,11 +184,9 @@ state:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackVpnConnection(AnsibleCloudStack):

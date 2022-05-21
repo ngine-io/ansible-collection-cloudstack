@@ -6,6 +6,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -57,7 +58,7 @@ options:
   open_firewall:
     description:
       - Whether the firewall rule for public port should be created, while creating the new rule.
-      - Use M(cs_firewall) for managing firewall rules.
+      - Use M(ngine_io.cloudstack.cs_firewall) for managing firewall rules.
     type: bool
     default: no
   cidr:
@@ -219,11 +220,9 @@ state:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackLBRule(AnsibleCloudStack):
