@@ -15,7 +15,7 @@ jobs:
         with:
           path: ansible_collections/ngine_io/cloudstack
       - name: Set up Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v3
         with:
           python-version: "3.x"
       - name: Install dependencies
