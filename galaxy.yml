@@ -10,17 +10,17 @@ authors:
   - "Gregor Riepl (@onitake)"
   - "Rafael del Valle (@rvalle)"
 dependencies: {}
-description: 'Ansible Collection for Apache CloudStack based clouds'
-documentation: ''
-homepage: 'https://github.com/ngine-io/ansible-collection-cloudstack'
-issues: 'https://github.com/ngine-io/ansible-collection-cloudstack/issues'
+description: "Ansible Collection for Apache CloudStack based clouds"
+documentation: ""
+homepage: "https://github.com/ngine-io/ansible-collection-cloudstack"
+issues: "https://github.com/ngine-io/ansible-collection-cloudstack/issues"
 license: GPL-3.0-or-later
 name: cloudstack
 namespace: ngine_io
 readme: README.md
-repository: 'https://github.com/ngine-io/ansible-collection-cloudstack'
+repository: "https://github.com/ngine-io/ansible-collection-cloudstack"
 tags:
   - cloud
   - cloudstack
   - ngine_io
-version: 2.2.3
+version: 2.2.4
