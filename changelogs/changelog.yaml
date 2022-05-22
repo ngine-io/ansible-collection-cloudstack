@@ -108,3 +108,11 @@ releases:
     fragments:
     - cs_insance.md
     release_date: '2022-02-04'
+  2.2.4:
+    changes:
+      minor_changes:
+      - Various documentation fixes and code improvements to address ansible sanity
+        tests failure.
+    fragments:
+    - doc-fix.yml
+    release_date: '2022-05-22'

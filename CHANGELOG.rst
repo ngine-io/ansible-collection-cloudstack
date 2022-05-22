@@ -5,6 +5,14 @@ Apache CloudStack Collection Release Notes
 .. contents:: Topics
 
 
+v2.2.4
+======
+
+Minor Changes
+-------------
+
+- Various documentation fixes and code improvements to address ansible sanity tests failure.
+
 v2.2.3
 ======
 
