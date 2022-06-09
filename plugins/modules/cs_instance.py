@@ -135,6 +135,18 @@ options:
       - Only considered when I(state=started) or instance is running.
       - Requires root admin privileges.
     type: str
+  cluster:
+    description:
+      - Cluster on which an instance should be deployed or started on.
+      - Only considered when I(state=started) or instance is running.
+      - Requires root admin privileges.
+    type: str
+   pod:
+    description:
+      - Pod on which an instance should be deployed or started on.
+      - Only considered when I(state=started) or instance is running.
+      - Requires root admin privileges.
+    type: str 
   domain:
     description:
       - Domain the instance is related to.
@@ -469,10 +481,42 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         hosts = self.query_api('listHosts', **args)
         if hosts:
             for h in hosts['host']:
-                if h['name'] == host_name:
-                    return h['id']
+              if host_name in [h['name'], h['id']]:
+                return h['id']
 
         self.fail_json(msg="Host '%s' not found" % host_name)
+
+    def get_cluster_id(self):
+      cluster_name = self.module.params.get('cluster')
+      if not cluster_name:
+        return None
+
+      args = {
+        'zoneid': self.get_zone(key='id')
+      }
+      clusters = self.query_api('listClusters', **args)
+      if clusters:
+        for c in clusters['cluster']:
+          if cluster_name in [c['name'], c['id']]:
+            return c['id']
+      
+      self.fail_json(msg="Cluster '%s' not found" % cluster_name)
+
+    def get_pod_id(self):
+      pod_name = self.module.params.get('pod')
+      if not pod_name:
+        return None
+
+      args = {
+        'zoneid': self.get_zone(key='id')
+      }
+      pods = self.query_api('listPods', **args)
+      if pods:
+        for p in pods['pod']:
+          if pod_name in [p['name'], p['id']]:
+            return p['id']
+      
+      self.fail_json(msg="Pod '%s' not found" % pod_name) 
 
     def get_template_or_iso(self, key=None):
         template = self.module.params.get('template')
@@ -740,6 +784,8 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         args['details'] = self.get_details()
         args['securitygroupnames'] = self.module.params.get('security_groups')
         args['hostid'] = self.get_host_id()
+        args['clusterid'] = self.get_cluster_id()
+        args['podid'] = self.get_pod_id()
 
         template_iso = self.get_template_or_iso()
         if 'hypervisor' not in template_iso:
@@ -1038,6 +1084,8 @@ def main():
         keyboard=dict(type='str', choices=['de', 'de-ch', 'es', 'fi', 'fr', 'fr-be', 'fr-ch', 'is', 'it', 'jp', 'nl-be', 'no', 'pt', 'uk', 'us']),
         hypervisor=dict(),
         host=dict(),
+        cluster=dict(),
+        pod=dict(),
         security_groups=dict(type='list', elements='str', aliases=['security_group']),
         affinity_groups=dict(type='list', elements='str', aliases=['affinity_group']),
         domain=dict(),
