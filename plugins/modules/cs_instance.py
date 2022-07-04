@@ -146,7 +146,7 @@ options:
       - Pod on which an instance should be deployed or started on.
       - Only considered when I(state=started) or instance is running.
       - Requires root admin privileges.
-    type: str 
+    type: str
   domain:
     description:
       - Domain the instance is related to.
@@ -499,7 +499,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             for c in clusters['cluster']:
                 if cluster_name in [c['name'], c['id']]:
                     return c['id']
-      
+
         self.fail_json(msg="Cluster '%s' not found" % cluster_name)
 
     def get_pod_id(self):
@@ -515,7 +515,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             for p in pods['pod']:
                 if pod_name in [p['name'], p['id']]:
                     return p['id']
-      
+
         self.fail_json(msg="Pod '%s' not found" % pod_name)
 
     def get_template_or_iso(self, key=None):
