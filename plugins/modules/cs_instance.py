@@ -786,7 +786,14 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         root_disk_size_changed = False
 
         if root_disk_size is not None:
-            res = self.query_api('listVolumes', type='ROOT', virtualmachineid=instance['id'], projectid=instance.get('projectid'))
+            args = {
+                'type': 'ROOT',
+                'virtualmachineid': instance['id'],
+                'account': instance.get('account'),
+                'domainid': instance.get('domainid'),
+                'projectid': instance.get('projectid'),
+            }
+            res = self.query_api('listVolumes', **args)
             [volume] = res['volume']
 
             size = volume['size'] >> 30
