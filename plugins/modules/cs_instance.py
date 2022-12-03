@@ -104,6 +104,7 @@ options:
     type: str
   ip_to_networks:
     description:
+      - "List of mappings in the form I({'network': NetworkName, 'ip': 1.2.3.4})"
       - Mutually exclusive with I(networks) option.
     type: list
     elements: dict
