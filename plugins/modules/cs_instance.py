@@ -72,7 +72,6 @@ options:
     description:
       - Name of the filter used to search for the template or iso.
       - Used for params I(iso) or I(template) on I(state=present).
-      - The filter C(all) was added in 2.6.
     type: str
     default: executable
     choices: [ all, featured, self, selfexecutable, sharedexecutable, executable, community ]
@@ -105,7 +104,6 @@ options:
     type: str
   ip_to_networks:
     description:
-      - "List of mappings in the form I({'network': NetworkName, 'ip': 1.2.3.4})"
       - Mutually exclusive with I(networks) option.
     type: list
     elements: dict
@@ -120,8 +118,8 @@ options:
     type: int
   root_disk_size:
     description:
-      - Root disk size in GByte required if deploying instance with KVM hypervisor and want resize the root disk size at startup
-        (need CloudStack >= 4.4, cloud-initramfs-growroot installed and enabled in the template)
+      - "Root disk size in GByte required if deploying instance with KVM hypervisor and want resize the root disk size at startup
+        (needs CloudStack >= 4.4, cloud-initramfs-growroot installed and enabled in the template)."
     type: int
   security_groups:
     description:
@@ -141,7 +139,7 @@ options:
       - Only considered when I(state=started) or instance is running.
       - Requires root admin privileges.
     type: str
-   pod:
+  pod:
     description:
       - Pod on which an instance should be deployed or started on.
       - Only considered when I(state=started) or instance is running.
