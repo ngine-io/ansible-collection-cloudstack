@@ -5,6 +5,15 @@ Apache CloudStack Collection Release Notes
 .. contents:: Topics
 
 
+v2.3.0
+======
+
+Minor Changes
+-------------
+
+- cs_instance - The arguments ``cpu``, ``cpu_speed`` and ``memory`` are no longer required to be set together (https://github.com/ngine-io/ansible-collection-cloudstack/issues/111).
+- cs_instance - The optional arguments ``pod`` and ``cluster`` has been added.
+
 v2.2.4
 ======
 

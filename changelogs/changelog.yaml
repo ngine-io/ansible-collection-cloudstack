@@ -116,3 +116,13 @@ releases:
     fragments:
     - doc-fix.yml
     release_date: '2022-05-22'
+  2.3.0:
+    changes:
+      minor_changes:
+      - cs_instance - The arguments ``cpu``, ``cpu_speed`` and ``memory`` are no longer
+        required to be set together (https://github.com/ngine-io/ansible-collection-cloudstack/issues/111).
+      - cs_instance - The optional arguments ``pod`` and ``cluster`` has been added.
+    fragments:
+    - cs_instance-pod-cluster-args.yml
+    - details_cpu_memory.yml
+    release_date: '2022-12-04'
