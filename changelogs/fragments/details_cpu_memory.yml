@@ -1,0 +1,2 @@
+minor_changes:
+  - cs_instance - The arguments ``cpu``, ``cpu_speed`` and ``memory`` are no longer required to be set together (https://github.com/ngine-io/ansible-collection-cloudstack/issues/111).
