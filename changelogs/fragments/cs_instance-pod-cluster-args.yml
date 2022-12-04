@@ -1,0 +1,2 @@
+minor_changes:
+  - cs_instance - The optional arguments ``pod`` and ``cluster`` has been added.

@@ -141,12 +141,14 @@ options:
       - Only considered when I(state=started) or instance is running.
       - Requires root admin privileges.
     type: str
+    version_added: 2.3.0
   pod:
     description:
       - Pod on which an instance should be deployed or started on.
       - Only considered when I(state=started) or instance is running.
       - Requires root admin privileges.
     type: str
+    version_added: 2.3.0
   domain:
     description:
       - Domain the instance is related to.
