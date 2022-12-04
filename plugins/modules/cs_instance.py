@@ -734,18 +734,23 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
 
     def get_details(self):
         details = self.module.params.get('details')
+
         cpu = self.module.params.get('cpu')
         cpu_speed = self.module.params.get('cpu_speed')
         memory = self.module.params.get('memory')
-        if all([cpu, cpu_speed, memory]):
+
+        if any([cpu, cpu_speed, memory]):
             if details is None:
                 details = {}
 
-            details.update({
-                'cpuNumber': cpu,
-                'cpuSpeed': cpu_speed,
-                'memory': memory,
-            })
+            if cpu:
+                details['cpuNumber'] = cpu
+
+            if cpu_speed:
+                details['cpuSpeed'] = cpu_speed
+
+            if memory:
+                details['memory'] = memory
 
         return details
 
@@ -1107,14 +1112,9 @@ def main():
         allow_root_disk_shrink=dict(type='bool', default=False),
     ))
 
-    required_together = cs_required_together()
-    required_together.extend([
-        ['cpu', 'cpu_speed', 'memory'],
-    ])
-
     module = AnsibleModule(
         argument_spec=argument_spec,
-        required_together=required_together,
+        required_together=cs_required_together(),
         required_one_of=(
             ['display_name', 'name'],
         ),
