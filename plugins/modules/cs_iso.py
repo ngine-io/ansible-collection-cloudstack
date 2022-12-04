@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -237,11 +238,9 @@ tags:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackIso(AnsibleCloudStack):
@@ -381,8 +380,8 @@ class AnsibleCloudStackIso(AnsibleCloudStack):
                     self.poll_job(res, 'iso')
         return iso
 
-    def get_result(self, iso):
-        super(AnsibleCloudStackIso, self).get_result(iso)
+    def get_result(self, resource):
+        super(AnsibleCloudStackIso, self).get_result(resource)
         # Workaround API does not return cross_zones=true
         if self.module.params.get('cross_zones'):
             self.result['cross_zones'] = True

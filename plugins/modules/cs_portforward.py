@@ -353,12 +353,12 @@ class AnsibleCloudStackPortforwarding(AnsibleCloudStack):
                     self.poll_job(res, 'portforwardingrule')
         return portforwarding_rule
 
-    def get_result(self, portforwarding_rule):
-        super(AnsibleCloudStackPortforwarding, self).get_result(portforwarding_rule)
-        if portforwarding_rule:
+    def get_result(self, resource):
+        super(AnsibleCloudStackPortforwarding, self).get_result(resource)
+        if resource:
             for search_key, return_key in self.returns_to_int.items():
-                if search_key in portforwarding_rule:
-                    self.result[return_key] = int(portforwarding_rule[search_key])
+                if search_key in resource:
+                    self.result[return_key] = int(resource[search_key])
         return self.result
 
 

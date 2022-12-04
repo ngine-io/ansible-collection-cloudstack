@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -133,11 +134,9 @@ zone:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackPod(AnsibleCloudStack):
@@ -248,9 +247,9 @@ class AnsibleCloudStackPod(AnsibleCloudStack):
                     resource[key] = resource[key][0]
         return resource
 
-    def get_result(self, pod):
-        pod = self._transform_ip_list(pod)
-        super(AnsibleCloudStackPod, self).get_result(pod)
+    def get_result(self, resource):
+        resource = self._transform_ip_list(resource)
+        super(AnsibleCloudStackPod, self).get_result(resource)
         return self.result
 
 

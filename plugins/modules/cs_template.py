@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -369,11 +370,9 @@ project:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackTemplate(AnsibleCloudStack):
@@ -657,15 +656,15 @@ class AnsibleCloudStackTemplate(AnsibleCloudStack):
                     res = self.poll_job(res, 'template')
         return template
 
-    def get_result(self, template):
-        super(AnsibleCloudStackTemplate, self).get_result(template)
-        if template:
-            if 'isextractable' in template:
-                self.result['is_extractable'] = True if template['isextractable'] else False
-            if 'isfeatured' in template:
-                self.result['is_featured'] = True if template['isfeatured'] else False
-            if 'ispublic' in template:
-                self.result['is_public'] = True if template['ispublic'] else False
+    def get_result(self, resource):
+        super(AnsibleCloudStackTemplate, self).get_result(resource)
+        if resource:
+            if 'isextractable' in resource:
+                self.result['is_extractable'] = True if resource['isextractable'] else False
+            if 'isfeatured' in resource:
+                self.result['is_featured'] = True if resource['isfeatured'] else False
+            if 'ispublic' in resource:
+                self.result['is_public'] = True if resource['ispublic'] else False
         return self.result
 
 

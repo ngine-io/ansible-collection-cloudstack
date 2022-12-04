@@ -5,7 +5,8 @@
 # Copyright (c) 2017, René Moser <mail@renemoser.net>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -215,11 +216,9 @@ display_offering:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackDiskOffering(AnsibleCloudStack):
@@ -319,12 +318,12 @@ class AnsibleCloudStackDiskOffering(AnsibleCloudStack):
                 disk_offering = res['diskoffering']
         return disk_offering
 
-    def get_result(self, disk_offering):
-        super(AnsibleCloudStackDiskOffering, self).get_result(disk_offering)
-        if disk_offering:
+    def get_result(self, resource):
+        super(AnsibleCloudStackDiskOffering, self).get_result(resource)
+        if resource:
             # Prevent confusion, the api returns a tags key for storage tags.
-            if 'tags' in disk_offering:
-                self.result['storage_tags'] = disk_offering['tags'].split(',') or [disk_offering['tags']]
+            if 'tags' in resource:
+                self.result['storage_tags'] = resource['tags'].split(',') or [resource['tags']]
             if 'tags' in self.result:
                 del self.result['tags']
 

@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -424,13 +425,12 @@ user-data:
 '''
 
 import base64
-from ansible.module_utils.basic import AnsibleModule
+
 from ansible.module_utils._text import to_bytes, to_text
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+from ansible.module_utils.basic import AnsibleModule
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackInstance(AnsibleCloudStack):
@@ -1038,22 +1038,22 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
                 instance = self.poll_job(res, 'virtualmachine')
         return instance
 
-    def get_result(self, instance):
-        super(AnsibleCloudStackInstance, self).get_result(instance)
-        if instance:
-            self.result['user_data'] = self._get_instance_user_data(instance)
-            if 'securitygroup' in instance:
+    def get_result(self, resource):
+        super(AnsibleCloudStackInstance, self).get_result(resource)
+        if resource:
+            self.result['user_data'] = self._get_instance_user_data(resource)
+            if 'securitygroup' in resource:
                 security_groups = []
-                for securitygroup in instance['securitygroup']:
+                for securitygroup in resource['securitygroup']:
                     security_groups.append(securitygroup['name'])
                 self.result['security_groups'] = security_groups
-            if 'affinitygroup' in instance:
+            if 'affinitygroup' in resource:
                 affinity_groups = []
-                for affinitygroup in instance['affinitygroup']:
+                for affinitygroup in resource['affinitygroup']:
                     affinity_groups.append(affinitygroup['name'])
                 self.result['affinity_groups'] = affinity_groups
-            if 'nic' in instance:
-                for nic in instance['nic']:
+            if 'nic' in resource:
+                for nic in resource['nic']:
                     if nic['isdefault']:
                         if 'ipaddress' in nic:
                             self.result['default_ip'] = nic['ipaddress']

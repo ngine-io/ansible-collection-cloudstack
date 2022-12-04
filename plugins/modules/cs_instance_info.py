@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -268,6 +269,7 @@ instances:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
+
 from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec
 
 
@@ -349,25 +351,25 @@ class AnsibleCloudStackInstanceInfo(AnsibleCloudStack):
             'instances': [self.update_result(resource) for resource in instances]
         }
 
-    def update_result(self, instance, result=None):
-        result = super(AnsibleCloudStackInstanceInfo, self).update_result(instance, result)
-        if instance:
-            if 'securitygroup' in instance:
+    def update_result(self, resource, result=None):
+        result = super(AnsibleCloudStackInstanceInfo, self).update_result(resource, result)
+        if resource:
+            if 'securitygroup' in resource:
                 security_groups = []
-                for securitygroup in instance['securitygroup']:
+                for securitygroup in resource['securitygroup']:
                     security_groups.append(securitygroup['name'])
                 result['security_groups'] = security_groups
-            if 'affinitygroup' in instance:
+            if 'affinitygroup' in resource:
                 affinity_groups = []
-                for affinitygroup in instance['affinitygroup']:
+                for affinitygroup in resource['affinitygroup']:
                     affinity_groups.append(affinitygroup['name'])
                 result['affinity_groups'] = affinity_groups
-            if 'nic' in instance:
-                for nic in instance['nic']:
+            if 'nic' in resource:
+                for nic in resource['nic']:
                     if nic['isdefault'] and 'ipaddress' in nic:
                         result['default_ip'] = nic['ipaddress']
-                result['nic'] = instance['nic']
-            volumes = self.get_volumes(instance)
+                result['nic'] = resource['nic']
+            volumes = self.get_volumes(instance=resource)
             if volumes:
                 result['volumes'] = volumes
         return result

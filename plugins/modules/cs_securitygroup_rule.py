@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -163,7 +164,9 @@ end_port:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackSecurityGroupRule(AnsibleCloudStack):
@@ -323,8 +326,8 @@ class AnsibleCloudStackSecurityGroupRule(AnsibleCloudStack):
             res = self.poll_job(res, 'securitygroup')
         return rule
 
-    def get_result(self, security_group_rule):
-        super(AnsibleCloudStackSecurityGroupRule, self).get_result(security_group_rule)
+    def get_result(self, resource):
+        super(AnsibleCloudStackSecurityGroupRule, self).get_result(resource)
         self.result['type'] = self.module.params.get('type')
         self.result['security_group'] = self.module.params.get('security_group')
         return self.result

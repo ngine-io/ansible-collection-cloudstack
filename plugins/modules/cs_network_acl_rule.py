@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -261,11 +262,9 @@ zone:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackNetworkAclRule(AnsibleCloudStack):
@@ -391,13 +390,13 @@ class AnsibleCloudStackNetworkAclRule(AnsibleCloudStack):
 
         return network_acl_rule
 
-    def get_result(self, network_acl_rule):
-        super(AnsibleCloudStackNetworkAclRule, self).get_result(network_acl_rule)
-        if network_acl_rule:
-            if 'cidrlist' in network_acl_rule:
-                self.result['cidrs'] = network_acl_rule['cidrlist'].split(',') or [network_acl_rule['cidrlist']]
-            if network_acl_rule['protocol'] not in ['tcp', 'udp', 'icmp', 'all']:
-                self.result['protocol_number'] = int(network_acl_rule['protocol'])
+    def get_result(self, resource):
+        super(AnsibleCloudStackNetworkAclRule, self).get_result(resource)
+        if resource:
+            if 'cidrlist' in resource:
+                self.result['cidrs'] = resource['cidrlist'].split(',') or [resource['cidrlist']]
+            if resource['protocol'] not in ['tcp', 'udp', 'icmp', 'all']:
+                self.result['protocol_number'] = int(resource['protocol'])
                 self.result['protocol'] = 'by_number'
             self.result['action_policy'] = self.result['action_policy'].lower()
             self.result['traffic_type'] = self.result['traffic_type'].lower()

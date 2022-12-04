@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 DOCUMENTATION = r'''
@@ -184,11 +185,9 @@ cidrs:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackVpnCustomerGateway(AnsibleCloudStack):
@@ -291,13 +290,13 @@ class AnsibleCloudStackVpnCustomerGateway(AnsibleCloudStack):
 
         return vpn_customer_gateway
 
-    def get_result(self, vpn_customer_gateway):
-        super(AnsibleCloudStackVpnCustomerGateway, self).get_result(vpn_customer_gateway)
-        if vpn_customer_gateway:
-            if 'cidrlist' in vpn_customer_gateway:
-                self.result['cidrs'] = vpn_customer_gateway['cidrlist'].split(',') or [vpn_customer_gateway['cidrlist']]
+    def get_result(self, resource):
+        super(AnsibleCloudStackVpnCustomerGateway, self).get_result(resource)
+        if resource:
+            if 'cidrlist' in resource:
+                self.result['cidrs'] = resource['cidrlist'].split(',') or [resource['cidrlist']]
             # Ensure we return a bool
-            self.result['force_encap'] = True if vpn_customer_gateway.get('forceencap') else False
+            self.result['force_encap'] = True if resource.get('forceencap') else False
         return self.result
 
 

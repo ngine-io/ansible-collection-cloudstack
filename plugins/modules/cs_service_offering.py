@@ -4,7 +4,8 @@
 # Copyright (c) 2017, René Moser <mail@renemoser.net>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -377,11 +378,9 @@ is_customized:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackServiceOffering(AnsibleCloudStack):
@@ -504,15 +503,15 @@ class AnsibleCloudStackServiceOffering(AnsibleCloudStack):
                 service_offering = res['serviceoffering']
         return service_offering
 
-    def get_result(self, service_offering):
-        super(AnsibleCloudStackServiceOffering, self).get_result(service_offering)
-        if service_offering:
-            if 'hosttags' in service_offering:
-                self.result['host_tags'] = service_offering['hosttags'].split(',') or [service_offering['hosttags']]
+    def get_result(self, resource):
+        super(AnsibleCloudStackServiceOffering, self).get_result(resource)
+        if resource:
+            if 'hosttags' in resource:
+                self.result['host_tags'] = resource['hosttags'].split(',') or [resource['hosttags']]
 
             # Prevent confusion, the api returns a tags key for storage tags.
-            if 'tags' in service_offering:
-                self.result['storage_tags'] = service_offering['tags'].split(',') or [service_offering['tags']]
+            if 'tags' in resource:
+                self.result['storage_tags'] = resource['tags'].split(',') or [resource['tags']]
             if 'tags' in self.result:
                 del self.result['tags']
 

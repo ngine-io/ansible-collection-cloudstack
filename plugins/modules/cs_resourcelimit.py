@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -104,12 +105,9 @@ project:
 
 # import cloudstack common
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_required_together,
-    cs_argument_spec
-)
 
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 RESOURCE_TYPES = {
     'instance': 0,
@@ -170,8 +168,8 @@ class AnsibleCloudStackResourceLimit(AnsibleCloudStack):
                 resource_limit = res['resourcelimit']
         return resource_limit
 
-    def get_result(self, resource_limit):
-        self.result = super(AnsibleCloudStackResourceLimit, self).get_result(resource_limit)
+    def get_result(self, resource):
+        self.result = super(AnsibleCloudStackResourceLimit, self).get_result(resource)
         self.result['resource_type'] = self.module.params.get('resource_type')
         return self.result
 

@@ -6,6 +6,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -192,11 +193,9 @@ state:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackLBRuleMember(AnsibleCloudStack):
@@ -300,11 +299,11 @@ class AnsibleCloudStackLBRuleMember(AnsibleCloudStack):
     def remove_members(self):
         return self._ensure_members('remove')
 
-    def get_result(self, rule):
-        super(AnsibleCloudStackLBRuleMember, self).get_result(rule)
-        if rule:
+    def get_result(self, resource):
+        super(AnsibleCloudStackLBRuleMember, self).get_result(resource)
+        if resource:
             self.result['vms'] = []
-            for vm in self._get_members_of_rule(rule=rule):
+            for vm in self._get_members_of_rule(rule=resource):
                 self.result['vms'].append(vm['name'])
         return self.result
 

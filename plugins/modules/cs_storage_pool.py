@@ -6,6 +6,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -228,11 +229,9 @@ storage_tags:
 
 # import cloudstack common
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackStoragePool(AnsibleCloudStack):
@@ -432,13 +431,13 @@ class AnsibleCloudStackStoragePool(AnsibleCloudStack):
 
         self.fail_json(msg="Cluster %s not found" % cluster)
 
-    def get_result(self, pool):
-        super(AnsibleCloudStackStoragePool, self).get_result(pool)
-        if pool:
-            self.result['storage_url'] = "%s://%s/%s" % (pool['type'], pool['ipaddress'], pool['path'])
-            self.result['scope'] = pool['scope'].lower()
-            self.result['storage_tags'] = pool['tags'].split(',') if pool.get('tags') else []
-            self.result['allocation_state'] = self.allocation_states.get(pool['state'])
+    def get_result(self, resource):
+        super(AnsibleCloudStackStoragePool, self).get_result(resource)
+        if resource:
+            self.result['storage_url'] = "%s://%s/%s" % (resource['type'], resource['ipaddress'], resource['path'])
+            self.result['scope'] = resource['scope'].lower()
+            self.result['storage_tags'] = resource['tags'].split(',') if resource.get('tags') else []
+            self.result['allocation_state'] = self.allocation_states.get(resource['state'])
         return self.result
 
 
