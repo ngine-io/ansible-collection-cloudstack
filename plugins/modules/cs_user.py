@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -185,11 +186,9 @@ domain:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackUser(AnsibleCloudStack):
@@ -368,18 +367,18 @@ class AnsibleCloudStackUser(AnsibleCloudStack):
 
         return user
 
-    def get_result(self, user):
-        super(AnsibleCloudStackUser, self).get_result(user)
-        if user:
-            if 'accounttype' in user:
+    def get_result(self, resource):
+        super(AnsibleCloudStackUser, self).get_result(resource)
+        if resource:
+            if 'accounttype' in resource:
                 for key, value in self.account_types.items():
-                    if value == user['accounttype']:
+                    if value == resource['accounttype']:
                         self.result['account_type'] = key
                         break
 
             # secretkey has been removed since CloudStack 4.10 from listUsers API
-            if self.module.params.get('keys_registered') and 'apikey' in user and 'secretkey' not in user:
-                user_keys = self.query_api('getUserKeys', id=user['id'])
+            if self.module.params.get('keys_registered') and 'apikey' in resource and 'secretkey' not in resource:
+                user_keys = self.query_api('getUserKeys', id=resource['id'])
                 if user_keys:
                     self.result['user_api_secret'] = user_keys['userkeys'].get('secretkey')
 

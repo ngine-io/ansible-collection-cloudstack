@@ -6,6 +6,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -258,11 +259,9 @@ zones:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackNetworkOffering(AnsibleCloudStack):
@@ -411,19 +410,19 @@ class AnsibleCloudStackNetworkOffering(AnsibleCloudStack):
 
         return network_offering
 
-    def get_result(self, network_offering):
-        super(AnsibleCloudStackNetworkOffering, self).get_result(network_offering)
-        if network_offering:
-            self.result['egress_default_policy'] = 'allow' if network_offering.get('egressdefaultpolicy') else 'deny'
+    def get_result(self, resource):
+        super(AnsibleCloudStackNetworkOffering, self).get_result(resource)
+        if resource:
+            self.result['egress_default_policy'] = 'allow' if resource.get('egressdefaultpolicy') else 'deny'
 
             # Return a list of comma separated network offering tags
-            tags = network_offering.get('tags')
+            tags = resource.get('tags')
             self.result['tags'] = tags.split(',') if tags else []
 
-            zone_id = network_offering.get('zoneid')
+            zone_id = resource.get('zoneid')
             self.result['zones'] = zone_id.split(',') if zone_id else []
 
-            domain_id = network_offering.get('domainid')
+            domain_id = resource.get('domainid')
             self.result['domains'] = zone_id.split(',') if domain_id else []
 
         return self.result

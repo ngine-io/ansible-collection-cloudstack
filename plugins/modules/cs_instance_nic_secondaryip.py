@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -147,11 +148,9 @@ project:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackInstanceNicSecondaryIp(AnsibleCloudStack):
@@ -220,10 +219,10 @@ class AnsibleCloudStackInstanceNicSecondaryIp(AnsibleCloudStack):
                     self.poll_job(res, 'nicsecondaryip')
         return nic
 
-    def get_result(self, nic):
-        super(AnsibleCloudStackInstanceNicSecondaryIp, self).get_result(nic)
-        if nic and not self.module.params.get('network'):
-            self.module.params['network'] = nic.get('networkid')
+    def get_result(self, resource):
+        super(AnsibleCloudStackInstanceNicSecondaryIp, self).get_result(resource)
+        if resource and not self.module.params.get('network'):
+            self.module.params['network'] = resource.get('networkid')
         self.result['network'] = self.get_network(key='name')
         self.result['vm'] = self.get_vm(key='name')
         self.result['vm_guest_ip'] = self.vm_guest_ip

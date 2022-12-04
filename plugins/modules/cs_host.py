@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -322,13 +323,12 @@ zone:
   sample: zone01
 '''
 
-from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
 import time
+
+from ansible.module_utils.basic import AnsibleModule
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackHost(AnsibleCloudStack):
@@ -560,11 +560,11 @@ class AnsibleCloudStackHost(AnsibleCloudStack):
                 return host
         self.fail_json(msg="Polling for maintenance timed out")
 
-    def get_result(self, host):
-        super(AnsibleCloudStackHost, self).get_result(host)
-        if host:
-            self.result['allocation_state'] = host['resourcestate'].lower()
-            self.result['host_tags'] = host['hosttags'].split(',') if host.get('hosttags') else []
+    def get_result(self, resource):
+        super(AnsibleCloudStackHost, self).get_result(resource)
+        if resource:
+            self.result['allocation_state'] = resource['resourcestate'].lower()
+            self.result['host_tags'] = resource['hosttags'].split(',') if resource.get('hosttags') else []
         return self.result
 
 

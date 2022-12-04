@@ -13,17 +13,17 @@ jobs:
     defaults:
       run:
         working-directory: ansible_collections/ngine_io/cloudstack
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
         python-version:
-          - 3.8
+          - "3.10"
         group:
           - 1
           - 2
         ansible-branch:
-          - devel
+          - stable-2.14
         container-version:
           - 1.4.0
           - 1.2.0

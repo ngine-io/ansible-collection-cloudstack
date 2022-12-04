@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -186,11 +187,9 @@ domain:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackSnapshotPolicy(AnsibleCloudStack):
@@ -286,11 +285,11 @@ class AnsibleCloudStackSnapshotPolicy(AnsibleCloudStack):
                 self.query_api('deleteSnapshotPolicies', **args)
         return policy
 
-    def get_result(self, policy):
-        super(AnsibleCloudStackSnapshotPolicy, self).get_result(policy)
-        if policy and 'intervaltype' in policy:
+    def get_result(self, resource):
+        super(AnsibleCloudStackSnapshotPolicy, self).get_result(resource)
+        if resource and 'intervaltype' in resource:
             for key, value in self.interval_types.items():
-                if value == policy['intervaltype']:
+                if value == resource['intervaltype']:
                     self.result['interval_type'] = key
                     break
         volume = self.get_volume()

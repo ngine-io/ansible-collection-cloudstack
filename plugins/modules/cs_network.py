@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -359,11 +360,9 @@ vpc:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackNetwork(AnsibleCloudStack):
@@ -439,7 +438,7 @@ class AnsibleCloudStackNetwork(AnsibleCloudStack):
         }
         return args
 
-    def get_network(self, refresh=False):
+    def query_network(self, refresh=False):
         if not self.network or refresh:
             network = self.module.params.get('name')
             args = {
@@ -463,7 +462,7 @@ class AnsibleCloudStackNetwork(AnsibleCloudStack):
         if self.module.params.get('acl') is not None and self.module.params.get('vpc') is None:
             self.module.fail_json(msg="Missing required params: vpc")
 
-        network = self.get_network()
+        network = self.query_network()
         if not network:
             network = self.create_network(network)
         else:
@@ -498,7 +497,7 @@ class AnsibleCloudStackNetwork(AnsibleCloudStack):
                 network = self.query_api('replaceNetworkACLList', **args)
                 if self.module.params.get('poll_async'):
                     self.poll_job(network, 'networkacllist')
-                    network = self.get_network(refresh=True)
+                    network = self.query_network(refresh=True)
         return network
 
     def create_network(self, network):
@@ -533,7 +532,7 @@ class AnsibleCloudStackNetwork(AnsibleCloudStack):
         return network
 
     def restart_network(self):
-        network = self.get_network()
+        network = self.query_network()
 
         if not network:
             self.module.fail_json(msg="No network named '%s' found." % self.module.params('name'))
@@ -556,7 +555,7 @@ class AnsibleCloudStackNetwork(AnsibleCloudStack):
         return network
 
     def absent_network(self):
-        network = self.get_network()
+        network = self.query_network()
         if network:
             self.result['changed'] = True
 
@@ -572,10 +571,10 @@ class AnsibleCloudStackNetwork(AnsibleCloudStack):
                     self.poll_job(res, 'network')
             return network
 
-    def get_result(self, network):
-        super(AnsibleCloudStackNetwork, self).get_result(network)
-        if network:
-            self.result['acl'] = self.get_network_acl(key='name', acl_id=network.get('aclid'))
+    def get_result(self, resource):
+        super(AnsibleCloudStackNetwork, self).get_result(resource)
+        if resource:
+            self.result['acl'] = self.get_network_acl(key='name', acl_id=resource.get('aclid'))
         return self.result
 
 

@@ -298,16 +298,16 @@ class AnsibleCloudStackVpnConnection(AnsibleCloudStack):
 
         return vpn_conn
 
-    def get_result(self, vpn_conn):
-        super(AnsibleCloudStackVpnConnection, self).get_result(vpn_conn)
-        if vpn_conn:
-            if 'cidrlist' in vpn_conn:
-                self.result['cidrs'] = vpn_conn['cidrlist'].split(',') or [vpn_conn['cidrlist']]
+    def get_result(self, resource):
+        super(AnsibleCloudStackVpnConnection, self).get_result(resource)
+        if resource:
+            if 'cidrlist' in resource:
+                self.result['cidrs'] = resource['cidrlist'].split(',') or [resource['cidrlist']]
             # Ensure we return a bool
-            self.result['force_encap'] = True if vpn_conn.get('forceencap') else False
+            self.result['force_encap'] = True if resource.get('forceencap') else False
             args = {
                 'key': 'name',
-                'identifier': vpn_conn['s2scustomergatewayid'],
+                'identifier': resource['s2scustomergatewayid'],
                 'refresh': True,
             }
             self.result['vpn_customer_gateway'] = self.get_vpn_customer_gateway(**args)

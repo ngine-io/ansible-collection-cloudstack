@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -211,11 +212,9 @@ network:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackFirewall(AnsibleCloudStack):
@@ -376,14 +375,14 @@ class AnsibleCloudStackFirewall(AnsibleCloudStack):
                     self.poll_job(res, 'firewallrule')
         return firewall_rule
 
-    def get_result(self, firewall_rule):
-        super(AnsibleCloudStackFirewall, self).get_result(firewall_rule)
-        if firewall_rule:
+    def get_result(self, resource):
+        super(AnsibleCloudStackFirewall, self).get_result(resource)
+        if resource:
             self.result['type'] = self.module.params.get('type')
             if self.result['type'] == 'egress':
                 self.result['network'] = self.get_network(key='displaytext')
-            if 'cidrlist' in firewall_rule:
-                self.result['cidrs'] = firewall_rule['cidrlist'].split(',') or [firewall_rule['cidrlist']]
+            if 'cidrlist' in resource:
+                self.result['cidrs'] = resource['cidrlist'].split(',') or [resource['cidrlist']]
         return self.result
 
 

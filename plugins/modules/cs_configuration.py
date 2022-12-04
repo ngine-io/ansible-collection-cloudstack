@@ -5,6 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -134,11 +135,9 @@ storage:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
+                                       cs_required_together)
 
 
 class AnsibleCloudStackConfiguration(AnsibleCloudStack):
@@ -232,8 +231,8 @@ class AnsibleCloudStackConfiguration(AnsibleCloudStack):
                 configuration = res['configuration']
         return configuration
 
-    def get_result(self, configuration):
-        self.result = super(AnsibleCloudStackConfiguration, self).get_result(configuration)
+    def get_result(self, resource):
+        self.result = super(AnsibleCloudStackConfiguration, self).get_result(resource)
         if self.account:
             self.result['account'] = self.account['name']
             self.result['domain'] = self.domain['path']
