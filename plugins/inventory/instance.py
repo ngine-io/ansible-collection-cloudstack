@@ -45,6 +45,9 @@ DOCUMENTATION = r'''
         filter_by_vpc:
             description: Only return instances in the provided VPC.
             type: string
+        filter_by_tags:
+            description: Only return instances with the provided tags.
+            type: dict
     extends_documentation_fragment:
         - constructed
         - ngine_io.cloudstack.cloudstack
@@ -63,6 +66,10 @@ hostname: v4_default_ip
 # Return only instances related to the VPC vpc1 and in the zone EU
 filter_by_vpc: vpc1
 filter_by_zone: EU
+
+# Return only instances with the tier:dev tag
+filter_by_tags:
+  - tier: dev
 
 # Group instances with a disk_offering as storage
 # Create a group dmz for instances connected to the dmz network
@@ -243,6 +250,14 @@ class InventoryModule(BaseInventoryPlugin, Constructable):
         inventory_instance = yaml.load(inventory_instance_str, Loader=yaml.FullLoader)
         return inventory_instance['instance']
 
+    def filter_instance_by_tags(self, instance={}, filter_tags=[]):
+        # Matches the instances tags with the filter tags
+        # Returns false if one tag doesn't match
+        for tag in filter_tags:
+            if not tag.items() <= instance.get('tags', {}).items():
+                return False
+        return True
+
     def parse(self, inventory, loader, path, cache=False):
 
         # call base method to ensure properties are available for use with other helper methods
@@ -262,6 +277,11 @@ class InventoryModule(BaseInventoryPlugin, Constructable):
 
         # Retrieve the filtered list of instances
         instances = self.query_api('listVirtualMachines', **self.get_filters())
+
+        # Filter instances by tags if filter_by_tags is defined
+        filter_tags = self.get_option('filter_by_tags')
+        if filter_tags:
+            instances = [i for i in instances if filter_instance_by_tags(self.normalize_instance_data(i), filter_tags)]
 
         for instance in instances:
 
