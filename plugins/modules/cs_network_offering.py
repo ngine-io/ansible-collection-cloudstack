@@ -455,7 +455,7 @@ def main():
         keepalive_enabled=dict(type='bool'),
         max_connections=dict(type='int'),
         network_rate=dict(type='int'),
-        service_capabilities=dict(type='list', elements='str', aliases=['service_capability']),
+        service_capabilities=dict(type='list', elements='dict', aliases=['service_capability']),
         service_offering=dict(),
         service_providers=dict(type='list', elements='dict', aliases=['service_provider']),
         specify_ip_ranges=dict(type='bool'),
