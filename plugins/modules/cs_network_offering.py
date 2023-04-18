@@ -94,7 +94,7 @@ options:
     description:
       - Desired service capabilities as part of network offering.
     type: list
-    elements: str
+    elements: dict
     aliases: [ service_capability ]
   service_offering:
     description:
