@@ -222,7 +222,8 @@ class AnsibleCloudStackProject(AnsibleCloudStack):
             self.result['changed'] = True
 
             args = {
-                'id': project['id']
+                'id': project['id'],
+                'cleanup': 'true'
             }
             if not self.module.check_mode:
                 res = self.query_api('deleteProject', **args)
