@@ -152,7 +152,7 @@ from jinja2 import Template
 from ..module_utils.cloudstack import HAS_LIB_CS
 
 try:
-    from cs import CloudStack, CloudStackException
+    from cs import CloudStack
 except ImportError:
     pass
 
