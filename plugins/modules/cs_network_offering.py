@@ -155,7 +155,20 @@ EXAMPLES = '''
     display_text: network offering description
     state: enabled
     guest_ip_type: Isolated
-    supported_services: [ Dns, PortForwarding, Dhcp, SourceNat, UserData, Firewall, StaticNat, Vpn, Lb, NetworkACL, SecurityGroup, Connectivity, BaremetalPxeService ]
+    supported_services:
+      - Dns
+      - PortForwarding
+      - Dhcp
+      - SourceNat
+      - UserData
+      - Firewall
+      - StaticNat
+      - Vpn
+      - Lb
+      - NetworkACL
+      - SecurityGroup
+      - Connectivity
+      - BaremetalPxeService
     service_providers:
       - { service: 'dns', provider: 'virtualrouter' }
       - { service: 'dhcp', provider: 'virtualrouter' }
