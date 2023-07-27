@@ -45,7 +45,7 @@ options:
       - A list of one or more items from the choice list.
     type: list
     elements: str
-    choices: [ Dns, PortForwarding, Dhcp, SourceNat, UserData, Firewall, StaticNat, Vpn, Lb ]
+    choices: [ Dns, PortForwarding, Dhcp, SourceNat, UserData, Firewall, StaticNat, Vpn, Lb, NetworkACL, SecurityGroup, Connectivity, BaremetalPxeService ]
     aliases: [ supported_service ]
   traffic_type:
     description:
@@ -155,7 +155,7 @@ EXAMPLES = '''
     display_text: network offering description
     state: enabled
     guest_ip_type: Isolated
-    supported_services: [ Dns, PortForwarding, Dhcp, SourceNat, UserData, Firewall, StaticNat, Vpn, Lb ]
+    supported_services: [ Dns, PortForwarding, Dhcp, SourceNat, UserData, Firewall, StaticNat, Vpn, Lb, NetworkACL, SecurityGroup, Connectivity, BaremetalPxeService ]
     service_providers:
       - { service: 'dns', provider: 'virtualrouter' }
       - { service: 'dhcp', provider: 'virtualrouter' }
@@ -445,6 +445,10 @@ def main():
             'StaticNat',
             'Vpn',
             'Lb',
+            'NetworkACL',
+            'SecurityGroup',
+            'Connectivity',
+            'BaremetalPxeService',
         ]),
         traffic_type=dict(default='Guest'),
         availability=dict(),
