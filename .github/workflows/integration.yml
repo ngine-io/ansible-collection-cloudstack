@@ -29,6 +29,7 @@ jobs:
         ansible-branch:
           - stable-2.17
         container-version:
+          - 1.6.1
           - 1.4.0
     steps:
       - name: Check out code
