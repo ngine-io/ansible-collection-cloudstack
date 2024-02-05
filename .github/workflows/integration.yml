@@ -23,10 +23,10 @@ jobs:
           - 1
           - 2
         ansible-branch:
-          - stable-2.14
+          - stable-2.15
         container-version:
+          - 1.6.1
           - 1.4.0
-          - 1.2.0
     steps:
       - name: Check out code
         uses: actions/checkout@v4

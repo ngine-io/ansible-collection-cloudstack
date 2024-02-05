@@ -1,7 +1,7 @@
 ---
 - name: setup zone is absent
   cs_zone:
-    name: "{{ cs_resource_prefix }}-zone"
+    name: "{{ cs_resource_prefix }}-zone1"
     state: absent
   register: zone
 - name: verify setup zone absent
@@ -11,7 +11,7 @@
 
 - name: test fail missing param
   cs_zone:
-    name: "{{ cs_resource_prefix }}-zone"
+    name: "{{ cs_resource_prefix }}-zone1"
   register: zone
   ignore_errors: true
 - name: verify test fail missing param
@@ -22,7 +22,7 @@
 
 - name: test create zone in check mode
   cs_zone:
-    name: "{{ cs_resource_prefix }}-zone"
+    name: "{{ cs_resource_prefix }}-zone1"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
     network_type: Basic
@@ -36,7 +36,7 @@
 
 - name: test create zone
   cs_zone:
-    name: "{{ cs_resource_prefix }}-zone"
+    name: "{{ cs_resource_prefix }}-zone1"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
     network_type: Basic
@@ -58,7 +58,7 @@
 
 - name: test create zone idempotency
   cs_zone:
-    name: "{{ cs_resource_prefix }}-zone"
+    name: "{{ cs_resource_prefix }}-zone1"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
     network_type: Basic
@@ -80,7 +80,7 @@
 
 - name: test update zone in check mode
   cs_zone:
-    name: "{{ cs_resource_prefix }}-zone"
+    name: "{{ cs_resource_prefix }}-zone1"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
     internal_dns1: 10.10.1.100
@@ -106,7 +106,7 @@
 
 - name: test update zone
   cs_zone:
-    name: "{{ cs_resource_prefix }}-zone"
+    name: "{{ cs_resource_prefix }}-zone1"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
     internal_dns1: 10.10.1.100
@@ -131,7 +131,7 @@
 
 - name: test update zone idempotency
   cs_zone:
-    name: "{{ cs_resource_prefix }}-zone"
+    name: "{{ cs_resource_prefix }}-zone1"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
     internal_dns1: 10.10.1.100
@@ -156,7 +156,7 @@
 
 - name: test absent zone in check mode
   cs_zone:
-    name: "{{ cs_resource_prefix }}-zone"
+    name: "{{ cs_resource_prefix }}-zone1"
     state: absent
   register: zone
   check_mode: true
@@ -176,7 +176,7 @@
 
 - name: test absent zone
   cs_zone:
-    name: "{{ cs_resource_prefix }}-zone"
+    name: "{{ cs_resource_prefix }}-zone1"
     state: absent
   register: zone
 - name: verify test absent zone
@@ -195,7 +195,7 @@
 
 - name: test absent zone idempotency
   cs_zone:
-    name: "{{ cs_resource_prefix }}-zone"
+    name: "{{ cs_resource_prefix }}-zone1"
     state: absent
   register: zone
 - name: verify test absent zone idempotency

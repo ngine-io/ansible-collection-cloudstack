@@ -509,9 +509,14 @@ class AnsibleCloudStackServiceOffering(AnsibleCloudStack):
             if 'hosttags' in resource:
                 self.result['host_tags'] = resource['hosttags'].split(',') or [resource['hosttags']]
 
-            # Prevent confusion, the api returns a tags key for storage tags.
-            if 'tags' in resource:
+            if 'storagetags' in resource:
+                self.result['storage_tags'] = resource['storagetags'].split(',') or [resource['storagetags']]
+
+            # Prevent confusion, the api returns a "tags" key for storage tags.
+            # Version < 4.16
+            elif 'tags' in resource:
                 self.result['storage_tags'] = resource['tags'].split(',') or [resource['tags']]
+
             if 'tags' in self.result:
                 del self.result['tags']
 
