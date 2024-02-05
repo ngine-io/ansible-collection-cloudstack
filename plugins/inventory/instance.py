@@ -32,6 +32,7 @@ DOCUMENTATION = r'''
             default: v4_default_ip
             choices:
                 - v4_default_ip
+                - v4_public_ip
                 - hostname
         filter_by_zone:
             description: Only return instances in the provided zone.
@@ -97,6 +98,9 @@ instance:
   name: {{ instance.name }}
   hostname: {{ instance.hostname or instance.name | lower }}
   v4_default_ip: {{ instance.nic[0].ipaddress }}
+  {% if instance.publicip %}
+  v4_public_ip: {{ instance.publicip }}
+  {% endif %}
 
   zone: {{ instance.zonename }}
   domain: {{ instance.domain | lower }}
