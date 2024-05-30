@@ -341,6 +341,12 @@ ssh_key:
   returned: if available
   type: str
   sample: key@work
+ssh_keys:
+  description: Names of SSH key deployed to instance.
+  returned: if available
+  type: list
+  sample: [key@work, key@home]
+  version_added: 2.4.0
 domain:
   description: Domain the instance is related to.
   returned: success
@@ -463,6 +469,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             'templatename': 'template',
             'templatedisplaytext': 'template_display_text',
             'keypair': 'ssh_key',
+            'keypairs': 'ssh_keys',
             'hostname': 'host',
         }
         self.instance = None
