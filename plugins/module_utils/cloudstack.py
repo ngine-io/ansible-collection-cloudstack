@@ -122,6 +122,10 @@ class AnsibleCloudStack:
             'method': self.module.params.get('api_http_method'),
             'verify': self.module.params.get('api_verify_ssl_cert'),
         }
+        
+        if not api_config['verify']:
+            api_config["dangerous_no_tls_verify"] = True
+
         self.result.update({
             'api_url': api_config['endpoint'],
             'api_key': api_config['key'],

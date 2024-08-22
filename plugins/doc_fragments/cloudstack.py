@@ -47,6 +47,7 @@ options:
     description:
       - Verify CA authority cert file.
       - If not given, the C(CLOUDSTACK_VERIFY) env variable is considered.
+      - If is null, we skip the verification of the certificate.
     type: str
 requirements:
   - python >= 2.6
