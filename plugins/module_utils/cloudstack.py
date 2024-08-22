@@ -35,6 +35,7 @@ def cs_argument_spec():
         api_http_method=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_METHOD']), choices=['get', 'post'], default='get'),
         api_timeout=dict(type='int', fallback=(env_fallback, ['CLOUDSTACK_TIMEOUT']), default=10),
         api_verify_ssl_cert=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_VERIFY'])),
+        validate_certs=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_DANGEROUS_NO_TLS_VERIFY']), default=True),
     )
 
 
@@ -121,10 +122,8 @@ class AnsibleCloudStack:
             'timeout': self.module.params.get('api_timeout'),
             'method': self.module.params.get('api_http_method'),
             'verify': self.module.params.get('api_verify_ssl_cert'),
+            'dangerous_no_tls_verify': self.module.params.get('validate_certs'),
         }
-        
-        if not api_config['verify']:
-            api_config["dangerous_no_tls_verify"] = True
 
         self.result.update({
             'api_url': api_config['endpoint'],
@@ -132,6 +131,7 @@ class AnsibleCloudStack:
             'api_timeout': int(api_config['timeout']),
             'api_http_method': api_config['method'],
             'api_verify_ssl_cert': api_config['verify'],
+            'validate_certs': api_config['dangerous_no_tls_verify'],
         })
         return api_config
 
