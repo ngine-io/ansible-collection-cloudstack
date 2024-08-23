@@ -1,0 +1,2 @@
+minor_changes:
+  - cs_project - Extended to pass ``cleanup=true`` to the deleteProject API when deleting a project (https://github.com/ngine-io/ansible-collection-cloudstack/pull/122).
