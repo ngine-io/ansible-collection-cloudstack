@@ -48,6 +48,13 @@ options:
       - Verify CA authority cert file.
       - If not given, the C(CLOUDSTACK_VERIFY) env variable is considered.
     type: str
+  validate_certs:
+    description:
+      - If V(false), SSL certificates will not be validated.
+      - If not given, the C(CLOUDSTACK_DANGEROUS_NO_TLS_VERIFY) env variable is considered.
+      - This should only be used on personally controlled sites using self-signed certificates.
+    type: bool
+    default: true
 requirements:
   - python >= 2.6
   - cs >= 0.9.0
