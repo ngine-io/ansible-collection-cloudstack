@@ -1,0 +1,2 @@
+minor_changes:
+  - Added possiblity to disable certs validation using ``validate_certs`` argument (https://github.com/ngine-io/ansible-collection-cloudstack/pull/131).
