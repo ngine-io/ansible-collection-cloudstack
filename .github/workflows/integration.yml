@@ -26,7 +26,6 @@ jobs:
           - stable-2.17
         container-version:
           - 1.4.0
-          - 1.2.0
     steps:
       - name: Check out code
         uses: actions/checkout@v4
