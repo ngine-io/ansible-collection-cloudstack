@@ -4,13 +4,14 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
 class ModuleDocFragment(object):
 
     # Standard cloudstack documentation fragment
-    DOCUMENTATION = r'''
+    DOCUMENTATION = r"""
 options:
   api_key:
     description:
@@ -55,10 +56,11 @@ options:
       - This should only be used on personally controlled sites using self-signed certificates.
     type: bool
     default: true
+    version_added: 2.4.0
 requirements:
   - python >= 2.6
   - cs >= 0.9.0
 notes:
   - A detailed guide about cloudstack modules can be found in the L(CloudStack Cloud Guide,../scenario_guides/guide_cloudstack.html).
   - This module supports check mode.
-'''
+"""
