@@ -18,15 +18,14 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
-          - "3.10"
+          - "3.11"
         group:
           - 1
           - 2
         ansible-branch:
-          - stable-2.14
+          - stable-2.17
         container-version:
           - 1.4.0
-          - 1.2.0
     steps:
       - name: Check out code
         uses: actions/checkout@v4
