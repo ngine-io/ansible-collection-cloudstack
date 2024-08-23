@@ -3,6 +3,7 @@
 # Simplified BSD License (see licenses/simplified_bsd.txt or https://opensource.org/licenses/BSD-2-Clause)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
@@ -11,8 +12,8 @@ import sys
 import time
 import traceback
 
-from ansible.module_utils._text import to_text, to_native
-from ansible.module_utils.basic import missing_required_lib, env_fallback
+from ansible.module_utils._text import to_native, to_text
+from ansible.module_utils.basic import env_fallback, missing_required_lib
 
 CS_IMP_ERR = None
 try:
@@ -35,7 +36,7 @@ def cs_argument_spec():
         api_http_method=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_METHOD']), choices=['get', 'post'], default='get'),
         api_timeout=dict(type='int', fallback=(env_fallback, ['CLOUDSTACK_TIMEOUT']), default=10),
         api_verify_ssl_cert=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_VERIFY'])),
-        validate_certs=dict(type='str', fallback=(env_fallback, ['CLOUDSTACK_DANGEROUS_NO_TLS_VERIFY']), default=True),
+        validate_certs=dict(type='bool', fallback=(env_fallback, ['CLOUDSTACK_DANGEROUS_NO_TLS_VERIFY']), default=True),
     )
 
 
