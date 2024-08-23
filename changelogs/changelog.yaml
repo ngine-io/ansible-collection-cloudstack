@@ -126,3 +126,14 @@ releases:
     - cs_instance-pod-cluster-args.yml
     - details_cpu_memory.yml
     release_date: '2022-12-04'
+  2.4.0:
+    changes:
+      minor_changes:
+      - Added possiblity to disable certs validation using ``validate_certs`` argument
+        (https://github.com/ngine-io/ansible-collection-cloudstack/pull/131).
+      - cs_project - Extended to pass ``cleanup=true`` to the deleteProject API when
+        deleting a project (https://github.com/ngine-io/ansible-collection-cloudstack/pull/122).
+    fragments:
+    - cs_project_cleanup_true.yml
+    - validate-certs.yml
+    release_date: '2024-08-23'
