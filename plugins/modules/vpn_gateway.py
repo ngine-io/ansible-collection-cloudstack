@@ -11,7 +11,7 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 ---
-module: cs_vpn_gateway
+module: vpn_gateway
 short_description: Manages site-to-site VPN gateways on Apache CloudStack based clouds.
 description:
     - Creates and removes VPN site-to-site gateways.
@@ -57,12 +57,12 @@ extends_documentation_fragment:
 
 EXAMPLES = """
 - name: Ensure a vpn gateway is present
-  ngine_io.cloudstack.cs_vpn_gateway:
+  ngine_io.cloudstack.vpn_gateway:
     vpc: my VPC
     zone: zone01
 
 - name: Ensure a vpn gateway is absent
-  ngine_io.cloudstack.cs_vpn_gateway:
+  ngine_io.cloudstack.vpn_gateway:
     vpc: my VPC
     zone: zone01
     state: absent
