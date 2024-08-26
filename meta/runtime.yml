@@ -1,68 +1,329 @@
-requires_ansible: '>=2.9.10'
+requires_ansible: ">=2.9.10"
 action_groups:
   cloudstack:
-  - cs_traffic_type
-  - cs_cluster
-  - cs_network_acl
-  - cs_affinitygroup
-  - cs_user
-  - cs_host
-  - cs_resourcelimit
-  - cs_zone_info
-  - cs_loadbalancer_rule
-  - cs_vpn_connection
-  - cs_iso
-  - cs_sshkeypair
-  - cs_instancegroup
-  - cs_securitygroup
-  - cs_vlan_ip_range
-  - cs_vpn_gateway
-  - cs_loadbalancer_rule_member
-  - cs_ip_address
-  - cs_pod
-  - cs_portforward
-  - cs_role_permission
-  - cs_vpc_offering
-  - cs_securitygroup_rule
-  - cs_vpc
-  - cs_instance_nic
-  - cs_region
-  - cs_firewall
-  - cs_role
-  - cs_router
-  - cs_template
-  - cs_disk_offering
-  - cs_vpn_customer_gateway
-  - cs_snapshot_policy
-  - cs_project
-  - cs_instance_password_reset
-  - cs_staticnat
-  - cs_storage_pool
-  - cs_zone
-  - cs_configuration
-  - cs_service_offering
-  - cs_vmsnapshot
-  - cs_network_offering
-  - cs_physical_network
-  - cs_instance_nic_secondaryip
-  - cs_network_acl_rule
-  - cs_image_store
-  - cs_domain
-  - cs_network
-  - cs_instance_info
-  - cs_account
-  - cs_instance
-  - cs_volume
+    - account
+    - affinitygroup
+    - cluster
+    - configuration
+    - disk_offering
+    - domain
+    - firewall
+    - host
+    - image_store
+    - instance
+    - instance_info
+    - instance_nic
+    - instance_nic_secondaryip
+    - instance_password_reset
+    - instancegroup
+    - ip_address
+    - iso
+    - loadbalancer_rule
+    - loadbalancer_rule_member
+    - network
+    - network_acl
+    - network_acl_rule
+    - network_offering
+    - metadata_facts
+    - physical_network
+    - pod
+    - portforward
+    - project
+    - region
+    - resourcelimit
+    - role
+    - role_permission
+    - router
+    - securitygroup
+    - securitygroup_rule
+    - service_offering
+    - snapshot_policy
+    - sshkeypair
+    - staticnat
+    - storage_pool
+    - template
+    - traffic_type
+    - user
+    - vlan_ip_range
+    - vmsnapshot
+    - volume
+    - vpc
+    - vpc_offering
+    - vpn_connection
+    - vpn_customer_gateway
+    - vpn_gateway
+    - zone
+    - zone_info
 
 plugin_routing:
   modules:
-    cs_instance_facts:
+    cs_account:
       deprecation:
-        removal_date: 2021-12-12
-        warning_text: module was renamed to ngine_io.cloudstack.cs_instance_info
-      redirect: ngine_io.cloudstack.cs_instance_info
-    cs_zone_facts:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.account
+      redirect: ngine_io.cloudstack.account
+    cs_affinitygroup:
       deprecation:
-        removal_date: 2021-12-12
-        warning_text: module was renamed to ngine_io.cloudstack.cs_zone_info
-      redirect: ngine_io.cloudstack.cs_zone_info
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.affinitygroup
+      redirect: ngine_io.cloudstack.affinitygroup
+    cs_cluster:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.cluster
+      redirect: ngine_io.cloudstack.cluster
+    cs_configuration:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.configuration
+      redirect: ngine_io.cloudstack.configuration
+    cs_disk_offering:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.disk_offering
+      redirect: ngine_io.cloudstack.disk_offering
+    cs_domain:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.domain
+      redirect: ngine_io.cloudstack.domain
+    cs_facts:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.metadata_facts
+      redirect: ngine_io.cloudstack.metadata_facts
+    cs_firewall:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.firewall
+      redirect: ngine_io.cloudstack.firewall
+    cs_host:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.host
+      redirect: ngine_io.cloudstack.host
+    cs_image_store:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.image_store
+      redirect: ngine_io.cloudstack.image_store
+    cs_instance:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.instance
+      redirect: ngine_io.cloudstack.instance
+    cs_instance_info:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.instance_info
+      redirect: ngine_io.cloudstack.instance_info
+    cs_instance_nic:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.instance_nic
+      redirect: ngine_io.cloudstack.instance_nic
+    cs_instance_nic_secondaryip:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.instance_nic_secondaryip
+      redirect: ngine_io.cloudstack.instance_nic_secondaryip
+    cs_instance_password_reset:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.instance_password_reset
+      redirect: ngine_io.cloudstack.instance_password_reset
+    cs_instancegroup:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.instancegroup
+      redirect: ngine_io.cloudstack.instancegroup
+    cs_ip_address:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.ip_address
+      redirect: ngine_io.cloudstack.ip_address
+    cs_iso:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.iso
+      redirect: ngine_io.cloudstack.iso
+    cs_loadbalancer_rule:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.loadbalancer_rule
+      redirect: ngine_io.cloudstack.loadbalancer_rule
+    cs_loadbalancer_rule_member:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.loadbalancer_rule_member
+      redirect: ngine_io.cloudstack.loadbalancer_rule_member
+    cs_network:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.network
+      redirect: ngine_io.cloudstack.network
+    cs_network_acl:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.network_acl
+      redirect: ngine_io.cloudstack.network_acl
+    cs_network_acl_rule:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.network_acl_rule
+      redirect: ngine_io.cloudstack.network_acl_rule
+    cs_network_offering:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.network_offering
+      redirect: ngine_io.cloudstack.network_offering
+    cs_metadata_facts:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.metadata_facts
+      redirect: ngine_io.cloudstack.metadata_facts
+    cs_physical_network:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.physical_network
+      redirect: ngine_io.cloudstack.physical_network
+    cs_pod:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.pod
+      redirect: ngine_io.cloudstack.pod
+    cs_portforward:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.portforward
+      redirect: ngine_io.cloudstack.portforward
+    cs_project:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.project
+      redirect: ngine_io.cloudstack.project
+    cs_region:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.region
+      redirect: ngine_io.cloudstack.region
+    cs_resourcelimit:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.resourcelimit
+      redirect: ngine_io.cloudstack.resourcelimit
+    cs_role:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.role
+      redirect: ngine_io.cloudstack.role
+    cs_role_permission:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.role_permission
+      redirect: ngine_io.cloudstack.role_permission
+    cs_router:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.router
+      redirect: ngine_io.cloudstack.router
+    cs_securitygroup:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.securitygroup
+      redirect: ngine_io.cloudstack.securitygroup
+    cs_securitygroup_rule:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.securitygroup_rule
+      redirect: ngine_io.cloudstack.securitygroup_rule
+    cs_service_offering:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.service_offering
+      redirect: ngine_io.cloudstack.service_offering
+    cs_snapshot_policy:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.snapshot_policy
+      redirect: ngine_io.cloudstack.snapshot_policy
+    cs_sshkeypair:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.sshkeypair
+      redirect: ngine_io.cloudstack.sshkeypair
+    cs_staticnat:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.staticnat
+      redirect: ngine_io.cloudstack.staticnat
+    cs_storage_pool:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.storage_pool
+      redirect: ngine_io.cloudstack.storage_pool
+    cs_template:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.template
+      redirect: ngine_io.cloudstack.template
+    cs_traffic_type:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.traffic_type
+      redirect: ngine_io.cloudstack.traffic_type
+    cs_user:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.user
+      redirect: ngine_io.cloudstack.user
+    cs_vlan_ip_range:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.vlan_ip_range
+      redirect: ngine_io.cloudstack.vlan_ip_range
+    cs_vmsnapshot:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.vmsnapshot
+      redirect: ngine_io.cloudstack.vmsnapshot
+    cs_volume:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.volume
+      redirect: ngine_io.cloudstack.volume
+    cs_vpc:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.vpc
+      redirect: ngine_io.cloudstack.vpc
+    cs_vpc_offering:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.vpc_offering
+      redirect: ngine_io.cloudstack.vpc_offering
+    cs_vpn_connection:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.vpn_connection
+      redirect: ngine_io.cloudstack.vpn_connection
+    cs_vpn_customer_gateway:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.vpn_customer_gateway
+      redirect: ngine_io.cloudstack.vpn_customer_gateway
+    cs_vpn_gateway:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.vpn_gateway
+      redirect: ngine_io.cloudstack.vpn_gateway
+    cs_zone:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.zone
+      redirect: ngine_io.cloudstack.zone
+    cs_zone_info:
+      deprecation:
+        removal_date: 2025-09-01
+        warning_text: module was renamed to ngine_io.cloudstack.zone_info
+      redirect: ngine_io.cloudstack.zone_info
