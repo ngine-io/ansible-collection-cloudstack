@@ -140,6 +140,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackConfiguration(AnsibleCloudStack):
+    """AnsibleCloudStackConfiguration"""
 
     def __init__(self, module):
         super(AnsibleCloudStackConfiguration, self).__init__(module)

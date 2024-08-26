@@ -116,6 +116,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackAffinityGroup(AnsibleCloudStack):
+    """AnsibleCloudStackAffinityGroup"""
 
     def __init__(self, module):
         super(AnsibleCloudStackAffinityGroup, self).__init__(module)

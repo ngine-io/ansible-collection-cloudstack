@@ -204,6 +204,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackCluster(AnsibleCloudStack):
+    """AnsibleCloudStackCluster"""
 
     def __init__(self, module):
         super(AnsibleCloudStackCluster, self).__init__(module)
@@ -299,15 +300,16 @@ class AnsibleCloudStackCluster(AnsibleCloudStack):
     def _update_cluster(self):
         cluster = self.get_cluster()
 
-        args = self._get_common_cluster_args()
-        args["id"] = cluster["id"]
+        if cluster is not None:
+            args = self._get_common_cluster_args()
+            args["id"] = cluster["id"]
 
-        if self.has_changed(args, cluster):
-            self.result["changed"] = True
+            if self.has_changed(args, cluster):
+                self.result["changed"] = True
 
-            if not self.module.check_mode:
-                res = self.query_api("updateCluster", **args)
-                cluster = res["cluster"]
+                if not self.module.check_mode:
+                    res = self.query_api("updateCluster", **args)
+                    cluster = res["cluster"]
 
         return cluster
 
@@ -330,25 +332,25 @@ def main():
     argument_spec = cs_argument_spec()
     argument_spec.update(
         dict(
-            name=dict(required=True),
-            zone=dict(required=True),
-            pod=dict(),
-            cluster_type=dict(choices=["CloudManaged", "ExternalManaged"]),
-            hypervisor=dict(),
-            state=dict(choices=["present", "enabled", "disabled", "absent"], default="present"),
-            url=dict(),
-            username=dict(),
-            password=dict(no_log=True),
-            guest_vswitch_name=dict(),
-            guest_vswitch_type=dict(choices=["vmwaresvs", "vmwaredvs"]),
-            public_vswitch_name=dict(),
-            public_vswitch_type=dict(choices=["vmwaresvs", "vmwaredvs"]),
-            vms_ip_address=dict(),
-            vms_username=dict(),
-            vms_password=dict(no_log=True),
-            ovm3_cluster=dict(),
-            ovm3_pool=dict(),
-            ovm3_vip=dict(),
+            name=dict(type="str", required=True),
+            zone=dict(type="str", required=True),
+            pod=dict(type="str"),
+            cluster_type=dict(type="str", choices=["CloudManaged", "ExternalManaged"]),
+            hypervisor=dict(type="str"),
+            state=dict(type="str", choices=["present", "enabled", "disabled", "absent"], default="present"),
+            url=dict(type="str"),
+            username=dict(type="str"),
+            password=dict(type="str", no_log=True),
+            guest_vswitch_name=dict(type="str"),
+            guest_vswitch_type=dict(type="str", choices=["vmwaresvs", "vmwaredvs"]),
+            public_vswitch_name=dict(type="str"),
+            public_vswitch_type=dict(type="str", choices=["vmwaresvs", "vmwaredvs"]),
+            vms_ip_address=dict(type="str"),
+            vms_username=dict(type="str"),
+            vms_password=dict(type="str", no_log=True),
+            ovm3_cluster=dict(type="str"),
+            ovm3_pool=dict(type="str"),
+            ovm3_vip=dict(type="str"),
         )
     )
 

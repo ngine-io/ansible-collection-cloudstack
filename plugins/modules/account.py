@@ -189,13 +189,13 @@ role:
   sample: Domain Admin
 """
 
-# import cloudstack common
 from ansible.module_utils.basic import AnsibleModule
 
 from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackAccount(AnsibleCloudStack):
+    """AnsibleCloudStackAccount"""
 
     def __init__(self, module):
         super(AnsibleCloudStackAccount, self).__init__(module)
