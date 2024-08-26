@@ -8,4 +8,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: rickstaa/action-black@v1
         with:
-          black_args: "./plugins --verbose --check"
+          black_args: "./plugins --verbose --check --diff"
