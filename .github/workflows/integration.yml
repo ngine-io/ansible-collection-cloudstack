@@ -1,15 +1,19 @@
 name: Collection integration
 
 on:
-  push:
-    tags: "v*"
   pull_request:
+    types: [labeled]
+  push:
+    paths:
+      - "plugins/**"
+      - "tests/integration/**"
   schedule:
     - cron: 30 6 * * 2
 
 jobs:
   integration-test:
     name: Integration v${{ matrix.container-version }} Ansible-${{ matrix.ansible-branch }} group${{ matrix.group }} Py${{ matrix.python-version }}
+    if: ${{ github.event.label.name == 'automation' || github.ref_name == 'master' || github.event_name == 'schedule' }}
     defaults:
       run:
         working-directory: ansible_collections/ngine_io/cloudstack
