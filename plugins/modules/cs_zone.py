@@ -5,12 +5,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_zone
+module: zone
 short_description: Manages zones on Apache CloudStack based clouds.
 description:
     - Create, update and remove zones.
@@ -91,33 +92,33 @@ options:
     type: bool
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Ensure a zone is present
-  ngine_io.cloudstack.cs_zone:
+  ngine_io.cloudstack.zone:
     name: ch-zrh-ix-01
     dns1: 8.8.8.8
     dns2: 8.8.4.4
     network_type: basic
 
 - name: Ensure a zone is disabled
-  ngine_io.cloudstack.cs_zone:
+  ngine_io.cloudstack.zone:
     name: ch-zrh-ix-01
     state: disabled
 
 - name: Ensure a zone is enabled
-  ngine_io.cloudstack.cs_zone:
+  ngine_io.cloudstack.zone:
     name: ch-zrh-ix-01
     state: enabled
 
 - name: Ensure a zone is absent
-  ngine_io.cloudstack.cs_zone:
+  ngine_io.cloudstack.zone:
     name: ch-zrh-ix-01
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the zone.
@@ -209,14 +210,11 @@ tags:
   returned: success
   type: list
   sample: [ { "key": "foo", "value": "bar" } ]
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackZone(AnsibleCloudStack):
@@ -224,59 +222,59 @@ class AnsibleCloudStackZone(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackZone, self).__init__(module)
         self.returns = {
-            'dns1': 'dns1',
-            'dns2': 'dns2',
-            'internaldns1': 'internal_dns1',
-            'internaldns2': 'internal_dns2',
-            'ipv6dns1': 'dns1_ipv6',
-            'ipv6dns2': 'dns2_ipv6',
-            'domain': 'network_domain',
-            'networktype': 'network_type',
-            'securitygroupsenabled': 'securitygroups_enabled',
-            'localstorageenabled': 'local_storage_enabled',
-            'guestcidraddress': 'guest_cidr_address',
-            'dhcpprovider': 'dhcp_provider',
-            'allocationstate': 'allocation_state',
-            'zonetoken': 'zone_token',
+            "dns1": "dns1",
+            "dns2": "dns2",
+            "internaldns1": "internal_dns1",
+            "internaldns2": "internal_dns2",
+            "ipv6dns1": "dns1_ipv6",
+            "ipv6dns2": "dns2_ipv6",
+            "domain": "network_domain",
+            "networktype": "network_type",
+            "securitygroupsenabled": "securitygroups_enabled",
+            "localstorageenabled": "local_storage_enabled",
+            "guestcidraddress": "guest_cidr_address",
+            "dhcpprovider": "dhcp_provider",
+            "allocationstate": "allocation_state",
+            "zonetoken": "zone_token",
         }
         self.zone = None
 
     def _get_common_zone_args(self):
         args = {
-            'name': self.module.params.get('name'),
-            'dns1': self.module.params.get('dns1'),
-            'dns2': self.module.params.get('dns2'),
-            'internaldns1': self.get_or_fallback('internal_dns1', 'dns1'),
-            'internaldns2': self.get_or_fallback('internal_dns2', 'dns2'),
-            'ipv6dns1': self.module.params.get('dns1_ipv6'),
-            'ipv6dns2': self.module.params.get('dns2_ipv6'),
-            'networktype': self.module.params.get('network_type'),
-            'domain': self.module.params.get('network_domain'),
-            'localstorageenabled': self.module.params.get('local_storage_enabled'),
-            'guestcidraddress': self.module.params.get('guest_cidr_address'),
-            'dhcpprovider': self.module.params.get('dhcp_provider'),
+            "name": self.module.params.get("name"),
+            "dns1": self.module.params.get("dns1"),
+            "dns2": self.module.params.get("dns2"),
+            "internaldns1": self.get_or_fallback("internal_dns1", "dns1"),
+            "internaldns2": self.get_or_fallback("internal_dns2", "dns2"),
+            "ipv6dns1": self.module.params.get("dns1_ipv6"),
+            "ipv6dns2": self.module.params.get("dns2_ipv6"),
+            "networktype": self.module.params.get("network_type"),
+            "domain": self.module.params.get("network_domain"),
+            "localstorageenabled": self.module.params.get("local_storage_enabled"),
+            "guestcidraddress": self.module.params.get("guest_cidr_address"),
+            "dhcpprovider": self.module.params.get("dhcp_provider"),
         }
-        state = self.module.params.get('state')
-        if state in ['enabled', 'disabled']:
-            args['allocationstate'] = state.capitalize()
+        state = self.module.params.get("state")
+        if state in ["enabled", "disabled"]:
+            args["allocationstate"] = state.capitalize()
         return args
 
     def get_zone(self):
         if not self.zone:
             args = {}
 
-            uuid = self.module.params.get('id')
+            uuid = self.module.params.get("id")
             if uuid:
-                args['id'] = uuid
-                zones = self.query_api('listZones', **args)
+                args["id"] = uuid
+                zones = self.query_api("listZones", **args)
                 if zones:
-                    self.zone = zones['zone'][0]
+                    self.zone = zones["zone"][0]
                     return self.zone
 
-            args['name'] = self.module.params.get('name')
-            zones = self.query_api('listZones', **args)
+            args["name"] = self.module.params.get("name")
+            zones = self.query_api("listZones", **args)
             if zones:
-                self.zone = zones['zone'][0]
+                self.zone = zones["zone"][0]
         return self.zone
 
     def present_zone(self):
@@ -289,81 +287,118 @@ class AnsibleCloudStackZone(AnsibleCloudStack):
 
     def _create_zone(self):
         required_params = [
-            'dns1',
+            "dns1",
         ]
         self.module.fail_on_missing_params(required_params=required_params)
 
-        self.result['changed'] = True
+        self.result["changed"] = True
 
         args = self._get_common_zone_args()
-        args['domainid'] = self.get_domain(key='id')
-        args['securitygroupenabled'] = self.module.params.get('securitygroups_enabled')
+        args["domainid"] = self.get_domain(key="id")
+        args["securitygroupenabled"] = self.module.params.get("securitygroups_enabled")
 
         zone = None
         if not self.module.check_mode:
-            res = self.query_api('createZone', **args)
-            zone = res['zone']
+            res = self.query_api("createZone", **args)
+            zone = res["zone"]
         return zone
 
     def _update_zone(self):
         zone = self.get_zone()
 
         args = self._get_common_zone_args()
-        args['id'] = zone['id']
+        args["id"] = zone["id"] if zone is not None else ""
 
         if self.has_changed(args, zone):
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             if not self.module.check_mode:
-                res = self.query_api('updateZone', **args)
-                zone = res['zone']
+                res = self.query_api("updateZone", **args)
+                zone = res["zone"]
         return zone
 
     def absent_zone(self):
         zone = self.get_zone()
         if zone:
-            self.result['changed'] = True
+            self.result["changed"] = True
 
-            args = {
-                'id': zone['id']
-            }
+            args = {"id": zone["id"]}
             if not self.module.check_mode:
-                self.query_api('deleteZone', **args)
+                self.query_api("deleteZone", **args)
 
         return zone
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        id=dict(),
-        name=dict(required=True),
-        dns1=dict(),
-        dns2=dict(),
-        internal_dns1=dict(),
-        internal_dns2=dict(),
-        dns1_ipv6=dict(),
-        dns2_ipv6=dict(),
-        network_type=dict(default='Basic', choices=['Basic', 'Advanced']),
-        network_domain=dict(),
-        guest_cidr_address=dict(),
-        dhcp_provider=dict(),
-        local_storage_enabled=dict(type='bool'),
-        securitygroups_enabled=dict(type='bool'),
-        state=dict(choices=['present', 'enabled', 'disabled', 'absent'], default='present'),
-        domain=dict(),
-    ))
+    argument_spec.update(
+        dict(
+            id=dict(
+                type="str",
+            ),
+            name=dict(
+                type="str",
+                required=True,
+            ),
+            dns1=dict(
+                type="str",
+            ),
+            dns2=dict(
+                type="str",
+            ),
+            internal_dns1=dict(
+                type="str",
+            ),
+            internal_dns2=dict(
+                type="str",
+            ),
+            dns1_ipv6=dict(
+                type="str",
+            ),
+            dns2_ipv6=dict(
+                type="str",
+            ),
+            network_type=dict(
+                type="str",
+                default="Basic",
+                choices=["Basic", "Advanced"],
+            ),
+            network_domain=dict(
+                type="str",
+            ),
+            guest_cidr_address=dict(
+                type="str",
+            ),
+            dhcp_provider=dict(
+                type="str",
+            ),
+            local_storage_enabled=dict(
+                type="bool",
+            ),
+            securitygroups_enabled=dict(
+                type="bool",
+            ),
+            state=dict(
+                type="str",
+                choices=["present", "enabled", "disabled", "absent"],
+                default="present",
+            ),
+            domain=dict(
+                type="str",
+            ),
+        )
+    )
 
     module = AnsibleModule(
         argument_spec=argument_spec,
         required_together=cs_required_together(),
-        supports_check_mode=True
+        supports_check_mode=True,
     )
 
     acs_zone = AnsibleCloudStackZone(module)
 
-    state = module.params.get('state')
-    if state in ['absent']:
+    state = module.params.get("state")
+    if state in ["absent"]:
         zone = acs_zone.absent_zone()
     else:
         zone = acs_zone.present_zone()
@@ -373,5 +408,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -9,9 +9,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_instance_nic_secondaryip
+module: instance_nic_secondaryip
 short_description: Manages secondary IPs of an instance on Apache CloudStack based clouds.
 description:
     - Add and remove secondary IPs to and from a NIC of an instance.
@@ -69,31 +69,30 @@ options:
     default: yes
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
+"""
 
-'''
-
-EXAMPLES = '''
+EXAMPLES = """
 - name: Assign a specific IP to the default NIC of the VM
-  ngine_io.cloudstack.cs_instance_nic_secondaryip:
+  ngine_io.cloudstack.instance_nic_secondaryip:
     vm: customer_xy
     zone: zone01
     vm_guest_ip: 10.10.10.10
 
 # Note: If vm_guest_ip is not set, you will get a new IP address on every run.
 - name: Assign an IP to the default NIC of the VM
-  ngine_io.cloudstack.cs_instance_nic_secondaryip:
+  ngine_io.cloudstack.instance_nic_secondaryip:
     vm: customer_xy
     zone: zone01
 
 - name: Remove a specific IP from the default NIC
-  ngine_io.cloudstack.cs_instance_nic_secondaryip:
+  ngine_io.cloudstack.instance_nic_secondaryip:
     vm: customer_xy
     zone: zone01
     vm_guest_ip: 10.10.10.10
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the NIC.
@@ -145,118 +144,121 @@ project:
   returned: success
   type: str
   sample: Production
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
-                                       cs_required_together)
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackInstanceNicSecondaryIp(AnsibleCloudStack):
 
     def __init__(self, module):
         super(AnsibleCloudStackInstanceNicSecondaryIp, self).__init__(module)
-        self.vm_guest_ip = self.module.params.get('vm_guest_ip')
+        self.vm_guest_ip = self.module.params.get("vm_guest_ip")
         self.nic = None
         self.returns = {
-            'ipaddress': 'ip_address',
-            'macaddress': 'mac_address',
-            'netmask': 'netmask',
+            "ipaddress": "ip_address",
+            "macaddress": "mac_address",
+            "netmask": "netmask",
         }
 
     def get_nic(self):
         if self.nic:
             return self.nic
         args = {
-            'virtualmachineid': self.get_vm(key='id'),
-            'networkid': self.get_network(key='id'),
+            "virtualmachineid": self.get_vm(key="id"),
+            "networkid": self.get_network(key="id"),
         }
-        nics = self.query_api('listNics', **args)
+        nics = self.query_api("listNics", **args)
         if nics:
-            self.nic = nics['nic'][0]
+            self.nic = nics["nic"][0]
             return self.nic
-        self.fail_json(msg="NIC for VM %s in network %s not found" % (self.get_vm(key='name'), self.get_network(key='name')))
+        self.fail_json(msg="NIC for VM %s in network %s not found" % (self.get_vm(key="name"), self.get_network(key="name")))
 
     def get_secondary_ip(self):
         nic = self.get_nic()
         if self.vm_guest_ip:
-            secondary_ips = nic.get('secondaryip') or []
+            secondary_ips = nic.get("secondaryip") or [] if nic is not None else []
             for secondary_ip in secondary_ips:
-                if secondary_ip['ipaddress'] == self.vm_guest_ip:
+                if secondary_ip["ipaddress"] == self.vm_guest_ip:
                     return secondary_ip
         return None
 
     def present_nic_ip(self):
         nic = self.get_nic()
         if not self.get_secondary_ip():
-            self.result['changed'] = True
+            self.result["changed"] = True
             args = {
-                'nicid': nic['id'],
-                'ipaddress': self.vm_guest_ip,
+                "nicid": nic["id"] if nic is not None else "",
+                "ipaddress": self.vm_guest_ip,
             }
 
             if not self.module.check_mode:
-                res = self.query_api('addIpToNic', **args)
+                res = self.query_api("addIpToNic", **args)
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    nic = self.poll_job(res, 'nicsecondaryip')
+                    nic = self.poll_job(res, "nicsecondaryip")
                     # Save result for RETURNS
-                    self.vm_guest_ip = nic['ipaddress']
+                    self.vm_guest_ip = nic["ipaddress"] if nic is not None else ""
         return nic
 
     def absent_nic_ip(self):
         nic = self.get_nic()
         secondary_ip = self.get_secondary_ip()
         if secondary_ip:
-            self.result['changed'] = True
+            self.result["changed"] = True
             if not self.module.check_mode:
-                res = self.query_api('removeIpFromNic', id=secondary_ip['id'])
+                res = self.query_api("removeIpFromNic", id=secondary_ip["id"])
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    self.poll_job(res, 'nicsecondaryip')
+                    self.poll_job(res, "nicsecondaryip")
         return nic
 
     def get_result(self, resource):
         super(AnsibleCloudStackInstanceNicSecondaryIp, self).get_result(resource)
-        if resource and not self.module.params.get('network'):
-            self.module.params['network'] = resource.get('networkid')
-        self.result['network'] = self.get_network(key='name')
-        self.result['vm'] = self.get_vm(key='name')
-        self.result['vm_guest_ip'] = self.vm_guest_ip
+        if resource and not self.module.params.get("network"):
+            self.module.params["network"] = resource.get("networkid")
+        self.result["network"] = self.get_network(key="name")
+        self.result["vm"] = self.get_vm(key="name")
+        self.result["vm_guest_ip"] = self.vm_guest_ip
         return self.result
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        vm=dict(required=True, aliases=['name']),
-        vm_guest_ip=dict(aliases=['secondary_ip']),
-        network=dict(),
-        vpc=dict(),
-        state=dict(choices=['present', 'absent'], default='present'),
-        domain=dict(),
-        account=dict(),
-        project=dict(),
-        zone=dict(required=True),
-        poll_async=dict(type='bool', default=True),
-    ))
+    argument_spec.update(
+        dict(
+            vm=dict(type="str", required=True, aliases=["name"]),
+            vm_guest_ip=dict(type="str", aliases=["secondary_ip"]),
+            network=dict(type="str"),
+            vpc=dict(type="str"),
+            state=dict(type="str", choices=["present", "absent"], default="present"),
+            domain=dict(type="str"),
+            account=dict(type="str"),
+            project=dict(type="str"),
+            zone=dict(type="str", required=True),
+            poll_async=dict(type="bool", default=True),
+        )  # type: ignore
+    )
 
     module = AnsibleModule(
         argument_spec=argument_spec,
         required_together=cs_required_together(),
         supports_check_mode=True,
-        required_if=([
-            ('state', 'absent', ['vm_guest_ip'])
-        ])
+        required_if=(
+            [
+                ("state", "absent", ["vm_guest_ip"]),
+            ]
+        ),
     )
 
     acs_instance_nic_secondaryip = AnsibleCloudStackInstanceNicSecondaryIp(module)
-    state = module.params.get('state')
+    state = module.params.get("state")
 
-    if state == 'absent':
+    if state == "absent":
         nic = acs_instance_nic_secondaryip.absent_nic_ip()
     else:
         nic = acs_instance_nic_secondaryip.present_nic_ip()
@@ -265,5 +267,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -10,9 +10,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_instance_nic
+module: instance_nic
 short_description: Manages NICs of an instance on Apache CloudStack based clouds.
 description:
     - Add and remove nic to and from network
@@ -70,31 +70,31 @@ options:
     default: yes
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Add a nic on another network
-  ngine_io.cloudstack.cs_instance_nic:
+  ngine_io.cloudstack.instance_nic:
     vm: privnet
     network: privNetForBasicZone
     zone: zone01
 
 - name: Ensure IP address on a nic
-  ngine_io.cloudstack.cs_instance_nic:
+  ngine_io.cloudstack.instance_nic:
     vm: privnet
     ip_address: 10.10.11.32
     network: privNetForBasicZone
     zone: zone01
 
 - name: Remove a secondary nic
-  ngine_io.cloudstack.cs_instance_nic:
+  ngine_io.cloudstack.instance_nic:
     vm: privnet
     state: absent
     network: privNetForBasicZone
     zone: zone01
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the nic.
@@ -141,12 +141,11 @@ project:
   returned: success
   type: str
   sample: Production
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
-                                       cs_required_together)
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackInstanceNic(AnsibleCloudStack):
@@ -155,75 +154,75 @@ class AnsibleCloudStackInstanceNic(AnsibleCloudStack):
         super(AnsibleCloudStackInstanceNic, self).__init__(module)
         self.nic = None
         self.returns = {
-            'ipaddress': 'ip_address',
-            'macaddress': 'mac_address',
-            'netmask': 'netmask',
+            "ipaddress": "ip_address",
+            "macaddress": "mac_address",
+            "netmask": "netmask",
         }
 
     def get_nic(self):
         if self.nic:
             return self.nic
         args = {
-            'virtualmachineid': self.get_vm(key='id'),
-            'networkid': self.get_network(key='id'),
+            "virtualmachineid": self.get_vm(key="id"),
+            "networkid": self.get_network(key="id"),
         }
-        nics = self.query_api('listNics', **args)
+        nics = self.query_api("listNics", **args)
         if nics:
-            self.nic = nics['nic'][0]
+            self.nic = nics["nic"][0]
             return self.nic
         return None
 
     def get_nic_from_result(self, result):
-        for nic in result.get('nic') or []:
-            if nic['networkid'] == self.get_network(key='id'):
+        for nic in result.get("nic") or []:
+            if nic["networkid"] == self.get_network(key="id"):
                 return nic
 
     def add_nic(self):
-        self.result['changed'] = True
+        self.result["changed"] = True
         args = {
-            'virtualmachineid': self.get_vm(key='id'),
-            'networkid': self.get_network(key='id'),
-            'ipaddress': self.module.params.get('ip_address'),
+            "virtualmachineid": self.get_vm(key="id"),
+            "networkid": self.get_network(key="id"),
+            "ipaddress": self.module.params.get("ip_address"),
         }
         if not self.module.check_mode:
-            res = self.query_api('addNicToVirtualMachine', **args)
+            res = self.query_api("addNicToVirtualMachine", **args)
 
-            if self.module.params.get('poll_async'):
-                vm = self.poll_job(res, 'virtualmachine')
+            if self.module.params.get("poll_async"):
+                vm = self.poll_job(res, "virtualmachine")
                 self.nic = self.get_nic_from_result(result=vm)
         return self.nic
 
     def update_nic(self, nic):
         # Do not try to update if no IP address is given
-        ip_address = self.module.params.get('ip_address')
+        ip_address = self.module.params.get("ip_address")
         if not ip_address:
             return nic
 
         args = {
-            'nicid': nic['id'],
-            'ipaddress': ip_address,
+            "nicid": nic["id"],
+            "ipaddress": ip_address,
         }
-        if self.has_changed(args, nic, ['ipaddress']):
-            self.result['changed'] = True
+        if self.has_changed(args, nic, ["ipaddress"]):
+            self.result["changed"] = True
             if not self.module.check_mode:
-                res = self.query_api('updateVmNicIp', **args)
+                res = self.query_api("updateVmNicIp", **args)
 
-                if self.module.params.get('poll_async'):
-                    vm = self.poll_job(res, 'virtualmachine')
+                if self.module.params.get("poll_async"):
+                    vm = self.poll_job(res, "virtualmachine")
                     self.nic = self.get_nic_from_result(result=vm)
         return self.nic
 
     def remove_nic(self, nic):
-        self.result['changed'] = True
+        self.result["changed"] = True
         args = {
-            'virtualmachineid': self.get_vm(key='id'),
-            'nicid': nic['id'],
+            "virtualmachineid": self.get_vm(key="id"),
+            "nicid": nic["id"],
         }
         if not self.module.check_mode:
-            res = self.query_api('removeNicFromVirtualMachine', **args)
+            res = self.query_api("removeNicFromVirtualMachine", **args)
 
-            if self.module.params.get('poll_async'):
-                self.poll_job(res, 'virtualmachine')
+            if self.module.params.get("poll_async"):
+                self.poll_job(res, "virtualmachine")
         return nic
 
     def present_nic(self):
@@ -242,27 +241,29 @@ class AnsibleCloudStackInstanceNic(AnsibleCloudStack):
 
     def get_result(self, resource):
         super(AnsibleCloudStackInstanceNic, self).get_result(resource)
-        if resource and not self.module.params.get('network'):
-            self.module.params['network'] = resource.get('networkid')
-        self.result['network'] = self.get_network(key='name')
-        self.result['vm'] = self.get_vm(key='name')
+        if resource and not self.module.params.get("network"):
+            self.module.params["network"] = resource.get("networkid")
+        self.result["network"] = self.get_network(key="name")
+        self.result["vm"] = self.get_vm(key="name")
         return self.result
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        vm=dict(required=True, aliases=['name']),
-        network=dict(required=True),
-        vpc=dict(),
-        ip_address=dict(),
-        state=dict(choices=['present', 'absent'], default='present'),
-        domain=dict(),
-        account=dict(),
-        project=dict(),
-        zone=dict(required=True),
-        poll_async=dict(type='bool', default=True),
-    ))
+    argument_spec.update(
+        dict(
+            vm=dict(required=True, aliases=["name"]),
+            network=dict(required=True),
+            vpc=dict(),
+            ip_address=dict(),
+            state=dict(choices=["present", "absent"], default="present"),
+            domain=dict(),
+            account=dict(),
+            project=dict(),
+            zone=dict(required=True),
+            poll_async=dict(type="bool", default=True),
+        )  # type: ignore
+    )
 
     module = AnsibleModule(
         argument_spec=argument_spec,
@@ -272,8 +273,8 @@ def main():
 
     acs_nic = AnsibleCloudStackInstanceNic(module)
 
-    state = module.params.get('state')
-    if state == 'absent':
+    state = module.params.get("state")
+    if state == "absent":
         nic = acs_nic.absent_nic()
     else:
         nic = acs_nic.present_nic()
@@ -283,5 +284,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

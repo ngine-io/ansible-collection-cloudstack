@@ -5,12 +5,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_affinitygroup
+module: affinitygroup
 short_description: Manages affinity groups on Apache CloudStack based clouds.
 description:
     - Create and remove affinity groups.
@@ -56,21 +57,21 @@ options:
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
 
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Create a affinity group
-  ngine_io.cloudstack.cs_affinitygroup:
+  ngine_io.cloudstack.affinitygroup:
     name: haproxy
     affinity_type: host anti-affinity
 
 - name: Remove a affinity group
-  ngine_io.cloudstack.cs_affinitygroup:
+  ngine_io.cloudstack.affinitygroup:
     name: haproxy
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the affinity group.
@@ -107,14 +108,11 @@ account:
   returned: success
   type: str
   sample: example account
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackAffinityGroup(AnsibleCloudStack):
@@ -122,7 +120,7 @@ class AnsibleCloudStackAffinityGroup(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackAffinityGroup, self).__init__(module)
         self.returns = {
-            'type': 'affinity_type',
+            "type": "affinity_type",
         }
         self.affinity_group = None
 
@@ -130,93 +128,117 @@ class AnsibleCloudStackAffinityGroup(AnsibleCloudStack):
         if not self.affinity_group:
 
             args = {
-                'projectid': self.get_project(key='id'),
-                'account': self.get_account(key='name'),
-                'domainid': self.get_domain(key='id'),
-                'name': self.module.params.get('name'),
+                "projectid": self.get_project(key="id"),
+                "account": self.get_account(key="name"),
+                "domainid": self.get_domain(key="id"),
+                "name": self.module.params.get("name"),
             }
-            affinity_groups = self.query_api('listAffinityGroups', **args)
+            affinity_groups = self.query_api("listAffinityGroups", **args)
             if affinity_groups:
-                self.affinity_group = affinity_groups['affinitygroup'][0]
+                self.affinity_group = affinity_groups["affinitygroup"][0]
         return self.affinity_group
 
     def get_affinity_type(self):
-        affinity_type = self.module.params.get('affinity_type')
+        affinity_type = self.module.params.get("affinity_type")
 
-        affinity_types = self.query_api('listAffinityGroupTypes', )
+        affinity_types = self.query_api(
+            "listAffinityGroupTypes",
+        )
         if affinity_types:
             if not affinity_type:
-                return affinity_types['affinityGroupType'][0]['type']
+                return affinity_types["affinityGroupType"][0]["type"]
 
-            for a in affinity_types['affinityGroupType']:
-                if a['type'] == affinity_type:
-                    return a['type']
+            for a in affinity_types["affinityGroupType"]:
+                if a["type"] == affinity_type:
+                    return a["type"]
         self.module.fail_json(msg="affinity group type not found: %s" % affinity_type)
 
     def create_affinity_group(self):
         affinity_group = self.get_affinity_group()
         if not affinity_group:
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             args = {
-                'name': self.module.params.get('name'),
-                'type': self.get_affinity_type(),
-                'description': self.module.params.get('description'),
-                'projectid': self.get_project(key='id'),
-                'account': self.get_account(key='name'),
-                'domainid': self.get_domain(key='id'),
+                "name": self.module.params.get("name"),
+                "type": self.get_affinity_type(),
+                "description": self.module.params.get("description"),
+                "projectid": self.get_project(key="id"),
+                "account": self.get_account(key="name"),
+                "domainid": self.get_domain(key="id"),
             }
             if not self.module.check_mode:
-                res = self.query_api('createAffinityGroup', **args)
+                res = self.query_api("createAffinityGroup", **args)
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if res and poll_async:
-                    affinity_group = self.poll_job(res, 'affinitygroup')
+                    affinity_group = self.poll_job(res, "affinitygroup")
         return affinity_group
 
     def remove_affinity_group(self):
         affinity_group = self.get_affinity_group()
         if affinity_group:
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             args = {
-                'name': self.module.params.get('name'),
-                'projectid': self.get_project(key='id'),
-                'account': self.get_account(key='name'),
-                'domainid': self.get_domain(key='id'),
+                "name": self.module.params.get("name"),
+                "projectid": self.get_project(key="id"),
+                "account": self.get_account(key="name"),
+                "domainid": self.get_domain(key="id"),
             }
             if not self.module.check_mode:
-                res = self.query_api('deleteAffinityGroup', **args)
+                res = self.query_api("deleteAffinityGroup", **args)
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if res and poll_async:
-                    self.poll_job(res, 'affinitygroup')
+                    self.poll_job(res, "affinitygroup")
         return affinity_group
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        name=dict(required=True),
-        affinity_type=dict(),
-        description=dict(),
-        state=dict(choices=['present', 'absent'], default='present'),
-        domain=dict(),
-        account=dict(),
-        project=dict(),
-        poll_async=dict(type='bool', default=True),
-    ))
+    argument_spec.update(
+        dict(
+            name=dict(
+                type="str",
+                required=True,
+            ),
+            affinity_type=dict(
+                type="str",
+            ),
+            description=dict(
+                type="str",
+            ),
+            state=dict(
+                type="str",
+                choices=["present", "absent"],
+                default="present",
+            ),
+            domain=dict(
+                type="str",
+            ),
+            account=dict(
+                type="str",
+            ),
+            project=dict(
+                type="str",
+            ),
+            poll_async=dict(
+                type="bool",
+                default=True,
+            ),
+        )
+    )
 
     module = AnsibleModule(
         argument_spec=argument_spec,
         required_together=cs_required_together(),
-        supports_check_mode=True
+        supports_check_mode=True,
     )
 
     acs_ag = AnsibleCloudStackAffinityGroup(module)
 
-    state = module.params.get('state')
-    if state in ['absent']:
+    state = module.params.get("state")
+    if state in ["absent"]:
         affinity_group = acs_ag.remove_affinity_group()
     else:
         affinity_group = acs_ag.create_affinity_group()
@@ -226,5 +248,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -5,12 +5,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_cluster
+module: cluster
 short_description: Manages host clusters on Apache CloudStack based clouds.
 description:
     - Create, update and remove clusters.
@@ -48,7 +49,7 @@ options:
       - URL for the cluster
     type: str
   username:
-    description:
+    description:cs_
       - Username for the cluster.
     type: str
   password:
@@ -109,36 +110,36 @@ options:
     default: present
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Ensure a cluster is present
-  ngine_io.cloudstack.cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: kvm-cluster-01
     zone: ch-zrh-ix-01
     hypervisor: KVM
     cluster_type: CloudManaged
 
 - name: Ensure a cluster is disabled
-  ngine_io.cloudstack.cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: kvm-cluster-01
     zone: ch-zrh-ix-01
     state: disabled
 
 - name: Ensure a cluster is enabled
-  ngine_io.cloudstack.cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: kvm-cluster-01
     zone: ch-zrh-ix-01
     state: enabled
 
 - name: Ensure a cluster is absent
-  ngine_io.cloudstack.cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: kvm-cluster-01
     zone: ch-zrh-ix-01
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the cluster.
@@ -195,14 +196,11 @@ pod:
   returned: success
   type: str
   sample: pod01
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackCluster(AnsibleCloudStack):
@@ -210,47 +208,47 @@ class AnsibleCloudStackCluster(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackCluster, self).__init__(module)
         self.returns = {
-            'allocationstate': 'allocation_state',
-            'hypervisortype': 'hypervisor',
-            'clustertype': 'cluster_type',
-            'podname': 'pod',
-            'managedstate': 'managed_state',
-            'memoryovercommitratio': 'memory_overcommit_ratio',
-            'cpuovercommitratio': 'cpu_overcommit_ratio',
-            'ovm3vip': 'ovm3_vip',
+            "allocationstate": "allocation_state",
+            "hypervisortype": "hypervisor",
+            "clustertype": "cluster_type",
+            "podname": "pod",
+            "managedstate": "managed_state",
+            "memoryovercommitratio": "memory_overcommit_ratio",
+            "cpuovercommitratio": "cpu_overcommit_ratio",
+            "ovm3vip": "ovm3_vip",
         }
         self.cluster = None
 
     def _get_common_cluster_args(self):
         args = {
-            'clustername': self.module.params.get('name'),
-            'hypervisor': self.module.params.get('hypervisor'),
-            'clustertype': self.module.params.get('cluster_type'),
+            "clustername": self.module.params.get("name"),
+            "hypervisor": self.module.params.get("hypervisor"),
+            "clustertype": self.module.params.get("cluster_type"),
         }
-        state = self.module.params.get('state')
-        if state in ['enabled', 'disabled']:
-            args['allocationstate'] = state.capitalize()
+        state = self.module.params.get("state")
+        if state in ["enabled", "disabled"]:
+            args["allocationstate"] = state.capitalize()
         return args
 
     def get_cluster(self):
         if not self.cluster:
             args = {}
 
-            uuid = self.module.params.get('id')
+            uuid = self.module.params.get("id")
             if uuid:
-                args['id'] = uuid
-                clusters = self.query_api('listClusters', **args)
+                args["id"] = uuid
+                clusters = self.query_api("listClusters", **args)
                 if clusters:
-                    self.cluster = clusters['cluster'][0]
+                    self.cluster = clusters["cluster"][0]
                     return self.cluster
 
-            args['name'] = self.module.params.get('name')
-            clusters = self.query_api('listClusters', **args)
+            args["name"] = self.module.params.get("name")
+            clusters = self.query_api("listClusters", **args)
             if clusters:
-                self.cluster = clusters['cluster'][0]
+                self.cluster = clusters["cluster"][0]
                 # fix different return from API then request argument given
-                self.cluster['hypervisor'] = self.cluster['hypervisortype']
-                self.cluster['clustername'] = self.cluster['name']
+                self.cluster["hypervisor"] = self.cluster["hypervisortype"]
+                self.cluster["clustername"] = self.cluster["name"]
         return self.cluster
 
     def present_cluster(self):
@@ -263,105 +261,107 @@ class AnsibleCloudStackCluster(AnsibleCloudStack):
 
     def _create_cluster(self):
         required_params = [
-            'cluster_type',
-            'hypervisor',
+            "cluster_type",
+            "hypervisor",
         ]
         self.module.fail_on_missing_params(required_params=required_params)
 
         args = self._get_common_cluster_args()
-        args['zoneid'] = self.get_zone(key='id')
-        args['podid'] = self.get_pod(key='id')
-        args['url'] = self.module.params.get('url')
-        args['username'] = self.module.params.get('username')
-        args['password'] = self.module.params.get('password')
-        args['guestvswitchname'] = self.module.params.get('guest_vswitch_name')
-        args['guestvswitchtype'] = self.module.params.get('guest_vswitch_type')
-        args['publicvswitchtype'] = self.module.params.get('public_vswitch_name')
-        args['publicvswitchtype'] = self.module.params.get('public_vswitch_type')
-        args['vsmipaddress'] = self.module.params.get('vms_ip_address')
-        args['vsmusername'] = self.module.params.get('vms_username')
-        args['vmspassword'] = self.module.params.get('vms_password')
-        args['ovm3cluster'] = self.module.params.get('ovm3_cluster')
-        args['ovm3pool'] = self.module.params.get('ovm3_pool')
-        args['ovm3vip'] = self.module.params.get('ovm3_vip')
+        args["zoneid"] = self.get_zone(key="id")
+        args["podid"] = self.get_pod(key="id")
+        args["url"] = self.module.params.get("url")
+        args["username"] = self.module.params.get("username")
+        args["password"] = self.module.params.get("password")
+        args["guestvswitchname"] = self.module.params.get("guest_vswitch_name")
+        args["guestvswitchtype"] = self.module.params.get("guest_vswitch_type")
+        args["publicvswitchtype"] = self.module.params.get("public_vswitch_name")
+        args["publicvswitchtype"] = self.module.params.get("public_vswitch_type")
+        args["vsmipaddress"] = self.module.params.get("vms_ip_address")
+        args["vsmusername"] = self.module.params.get("vms_username")
+        args["vmspassword"] = self.module.params.get("vms_password")
+        args["ovm3cluster"] = self.module.params.get("ovm3_cluster")
+        args["ovm3pool"] = self.module.params.get("ovm3_pool")
+        args["ovm3vip"] = self.module.params.get("ovm3_vip")
 
-        self.result['changed'] = True
+        self.result["changed"] = True
 
         cluster = None
         if not self.module.check_mode:
-            res = self.query_api('addCluster', **args)
+            res = self.query_api("addCluster", **args)
 
             # API returns a list as result CLOUDSTACK-9205
-            if isinstance(res['cluster'], list):
-                cluster = res['cluster'][0]
+            if isinstance(res["cluster"], list):
+                cluster = res["cluster"][0]
             else:
-                cluster = res['cluster']
+                cluster = res["cluster"]
         return cluster
 
     def _update_cluster(self):
         cluster = self.get_cluster()
 
         args = self._get_common_cluster_args()
-        args['id'] = cluster['id']
+        args["id"] = cluster["id"]
 
         if self.has_changed(args, cluster):
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             if not self.module.check_mode:
-                res = self.query_api('updateCluster', **args)
-                cluster = res['cluster']
+                res = self.query_api("updateCluster", **args)
+                cluster = res["cluster"]
 
         return cluster
 
     def absent_cluster(self):
         cluster = self.get_cluster()
         if cluster:
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             args = {
-                'id': cluster['id'],
+                "id": cluster["id"],
             }
 
             if not self.module.check_mode:
-                self.query_api('deleteCluster', **args)
+                self.query_api("deleteCluster", **args)
 
         return cluster
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        name=dict(required=True),
-        zone=dict(required=True),
-        pod=dict(),
-        cluster_type=dict(choices=['CloudManaged', 'ExternalManaged']),
-        hypervisor=dict(),
-        state=dict(choices=['present', 'enabled', 'disabled', 'absent'], default='present'),
-        url=dict(),
-        username=dict(),
-        password=dict(no_log=True),
-        guest_vswitch_name=dict(),
-        guest_vswitch_type=dict(choices=['vmwaresvs', 'vmwaredvs']),
-        public_vswitch_name=dict(),
-        public_vswitch_type=dict(choices=['vmwaresvs', 'vmwaredvs']),
-        vms_ip_address=dict(),
-        vms_username=dict(),
-        vms_password=dict(no_log=True),
-        ovm3_cluster=dict(),
-        ovm3_pool=dict(),
-        ovm3_vip=dict(),
-    ))
+    argument_spec.update(
+        dict(
+            name=dict(required=True),
+            zone=dict(required=True),
+            pod=dict(),
+            cluster_type=dict(choices=["CloudManaged", "ExternalManaged"]),
+            hypervisor=dict(),
+            state=dict(choices=["present", "enabled", "disabled", "absent"], default="present"),
+            url=dict(),
+            username=dict(),
+            password=dict(no_log=True),
+            guest_vswitch_name=dict(),
+            guest_vswitch_type=dict(choices=["vmwaresvs", "vmwaredvs"]),
+            public_vswitch_name=dict(),
+            public_vswitch_type=dict(choices=["vmwaresvs", "vmwaredvs"]),
+            vms_ip_address=dict(),
+            vms_username=dict(),
+            vms_password=dict(no_log=True),
+            ovm3_cluster=dict(),
+            ovm3_pool=dict(),
+            ovm3_vip=dict(),
+        )
+    )
 
     module = AnsibleModule(
         argument_spec=argument_spec,
         required_together=cs_required_together(),
-        supports_check_mode=True
+        supports_check_mode=True,
     )
 
     acs_cluster = AnsibleCloudStackCluster(module)
 
-    state = module.params.get('state')
-    if state in ['absent']:
+    state = module.params.get("state")
+    if state in ["absent"]:
         cluster = acs_cluster.absent_cluster()
     else:
         cluster = acs_cluster.present_cluster()
@@ -371,5 +371,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

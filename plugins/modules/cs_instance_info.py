@@ -9,9 +9,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_instance_info
+module: instance_info
 short_description: Gathering information from the API of instances from Apache CloudStack based clouds.
 description:
     - Gathering information from the API of an instance.
@@ -43,11 +43,11 @@ options:
     version_added: 2.2.0
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Gather instance information
-  ngine_io.cloudstack.cs_instance_info:
+  ngine_io.cloudstack.instance_info:
     name: web-vm-1
   register: vm
 
@@ -56,7 +56,7 @@ EXAMPLES = '''
     msg: "{{ vm }}"
 
 - name: Gather information from all instances
-  ngine_io.cloudstack.cs_instance_info:
+  ngine_io.cloudstack.instance_info:
   register: vms
 
 - name: Show information on all instances
@@ -64,12 +64,12 @@ EXAMPLES = '''
     msg: "{{ vms }}"
 
 - name: Gather information from all instances on a host
-  ngine_io.cloudstack.cs_instance_info:
+  ngine_io.cloudstack.instance_info:
     host: host01.example.com
   register: vms
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 instances:
   description: A list of matching instances.
@@ -266,7 +266,7 @@ instances:
           returned: success
           type: str
           sample: Shared
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
 
@@ -278,51 +278,51 @@ class AnsibleCloudStackInstanceInfo(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackInstanceInfo, self).__init__(module)
         self.returns = {
-            'group': 'group',
-            'hypervisor': 'hypervisor',
-            'instancename': 'instance_name',
-            'publicip': 'public_ip',
-            'passwordenabled': 'password_enabled',
-            'password': 'password',
-            'serviceofferingname': 'service_offering',
-            'isoname': 'iso',
-            'templatename': 'template',
-            'keypair': 'ssh_key',
-            'hostname': 'host',
+            "group": "group",
+            "hypervisor": "hypervisor",
+            "instancename": "instance_name",
+            "publicip": "public_ip",
+            "passwordenabled": "password_enabled",
+            "password": "password",
+            "serviceofferingname": "service_offering",
+            "isoname": "iso",
+            "templatename": "template",
+            "keypair": "ssh_key",
+            "hostname": "host",
         }
 
     def get_host(self, key=None):
-        host = self.module.params.get('host')
+        host = self.module.params.get("host")
         if not host:
             return
 
         args = {
-            'fetch_list': True,
+            "fetch_list": True,
         }
-        res = self.query_api('listHosts', **args)
+        res = self.query_api("listHosts", **args)
         if res:
             for h in res:
-                if host.lower() in [h['id'], h['ipaddress'], h['name'].lower()]:
+                if host.lower() in [h["id"], h["ipaddress"], h["name"].lower()]:
                     return self._get_by_key(key, h)
         self.fail_json(msg="Host not found: %s" % host)
 
     def get_instances(self):
-        instance_name = self.module.params.get('name')
+        instance_name = self.module.params.get("name")
 
         args = {
-            'account': self.get_account(key='name'),
-            'domainid': self.get_domain(key='id'),
-            'projectid': self.get_project(key='id'),
-            'hostid': self.get_host(key='id'),
-            'fetch_list': True,
+            "account": self.get_account(key="name"),
+            "domainid": self.get_domain(key="id"),
+            "projectid": self.get_project(key="id"),
+            "hostid": self.get_host(key="id"),
+            "fetch_list": True,
         }
         # Do not pass zoneid, as the instance name must be unique across zones.
-        instances = self.query_api('listVirtualMachines', **args)
+        instances = self.query_api("listVirtualMachines", **args)
         if not instance_name:
             return instances or []
         if instances:
             for v in instances:
-                if instance_name.lower() in [v['name'].lower(), v['displayname'].lower(), v['id']]:
+                if instance_name.lower() in [v["name"].lower(), v["displayname"].lower(), v["id"]]:
                     return [v]
         return []
 
@@ -330,60 +330,60 @@ class AnsibleCloudStackInstanceInfo(AnsibleCloudStack):
         volume_details = []
         if instance:
             args = {
-                'account': self.get_account(key='name'),
-                'domainid': self.get_domain(key='id'),
-                'projectid': self.get_project(key='id'),
-                'virtualmachineid': instance['id'],
-                'fetch_list': True,
+                "account": self.get_account(key="name"),
+                "domainid": self.get_domain(key="id"),
+                "projectid": self.get_project(key="id"),
+                "virtualmachineid": instance["id"],
+                "fetch_list": True,
             }
 
-            volumes = self.query_api('listVolumes', **args)
+            volumes = self.query_api("listVolumes", **args)
             if volumes:
                 for vol in volumes:
-                    volume_details.append({'size': vol['size'], 'type': vol['type'], 'name': vol['name']})
+                    volume_details.append({"size": vol["size"], "type": vol["type"], "name": vol["name"]})
         return volume_details
 
     def run(self):
         instances = self.get_instances()
-        if self.module.params.get('name') and not instances:
-            self.module.fail_json(msg="Instance not found: %s" % self.module.params.get('name'))
-        return {
-            'instances': [self.update_result(resource) for resource in instances]
-        }
+        if self.module.params.get("name") and not instances:
+            self.module.fail_json(msg="Instance not found: %s" % self.module.params.get("name"))
+        return {"instances": [self.update_result(resource) for resource in instances]}
 
     def update_result(self, resource, result=None):
         result = super(AnsibleCloudStackInstanceInfo, self).update_result(resource, result)
         if resource:
-            if 'securitygroup' in resource:
+            if "securitygroup" in resource:
                 security_groups = []
-                for securitygroup in resource['securitygroup']:
-                    security_groups.append(securitygroup['name'])
-                result['security_groups'] = security_groups
-            if 'affinitygroup' in resource:
+                for securitygroup in resource["securitygroup"]:
+                    security_groups.append(securitygroup["name"])
+                result["security_groups"] = security_groups
+            if "affinitygroup" in resource:
                 affinity_groups = []
-                for affinitygroup in resource['affinitygroup']:
-                    affinity_groups.append(affinitygroup['name'])
-                result['affinity_groups'] = affinity_groups
-            if 'nic' in resource:
-                for nic in resource['nic']:
-                    if nic['isdefault'] and 'ipaddress' in nic:
-                        result['default_ip'] = nic['ipaddress']
-                result['nic'] = resource['nic']
+                for affinitygroup in resource["affinitygroup"]:
+                    affinity_groups.append(affinitygroup["name"])
+                result["affinity_groups"] = affinity_groups
+            if "nic" in resource:
+                for nic in resource["nic"]:
+                    if nic["isdefault"] and "ipaddress" in nic:
+                        result["default_ip"] = nic["ipaddress"]
+                result["nic"] = resource["nic"]
             volumes = self.get_volumes(instance=resource)
             if volumes:
-                result['volumes'] = volumes
+                result["volumes"] = volumes
         return result
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        name=dict(),
-        domain=dict(),
-        account=dict(),
-        project=dict(),
-        host=dict(),
-    ))
+    argument_spec.update(
+        dict(
+            name=dict(),
+            domain=dict(),
+            account=dict(),
+            project=dict(),
+            host=dict(),
+        )
+    )
 
     module = AnsibleModule(
         argument_spec=argument_spec,
@@ -395,5 +395,5 @@ def main():
     module.exit_json(**cs_instance_info)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -5,12 +5,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_zone_info
+module: zone_info
 short_description: Gathering information about zones from Apache CloudStack based clouds.
 description:
   - Gathering information from the API of a zone.
@@ -25,11 +26,11 @@ options:
     aliases: [ name ]
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Gather information from a zone
-  ngine_io.cloudstack.cs_zone_info:
+  ngine_io.cloudstack.zone_info:
     zone: ch-gva-1
   register: zone
 
@@ -38,15 +39,15 @@ EXAMPLES = '''
     msg: "{{ zone }}"
 
 - name: Gather information from all zones
-  ngine_io.cloudstack.cs_zone_info:
+  ngine_io.cloudstack.zone_info:
   register: zones
 
 - name: Show information on all zones
   debug:
     msg: "{{ zones }}"
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 zones:
   description: A list of matching zones.
@@ -106,7 +107,7 @@ zones:
     network_domain:
       description: Network domain for the zone.
       returned: success
-      type: str
+      type: strtype="str",
       sample: example.com
     network_type:
       description: Network type for the zone.
@@ -143,13 +144,11 @@ zones:
       returned: success
       type: list
       sample: [ { "key": "foo", "value": "bar" } ]
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-)
+
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec
 
 
 class AnsibleCloudStackZoneInfo(AnsibleCloudStack):
@@ -157,41 +156,44 @@ class AnsibleCloudStackZoneInfo(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackZoneInfo, self).__init__(module)
         self.returns = {
-            'dns1': 'dns1',
-            'dns2': 'dns2',
-            'internaldns1': 'internal_dns1',
-            'internaldns2': 'internal_dns2',
-            'ipv6dns1': 'dns1_ipv6',
-            'ipv6dns2': 'dns2_ipv6',
-            'domain': 'network_domain',
-            'networktype': 'network_type',
-            'securitygroupsenabled': 'securitygroups_enabled',
-            'localstorageenabled': 'local_storage_enabled',
-            'guestcidraddress': 'guest_cidr_address',
-            'dhcpprovider': 'dhcp_provider',
-            'allocationstate': 'allocation_state',
-            'zonetoken': 'zone_token',
+            "dns1": "dns1",
+            "dns2": "dns2",
+            "internaldns1": "internal_dns1",
+            "internaldns2": "internal_dns2",
+            "ipv6dns1": "dns1_ipv6",
+            "ipv6dns2": "dns2_ipv6",
+            "domain": "network_domain",
+            "networktype": "network_type",
+            "securitygroupsenabled": "securitygroups_enabled",
+            "localstorageenabled": "local_storage_enabled",
+            "guestcidraddress": "guest_cidr_address",
+            "dhcpprovider": "dhcp_provider",
+            "allocationstate": "allocation_state",
+            "zonetoken": "zone_token",
         }
 
     def get_zone(self):
-        if self.module.params['zone']:
+        if self.module.params["zone"]:
             zones = [super(AnsibleCloudStackZoneInfo, self).get_zone()]
         else:
-            zones = self.query_api('listZones')
+            zones = self.query_api("listZones")
             if zones:
-                zones = zones['zone']
+                zones = zones["zone"]
             else:
                 zones = []
-        return {
-            'zones': [self.update_result(resource) for resource in zones]
-        }
+        return {"zones": [self.update_result(resource) for resource in zones]}
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        zone=dict(type='str', aliases=['name']),
-    ))
+    argument_spec.update(
+        dict(
+            zone=dict(
+                type="str",
+                aliases=["name"],
+            ),
+        )
+    )
 
     module = AnsibleModule(
         argument_spec=argument_spec,
@@ -203,5 +205,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

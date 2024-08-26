@@ -5,12 +5,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_domain
+module: domain
 short_description: Manages domains on Apache CloudStack based clouds.
 description:
     - Create, update and remove domains.
@@ -46,26 +47,26 @@ options:
     default: yes
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Create a domain
-  ngine_io.cloudstack.cs_domain:
+  ngine_io.cloudstack.domain:
     path: ROOT/customers
     network_domain: customers.example.com
 
 - name: Create another subdomain
-  ngine_io.cloudstack.cs_domain:
+  ngine_io.cloudstack.domain:
     path: ROOT/customers/xy
     network_domain: xy.customers.example.com
 
 - name: Remove a domain
-  ngine_io.cloudstack.cs_domain:
+  ngine_io.cloudstack.domain:
     path: ROOT/customers/xy
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the domain.
@@ -92,14 +93,11 @@ network_domain:
   returned: success
   type: str
   sample: example.local
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackDomain(AnsibleCloudStack):
@@ -107,41 +105,41 @@ class AnsibleCloudStackDomain(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackDomain, self).__init__(module)
         self.returns = {
-            'path': 'path',
-            'networkdomain': 'network_domain',
-            'parentdomainname': 'parent_domain',
+            "path": "path",
+            "networkdomain": "network_domain",
+            "parentdomainname": "parent_domain",
         }
         self.domain = None
 
     def _get_domain_internal(self, path=None):
         if not path:
-            path = self.module.params.get('path')
+            path = self.module.params.get("path")
 
-        if path.endswith('/'):
+        if path.endswith("/"):
             self.module.fail_json(msg="Path '%s' must not end with /" % path)
 
         path = path.lower()
 
-        if path.startswith('/') and not path.startswith('/root/'):
+        if path.startswith("/") and not path.startswith("/root/"):
             path = "root" + path
-        elif not path.startswith('root/'):
+        elif not path.startswith("root/"):
             path = "root/" + path
 
         args = {
-            'listall': True,
-            'fetch_list': True,
+            "listall": True,
+            "fetch_list": True,
         }
 
-        domains = self.query_api('listDomains', **args)
+        domains = self.query_api("listDomains", **args)
         if domains:
             for d in domains:
-                if path == d['path'].lower():
+                if path == d["path"].lower():
                     return d
         return None
 
     def get_name(self):
         # last part of the path is the name
-        name = self.module.params.get('path').split('/')[-1:]
+        name = self.module.params.get("path").split("/")[-1:]
         return name
 
     def get_domain(self, key=None):
@@ -150,9 +148,9 @@ class AnsibleCloudStackDomain(AnsibleCloudStack):
         return self._get_by_key(key, self.domain)
 
     def get_parent_domain(self, key=None):
-        path = self.module.params.get('path')
+        path = self.module.params.get("path")
         # cut off last /*
-        path = '/'.join(path.split('/')[:-1])
+        path = "/".join(path.split("/")[:-1])
         if not path:
             return None
         parent_domain = self._get_domain_internal(path=path)
@@ -169,68 +167,60 @@ class AnsibleCloudStackDomain(AnsibleCloudStack):
         return domain
 
     def create_domain(self, domain):
-        self.result['changed'] = True
+        self.result["changed"] = True
 
-        args = {
-            'name': self.get_name(),
-            'parentdomainid': self.get_parent_domain(key='id'),
-            'networkdomain': self.module.params.get('network_domain')
-        }
+        args = {"name": self.get_name(), "parentdomainid": self.get_parent_domain(key="id"), "networkdomain": self.module.params.get("network_domain")}
         if not self.module.check_mode:
-            res = self.query_api('createDomain', **args)
-            domain = res['domain']
+            res = self.query_api("createDomain", **args)
+            domain = res["domain"]
         return domain
 
     def update_domain(self, domain):
-        args = {
-            'id': domain['id'],
-            'networkdomain': self.module.params.get('network_domain')
-        }
+        args = {"id": domain["id"], "networkdomain": self.module.params.get("network_domain")}
         if self.has_changed(args, domain):
-            self.result['changed'] = True
+            self.result["changed"] = True
             if not self.module.check_mode:
-                res = self.query_api('updateDomain', **args)
-                domain = res['domain']
+                res = self.query_api("updateDomain", **args)
+                domain = res["domain"]
         return domain
 
     def absent_domain(self):
         domain = self.get_domain()
         if domain:
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             if not self.module.check_mode:
-                args = {
-                    'id': domain['id'],
-                    'cleanup': self.module.params.get('clean_up')
-                }
-                res = self.query_api('deleteDomain', **args)
+                args = {"id": domain["id"], "cleanup": self.module.params.get("clean_up")}
+                res = self.query_api("deleteDomain", **args)
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    res = self.poll_job(res, 'domain')
+                    res = self.poll_job(res, "domain")
         return domain
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        path=dict(required=True),
-        state=dict(choices=['present', 'absent'], default='present'),
-        network_domain=dict(),
-        clean_up=dict(type='bool', default=False),
-        poll_async=dict(type='bool', default=True),
-    ))
+    argument_spec.update(
+        dict(
+            path=dict(required=True),
+            state=dict(choices=["present", "absent"], default="present"),
+            network_domain=dict(),
+            clean_up=dict(type="bool", default=False),
+            poll_async=dict(type="bool", default=True),
+        )
+    )
 
     module = AnsibleModule(
         argument_spec=argument_spec,
         required_together=cs_required_together(),
-        supports_check_mode=True
+        supports_check_mode=True,
     )
 
     acs_dom = AnsibleCloudStackDomain(module)
 
-    state = module.params.get('state')
-    if state in ['absent']:
+    state = module.params.get("state")
+    if state in ["absent"]:
         domain = acs_dom.absent_domain()
     else:
         domain = acs_dom.present_domain()
@@ -240,5 +230,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
