@@ -604,20 +604,27 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
 
     def get_user_data_id_by_name(self):
       name = self.module.params.get('user_data_name')
-      if not name:
-          args = {
-              'account': self.get_account(key='name'),
-              'domainid': self.get_domain(key='id'),
-              'projectid': self.get_project(key='id'),
-              'name': name,
-          }
-          # Do not pass zoneid, as the instance name must be unique across zones.
-          user_data_list = self.query_api('listUserData', **args)
-          if user_data_list:
-              for v in user_data_list:
-                  if name.lower() in [v['name'].lower()]:
-                      user_data_id = v['id']
-                      break
+      user_data_id = None
+      if name:
+        args = {
+            'account': self.get_account(key='name'),
+            'domainid': self.get_domain(key='id'),
+            'projectid': self.get_project(key='id'),
+            'listall': True,
+            # name or keyword is documented but not work on cloudstack 4.19
+            # commented util will work it
+            # 'name': name,
+        }
+        
+        user_data_list = self.query_api('listUserData', **args)
+        if user_data_list:
+            for v in user_data_list.get('userdata', []):
+                if name.lower() in [v['name'].lower()]:
+                    user_data_id = v['id']
+                    break
+        if user_data_id is None:
+          self.module.fail_json(msg="User data '%s' not found" % user_data_list)
+
       return user_data_id
 
     def _get_instance_user_data(self, instance):
@@ -1145,6 +1152,8 @@ def main():
         account=dict(),
         project=dict(),
         user_data=dict(),
+        user_data_name=dict(),
+        user_data_details=dict(type='dict'),
         zone=dict(required=True),
         ssh_key=dict(no_log=False),
         force=dict(type='bool', default=False),
