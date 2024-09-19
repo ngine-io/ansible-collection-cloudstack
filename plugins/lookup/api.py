@@ -36,7 +36,7 @@ EXAMPLES = """
 - name: List all Virtual Machines from the API
   set_fact:
     virtual_machines: "{{ lookup('ngine_io.cloudstack.api', 'listVirtualMachines') }}"
-    
+
 - name: List specific Virtual Machines from the API
   set_fact:
     virtual_machines: "{{ lookup('ngine_io.cloudstack.api', 'listVirtualMachines', query_params={ 'name': 'myvmname' }) }}"
@@ -57,6 +57,7 @@ from ansible.utils.display import Display
 
 from ..module_utils.cloudstack_api import AnsibleCloudStackAPI
 
+
 class LookupModule(LookupBase):
     display = Display()
 
@@ -69,19 +70,20 @@ class LookupModule(LookupBase):
     def run(self, terms, variables=None, **kwargs):
         if len(terms) != 1:
             raise AnsibleError('You must pass exactly one endpoint to query')
-        
+
         self.set_options(direct=kwargs)
-        
+
         module = AnsibleCloudStackAPI(argument_spec={}, direct_params=kwargs, error_callback=self.handle_error, warn_callback=self.warn_callback)
 
         args = {}
         if self.get_option('query_params'):
             args.update(self.get_option('query_params', {}))
-        
+
         res = module.query_api(terms[0], **args)
 
         if res is None:
             return []
         if type(res) is list:
             return res
+
         return [res]

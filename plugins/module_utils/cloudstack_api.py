@@ -43,7 +43,7 @@ class AnsibleCloudStackAPI(AnsibleModule):
     )
 
     def __init__(self, argument_spec=None, direct_params=None, error_callback=None, warn_callback=None, **kwargs):
-        
+
         if not HAS_LIB_CS:
             self.fail_json(msg=missing_required_lib('cs'), exception=CS_IMP_ERR)
 
@@ -54,7 +54,7 @@ class AnsibleCloudStackAPI(AnsibleModule):
 
         self.error_callback = error_callback
         self.warn_callback = warn_callback
-        
+
         self._cs = None
         self.result = {}
 
@@ -63,7 +63,7 @@ class AnsibleCloudStackAPI(AnsibleModule):
                 if param in direct_params:
                     setattr(self, param, direct_params[param])
                 else:
-                    setattr(self, param, value)    
+                    setattr(self, param, value)
         else:
             super(AnsibleCloudStackAPI, self).__init__(argument_spec=full_argspec, **kwargs)
 
@@ -71,7 +71,6 @@ class AnsibleCloudStackAPI(AnsibleModule):
         if not re.match('^https{0,1}://', self.api_url):
             self.api_url = "https://{0}".format(self.api_url)
 
-       
     def fail_json(self, **kwargs):
         if self.error_callback:
             self.error_callback(**kwargs)
@@ -110,7 +109,7 @@ class AnsibleCloudStackAPI(AnsibleModule):
         return api_config
 
     def query_api(self, command, **args):
-        
+
         try:
             res = getattr(self.cs, command)(**args)
 
