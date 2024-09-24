@@ -615,7 +615,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             # commented util will work it
             # 'name': name,
         }
-
+        
         user_data_list = self.query_api('listUserData', **args)
         if user_data_list:
             for v in user_data_list.get('userdata', []):
@@ -864,10 +864,10 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
               'userdata': self.get_user_data()
           }
           instance['userdata'] = self._get_instance_user_data(instance)
-
+          
         if self.module.params.get('user_data_details'):
             args_instance_update['userdatadetails'] = self.module.params.get('user_data_details')
-
+            
         args_instance_update['ostypeid'] = self.get_os_type(key='id')
         if self.module.params.get('group'):
             args_instance_update['group'] = self.module.params.get('group')
