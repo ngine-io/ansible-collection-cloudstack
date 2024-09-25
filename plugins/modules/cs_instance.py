@@ -181,6 +181,7 @@ options:
       - Optional data (ASCII) that can be sent to the instance upon a successful deployment.
       - The data will be automatically base64 encoded.
       - Consider switching to HTTP_POST by using I(CLOUDSTACK_METHOD=post) to increase the HTTP_GET size limit of 2KB to 32 KB.
+      - Mutually exclusive with I(user_data_name) option.
     type: str
   user_data_details:
     description:
@@ -189,7 +190,8 @@ options:
     version_added: 2.5.0
   user_data_name:
     description:
-      - Name of user data to be used. This have precedence over I(user_data).
+      - Name of user data to be used.
+      - Mutually exclusive with I(user_data) option.
     type: str
     version_added: 2.5.0
   force:
@@ -603,9 +605,10 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         return self.instance
 
     def get_user_data_id_by_name(self):
-      name = self.module.params.get('user_data_name')
-      user_data_id = None
-      if name:
+        name = self.module.params.get('user_data_name')
+        if not name:
+            return None
+
         args = {
             'account': self.get_account(key='name'),
             'domainid': self.get_domain(key='id'),
@@ -615,17 +618,13 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             # commented util will work it
             # 'name': name,
         }
-        
+
         user_data_list = self.query_api('listUserData', **args)
         if user_data_list:
-            for v in user_data_list.get('userdata', []):
-                if name.lower() in [v['name'].lower()]:
-                    user_data_id = v['id']
-                    break
-        if user_data_id is None:
-          self.module.fail_json(msg="User data '%s' not found" % user_data_list)
-
-      return user_data_id
+            for v in user_data_list.get('userdata') or []:
+                if name in [v['name'], v['id']]:
+                    return v['id']
+        self.module.fail_json(msg="User data '%s' not found" % user_data_list)
 
     def _get_instance_user_data(self, instance):
         # Query the user data if we need to
@@ -831,7 +830,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         args['podid'] = self.get_pod_id()
 
         template_iso = self.get_template_or_iso()
-        if 'hypervisor' not in template_iso:
+        if template_iso and 'hypervisor' not in template_iso:
             args['hypervisor'] = self.get_hypervisor()
 
         instance = None
@@ -854,20 +853,20 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
 
         # Instance UserData
         if self.module.params.get('user_data_name') is not None:
-          args_instance_update = {
-              'id': instance['id'],
-              'userdataid': self.get_user_data_id_by_name()
-          }
+            args_instance_update = {
+                'id': instance['id'],
+                'userdataid': self.get_user_data_id_by_name()
+            }
         else:
-          args_instance_update = {
-              'id': instance['id'],
-              'userdata': self.get_user_data()
-          }
-          instance['userdata'] = self._get_instance_user_data(instance)
-          
+            args_instance_update = {
+                'id': instance['id'],
+                'userdata': self.get_user_data()
+            }
+            instance['userdata'] = self._get_instance_user_data(instance)
+
         if self.module.params.get('user_data_details'):
             args_instance_update['userdatadetails'] = self.module.params.get('user_data_details')
-            
+
         args_instance_update['ostypeid'] = self.get_os_type(key='id')
         if self.module.params.get('group'):
             args_instance_update['group'] = self.module.params.get('group')
@@ -1171,6 +1170,7 @@ def main():
         ),
         mutually_exclusive=(
             ['template', 'iso'],
+            ["user_data", "user_data_name"],
         ),
         supports_check_mode=True
     )
