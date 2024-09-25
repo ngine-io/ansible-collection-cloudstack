@@ -123,7 +123,7 @@ class AnsibleCloudStack:
             'timeout': self.module.params.get('api_timeout'),
             'method': self.module.params.get('api_http_method'),
             'verify': self.module.params.get('api_verify_ssl_cert'),
-            'dangerous_no_tls_verify': self.module.params.get('validate_certs'),
+            'dangerous_no_tls_verify': not self.module.params.get('validate_certs'),
         }
 
         self.result.update({
@@ -132,7 +132,7 @@ class AnsibleCloudStack:
             'api_timeout': int(api_config['timeout']),
             'api_http_method': api_config['method'],
             'api_verify_ssl_cert': api_config['verify'],
-            'validate_certs': api_config['dangerous_no_tls_verify'],
+            'validate_certs': not api_config['dangerous_no_tls_verify'],
         })
         return api_config
 
