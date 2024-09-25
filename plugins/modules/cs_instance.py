@@ -182,6 +182,16 @@ options:
       - The data will be automatically base64 encoded.
       - Consider switching to HTTP_POST by using I(CLOUDSTACK_METHOD=post) to increase the HTTP_GET size limit of 2KB to 32 KB.
     type: str
+  user_data_details:
+    description:
+      - Map used to specify the parameters values for the variables in userdata.
+    type: dict
+    version_added: 2.5.0
+  user_data_name:
+    description:
+      - Name of user data to be used. This have precedence over I(user_data).
+    type: str
+    version_added: 2.5.0
   force:
     description:
       - Force stop/start the instance if required to apply changes, otherwise a running instance will not be changed.
@@ -592,6 +602,31 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
                         break
         return self.instance
 
+    def get_user_data_id_by_name(self):
+      name = self.module.params.get('user_data_name')
+      user_data_id = None
+      if name:
+        args = {
+            'account': self.get_account(key='name'),
+            'domainid': self.get_domain(key='id'),
+            'projectid': self.get_project(key='id'),
+            'listall': True,
+            # name or keyword is documented but not work on cloudstack 4.19
+            # commented util will work it
+            # 'name': name,
+        }
+        
+        user_data_list = self.query_api('listUserData', **args)
+        if user_data_list:
+            for v in user_data_list.get('userdata', []):
+                if name.lower() in [v['name'].lower()]:
+                    user_data_id = v['id']
+                    break
+        if user_data_id is None:
+          self.module.fail_json(msg="User data '%s' not found" % user_data_list)
+
+      return user_data_id
+
     def _get_instance_user_data(self, instance):
         # Query the user data if we need to
         if 'userdata' in instance:
@@ -776,6 +811,8 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         args['networkids'] = networkids
         args['iptonetworklist'] = self.get_iptonetwork_mappings()
         args['userdata'] = self.get_user_data()
+        args['userdataid'] = self.get_user_data_id_by_name()
+        args['userdatadetails'] = self.module.params.get('user_data_details')
         args['keyboard'] = self.module.params.get('keyboard')
         args['ipaddress'] = self.module.params.get('ip_address')
         args['ip6address'] = self.module.params.get('ip6_address')
@@ -815,12 +852,22 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             args_service_offering['serviceofferingid'] = self.get_service_offering_id()
         service_offering_changed = self.has_changed(args_service_offering, instance)
 
-        # Instance data
-        args_instance_update = {
-            'id': instance['id'],
-            'userdata': self.get_user_data(),
-        }
-        instance['userdata'] = self._get_instance_user_data(instance)
+        # Instance UserData
+        if self.module.params.get('user_data_name') is not None:
+          args_instance_update = {
+              'id': instance['id'],
+              'userdataid': self.get_user_data_id_by_name()
+          }
+        else:
+          args_instance_update = {
+              'id': instance['id'],
+              'userdata': self.get_user_data()
+          }
+          instance['userdata'] = self._get_instance_user_data(instance)
+          
+        if self.module.params.get('user_data_details'):
+            args_instance_update['userdatadetails'] = self.module.params.get('user_data_details')
+            
         args_instance_update['ostypeid'] = self.get_os_type(key='id')
         if self.module.params.get('group'):
             args_instance_update['group'] = self.module.params.get('group')
@@ -1105,6 +1152,8 @@ def main():
         account=dict(),
         project=dict(),
         user_data=dict(),
+        user_data_name=dict(),
+        user_data_details=dict(type='dict'),
         zone=dict(required=True),
         ssh_key=dict(no_log=False),
         force=dict(type='bool', default=False),
