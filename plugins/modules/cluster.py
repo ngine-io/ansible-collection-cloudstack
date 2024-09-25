@@ -49,7 +49,7 @@ options:
       - URL for the cluster
     type: str
   username:
-    description:cs_
+    description:
       - Username for the cluster.
     type: str
   password:

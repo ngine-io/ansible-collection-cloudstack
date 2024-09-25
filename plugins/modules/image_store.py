@@ -183,7 +183,7 @@ class AnsibleCloudstackImageStore(AnsibleCloudStack):
                     self.image_store = None
                     self.image_store = self.present_image_store()
                 else:
-                    self.module.warn("Changes to the Image Store won't be applied" "Use force_recreate=yes to allow the store to be recreated")
+                    self.module.warn("Changes to the Image Store won't be applied. Use force_recreate=yes to allow the store to be recreated")
 
         return self.image_store
 

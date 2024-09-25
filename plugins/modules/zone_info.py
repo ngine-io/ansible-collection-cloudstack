@@ -107,7 +107,7 @@ zones:
     network_domain:
       description: Network domain for the zone.
       returned: success
-      type: strtype="str",
+      type: str
       sample: example.com
     network_type:
       description: Network type for the zone.

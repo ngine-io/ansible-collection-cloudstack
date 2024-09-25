@@ -236,7 +236,7 @@ class AnsibleCloudStackConfiguration(AnsibleCloudStack):
         if self.account:
             self.result["account"] = self.account["name"]
             # TODO: buggy?
-            self.result["domain"] = self.domain["path"]
+            self.result["domain"] = self.domain["path"] if self.domain else None
         elif self.zone:
             self.result["zone"] = self.zone["name"]
         return self.result
