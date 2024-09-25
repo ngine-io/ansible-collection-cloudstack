@@ -5,6 +5,14 @@ Apache CloudStack Collection Release Notes
 .. contents:: Topics
 
 
+v2.4.1
+======
+
+Bugfixes
+--------
+
+- Fixed a bug related to the new option ``validate_certs`` (https://github.com/ngine-io/ansible-collection-cloudstack/pull/135).
+
 v2.4.0
 ======
 

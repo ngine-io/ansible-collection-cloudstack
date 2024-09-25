@@ -137,3 +137,10 @@ releases:
     - cs_project_cleanup_true.yml
     - validate-certs.yml
     release_date: '2024-08-23'
+  2.4.1:
+    changes:
+      bugfixes:
+      - Fixed a bug related to the new option ``validate_certs`` (https://github.com/ngine-io/ansible-collection-cloudstack/pull/135).
+    fragments:
+    - fix_validate_certs.yml
+    release_date: '2024-09-25'
