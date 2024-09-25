@@ -1,0 +1,2 @@
+bugfixes:
+  - Fixed a bug related to the new option ``validate_certs`` (https://github.com/ngine-io/ansible-collection-cloudstack/pull/135).
