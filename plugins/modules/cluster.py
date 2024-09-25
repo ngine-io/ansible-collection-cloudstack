@@ -110,6 +110,7 @@ options:
     default: present
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
+
 """
 
 EXAMPLES = """

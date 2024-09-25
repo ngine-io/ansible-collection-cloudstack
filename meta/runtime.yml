@@ -65,8 +65,8 @@ plugin_routing:
     cs_affinitygroup:
       deprecation:
         removal_date: 2025-09-01
-        warning_text: module was renamed to ngine_io.cloudstack.affinitygroup
-      redirect: ngine_io.cloudstack.affinitygroup
+        warning_text: module was renamed to ngine_io.cloudstack.affinity_group
+      redirect: ngine_io.cloudstack.affinity_group
     cs_cluster:
       deprecation:
         removal_date: 2025-09-01
@@ -135,8 +135,8 @@ plugin_routing:
     cs_instancegroup:
       deprecation:
         removal_date: 2025-09-01
-        warning_text: module was renamed to ngine_io.cloudstack.instancegroup
-      redirect: ngine_io.cloudstack.instancegroup
+        warning_text: module was renamed to ngine_io.cloudstack.instance_group
+      redirect: ngine_io.cloudstack.instance_group
     cs_ip_address:
       deprecation:
         removal_date: 2025-09-01
@@ -150,13 +150,13 @@ plugin_routing:
     cs_loadbalancer_rule:
       deprecation:
         removal_date: 2025-09-01
-        warning_text: module was renamed to ngine_io.cloudstack.loadbalancer_rule
-      redirect: ngine_io.cloudstack.loadbalancer_rule
+        warning_text: module was renamed to ngine_io.cloudstack.lb_rule
+      redirect: ngine_io.cloudstack.lb_rule
     cs_loadbalancer_rule_member:
       deprecation:
         removal_date: 2025-09-01
-        warning_text: module was renamed to ngine_io.cloudstack.loadbalancer_rule_member
-      redirect: ngine_io.cloudstack.loadbalancer_rule_member
+        warning_text: module was renamed to ngine_io.cloudstack.lb_rule_member
+      redirect: ngine_io.cloudstack.lb_rule_member
     cs_network:
       deprecation:
         removal_date: 2025-09-01
@@ -210,8 +210,8 @@ plugin_routing:
     cs_resourcelimit:
       deprecation:
         removal_date: 2025-09-01
-        warning_text: module was renamed to ngine_io.cloudstack.resourcelimit
-      redirect: ngine_io.cloudstack.resourcelimit
+        warning_text: module was renamed to ngine_io.cloudstack.resource_limit
+      redirect: ngine_io.cloudstack.resource_limit
     cs_role:
       deprecation:
         removal_date: 2025-09-01
@@ -230,13 +230,13 @@ plugin_routing:
     cs_securitygroup:
       deprecation:
         removal_date: 2025-09-01
-        warning_text: module was renamed to ngine_io.cloudstack.securitygroup
-      redirect: ngine_io.cloudstack.securitygroup
+        warning_text: module was renamed to ngine_io.cloudstack.security_group
+      redirect: ngine_io.cloudstack.security_group
     cs_securitygroup_rule:
       deprecation:
         removal_date: 2025-09-01
-        warning_text: module was renamed to ngine_io.cloudstack.securitygroup_rule
-      redirect: ngine_io.cloudstack.securitygroup_rule
+        warning_text: module was renamed to ngine_io.cloudstack.security_group_rule
+      redirect: ngine_io.cloudstack.security_group_rule
     cs_service_offering:
       deprecation:
         removal_date: 2025-09-01
@@ -250,13 +250,13 @@ plugin_routing:
     cs_sshkeypair:
       deprecation:
         removal_date: 2025-09-01
-        warning_text: module was renamed to ngine_io.cloudstack.sshkeypair
-      redirect: ngine_io.cloudstack.sshkeypair
+        warning_text: module was renamed to ngine_io.cloudstack.ssh_key
+      redirect: ngine_io.cloudstack.ssh_key
     cs_staticnat:
       deprecation:
         removal_date: 2025-09-01
-        warning_text: module was renamed to ngine_io.cloudstack.staticnat
-      redirect: ngine_io.cloudstack.staticnat
+        warning_text: module was renamed to ngine_io.cloudstack.static_nat
+      redirect: ngine_io.cloudstack.static_nat
     cs_storage_pool:
       deprecation:
         removal_date: 2025-09-01
@@ -285,8 +285,8 @@ plugin_routing:
     cs_vmsnapshot:
       deprecation:
         removal_date: 2025-09-01
-        warning_text: module was renamed to ngine_io.cloudstack.vmsnapshot
-      redirect: ngine_io.cloudstack.vmsnapshot
+        warning_text: module was renamed to ngine_io.cloudstack.instance_snapshot
+      redirect: ngine_io.cloudstack.instance_snapshot
     cs_volume:
       deprecation:
         removal_date: 2025-09-01
