@@ -395,15 +395,15 @@ def main():
         supports_check_mode=True,
     )
 
-    acs_zone = AnsibleCloudStackZone(module)
+    azone = AnsibleCloudStackZone(module)
 
     state = module.params.get("state")
     if state in ["absent"]:
-        zone = acs_zone.absent_zone()
+        zone = azone.absent_zone()
     else:
-        zone = acs_zone.present_zone()
+        zone = azone.present_zone()
 
-    result = acs_zone.get_result(zone)
+    result = azone.get_result(zone)
 
     module.exit_json(**result)
 

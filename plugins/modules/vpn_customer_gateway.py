@@ -8,9 +8,9 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-DOCUMENTATION = r'''
+DOCUMENTATION = """
 ---
-module: cs_vpn_customer_gateway
+module: vpn_customer_gateway
 short_description: Manages site-to-site VPN customer gateway configurations on Apache CloudStack based clouds.
 description:
     - Create, update and remove VPN customer gateways.
@@ -95,11 +95,11 @@ options:
     type: bool
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = r'''
+EXAMPLES = """
 - name: Create a vpn customer gateway
-  ngine_io.cloudstack.cs_vpn_customer_gateway:
+  ngine_io.cloudstack.vpn_customer_gateway:
     name: my vpn customer gateway
     cidrs:
     - 192.168.123.0/24
@@ -110,12 +110,12 @@ EXAMPLES = r'''
     ipsec_psk: "S3cr3Tk3Y"
 
 - name: Remove a vpn customer gateway
-  ngine_io.cloudstack.cs_vpn_customer_gateway:
+  ngine_io.cloudstack.vpn_customer_gateway:
     name: my vpn customer gateway
     state: absent
-'''
+"""
 
-RETURN = r'''
+RETURN = """
 ---
 id:
   description: UUID of the VPN customer gateway.
@@ -182,12 +182,11 @@ cidrs:
   returned: success
   type: list
   sample: [ 10.10.10.0/24 ]
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
-                                       cs_required_together)
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackVpnCustomerGateway(AnsibleCloudStack):
@@ -195,54 +194,54 @@ class AnsibleCloudStackVpnCustomerGateway(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackVpnCustomerGateway, self).__init__(module)
         self.returns = {
-            'dpd': 'dpd',
-            'esplifetime': 'esp_lifetime',
-            'esppolicy': 'esp_policy',
-            'gateway': 'gateway',
-            'ikepolicy': 'ike_policy',
-            'ikelifetime': 'ike_lifetime',
-            'ipaddress': 'ip_address',
+            "dpd": "dpd",
+            "esplifetime": "esp_lifetime",
+            "esppolicy": "esp_policy",
+            "gateway": "gateway",
+            "ikepolicy": "ike_policy",
+            "ikelifetime": "ike_lifetime",
+            "ipaddress": "ip_address",
         }
 
     def _common_args(self):
         return {
-            'name': self.module.params.get('name'),
-            'account': self.get_account(key='name'),
-            'domainid': self.get_domain(key='id'),
-            'projectid': self.get_project(key='id'),
-            'cidrlist': ','.join(self.module.params.get('cidrs')) if self.module.params.get('cidrs') is not None else None,
-            'esppolicy': self.module.params.get('esp_policy'),
-            'esplifetime': self.module.params.get('esp_lifetime'),
-            'ikepolicy': self.module.params.get('ike_policy'),
-            'ikelifetime': self.module.params.get('ike_lifetime'),
-            'ipsecpsk': self.module.params.get('ipsec_psk'),
-            'dpd': self.module.params.get('dpd'),
-            'forceencap': self.module.params.get('force_encap'),
-            'gateway': self.module.params.get('gateway'),
+            "name": self.module.params.get("name"),
+            "account": self.get_account(key="name"),
+            "domainid": self.get_domain(key="id"),
+            "projectid": self.get_project(key="id"),
+            "cidrlist": ",".join(self.module.params.get("cidrs")) if self.module.params.get("cidrs") is not None else None,
+            "esppolicy": self.module.params.get("esp_policy"),
+            "esplifetime": self.module.params.get("esp_lifetime"),
+            "ikepolicy": self.module.params.get("ike_policy"),
+            "ikelifetime": self.module.params.get("ike_lifetime"),
+            "ipsecpsk": self.module.params.get("ipsec_psk"),
+            "dpd": self.module.params.get("dpd"),
+            "forceencap": self.module.params.get("force_encap"),
+            "gateway": self.module.params.get("gateway"),
         }
 
     def get_vpn_customer_gateway(self):
         args = {
-            'account': self.get_account(key='name'),
-            'domainid': self.get_domain(key='id'),
-            'projectid': self.get_project(key='id'),
-            'fetch_list': True,
+            "account": self.get_account(key="name"),
+            "domainid": self.get_domain(key="id"),
+            "projectid": self.get_project(key="id"),
+            "fetch_list": True,
         }
-        vpn_customer_gateway = self.module.params.get('name')
-        vpn_customer_gateways = self.query_api('listVpnCustomerGateways', **args)
+        vpn_customer_gateway = self.module.params.get("name")
+        vpn_customer_gateways = self.query_api("listVpnCustomerGateways", **args)
         if vpn_customer_gateways:
             for vgw in vpn_customer_gateways:
-                if vpn_customer_gateway.lower() in [vgw['id'], vgw['name'].lower()]:
+                if vpn_customer_gateway.lower() in [vgw["id"], vgw["name"].lower()]:
                     return vgw
 
     def present_vpn_customer_gateway(self):
         vpn_customer_gateway = self.get_vpn_customer_gateway()
         required_params = [
-            'cidrs',
-            'esp_policy',
-            'gateway',
-            'ike_policy',
-            'ipsec_psk',
+            "cidrs",
+            "esp_policy",
+            "gateway",
+            "ike_policy",
+            "ipsec_psk",
         ]
         self.module.fail_on_missing_params(required_params=required_params)
 
@@ -254,81 +253,77 @@ class AnsibleCloudStackVpnCustomerGateway(AnsibleCloudStack):
         return vpn_customer_gateway
 
     def _create_vpn_customer_gateway(self, vpn_customer_gateway):
-        self.result['changed'] = True
+        self.result["changed"] = True
         args = self._common_args()
         if not self.module.check_mode:
-            res = self.query_api('createVpnCustomerGateway', **args)
-            poll_async = self.module.params.get('poll_async')
+            res = self.query_api("createVpnCustomerGateway", **args)
+            poll_async = self.module.params.get("poll_async")
             if poll_async:
-                vpn_customer_gateway = self.poll_job(res, 'vpncustomergateway')
+                vpn_customer_gateway = self.poll_job(res, "vpncustomergateway")
         return vpn_customer_gateway
 
     def _update_vpn_customer_gateway(self, vpn_customer_gateway):
         args = self._common_args()
-        args.update({'id': vpn_customer_gateway['id']})
-        if self.has_changed(args, vpn_customer_gateway, skip_diff_for_keys=['ipsecpsk']):
-            self.result['changed'] = True
+        args.update({"id": vpn_customer_gateway["id"]})
+        if self.has_changed(args, vpn_customer_gateway, skip_diff_for_keys=["ipsecpsk"]):
+            self.result["changed"] = True
             if not self.module.check_mode:
-                res = self.query_api('updateVpnCustomerGateway', **args)
-                poll_async = self.module.params.get('poll_async')
+                res = self.query_api("updateVpnCustomerGateway", **args)
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    vpn_customer_gateway = self.poll_job(res, 'vpncustomergateway')
+                    vpn_customer_gateway = self.poll_job(res, "vpncustomergateway")
         return vpn_customer_gateway
 
     def absent_vpn_customer_gateway(self):
         vpn_customer_gateway = self.get_vpn_customer_gateway()
         if vpn_customer_gateway:
-            self.result['changed'] = True
-            args = {
-                'id': vpn_customer_gateway['id']
-            }
+            self.result["changed"] = True
+            args = {"id": vpn_customer_gateway["id"]}
             if not self.module.check_mode:
-                res = self.query_api('deleteVpnCustomerGateway', **args)
-                poll_async = self.module.params.get('poll_async')
+                res = self.query_api("deleteVpnCustomerGateway", **args)
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    self.poll_job(res, 'vpncustomergateway')
+                    self.poll_job(res, "vpncustomergateway")
 
         return vpn_customer_gateway
 
     def get_result(self, resource):
         super(AnsibleCloudStackVpnCustomerGateway, self).get_result(resource)
         if resource:
-            if 'cidrlist' in resource:
-                self.result['cidrs'] = resource['cidrlist'].split(',') or [resource['cidrlist']]
+            if "cidrlist" in resource:
+                self.result["cidrs"] = resource["cidrlist"].split(",") or [resource["cidrlist"]]
             # Ensure we return a bool
-            self.result['force_encap'] = True if resource.get('forceencap') else False
+            self.result["force_encap"] = True if resource.get("forceencap") else False
         return self.result
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        name=dict(required=True),
-        state=dict(choices=['present', 'absent'], default='present'),
-        domain=dict(),
-        account=dict(),
-        project=dict(),
-        cidrs=dict(type='list', elements='str', aliases=['cidr']),
-        esp_policy=dict(),
-        esp_lifetime=dict(type='int'),
-        gateway=dict(),
-        ike_policy=dict(),
-        ike_lifetime=dict(type='int'),
-        ipsec_psk=dict(no_log=True),
-        dpd=dict(type='bool'),
-        force_encap=dict(type='bool'),
-        poll_async=dict(type='bool', default=True),
-    ))
-
-    module = AnsibleModule(
-        argument_spec=argument_spec,
-        required_together=cs_required_together(),
-        supports_check_mode=True
+    argument_spec.update(
+        dict(
+            name=dict(required=True),
+            state=dict(choices=["present", "absent"], default="present"),
+            domain=dict(),
+            account=dict(),
+            project=dict(),
+            cidrs=dict(type="list", elements="str", aliases=["cidr"]),
+            esp_policy=dict(),
+            esp_lifetime=dict(type="int"),
+            gateway=dict(),
+            ike_policy=dict(),
+            ike_lifetime=dict(type="int"),
+            ipsec_psk=dict(no_log=True),
+            dpd=dict(type="bool"),
+            force_encap=dict(type="bool"),
+            poll_async=dict(type="bool", default=True),
+        )
     )
+
+    module = AnsibleModule(argument_spec=argument_spec, required_together=cs_required_together(), supports_check_mode=True)
 
     acs_vpn_cgw = AnsibleCloudStackVpnCustomerGateway(module)
 
-    state = module.params.get('state')
+    state = module.params.get("state")
     if state == "absent":
         vpn_customer_gateway = acs_vpn_cgw.absent_vpn_customer_gateway()
     else:
@@ -338,5 +333,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

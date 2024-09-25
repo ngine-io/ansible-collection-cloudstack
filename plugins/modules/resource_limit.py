@@ -9,9 +9,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_resourcelimit
+module: resource_limit
 short_description: Manages resource limits on Apache CloudStack based clouds.
 description:
     - Manage limits of resources for domains, accounts and projects.
@@ -57,24 +57,24 @@ options:
     type: str
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Update a resource limit for instances of a domain
-  ngine_io.cloudstack.cs_resourcelimit:
+  ngine_io.cloudstack.resource_limit:
     type: instance
     limit: 10
     domain: customers
 
 - name: Update a resource limit for instances of an account
-  ngine_io.cloudstack.cs_resourcelimit:
+  ngine_io.cloudstack.resource_limit:
     type: instance
     limit: 12
     account: moserre
     domain: customers
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 recource_type:
   description: Type of the resource
@@ -101,26 +101,25 @@ project:
   returned: success
   type: str
   sample: example project
-'''
+"""
 
 # import cloudstack common
 from ansible.module_utils.basic import AnsibleModule
 
-from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
-                                       cs_required_together)
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 RESOURCE_TYPES = {
-    'instance': 0,
-    'ip_address': 1,
-    'volume': 2,
-    'snapshot': 3,
-    'template': 4,
-    'network': 6,
-    'vpc': 7,
-    'cpu': 8,
-    'memory': 9,
-    'primary_storage': 10,
-    'secondary_storage': 11,
+    "instance": 0,
+    "ip_address": 1,
+    "volume": 2,
+    "snapshot": 3,
+    "template": 4,
+    "network": 6,
+    "vpc": 7,
+    "cpu": 8,
+    "memory": 9,
+    "primary_storage": 10,
+    "secondary_storage": 11,
 }
 
 
@@ -129,66 +128,64 @@ class AnsibleCloudStackResourceLimit(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackResourceLimit, self).__init__(module)
         self.returns = {
-            'max': 'limit',
+            "max": "limit",
         }
 
     def get_resource_type(self):
-        resource_type = self.module.params.get('resource_type')
+        resource_type = self.module.params.get("resource_type")
         return RESOURCE_TYPES.get(resource_type)
 
     def get_resource_limit(self):
         args = {
-            'account': self.get_account(key='name'),
-            'domainid': self.get_domain(key='id'),
-            'projectid': self.get_project(key='id'),
-            'resourcetype': self.get_resource_type()
+            "account": self.get_account(key="name"),
+            "domainid": self.get_domain(key="id"),
+            "projectid": self.get_project(key="id"),
+            "resourcetype": self.get_resource_type(),
         }
-        resource_limit = self.query_api('listResourceLimits', **args)
+        resource_limit = self.query_api("listResourceLimits", **args)
         if resource_limit:
-            if 'limit' in resource_limit['resourcelimit'][0]:
-                resource_limit['resourcelimit'][0]['limit'] = int(resource_limit['resourcelimit'][0])
-            return resource_limit['resourcelimit'][0]
-        self.module.fail_json(msg="Resource limit type '%s' not found." % self.module.params.get('resource_type'))
+            if "limit" in resource_limit["resourcelimit"][0]:
+                resource_limit["resourcelimit"][0]["limit"] = int(resource_limit["resourcelimit"][0])
+            return resource_limit["resourcelimit"][0]
+        self.module.fail_json(msg="Resource limit type '%s' not found." % self.module.params.get("resource_type"))
 
     def update_resource_limit(self):
         resource_limit = self.get_resource_limit()
 
         args = {
-            'account': self.get_account(key='name'),
-            'domainid': self.get_domain(key='id'),
-            'projectid': self.get_project(key='id'),
-            'resourcetype': self.get_resource_type(),
-            'max': self.module.params.get('limit', -1)
+            "account": self.get_account(key="name"),
+            "domainid": self.get_domain(key="id"),
+            "projectid": self.get_project(key="id"),
+            "resourcetype": self.get_resource_type(),
+            "max": self.module.params.get("limit", -1),
         }
 
         if self.has_changed(args, resource_limit):
-            self.result['changed'] = True
+            self.result["changed"] = True
             if not self.module.check_mode:
-                res = self.query_api('updateResourceLimit', **args)
-                resource_limit = res['resourcelimit']
+                res = self.query_api("updateResourceLimit", **args)
+                resource_limit = res["resourcelimit"]
         return resource_limit
 
     def get_result(self, resource):
         self.result = super(AnsibleCloudStackResourceLimit, self).get_result(resource)
-        self.result['resource_type'] = self.module.params.get('resource_type')
+        self.result["resource_type"] = self.module.params.get("resource_type")
         return self.result
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        resource_type=dict(required=True, choices=list(RESOURCE_TYPES.keys()), aliases=['type']),
-        limit=dict(default=-1, aliases=['max'], type='int'),
-        domain=dict(),
-        account=dict(),
-        project=dict(),
-    ))
-
-    module = AnsibleModule(
-        argument_spec=argument_spec,
-        required_together=cs_required_together(),
-        supports_check_mode=True
+    argument_spec.update(
+        dict(
+            resource_type=dict(required=True, choices=list(RESOURCE_TYPES.keys()), aliases=["type"]),
+            limit=dict(default=-1, aliases=["max"], type="int"),
+            domain=dict(),
+            account=dict(),
+            project=dict(),
+        )
     )
+
+    module = AnsibleModule(argument_spec=argument_spec, required_together=cs_required_together(), supports_check_mode=True)
 
     acs_resource_limit = AnsibleCloudStackResourceLimit(module)
     resource_limit = acs_resource_limit.update_resource_limit()
@@ -196,5 +193,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -200,8 +200,8 @@ def main():
         supports_check_mode=True,
     )
 
-    acs_zone_info = AnsibleCloudStackZoneInfo(module=module)
-    result = acs_zone_info.get_zone()
+    azone_info = AnsibleCloudStackZoneInfo(module=module)
+    result = azone_info.get_zone()
     module.exit_json(**result)
 
 

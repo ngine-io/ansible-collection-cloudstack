@@ -5,12 +5,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_staticnat
+module: static_nat
 short_description: Manages static NATs on Apache CloudStack based clouds.
 description:
     - Create, update and remove static NATs.
@@ -69,23 +70,23 @@ options:
     default: yes
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Create a static NAT for IP 1.2.3.4 to web01
-  ngine_io.cloudstack.cs_staticnat:
+  ngine_io.cloudstack.static_nat:
     ip_address: 1.2.3.4
     zone: zone01
     vm: web01
 
 - name: Remove a static NAT
-  ngine_io.cloudstack.cs_staticnat:
+  ngine_io.cloudstack.static_nat:
     ip_address: 1.2.3.4
     zone: zone01
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the ip_address.
@@ -132,14 +133,11 @@ domain:
   returned: success
   type: str
   sample: example domain
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackStaticNat(AnsibleCloudStack):
@@ -147,22 +145,22 @@ class AnsibleCloudStackStaticNat(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackStaticNat, self).__init__(module)
         self.returns = {
-            'virtualmachinedisplayname': 'vm_display_name',
-            'virtualmachinename': 'vm_name',
-            'ipaddress': 'ip_address',
-            'vmipaddress': 'vm_guest_ip',
+            "virtualmachinedisplayname": "vm_display_name",
+            "virtualmachinename": "vm_name",
+            "ipaddress": "ip_address",
+            "vmipaddress": "vm_guest_ip",
         }
 
     def create_static_nat(self, ip_address):
-        self.result['changed'] = True
+        self.result["changed"] = True
         args = {
-            'virtualmachineid': self.get_vm(key='id'),
-            'ipaddressid': ip_address['id'],
-            'vmguestip': self.get_vm_guest_ip(),
-            'networkid': self.get_network(key='id')
+            "virtualmachineid": self.get_vm(key="id"),
+            "ipaddressid": ip_address["id"],
+            "vmguestip": self.get_vm_guest_ip(),
+            "networkid": self.get_network(key="id"),
         }
         if not self.module.check_mode:
-            self.query_api('enableStaticNat', **args)
+            self.query_api("enableStaticNat", **args)
 
             # reset ip address and query new values
             self.ip_address = None
@@ -171,20 +169,20 @@ class AnsibleCloudStackStaticNat(AnsibleCloudStack):
 
     def update_static_nat(self, ip_address):
         args = {
-            'virtualmachineid': self.get_vm(key='id'),
-            'ipaddressid': ip_address['id'],
-            'vmguestip': self.get_vm_guest_ip(),
-            'networkid': self.get_network(key='id')
+            "virtualmachineid": self.get_vm(key="id"),
+            "ipaddressid": ip_address["id"],
+            "vmguestip": self.get_vm_guest_ip(),
+            "networkid": self.get_network(key="id"),
         }
         # make an alias, so we can use has_changed()
-        ip_address['vmguestip'] = ip_address['vmipaddress']
-        if self.has_changed(args, ip_address, ['vmguestip', 'virtualmachineid']):
-            self.result['changed'] = True
+        ip_address["vmguestip"] = ip_address["vmipaddress"]
+        if self.has_changed(args, ip_address, ["vmguestip", "virtualmachineid"]):
+            self.result["changed"] = True
             if not self.module.check_mode:
-                res = self.query_api('disableStaticNat', ipaddressid=ip_address['id'])
-                self.poll_job(res, 'staticnat')
+                res = self.query_api("disableStaticNat", ipaddressid=ip_address["id"])
+                self.poll_job(res, "staticnat")
 
-                self.query_api('enableStaticNat', **args)
+                self.query_api("enableStaticNat", **args)
 
                 # reset ip address and query new values
                 self.ip_address = None
@@ -193,7 +191,7 @@ class AnsibleCloudStackStaticNat(AnsibleCloudStack):
 
     def present_static_nat(self):
         ip_address = self.get_ip_address()
-        if not ip_address['isstaticnat']:
+        if not ip_address["isstaticnat"]:
             ip_address = self.create_static_nat(ip_address)
         else:
             ip_address = self.update_static_nat(ip_address)
@@ -201,43 +199,41 @@ class AnsibleCloudStackStaticNat(AnsibleCloudStack):
 
     def absent_static_nat(self):
         ip_address = self.get_ip_address()
-        if ip_address['isstaticnat']:
-            self.result['changed'] = True
+        if ip_address["isstaticnat"]:
+            self.result["changed"] = True
             if not self.module.check_mode:
-                res = self.query_api('disableStaticNat', ipaddressid=ip_address['id'])
+                res = self.query_api("disableStaticNat", ipaddressid=ip_address["id"])
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    self.poll_job(res, 'staticnat')
+                    self.poll_job(res, "staticnat")
         return ip_address
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        ip_address=dict(required=True),
-        vm=dict(),
-        vm_guest_ip=dict(),
-        network=dict(),
-        vpc=dict(),
-        state=dict(choices=['present', 'absent'], default='present'),
-        zone=dict(required=True),
-        domain=dict(),
-        account=dict(),
-        project=dict(),
-        poll_async=dict(type='bool', default=True),
-    ))
-
-    module = AnsibleModule(
-        argument_spec=argument_spec,
-        required_together=cs_required_together(),
-        supports_check_mode=True
+    argument_spec.update(
+        dict(
+            ip_address=dict(required=True),
+            vm=dict(),
+            vm_guest_ip=dict(),
+            network=dict(),
+            vpc=dict(),
+            state=dict(choices=["present", "absent"], default="present"),
+            zone=dict(required=True),
+            domain=dict(),
+            account=dict(),
+            project=dict(),
+            poll_async=dict(type="bool", default=True),
+        )
     )
+
+    module = AnsibleModule(argument_spec=argument_spec, required_together=cs_required_together(), supports_check_mode=True)
 
     acs_static_nat = AnsibleCloudStackStaticNat(module)
 
-    state = module.params.get('state')
-    if state in ['absent']:
+    state = module.params.get("state")
+    if state in ["absent"]:
         ip_address = acs_static_nat.absent_static_nat()
     else:
         ip_address = acs_static_nat.present_static_nat()
@@ -247,5 +243,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

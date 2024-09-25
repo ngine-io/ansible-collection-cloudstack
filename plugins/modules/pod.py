@@ -9,9 +9,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_pod
+module: pod
 short_description: Manages pods on Apache CloudStack based clouds.
 description:
     - Create, update, delete pods.
@@ -59,11 +59,11 @@ options:
     choices: [ present, enabled, disabled, absent ]
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Ensure a pod is present
-  ngine_io.cloudstack.cs_pod:
+  ngine_io.cloudstack.pod:
     name: pod1
     zone: ch-zrh-ix-01
     start_ip: 10.100.10.101
@@ -71,25 +71,25 @@ EXAMPLES = '''
     netmask: 255.255.255.0
 
 - name: Ensure a pod is disabled
-  ngine_io.cloudstack.cs_pod:
+  ngine_io.cloudstack.pod:
     name: pod1
     zone: ch-zrh-ix-01
     state: disabled
 
 - name: Ensure a pod is enabled
-  ngine_io.cloudstack.cs_pod:
+  ngine_io.cloudstack.pod:
     name: pod1
     zone: ch-zrh-ix-01
     state: enabled
 
 - name: Ensure a pod is absent
-  ngine_io.cloudstack.cs_pod:
+  ngine_io.cloudstack.pod:
     name: pod1
     zone: ch-zrh-ix-01
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the pod.
@@ -131,12 +131,11 @@ zone:
   returned: success
   type: str
   sample: ch-gva-2
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
-                                       cs_required_together)
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackPod(AnsibleCloudStack):
@@ -144,47 +143,45 @@ class AnsibleCloudStackPod(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackPod, self).__init__(module)
         self.returns = {
-            'endip': 'end_ip',
-            'startip': 'start_ip',
-            'gateway': 'gateway',
-            'netmask': 'netmask',
-            'allocationstate': 'allocation_state',
+            "endip": "end_ip",
+            "startip": "start_ip",
+            "gateway": "gateway",
+            "netmask": "netmask",
+            "allocationstate": "allocation_state",
         }
         self.pod = None
 
     def _get_common_pod_args(self):
         args = {
-            'name': self.module.params.get('name'),
-            'zoneid': self.get_zone(key='id'),
-            'startip': self.module.params.get('start_ip'),
-            'endip': self.module.params.get('end_ip'),
-            'netmask': self.module.params.get('netmask'),
-            'gateway': self.module.params.get('gateway')
+            "name": self.module.params.get("name"),
+            "zoneid": self.get_zone(key="id"),
+            "startip": self.module.params.get("start_ip"),
+            "endip": self.module.params.get("end_ip"),
+            "netmask": self.module.params.get("netmask"),
+            "gateway": self.module.params.get("gateway"),
         }
-        state = self.module.params.get('state')
-        if state in ['enabled', 'disabled']:
-            args['allocationstate'] = state.capitalize()
+        state = self.module.params.get("state")
+        if state in ["enabled", "disabled"]:
+            args["allocationstate"] = state.capitalize()
         return args
 
     def get_pod(self):
         if not self.pod:
-            args = {
-                'zoneid': self.get_zone(key='id')
-            }
+            args = {"zoneid": self.get_zone(key="id")}
 
-            uuid = self.module.params.get('id')
+            uuid = self.module.params.get("id")
             if uuid:
-                args['id'] = uuid
+                args["id"] = uuid
             else:
-                args['name'] = self.module.params.get('name')
+                args["name"] = self.module.params.get("name")
 
-            pods = self.query_api('listPods', **args)
+            pods = self.query_api("listPods", **args)
             if pods:
-                for pod in pods['pod']:
-                    if not args['name']:
+                for pod in pods["pod"]:
+                    if not args["name"]:
                         self.pod = self._transform_ip_list(pod)
                         break
-                    elif args['name'] == pod['name']:
+                    elif args["name"] == pod["name"]:
                         self.pod = self._transform_ip_list(pod)
                         break
         return self.pod
@@ -199,48 +196,46 @@ class AnsibleCloudStackPod(AnsibleCloudStack):
 
     def _create_pod(self):
         required_params = [
-            'start_ip',
-            'netmask',
-            'gateway',
+            "start_ip",
+            "netmask",
+            "gateway",
         ]
         self.module.fail_on_missing_params(required_params=required_params)
 
         pod = None
-        self.result['changed'] = True
+        self.result["changed"] = True
         args = self._get_common_pod_args()
         if not self.module.check_mode:
-            res = self.query_api('createPod', **args)
-            pod = res['pod']
+            res = self.query_api("createPod", **args)
+            pod = res["pod"]
         return pod
 
     def _update_pod(self):
         pod = self.get_pod()
         args = self._get_common_pod_args()
-        args['id'] = pod['id']
+        args["id"] = pod["id"]
 
         if self.has_changed(args, pod):
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             if not self.module.check_mode:
-                res = self.query_api('updatePod', **args)
-                pod = res['pod']
+                res = self.query_api("updatePod", **args)
+                pod = res["pod"]
         return pod
 
     def absent_pod(self):
         pod = self.get_pod()
         if pod:
-            self.result['changed'] = True
+            self.result["changed"] = True
 
-            args = {
-                'id': pod['id']
-            }
+            args = {"id": pod["id"]}
             if not self.module.check_mode:
-                self.query_api('deletePod', **args)
+                self.query_api("deletePod", **args)
         return pod
 
     def _transform_ip_list(self, resource):
-        """ Workaround for 4.11 return API break """
-        keys = ['endip', 'startip']
+        """Workaround for 4.11 return API break"""
+        keys = ["endip", "startip"]
         if resource:
             for key in keys:
                 if key in resource and isinstance(resource[key], list):
@@ -255,34 +250,32 @@ class AnsibleCloudStackPod(AnsibleCloudStack):
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        id=dict(),
-        name=dict(required=True),
-        gateway=dict(),
-        netmask=dict(),
-        start_ip=dict(),
-        end_ip=dict(),
-        zone=dict(required=True),
-        state=dict(choices=['present', 'enabled', 'disabled', 'absent'], default='present'),
-    ))
-
-    module = AnsibleModule(
-        argument_spec=argument_spec,
-        required_together=cs_required_together(),
-        supports_check_mode=True
+    argument_spec.update(
+        dict(
+            id=dict(),
+            name=dict(required=True),
+            gateway=dict(),
+            netmask=dict(),
+            start_ip=dict(),
+            end_ip=dict(),
+            zone=dict(required=True),
+            state=dict(choices=["present", "enabled", "disabled", "absent"], default="present"),
+        )
     )
 
-    acs_pod = AnsibleCloudStackPod(module)
-    state = module.params.get('state')
-    if state in ['absent']:
-        pod = acs_pod.absent_pod()
-    else:
-        pod = acs_pod.present_pod()
+    module = AnsibleModule(argument_spec=argument_spec, required_together=cs_required_together(), supports_check_mode=True)
 
-    result = acs_pod.get_result(pod)
+    apod = AnsibleCloudStackPod(module)
+    state = module.params.get("state")
+    if state in ["absent"]:
+        pod = apod.absent_pod()
+    else:
+        pod = apod.present_pod()
+
+    result = apod.get_result(pod)
 
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

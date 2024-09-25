@@ -360,15 +360,15 @@ def main():
         supports_check_mode=True,
     )
 
-    acs_cluster = AnsibleCloudStackCluster(module)
+    acluster = AnsibleCloudStackCluster(module)
 
     state = module.params.get("state")
     if state in ["absent"]:
-        cluster = acs_cluster.absent_cluster()
+        cluster = acluster.absent_cluster()
     else:
-        cluster = acs_cluster.present_cluster()
+        cluster = acluster.present_cluster()
 
-    result = acs_cluster.get_result(cluster)
+    result = acluster.get_result(cluster)
 
     module.exit_json(**result)
 

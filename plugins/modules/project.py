@@ -5,12 +5,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_project
+module: project
 short_description: Manages projects on Apache CloudStack based clouds.
 description:
     - Create, update, suspend, activate and remove projects.
@@ -55,38 +56,38 @@ options:
     default: yes
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Create a project
-  ngine_io.cloudstack.cs_project:
+  ngine_io.cloudstack.project:
     name: web
     tags:
       - { key: admin, value: john }
       - { key: foo,   value: bar }
 
 - name: Rename a project
-  ngine_io.cloudstack.cs_project:
+  ngine_io.cloudstack.project:
     name: web
     display_text: my web project
 
 - name: Suspend an existing project
-  ngine_io.cloudstack.cs_project:
+  ngine_io.cloudstack.project:
     name: web
     state: suspended
 
 - name: Activate an existing project
-  ngine_io.cloudstack.cs_project:
+  ngine_io.cloudstack.project:
     name: web
     state: active
 
 - name: Remove a project
-  ngine_io.cloudstack.cs_project:
+  ngine_io.cloudstack.project:
     name: web
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the project.
@@ -123,31 +124,28 @@ tags:
   returned: success
   type: list
   sample: '[ { "key": "foo", "value": "bar" } ]'
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackProject(AnsibleCloudStack):
 
     def get_project(self):
         if not self.project:
-            project = self.module.params.get('name')
+            project = self.module.params.get("name")
 
             args = {
-                'account': self.get_account(key='name'),
-                'domainid': self.get_domain(key='id'),
-                'fetch_list': True,
+                "account": self.get_account(key="name"),
+                "domainid": self.get_domain(key="id"),
+                "fetch_list": True,
             }
-            projects = self.query_api('listProjects', **args)
+            projects = self.query_api("listProjects", **args)
             if projects:
                 for p in projects:
-                    if project.lower() in [p['name'].lower(), p['id']]:
+                    if project.lower() in [p["name"].lower(), p["id"]]:
                         self.project = p
                         break
         return self.project
@@ -159,114 +157,104 @@ class AnsibleCloudStackProject(AnsibleCloudStack):
         else:
             project = self.update_project(project)
         if project:
-            project = self.ensure_tags(resource=project, resource_type='project')
+            project = self.ensure_tags(resource=project, resource_type="project")
             # refresh resource
             self.project = project
         return project
 
     def update_project(self, project):
-        args = {
-            'id': project['id'],
-            'displaytext': self.get_or_fallback('display_text', 'name')
-        }
+        args = {"id": project["id"], "displaytext": self.get_or_fallback("display_text", "name")}
         if self.has_changed(args, project):
-            self.result['changed'] = True
+            self.result["changed"] = True
             if not self.module.check_mode:
-                project = self.query_api('updateProject', **args)
+                project = self.query_api("updateProject", **args)
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if project and poll_async:
-                    project = self.poll_job(project, 'project')
+                    project = self.poll_job(project, "project")
         return project
 
     def create_project(self, project):
-        self.result['changed'] = True
+        self.result["changed"] = True
 
         args = {
-            'name': self.module.params.get('name'),
-            'displaytext': self.get_or_fallback('display_text', 'name'),
-            'account': self.get_account('name'),
-            'domainid': self.get_domain('id')
+            "name": self.module.params.get("name"),
+            "displaytext": self.get_or_fallback("display_text", "name"),
+            "account": self.get_account("name"),
+            "domainid": self.get_domain("id"),
         }
         if not self.module.check_mode:
-            project = self.query_api('createProject', **args)
+            project = self.query_api("createProject", **args)
 
-            poll_async = self.module.params.get('poll_async')
+            poll_async = self.module.params.get("poll_async")
             if project and poll_async:
-                project = self.poll_job(project, 'project')
+                project = self.poll_job(project, "project")
         return project
 
-    def state_project(self, state='active'):
+    def state_project(self, state="active"):
         project = self.present_project()
 
-        if project['state'].lower() != state:
-            self.result['changed'] = True
+        if project["state"].lower() != state:
+            self.result["changed"] = True
 
-            args = {
-                'id': project['id']
-            }
+            args = {"id": project["id"]}
             if not self.module.check_mode:
-                if state == 'suspended':
-                    project = self.query_api('suspendProject', **args)
+                if state == "suspended":
+                    project = self.query_api("suspendProject", **args)
                 else:
-                    project = self.query_api('activateProject', **args)
+                    project = self.query_api("activateProject", **args)
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if project and poll_async:
-                    project = self.poll_job(project, 'project')
+                    project = self.poll_job(project, "project")
         return project
 
     def absent_project(self):
         project = self.get_project()
         if project:
-            self.result['changed'] = True
+            self.result["changed"] = True
 
-            args = {
-                'id': project['id'],
-                'cleanup': True
-            }
+            args = {"id": project["id"], "cleanup": True}
             if not self.module.check_mode:
-                res = self.query_api('deleteProject', **args)
+                res = self.query_api("deleteProject", **args)
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if res and poll_async:
-                    res = self.poll_job(res, 'project')
+                    res = self.poll_job(res, "project")
             return project
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        name=dict(required=True),
-        display_text=dict(),
-        state=dict(choices=['present', 'absent', 'active', 'suspended'], default='present'),
-        domain=dict(),
-        account=dict(),
-        poll_async=dict(type='bool', default=True),
-        tags=dict(type='list', elements='dict', aliases=['tag']),
-    ))
-
-    module = AnsibleModule(
-        argument_spec=argument_spec,
-        required_together=cs_required_together(),
-        supports_check_mode=True
+    argument_spec.update(
+        dict(
+            name=dict(required=True),
+            display_text=dict(),
+            state=dict(choices=["present", "absent", "active", "suspended"], default="present"),
+            domain=dict(),
+            account=dict(),
+            poll_async=dict(type="bool", default=True),
+            tags=dict(type="list", elements="dict", aliases=["tag"]),
+        )
     )
 
-    acs_project = AnsibleCloudStackProject(module)
+    module = AnsibleModule(argument_spec=argument_spec, required_together=cs_required_together(), supports_check_mode=True)
 
-    state = module.params.get('state')
-    if state in ['absent']:
-        project = acs_project.absent_project()
+    aproject = AnsibleCloudStackProject(module)
 
-    elif state in ['active', 'suspended']:
-        project = acs_project.state_project(state=state)
+    state = module.params.get("state")
+    if state in ["absent"]:
+        project = aproject.absent_project()
+
+    elif state in ["active", "suspended"]:
+        project = aproject.state_project(state=state)
 
     else:
-        project = acs_project.present_project()
+        project = aproject.present_project()
 
-    result = acs_project.get_result(project)
+    result = aproject.get_result(project)
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

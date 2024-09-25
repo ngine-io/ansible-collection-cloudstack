@@ -255,15 +255,15 @@ def main():
         ),
     )
 
-    acs_instance_nic_secondaryip = AnsibleCloudStackInstanceNicSecondaryIp(module)
+    ainstance_nic_secondaryip = AnsibleCloudStackInstanceNicSecondaryIp(module)
     state = module.params.get("state")
 
     if state == "absent":
-        nic = acs_instance_nic_secondaryip.absent_nic_ip()
+        nic = ainstance_nic_secondaryip.absent_nic_ip()
     else:
-        nic = acs_instance_nic_secondaryip.present_nic_ip()
+        nic = ainstance_nic_secondaryip.present_nic_ip()
 
-    result = acs_instance_nic_secondaryip.get_result(nic)
+    result = ainstance_nic_secondaryip.get_result(nic)
     module.exit_json(**result)
 
 

@@ -2,7 +2,7 @@ requires_ansible: ">=2.9.10"
 action_groups:
   cloudstack:
     - account
-    - affinitygroup
+    - affinity_group
     - cluster
     - configuration
     - disk_offering
@@ -15,7 +15,7 @@ action_groups:
     - instance_nic
     - instance_nic_secondaryip
     - instance_password_reset
-    - instancegroup
+    - instance_group
     - ip_address
     - iso
     - loadbalancer_rule
@@ -30,16 +30,16 @@ action_groups:
     - portforward
     - project
     - region
-    - resourcelimit
+    - resource_limit
     - role
     - role_permission
     - router
-    - securitygroup
-    - securitygroup_rule
+    - security_group
+    - security_group_rule
     - service_offering
     - snapshot_policy
-    - sshkeypair
-    - staticnat
+    - ssh_key
+    - static_nat
     - storage_pool
     - template
     - traffic_type

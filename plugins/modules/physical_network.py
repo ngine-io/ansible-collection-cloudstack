@@ -5,12 +5,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_physical_network
+module: physical_network
 short_description: Manages physical networks on Apache CloudStack based clouds.
 description:
     - Create, update and remove networks.
@@ -87,30 +88,30 @@ options:
     type: bool
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Ensure a network is present
-  ngine_io.cloudstack.cs_physical_network:
+  ngine_io.cloudstack.physical_network:
     name: net01
     zone: zone01
     isolation_method: VLAN
     broadcast_domain_range: ZONE
 
 - name: Set a tag on a network
-  ngine_io.cloudstack.cs_physical_network:
+  ngine_io.cloudstack.physical_network:
     name: net01
     zone: zone01
     tag: overlay
 
 - name: Remove tag on a network
-  ngine_io.cloudstack.cs_physical_network:
+  ngine_io.cloudstack.physical_network:
     name: net01
     zone: zone01
     tag: ""
 
 - name: Ensure a network is enabled with specific nsps enabled
-  ngine_io.cloudstack.cs_physical_network:
+  ngine_io.cloudstack.physical_network:
     name: net01
     zone: zone01
     isolation_method: VLAN
@@ -123,7 +124,7 @@ EXAMPLES = '''
       - vpcvirtualrouter
 
 - name: Ensure a network is enabled with VXLAN isolation
-  ngine_io.cloudstack.cs_physical_network:
+  ngine_io.cloudstack.physical_network:
     name: net01
     zone: zone01
     isolation_method: VXLAN
@@ -132,25 +133,25 @@ EXAMPLES = '''
     state: enabled
 
 - name: Ensure a network is disabled
-  ngine_io.cloudstack.cs_physical_network:
+  ngine_io.cloudstack.physical_network:
     name: net01
     zone: zone01
     state: disabled
 
 - name: Ensure a network is enabled
-  ngine_io.cloudstack.cs_physical_network:
+  ngine_io.cloudstack.physical_network:
     name: net01
     zone: zone01
     state: enabled
 
 - name: Ensure a network is absent
-  ngine_io.cloudstack.cs_physical_network:
+  ngine_io.cloudstack.physical_network:
     name: net01
     zone: zone01
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the network.
@@ -209,14 +210,11 @@ nsps:
       type: list
       sample:
        - internallbvm
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackPhysicalNetwork(AnsibleCloudStack):
@@ -224,11 +222,11 @@ class AnsibleCloudStackPhysicalNetwork(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackPhysicalNetwork, self).__init__(module)
         self.returns = {
-            'isolationmethods': 'isolation_method',
-            'broadcastdomainrange': 'broadcast_domain_range',
-            'networkspeed': 'network_speed',
-            'vlan': 'vlan',
-            'tags': 'tags',
+            "isolationmethods": "isolation_method",
+            "broadcastdomainrange": "broadcast_domain_range",
+            "networkspeed": "network_speed",
+            "vlan": "vlan",
+            "tags": "tags",
         }
         self.nsps = []
         self.vrouters = None
@@ -236,136 +234,126 @@ class AnsibleCloudStackPhysicalNetwork(AnsibleCloudStack):
 
     def _get_common_args(self):
         args = {
-            'name': self.module.params.get('name'),
-            'isolationmethods': self.module.params.get('isolation_method'),
-            'broadcastdomainrange': self.module.params.get('broadcast_domain_range'),
-            'networkspeed': self.module.params.get('network_speed'),
-            'tags': self.module.params.get('tags'),
-            'vlan': self.module.params.get('vlan'),
+            "name": self.module.params.get("name"),
+            "isolationmethods": self.module.params.get("isolation_method"),
+            "broadcastdomainrange": self.module.params.get("broadcast_domain_range"),
+            "networkspeed": self.module.params.get("network_speed"),
+            "tags": self.module.params.get("tags"),
+            "vlan": self.module.params.get("vlan"),
         }
 
-        state = self.module.params.get('state')
-        if state in ['enabled', 'disabled']:
-            args['state'] = state.capitalize()
+        state = self.module.params.get("state")
+        if state in ["enabled", "disabled"]:
+            args["state"] = state.capitalize()
         return args
 
     def get_physical_network(self, key=None):
-        physical_network = self.module.params.get('name')
+        physical_network = self.module.params.get("name")
         if self.physical_network:
             return self._get_by_key(key, self.physical_network)
 
-        args = {
-            'zoneid': self.get_zone(key='id')
-        }
-        physical_networks = self.query_api('listPhysicalNetworks', **args)
+        args = {"zoneid": self.get_zone(key="id")}
+        physical_networks = self.query_api("listPhysicalNetworks", **args)
         if physical_networks:
-            for net in physical_networks['physicalnetwork']:
-                if physical_network.lower() in [net['name'].lower(), net['id']]:
+            for net in physical_networks["physicalnetwork"]:
+                if physical_network.lower() in [net["name"].lower(), net["id"]]:
                     self.physical_network = net
-                    self.result['physical_network'] = net['name']
+                    self.result["physical_network"] = net["name"]
                     break
 
         return self._get_by_key(key, self.physical_network)
 
     def get_nsp(self, name=None):
         if not self.nsps:
-            args = {
-                'physicalnetworkid': self.get_physical_network(key='id')
-            }
-            res = self.query_api('listNetworkServiceProviders', **args)
+            args = {"physicalnetworkid": self.get_physical_network(key="id")}
+            res = self.query_api("listNetworkServiceProviders", **args)
 
-            self.nsps = res['networkserviceprovider']
+            self.nsps = res["networkserviceprovider"]
 
         names = []
         for nsp in self.nsps:
-            names.append(nsp['name'])
-            if nsp['name'].lower() == name.lower():
+            names.append(nsp["name"])
+            if nsp["name"].lower() == name.lower():
                 return nsp
 
         self.module.fail_json(msg="Failed: '{0}' not in network service providers list '[{1}]'".format(name, names))
 
     def update_nsp(self, name=None, state=None, service_list=None):
         nsp = self.get_nsp(name)
-        if not service_list and nsp['state'] == state:
+        if not service_list and nsp["state"] == state:
             return nsp
 
-        args = {
-            'id': nsp['id'],
-            'servicelist': service_list,
-            'state': state
-        }
+        args = {"id": nsp["id"], "servicelist": service_list, "state": state}
         if not self.module.check_mode:
-            res = self.query_api('updateNetworkServiceProvider', **args)
+            res = self.query_api("updateNetworkServiceProvider", **args)
 
-            poll_async = self.module.params.get('poll_async')
+            poll_async = self.module.params.get("poll_async")
             if poll_async:
-                nsp = self.poll_job(res, 'networkserviceprovider')
+                nsp = self.poll_job(res, "networkserviceprovider")
 
-        self.result['changed'] = True
+        self.result["changed"] = True
         return nsp
 
-    def get_vrouter_element(self, nsp_name='virtualrouter'):
+    def get_vrouter_element(self, nsp_name="virtualrouter"):
         nsp = self.get_nsp(nsp_name)
-        nspid = nsp['id']
+        nspid = nsp["id"]
         if self.vrouters is None:
             self.vrouters = dict()
-            res = self.query_api('listVirtualRouterElements', )
-            for vrouter in res['virtualrouterelement']:
-                self.vrouters[vrouter['nspid']] = vrouter
+            res = self.query_api(
+                "listVirtualRouterElements",
+            )
+            for vrouter in res["virtualrouterelement"]:
+                self.vrouters[vrouter["nspid"]] = vrouter
 
         if nspid not in self.vrouters:
             self.module.fail_json(msg="Failed: No VirtualRouterElement found for nsp '%s'" % nsp_name)
 
         return self.vrouters[nspid]
 
-    def get_loadbalancer_element(self, nsp_name='internallbvm'):
+    def get_loadbalancer_element(self, nsp_name="internallbvm"):
         nsp = self.get_nsp(nsp_name)
-        nspid = nsp['id']
+        nspid = nsp["id"]
         if self.loadbalancers is None:
             self.loadbalancers = dict()
-            res = self.query_api('listInternalLoadBalancerElements', )
-            for loadbalancer in res['internalloadbalancerelement']:
-                self.loadbalancers[loadbalancer['nspid']] = loadbalancer
+            res = self.query_api(
+                "listInternalLoadBalancerElements",
+            )
+            for loadbalancer in res["internalloadbalancerelement"]:
+                self.loadbalancers[loadbalancer["nspid"]] = loadbalancer
 
             if nspid not in self.loadbalancers:
                 self.module.fail_json(msg="Failed: No Loadbalancer found for nsp '%s'" % nsp_name)
 
         return self.loadbalancers[nspid]
 
-    def set_vrouter_element_state(self, enabled, nsp_name='virtualrouter'):
+    def set_vrouter_element_state(self, enabled, nsp_name="virtualrouter"):
         vrouter = self.get_vrouter_element(nsp_name)
-        if vrouter['enabled'] == enabled:
+        if vrouter["enabled"] == enabled:
             return vrouter
 
-        args = {
-            'id': vrouter['id'],
-            'enabled': enabled
-        }
+        args = {"id": vrouter["id"], "enabled": enabled}
         if not self.module.check_mode:
-            res = self.query_api('configureVirtualRouterElement', **args)
-            poll_async = self.module.params.get('poll_async')
+            res = self.query_api("configureVirtualRouterElement", **args)
+            poll_async = self.module.params.get("poll_async")
             if poll_async:
-                vrouter = self.poll_job(res, 'virtualrouterelement')
+                vrouter = self.poll_job(res, "virtualrouterelement")
 
-        self.result['changed'] = True
+        self.result["changed"] = True
         return vrouter
 
-    def set_loadbalancer_element_state(self, enabled, nsp_name='internallbvm'):
+    def set_loadbalancer_element_state(self, enabled, nsp_name="internallbvm"):
         loadbalancer = self.get_loadbalancer_element(nsp_name=nsp_name)
-        if loadbalancer['enabled'] == enabled:
+        if loadbalancer["enabled"] == enabled:
             return loadbalancer
 
-        args = {
-            'id': loadbalancer['id'],
-            'enabled': enabled
-        }
+        args = {"id": loadbalancer["id"], "enabled": enabled}
         if not self.module.check_mode:
-            res = self.query_api('configureInternalLoadBalancerElement', **args)
-            poll_async = self.module.params.get('poll_async')
+            res = self.query_api("configureInternalLoadBalancerElement", **args)
+            poll_async = self.module.params.get("poll_async")
             if poll_async:
-                loadbalancer = self.poll_job(res, 'internalloadbalancerelement')
+                loadbalancer = self.poll_job(res, "internalloadbalancerelement")
 
-        self.result['changed'] = True
+        self.result["changed"] = True
         return loadbalancer
 
     def present_network(self):
@@ -377,108 +365,106 @@ class AnsibleCloudStackPhysicalNetwork(AnsibleCloudStack):
         return network
 
     def _create_network(self):
-        self.result['changed'] = True
-        args = dict(zoneid=self.get_zone(key='id'))
+        self.result["changed"] = True
+        args = dict(zoneid=self.get_zone(key="id"))
         args.update(self._get_common_args())
-        if self.get_domain(key='id'):
-            args['domainid'] = self.get_domain(key='id')
+        if self.get_domain(key="id"):
+            args["domainid"] = self.get_domain(key="id")
 
         if not self.module.check_mode:
-            resource = self.query_api('createPhysicalNetwork', **args)
+            resource = self.query_api("createPhysicalNetwork", **args)
 
-            poll_async = self.module.params.get('poll_async')
+            poll_async = self.module.params.get("poll_async")
             if poll_async:
-                self.network = self.poll_job(resource, 'physicalnetwork')
+                self.network = self.poll_job(resource, "physicalnetwork")
 
         return self.network
 
     def _update_network(self):
         network = self.get_physical_network()
 
-        args = dict(id=network['id'])
+        args = dict(id=network["id"])
         args.update(self._get_common_args())
 
         if self.has_changed(args, network):
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             if not self.module.check_mode:
-                resource = self.query_api('updatePhysicalNetwork', **args)
+                resource = self.query_api("updatePhysicalNetwork", **args)
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    self.physical_network = self.poll_job(resource, 'physicalnetwork')
+                    self.physical_network = self.poll_job(resource, "physicalnetwork")
         return self.physical_network
 
     def absent_network(self):
         physical_network = self.get_physical_network()
         if physical_network:
-            self.result['changed'] = True
+            self.result["changed"] = True
             args = {
-                'id': physical_network['id'],
+                "id": physical_network["id"],
             }
             if not self.module.check_mode:
-                resource = self.query_api('deletePhysicalNetwork', **args)
-                poll_async = self.module.params.get('poll_async')
+                resource = self.query_api("deletePhysicalNetwork", **args)
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    self.poll_job(resource, 'success')
+                    self.poll_job(resource, "success")
 
         return physical_network
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        name=dict(required=True, aliases=['physical_network']),
-        zone=dict(required=True),
-        domain=dict(),
-        vlan=dict(),
-        nsps_disabled=dict(type='list', elements='str'),
-        nsps_enabled=dict(type='list', elements='str'),
-        network_speed=dict(choices=['1G', '10G']),
-        broadcast_domain_range=dict(choices=['POD', 'ZONE']),
-        isolation_method=dict(choices=['VLAN', 'VXLAN', 'GRE', 'L3']),
-        state=dict(choices=['present', 'enabled', 'disabled', 'absent'], default='present'),
-        tags=dict(aliases=['tag']),
-        poll_async=dict(type='bool', default=True),
-    ))
-
-    module = AnsibleModule(
-        argument_spec=argument_spec,
-        required_together=cs_required_together(),
-        supports_check_mode=True
+    argument_spec.update(
+        dict(
+            name=dict(required=True, aliases=["physical_network"]),
+            zone=dict(required=True),
+            domain=dict(),
+            vlan=dict(),
+            nsps_disabled=dict(type="list", elements="str"),
+            nsps_enabled=dict(type="list", elements="str"),
+            network_speed=dict(choices=["1G", "10G"]),
+            broadcast_domain_range=dict(choices=["POD", "ZONE"]),
+            isolation_method=dict(choices=["VLAN", "VXLAN", "GRE", "L3"]),
+            state=dict(choices=["present", "enabled", "disabled", "absent"], default="present"),
+            tags=dict(aliases=["tag"]),
+            poll_async=dict(type="bool", default=True),
+        )
     )
 
-    acs_network = AnsibleCloudStackPhysicalNetwork(module)
-    state = module.params.get('state')
-    nsps_disabled = module.params.get('nsps_disabled', [])
-    nsps_enabled = module.params.get('nsps_enabled', [])
+    module = AnsibleModule(argument_spec=argument_spec, required_together=cs_required_together(), supports_check_mode=True)
 
-    if state in ['absent']:
+    acs_network = AnsibleCloudStackPhysicalNetwork(module)
+    state = module.params.get("state")
+    nsps_disabled = module.params.get("nsps_disabled", [])
+    nsps_enabled = module.params.get("nsps_enabled", [])
+
+    if state in ["absent"]:
         network = acs_network.absent_network()
     else:
         network = acs_network.present_network()
     if nsps_disabled is not None:
         for name in nsps_disabled:
-            acs_network.update_nsp(name=name, state='Disabled')
+            acs_network.update_nsp(name=name, state="Disabled")
 
     if nsps_enabled is not None:
         for nsp_name in nsps_enabled:
-            if nsp_name.lower() in ['virtualrouter', 'vpcvirtualrouter']:
+            if nsp_name.lower() in ["virtualrouter", "vpcvirtualrouter"]:
                 acs_network.set_vrouter_element_state(enabled=True, nsp_name=nsp_name)
-            elif nsp_name.lower() == 'internallbvm':
+            elif nsp_name.lower() == "internallbvm":
                 acs_network.set_loadbalancer_element_state(enabled=True, nsp_name=nsp_name)
 
-            acs_network.update_nsp(name=nsp_name, state='Enabled')
+            acs_network.update_nsp(name=nsp_name, state="Enabled")
 
     result = acs_network.get_result(network)
 
     if nsps_enabled:
-        result['nsps_enabled'] = nsps_enabled
+        result["nsps_enabled"] = nsps_enabled
     if nsps_disabled:
-        result['nsps_disabled'] = nsps_disabled
+        result["nsps_disabled"] = nsps_disabled
 
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

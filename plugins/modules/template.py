@@ -11,7 +11,7 @@ __metaclass__ = type
 
 DOCUMENTATION = '''
 ---
-module: cs_template
+module: template
 short_description: Manages templates on Apache CloudStack based clouds.
 description:
   - Register templates from an URL.
@@ -189,7 +189,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: register a systemvm template
-  ngine_io.cloudstack.cs_template:
+  ngine_io.cloudstack.template:
     name: systemvm-vmware-4.5
     url: "http://packages.shapeblue.com/systemvmtemplate/4.5/systemvm64template-4.5-vmware.ova"
     hypervisor: VMware
@@ -198,7 +198,7 @@ EXAMPLES = '''
     os_type: Debian GNU/Linux 7(64-bit)
 
 - name: Create a template from a stopped virtual machine's volume
-  ngine_io.cloudstack.cs_template:
+  ngine_io.cloudstack.template:
     name: Debian 9 (64-bit) 20GB ({{ ansible_date_time.date }})
     vm: debian-9-base-vm
     os_type: Debian GNU/Linux 9 (64-bit)
@@ -209,7 +209,7 @@ EXAMPLES = '''
 
 # Note: Use template_find_option(s) when a template name is not unique
 - name: Create a template from a stopped virtual machine's volume
-  ngine_io.cloudstack.cs_template:
+  ngine_io.cloudstack.template:
     name: Debian 9 (64-bit)
     display_text: Debian 9 (64-bit) 20GB ({{ ansible_date_time.date }})
     template_find_option: display_text
@@ -220,7 +220,7 @@ EXAMPLES = '''
     is_public: yes
 
 - name: create a template from a virtual machine's root volume snapshot
-  ngine_io.cloudstack.cs_template:
+  ngine_io.cloudstack.template:
     name: Debian 9 (64-bit) Snapshot ROOT-233_2015061509114
     snapshot: ROOT-233_2015061509114
     os_type: Debian GNU/Linux 9 (64-bit)
@@ -229,7 +229,7 @@ EXAMPLES = '''
     is_public: yes
 
 - name: Remove a template
-  ngine_io.cloudstack.cs_template:
+  ngine_io.cloudstack.template:
     name: systemvm-4.2
     cross_zones: yes
     state: absent

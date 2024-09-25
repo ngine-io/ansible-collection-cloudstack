@@ -5,12 +5,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_securitygroup
+module: security_group
 short_description: Manages security groups on Apache CloudStack based clouds.
 description:
     - Create and remove security groups.
@@ -46,21 +47,21 @@ options:
     type: str
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: create a security group
-  ngine_io.cloudstack.cs_securitygroup:
+  ngine_io.cloudstack.securitygroup:
     name: default
     description: default security group
 
 - name: remove a security group
-  ngine_io.cloudstack.cs_securitygroup:
+  ngine_io.cloudstack.securitygroup:
     name: default
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the security group.
@@ -97,9 +98,10 @@ account:
   returned: success
   type: str
   sample: example account
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
+
 from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
@@ -113,74 +115,72 @@ class AnsibleCloudStackSecurityGroup(AnsibleCloudStack):
         if not self.security_group:
 
             args = {
-                'projectid': self.get_project(key='id'),
-                'account': self.get_account(key='name'),
-                'domainid': self.get_domain(key='id'),
-                'securitygroupname': self.module.params.get('name'),
+                "projectid": self.get_project(key="id"),
+                "account": self.get_account(key="name"),
+                "domainid": self.get_domain(key="id"),
+                "securitygroupname": self.module.params.get("name"),
             }
-            sgs = self.query_api('listSecurityGroups', **args)
+            sgs = self.query_api("listSecurityGroups", **args)
             if sgs:
-                self.security_group = sgs['securitygroup'][0]
+                self.security_group = sgs["securitygroup"][0]
         return self.security_group
 
     def create_security_group(self):
         security_group = self.get_security_group()
         if not security_group:
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             args = {
-                'name': self.module.params.get('name'),
-                'projectid': self.get_project(key='id'),
-                'account': self.get_account(key='name'),
-                'domainid': self.get_domain(key='id'),
-                'description': self.module.params.get('description'),
+                "name": self.module.params.get("name"),
+                "projectid": self.get_project(key="id"),
+                "account": self.get_account(key="name"),
+                "domainid": self.get_domain(key="id"),
+                "description": self.module.params.get("description"),
             }
 
             if not self.module.check_mode:
-                res = self.query_api('createSecurityGroup', **args)
-                security_group = res['securitygroup']
+                res = self.query_api("createSecurityGroup", **args)
+                security_group = res["securitygroup"]
 
         return security_group
 
     def remove_security_group(self):
         security_group = self.get_security_group()
         if security_group:
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             args = {
-                'name': self.module.params.get('name'),
-                'projectid': self.get_project(key='id'),
-                'account': self.get_account(key='name'),
-                'domainid': self.get_domain(key='id'),
+                "name": self.module.params.get("name"),
+                "projectid": self.get_project(key="id"),
+                "account": self.get_account(key="name"),
+                "domainid": self.get_domain(key="id"),
             }
 
             if not self.module.check_mode:
-                self.query_api('deleteSecurityGroup', **args)
+                self.query_api("deleteSecurityGroup", **args)
 
         return security_group
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        name=dict(required=True),
-        description=dict(),
-        state=dict(choices=['present', 'absent'], default='present'),
-        project=dict(),
-        account=dict(),
-        domain=dict(),
-    ))
-
-    module = AnsibleModule(
-        argument_spec=argument_spec,
-        required_together=cs_required_together(),
-        supports_check_mode=True
+    argument_spec.update(
+        dict(
+            name=dict(required=True),
+            description=dict(),
+            state=dict(choices=["present", "absent"], default="present"),
+            project=dict(),
+            account=dict(),
+            domain=dict(),
+        )
     )
+
+    module = AnsibleModule(argument_spec=argument_spec, required_together=cs_required_together(), supports_check_mode=True)
 
     acs_sg = AnsibleCloudStackSecurityGroup(module)
 
-    state = module.params.get('state')
-    if state in ['absent']:
+    state = module.params.get("state")
+    if state in ["absent"]:
         sg = acs_sg.remove_security_group()
     else:
         sg = acs_sg.create_security_group()
@@ -189,5 +189,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

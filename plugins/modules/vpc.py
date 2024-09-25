@@ -5,12 +5,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_vpc
+module: vpc
 short_description: "Manages VPCs on Apache CloudStack based clouds."
 description:
   - Create, update and delete VPCs.
@@ -91,11 +92,11 @@ options:
     type: bool
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Ensure a VPC is present but not started after creating
-  ngine_io.cloudstack.cs_vpc:
+  ngine_io.cloudstack.vpc:
     name: my_vpc
     zone: zone01
     display_text: My example VPC
@@ -103,27 +104,27 @@ EXAMPLES = '''
     state: stopped
 
 - name: Ensure a VPC is present and started after creating
-  ngine_io.cloudstack.cs_vpc:
+  ngine_io.cloudstack.vpc:
     name: my_vpc
     zone: zone01
     display_text: My example VPC
     cidr: 10.10.0.0/16
 
 - name: Ensure a VPC is absent
-  ngine_io.cloudstack.cs_vpc:
+  ngine_io.cloudstack.vpc:
     name: my_vpc
     zone: zone01
     state: absent
 
 - name: Ensure a VPC is restarted with clean up
-  ngine_io.cloudstack.cs_vpc:
+  ngine_io.cloudstack.vpc:
     name: my_vpc
     zone: zone01
     clean_up: yes
     state: restarted
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: "UUID of the VPC."
@@ -200,14 +201,11 @@ tags:
   returned: success
   type: list
   sample: '[ { "key": "foo", "value": "bar" } ]'
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together,
-)
+
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackVpc(AnsibleCloudStack):
@@ -215,34 +213,34 @@ class AnsibleCloudStackVpc(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackVpc, self).__init__(module)
         self.returns = {
-            'cidr': 'cidr',
-            'networkdomain': 'network_domain',
-            'redundantvpcrouter': 'redundant_vpc_router',
-            'distributedvpcrouter': 'distributed_vpc_router',
-            'regionlevelvpc': 'region_level_vpc',
-            'restartrequired': 'restart_required',
+            "cidr": "cidr",
+            "networkdomain": "network_domain",
+            "redundantvpcrouter": "redundant_vpc_router",
+            "distributedvpcrouter": "distributed_vpc_router",
+            "regionlevelvpc": "region_level_vpc",
+            "restartrequired": "restart_required",
         }
         self.vpc = None
 
     def get_vpc_offering(self, key=None):
-        vpc_offering = self.module.params.get('vpc_offering')
+        vpc_offering = self.module.params.get("vpc_offering")
         args = {
-            'state': 'Enabled',
+            "state": "Enabled",
         }
         if vpc_offering:
-            args['name'] = vpc_offering
+            args["name"] = vpc_offering
             fail_msg = "VPC offering not found or not enabled: %s" % vpc_offering
         else:
-            args['isdefault'] = True
+            args["isdefault"] = True
             fail_msg = "No enabled default VPC offering found"
 
-        vpc_offerings = self.query_api('listVPCOfferings', **args)
+        vpc_offerings = self.query_api("listVPCOfferings", **args)
         if vpc_offerings:
             # The API name argument filter also matches substrings, we have to
             # iterate over the results to get an exact match
-            for vo in vpc_offerings['vpcoffering']:
-                if 'name' in args:
-                    if args['name'] == vo['name']:
+            for vo in vpc_offerings["vpcoffering"]:
+                if "name" in args:
+                    if args["name"] == vo["name"]:
                         return self._get_by_key(key, vo)
                 #  Return the first offering found, if not queried for the name
                 else:
@@ -253,17 +251,17 @@ class AnsibleCloudStackVpc(AnsibleCloudStack):
         if self.vpc:
             return self.vpc
         args = {
-            'account': self.get_account(key='name'),
-            'domainid': self.get_domain(key='id'),
-            'projectid': self.get_project(key='id'),
-            'zoneid': self.get_zone(key='id'),
-            'fetch_list': True,
+            "account": self.get_account(key="name"),
+            "domainid": self.get_domain(key="id"),
+            "projectid": self.get_project(key="id"),
+            "zoneid": self.get_zone(key="id"),
+            "fetch_list": True,
         }
-        vpcs = self.query_api('listVPCs', **args)
+        vpcs = self.query_api("listVPCs", **args)
         if vpcs:
-            vpc_name = self.module.params.get('name')
+            vpc_name = self.module.params.get("name")
             for v in vpcs:
-                if vpc_name in [v['name'], v['displaytext'], v['id']]:
+                if vpc_name in [v["name"], v["displaytext"], v["id"]]:
                     # Fail if the identifier matches more than one VPC
                     if self.vpc:
                         self.module.fail_json(msg="More than one VPC found with the provided identifyer: %s" % vpc_name)
@@ -272,18 +270,18 @@ class AnsibleCloudStackVpc(AnsibleCloudStack):
         return self.vpc
 
     def restart_vpc(self):
-        self.result['changed'] = True
+        self.result["changed"] = True
         vpc = self.get_vpc()
         if vpc and not self.module.check_mode:
             args = {
-                'id': vpc['id'],
-                'cleanup': self.module.params.get('clean_up'),
+                "id": vpc["id"],
+                "cleanup": self.module.params.get("clean_up"),
             }
-            res = self.query_api('restartVPC', **args)
+            res = self.query_api("restartVPC", **args)
 
-            poll_async = self.module.params.get('poll_async')
+            poll_async = self.module.params.get("poll_async")
             if poll_async:
-                self.poll_job(res, 'vpc')
+                self.poll_job(res, "vpc")
         return vpc
 
     def present_vpc(self):
@@ -294,102 +292,104 @@ class AnsibleCloudStackVpc(AnsibleCloudStack):
             vpc = self._update_vpc(vpc)
 
         if vpc:
-            vpc = self.ensure_tags(resource=vpc, resource_type='Vpc')
+            vpc = self.ensure_tags(resource=vpc, resource_type="Vpc")
         return vpc
 
     def _create_vpc(self, vpc):
-        self.result['changed'] = True
+        self.result["changed"] = True
         args = {
-            'name': self.module.params.get('name'),
-            'displaytext': self.get_or_fallback('display_text', 'name'),
-            'networkdomain': self.module.params.get('network_domain'),
-            'vpcofferingid': self.get_vpc_offering(key='id'),
-            'cidr': self.module.params.get('cidr'),
-            'account': self.get_account(key='name'),
-            'domainid': self.get_domain(key='id'),
-            'projectid': self.get_project(key='id'),
-            'zoneid': self.get_zone(key='id'),
-            'start': self.module.params.get('state') != 'stopped'
+            "name": self.module.params.get("name"),
+            "displaytext": self.get_or_fallback("display_text", "name"),
+            "networkdomain": self.module.params.get("network_domain"),
+            "vpcofferingid": self.get_vpc_offering(key="id"),
+            "cidr": self.module.params.get("cidr"),
+            "account": self.get_account(key="name"),
+            "domainid": self.get_domain(key="id"),
+            "projectid": self.get_project(key="id"),
+            "zoneid": self.get_zone(key="id"),
+            "start": self.module.params.get("state") != "stopped",
         }
-        self.result['diff']['after'] = args
+        self.result["diff"]["after"] = args
         if not self.module.check_mode:
-            res = self.query_api('createVPC', **args)
+            res = self.query_api("createVPC", **args)
 
-            poll_async = self.module.params.get('poll_async')
+            poll_async = self.module.params.get("poll_async")
             if poll_async:
-                vpc = self.poll_job(res, 'vpc')
+                vpc = self.poll_job(res, "vpc")
         return vpc
 
     def _update_vpc(self, vpc):
         args = {
-            'id': vpc['id'],
-            'displaytext': self.module.params.get('display_text'),
+            "id": vpc["id"],
+            "displaytext": self.module.params.get("display_text"),
         }
         if self.has_changed(args, vpc):
-            self.result['changed'] = True
+            self.result["changed"] = True
             if not self.module.check_mode:
-                res = self.query_api('updateVPC', **args)
+                res = self.query_api("updateVPC", **args)
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    vpc = self.poll_job(res, 'vpc')
+                    vpc = self.poll_job(res, "vpc")
         return vpc
 
     def absent_vpc(self):
         vpc = self.get_vpc()
         if vpc:
-            self.result['changed'] = True
-            self.result['diff']['before'] = vpc
+            self.result["changed"] = True
+            self.result["diff"]["before"] = vpc
             if not self.module.check_mode:
-                res = self.query_api('deleteVPC', id=vpc['id'])
+                res = self.query_api("deleteVPC", id=vpc["id"])
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    self.poll_job(res, 'vpc')
+                    self.poll_job(res, "vpc")
         return vpc
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        name=dict(required=True),
-        cidr=dict(),
-        display_text=dict(),
-        vpc_offering=dict(),
-        network_domain=dict(),
-        clean_up=dict(type='bool'),
-        state=dict(choices=['present', 'absent', 'stopped', 'restarted'], default='present'),
-        domain=dict(),
-        account=dict(),
-        project=dict(),
-        zone=dict(required=True),
-        tags=dict(type='list', elements='dict', aliases=['tag']),
-        poll_async=dict(type='bool', default=True),
-    ))
+    argument_spec.update(
+        dict(
+            name=dict(required=True),
+            cidr=dict(),
+            display_text=dict(),
+            vpc_offering=dict(),
+            network_domain=dict(),
+            clean_up=dict(type="bool"),
+            state=dict(choices=["present", "absent", "stopped", "restarted"], default="present"),
+            domain=dict(),
+            account=dict(),
+            project=dict(),
+            zone=dict(required=True),
+            tags=dict(type="list", elements="dict", aliases=["tag"]),
+            poll_async=dict(type="bool", default=True),
+        )
+    )
 
     module = AnsibleModule(
         argument_spec=argument_spec,
         required_together=cs_required_together(),
         required_if=[
-            ('state', 'present', ['cidr']),
+            ("state", "present", ["cidr"]),
         ],
         supports_check_mode=True,
     )
 
-    acs_vpc = AnsibleCloudStackVpc(module)
+    avpc = AnsibleCloudStackVpc(module)
 
-    state = module.params.get('state')
-    if state == 'absent':
-        vpc = acs_vpc.absent_vpc()
-    elif state == 'restarted':
-        vpc = acs_vpc.restart_vpc()
+    state = module.params.get("state")
+    if state == "absent":
+        vpc = avpc.absent_vpc()
+    elif state == "restarted":
+        vpc = avpc.restart_vpc()
     else:
-        vpc = acs_vpc.present_vpc()
+        vpc = avpc.present_vpc()
 
-    result = acs_vpc.get_result(vpc)
+    result = avpc.get_result(vpc)
 
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

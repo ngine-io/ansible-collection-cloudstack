@@ -11,7 +11,7 @@ __metaclass__ = type
 
 DOCUMENTATION = '''
 ---
-module: cs_instance
+module: instance
 short_description: Manages instances and virtual machines on Apache CloudStack based clouds.
 description:
     - Deploy, start, update, scale, restart, restore, stop and destroy instances.
@@ -227,7 +227,7 @@ extends_documentation_fragment:
 EXAMPLES = '''
 # NOTE: Names of offerings and ISOs depending on the CloudStack configuration.
 - name: create a instance from an ISO
-  ngine_io.cloudstack.cs_instance:
+  ngine_io.cloudstack.instance:
     name: web-vm-1
     iso: Linux Debian 7 64-bit
     hypervisor: VMware
@@ -242,7 +242,7 @@ EXAMPLES = '''
       - Storage Integration
 
 - name: for changing a running instance, use the 'force' parameter
-  ngine_io.cloudstack.cs_instance:
+  ngine_io.cloudstack.instance:
     name: web-vm-1
     zone: zone01
     display_name: web-vm-01.example.com
@@ -252,7 +252,7 @@ EXAMPLES = '''
 
 # NOTE: user_data can be used to kickstart the instance using cloud-init yaml config.
 - name: create or update a instance on Exoscale's public cloud using display_name.
-  ngine_io.cloudstack.cs_instance:
+  ngine_io.cloudstack.instance:
     display_name: web-vm-1
     zone: zone01
     template: Linux Debian 7 64-bit
@@ -269,7 +269,7 @@ EXAMPLES = '''
           - nginx
 
 - name: create an instance with multiple interfaces specifying the IP addresses
-  ngine_io.cloudstack.cs_instance:
+  ngine_io.cloudstack.instance:
     name: web-vm-1
     zone: zone01
     template: Linux Debian 7 64-bit
@@ -281,19 +281,19 @@ EXAMPLES = '''
         ip: 192.0.2.1
 
 - name: ensure an instance is stopped
-  ngine_io.cloudstack.cs_instance:
+  ngine_io.cloudstack.instance:
     name: web-vm-1
     zone: zone01
     state: stopped
 
 - name: ensure an instance is running
-  ngine_io.cloudstack.cs_instance:
+  ngine_io.cloudstack.instance:
     name: web-vm-1
     zone: zone01
     state: started
 
 - name: remove an instance
-  ngine_io.cloudstack.cs_instance:
+  ngine_io.cloudstack.instance:
     name: web-vm-1
     zone: zone01
     state: absent
@@ -1182,39 +1182,39 @@ def main():
         supports_check_mode=True
     )
 
-    acs_instance = AnsibleCloudStackInstance(module)
+    ainstance = AnsibleCloudStackInstance(module)
 
     state = module.params.get('state')
 
     if state in ['absent', 'destroyed']:
-        instance = acs_instance.absent_instance()
+        instance = ainstance.absent_instance()
 
     elif state in ['expunged']:
-        instance = acs_instance.expunge_instance()
+        instance = ainstance.expunge_instance()
 
     elif state in ['restored']:
-        acs_instance.present_instance()
-        instance = acs_instance.restore_instance()
+        ainstance.present_instance()
+        instance = ainstance.restore_instance()
 
     elif state in ['present', 'deployed']:
-        instance = acs_instance.present_instance()
+        instance = ainstance.present_instance()
 
     elif state in ['stopped']:
-        acs_instance.present_instance(start_vm=False)
-        instance = acs_instance.stop_instance()
+        ainstance.present_instance(start_vm=False)
+        instance = ainstance.stop_instance()
 
     elif state in ['started']:
-        acs_instance.present_instance()
-        instance = acs_instance.start_instance()
+        ainstance.present_instance()
+        instance = ainstance.start_instance()
 
     elif state in ['restarted']:
-        acs_instance.present_instance()
-        instance = acs_instance.restart_instance()
+        ainstance.present_instance()
+        instance = ainstance.restart_instance()
 
     if instance and 'state' in instance and instance['state'].lower() == 'error':
         module.fail_json(msg="Instance named '%s' in error state." % module.params.get('name'))
 
-    result = acs_instance.get_result(instance)
+    result = ainstance.get_result(instance)
     module.exit_json(**result)
 
 

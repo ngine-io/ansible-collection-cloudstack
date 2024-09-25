@@ -9,9 +9,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_service_offering
+module: service_offering
 description:
   - Create and delete service offerings for guest and system VMs.
   - Update display_text of existing service offering.
@@ -168,11 +168,11 @@ options:
     type: bool
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Create a non-volatile compute service offering with local storage
-  ngine_io.cloudstack.cs_service_offering:
+  ngine_io.cloudstack.service_offering:
     name: Micro
     display_text: Micro 512mb 1cpu
     cpu_number: 1
@@ -182,7 +182,7 @@ EXAMPLES = '''
     storage_type: local
 
 - name: Create a volatile compute service offering with shared storage
-  ngine_io.cloudstack.cs_service_offering:
+  ngine_io.cloudstack.service_offering:
     name: Tiny
     display_text: Tiny 1gb 1cpu
     cpu_number: 1
@@ -194,7 +194,7 @@ EXAMPLES = '''
     storage_tags: eco
 
 - name: Create or update a volatile compute service offering with shared storage
-  ngine_io.cloudstack.cs_service_offering:
+  ngine_io.cloudstack.service_offering:
     name: Tiny
     display_text: Tiny 1gb 1cpu
     cpu_number: 1
@@ -206,7 +206,7 @@ EXAMPLES = '''
     storage_tags: eco
 
 - name: Create or update a custom compute service offering
-  ngine_io.cloudstack.cs_service_offering:
+  ngine_io.cloudstack.service_offering:
     name: custom
     display_text: custom compute offer
     is_customized: yes
@@ -215,12 +215,12 @@ EXAMPLES = '''
     storage_tags: eco
 
 - name: Remove a compute service offering
-  ngine_io.cloudstack.cs_service_offering:
+  ngine_io.cloudstack.service_offering:
     name: Tiny
     state: absent
 
 - name: Create or update a system offering for the console proxy
-  ngine_io.cloudstack.cs_service_offering:
+  ngine_io.cloudstack.service_offering:
     name: System Offering for Console Proxy 2GB
     display_text: System Offering for Console Proxy 2GB RAM
     is_system: yes
@@ -232,13 +232,13 @@ EXAMPLES = '''
     storage_tags: perf
 
 - name: Remove a system offering
-  ngine_io.cloudstack.cs_service_offering:
+  ngine_io.cloudstack.service_offering:
     name: System Offering for Console Proxy 2GB
     is_system: yes
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the service offering
@@ -375,12 +375,11 @@ is_customized:
   returned: success
   type: bool
   sample: false
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
-                                       cs_required_together)
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackServiceOffering(AnsibleCloudStack):
@@ -388,41 +387,41 @@ class AnsibleCloudStackServiceOffering(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackServiceOffering, self).__init__(module)
         self.returns = {
-            'cpunumber': 'cpu_number',
-            'cpuspeed': 'cpu_speed',
-            'deploymentplanner': 'deployment_planner',
-            'diskBytesReadRate': 'disk_bytes_read_rate',
-            'diskBytesWriteRate': 'disk_bytes_write_rate',
-            'diskIopsReadRate': 'disk_iops_read_rate',
-            'diskIopsWriteRate': 'disk_iops_write_rate',
-            'maxiops': 'disk_iops_max',
-            'miniops': 'disk_iops_min',
-            'hypervisorsnapshotreserve': 'hypervisor_snapshot_reserve',
-            'iscustomized': 'is_customized',
-            'iscustomizediops': 'is_iops_customized',
-            'issystem': 'is_system',
-            'isvolatile': 'is_volatile',
-            'limitcpuuse': 'limit_cpu_usage',
-            'memory': 'memory',
-            'networkrate': 'network_rate',
-            'offerha': 'offer_ha',
-            'provisioningtype': 'provisioning_type',
-            'serviceofferingdetails': 'service_offering_details',
-            'storagetype': 'storage_type',
-            'systemvmtype': 'system_vm_type',
-            'tags': 'storage_tags',
+            "cpunumber": "cpu_number",
+            "cpuspeed": "cpu_speed",
+            "deploymentplanner": "deployment_planner",
+            "diskBytesReadRate": "disk_bytes_read_rate",
+            "diskBytesWriteRate": "disk_bytes_write_rate",
+            "diskIopsReadRate": "disk_iops_read_rate",
+            "diskIopsWriteRate": "disk_iops_write_rate",
+            "maxiops": "disk_iops_max",
+            "miniops": "disk_iops_min",
+            "hypervisorsnapshotreserve": "hypervisor_snapshot_reserve",
+            "iscustomized": "is_customized",
+            "iscustomizediops": "is_iops_customized",
+            "issystem": "is_system",
+            "isvolatile": "is_volatile",
+            "limitcpuuse": "limit_cpu_usage",
+            "memory": "memory",
+            "networkrate": "network_rate",
+            "offerha": "offer_ha",
+            "provisioningtype": "provisioning_type",
+            "serviceofferingdetails": "service_offering_details",
+            "storagetype": "storage_type",
+            "systemvmtype": "system_vm_type",
+            "tags": "storage_tags",
         }
 
     def get_service_offering(self):
         args = {
-            'name': self.module.params.get('name'),
-            'domainid': self.get_domain(key='id'),
-            'issystem': self.module.params.get('is_system'),
-            'systemvmtype': self.module.params.get('system_vm_type'),
+            "name": self.module.params.get("name"),
+            "domainid": self.get_domain(key="id"),
+            "issystem": self.module.params.get("is_system"),
+            "systemvmtype": self.module.params.get("system_vm_type"),
         }
-        service_offerings = self.query_api('listServiceOfferings', **args)
+        service_offerings = self.query_api("listServiceOfferings", **args)
         if service_offerings:
-            return service_offerings['serviceoffering'][0]
+            return service_offerings["serviceoffering"][0]
 
     def present_service_offering(self):
         service_offering = self.get_service_offering()
@@ -436,135 +435,133 @@ class AnsibleCloudStackServiceOffering(AnsibleCloudStack):
     def absent_service_offering(self):
         service_offering = self.get_service_offering()
         if service_offering:
-            self.result['changed'] = True
+            self.result["changed"] = True
             if not self.module.check_mode:
                 args = {
-                    'id': service_offering['id'],
+                    "id": service_offering["id"],
                 }
-                self.query_api('deleteServiceOffering', **args)
+                self.query_api("deleteServiceOffering", **args)
         return service_offering
 
     def _create_offering(self, service_offering):
-        self.result['changed'] = True
+        self.result["changed"] = True
 
-        system_vm_type = self.module.params.get('system_vm_type')
-        is_system = self.module.params.get('is_system')
+        system_vm_type = self.module.params.get("system_vm_type")
+        is_system = self.module.params.get("is_system")
 
         required_params = []
         if is_system and not system_vm_type:
-            required_params.append('system_vm_type')
+            required_params.append("system_vm_type")
         self.module.fail_on_missing_params(required_params=required_params)
 
         args = {
-            'name': self.module.params.get('name'),
-            'displaytext': self.get_or_fallback('display_text', 'name'),
-            'bytesreadrate': self.module.params.get('disk_bytes_read_rate'),
-            'byteswriterate': self.module.params.get('disk_bytes_write_rate'),
-            'cpunumber': self.module.params.get('cpu_number'),
-            'cpuspeed': self.module.params.get('cpu_speed'),
-            'customizediops': self.module.params.get('is_iops_customized'),
-            'deploymentplanner': self.module.params.get('deployment_planner'),
-            'domainid': self.get_domain(key='id'),
-            'hosttags': self.module.params.get('host_tags'),
-            'hypervisorsnapshotreserve': self.module.params.get('hypervisor_snapshot_reserve'),
-            'iopsreadrate': self.module.params.get('disk_iops_read_rate'),
-            'iopswriterate': self.module.params.get('disk_iops_write_rate'),
-            'maxiops': self.module.params.get('disk_iops_max'),
-            'miniops': self.module.params.get('disk_iops_min'),
-            'issystem': is_system,
-            'isvolatile': self.module.params.get('is_volatile'),
-            'memory': self.module.params.get('memory'),
-            'networkrate': self.module.params.get('network_rate'),
-            'offerha': self.module.params.get('offer_ha'),
-            'provisioningtype': self.module.params.get('provisioning_type'),
-            'serviceofferingdetails': self.module.params.get('service_offering_details'),
-            'storagetype': self.module.params.get('storage_type'),
-            'systemvmtype': system_vm_type,
-            'tags': self.module.params.get('storage_tags'),
-            'limitcpuuse': self.module.params.get('limit_cpu_usage'),
-            'customized': self.module.params.get('is_customized')
+            "name": self.module.params.get("name"),
+            "displaytext": self.get_or_fallback("display_text", "name"),
+            "bytesreadrate": self.module.params.get("disk_bytes_read_rate"),
+            "byteswriterate": self.module.params.get("disk_bytes_write_rate"),
+            "cpunumber": self.module.params.get("cpu_number"),
+            "cpuspeed": self.module.params.get("cpu_speed"),
+            "customizediops": self.module.params.get("is_iops_customized"),
+            "deploymentplanner": self.module.params.get("deployment_planner"),
+            "domainid": self.get_domain(key="id"),
+            "hosttags": self.module.params.get("host_tags"),
+            "hypervisorsnapshotreserve": self.module.params.get("hypervisor_snapshot_reserve"),
+            "iopsreadrate": self.module.params.get("disk_iops_read_rate"),
+            "iopswriterate": self.module.params.get("disk_iops_write_rate"),
+            "maxiops": self.module.params.get("disk_iops_max"),
+            "miniops": self.module.params.get("disk_iops_min"),
+            "issystem": is_system,
+            "isvolatile": self.module.params.get("is_volatile"),
+            "memory": self.module.params.get("memory"),
+            "networkrate": self.module.params.get("network_rate"),
+            "offerha": self.module.params.get("offer_ha"),
+            "provisioningtype": self.module.params.get("provisioning_type"),
+            "serviceofferingdetails": self.module.params.get("service_offering_details"),
+            "storagetype": self.module.params.get("storage_type"),
+            "systemvmtype": system_vm_type,
+            "tags": self.module.params.get("storage_tags"),
+            "limitcpuuse": self.module.params.get("limit_cpu_usage"),
+            "customized": self.module.params.get("is_customized"),
         }
         if not self.module.check_mode:
-            res = self.query_api('createServiceOffering', **args)
-            service_offering = res['serviceoffering']
+            res = self.query_api("createServiceOffering", **args)
+            service_offering = res["serviceoffering"]
         return service_offering
 
     def _update_offering(self, service_offering):
         args = {
-            'id': service_offering['id'],
-            'name': self.module.params.get('name'),
-            'displaytext': self.get_or_fallback('display_text', 'name'),
+            "id": service_offering["id"],
+            "name": self.module.params.get("name"),
+            "displaytext": self.get_or_fallback("display_text", "name"),
         }
         if self.has_changed(args, service_offering):
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             if not self.module.check_mode:
-                res = self.query_api('updateServiceOffering', **args)
-                service_offering = res['serviceoffering']
+                res = self.query_api("updateServiceOffering", **args)
+                service_offering = res["serviceoffering"]
         return service_offering
 
     def get_result(self, resource):
         super(AnsibleCloudStackServiceOffering, self).get_result(resource)
         if resource:
-            if 'hosttags' in resource:
-                self.result['host_tags'] = resource['hosttags'].split(',') or [resource['hosttags']]
+            if "hosttags" in resource:
+                self.result["host_tags"] = resource["hosttags"].split(",") or [resource["hosttags"]]
 
-            if 'storagetags' in resource:
-                self.result['storage_tags'] = resource['storagetags'].split(',') or [resource['storagetags']]
+            if "storagetags" in resource:
+                self.result["storage_tags"] = resource["storagetags"].split(",") or [resource["storagetags"]]
 
             # Prevent confusion, the api returns a "tags" key for storage tags.
             # Version < 4.16
-            elif 'tags' in resource:
-                self.result['storage_tags'] = resource['tags'].split(',') or [resource['tags']]
+            elif "tags" in resource:
+                self.result["storage_tags"] = resource["tags"].split(",") or [resource["tags"]]
 
-            if 'tags' in self.result:
-                del self.result['tags']
+            if "tags" in self.result:
+                del self.result["tags"]
 
         return self.result
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        name=dict(required=True),
-        display_text=dict(),
-        cpu_number=dict(type='int'),
-        cpu_speed=dict(type='int'),
-        limit_cpu_usage=dict(type='bool'),
-        deployment_planner=dict(),
-        domain=dict(),
-        host_tags=dict(type='list', elements='str', aliases=['host_tag']),
-        hypervisor_snapshot_reserve=dict(type='int'),
-        disk_bytes_read_rate=dict(type='int', aliases=['bytes_read_rate']),
-        disk_bytes_write_rate=dict(type='int', aliases=['bytes_write_rate']),
-        disk_iops_read_rate=dict(type='int'),
-        disk_iops_write_rate=dict(type='int'),
-        disk_iops_max=dict(type='int'),
-        disk_iops_min=dict(type='int'),
-        is_system=dict(type='bool', default=False),
-        is_volatile=dict(type='bool'),
-        is_iops_customized=dict(type='bool', aliases=['disk_iops_customized']),
-        memory=dict(type='int'),
-        network_rate=dict(type='int'),
-        offer_ha=dict(type='bool'),
-        provisioning_type=dict(choices=['thin', 'sparse', 'fat']),
-        service_offering_details=dict(type='list', elements='dict'),
-        storage_type=dict(choices=['local', 'shared']),
-        system_vm_type=dict(choices=['domainrouter', 'consoleproxy', 'secondarystoragevm']),
-        storage_tags=dict(type='list', elements='str', aliases=['storage_tag']),
-        state=dict(choices=['present', 'absent'], default='present'),
-        is_customized=dict(type='bool'),
-    ))
-
-    module = AnsibleModule(
-        argument_spec=argument_spec,
-        required_together=cs_required_together(),
-        supports_check_mode=True
+    argument_spec.update(
+        dict(
+            name=dict(required=True),
+            display_text=dict(),
+            cpu_number=dict(type="int"),
+            cpu_speed=dict(type="int"),
+            limit_cpu_usage=dict(type="bool"),
+            deployment_planner=dict(),
+            domain=dict(),
+            host_tags=dict(type="list", elements="str", aliases=["host_tag"]),
+            hypervisor_snapshot_reserve=dict(type="int"),
+            disk_bytes_read_rate=dict(type="int", aliases=["bytes_read_rate"]),
+            disk_bytes_write_rate=dict(type="int", aliases=["bytes_write_rate"]),
+            disk_iops_read_rate=dict(type="int"),
+            disk_iops_write_rate=dict(type="int"),
+            disk_iops_max=dict(type="int"),
+            disk_iops_min=dict(type="int"),
+            is_system=dict(type="bool", default=False),
+            is_volatile=dict(type="bool"),
+            is_iops_customized=dict(type="bool", aliases=["disk_iops_customized"]),
+            memory=dict(type="int"),
+            network_rate=dict(type="int"),
+            offer_ha=dict(type="bool"),
+            provisioning_type=dict(choices=["thin", "sparse", "fat"]),
+            service_offering_details=dict(type="list", elements="dict"),
+            storage_type=dict(choices=["local", "shared"]),
+            system_vm_type=dict(choices=["domainrouter", "consoleproxy", "secondarystoragevm"]),
+            storage_tags=dict(type="list", elements="str", aliases=["storage_tag"]),
+            state=dict(choices=["present", "absent"], default="present"),
+            is_customized=dict(type="bool"),
+        )
     )
+
+    module = AnsibleModule(argument_spec=argument_spec, required_together=cs_required_together(), supports_check_mode=True)
 
     acs_so = AnsibleCloudStackServiceOffering(module)
 
-    state = module.params.get('state')
+    state = module.params.get("state")
     if state == "absent":
         service_offering = acs_so.absent_service_offering()
     else:
@@ -574,5 +571,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

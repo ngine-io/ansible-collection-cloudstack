@@ -390,9 +390,9 @@ def main():
         supports_check_mode=True,
     )
 
-    acs_instance_info = AnsibleCloudStackInstanceInfo(module=module)
-    cs_instance_info = acs_instance_info.run()
-    module.exit_json(**cs_instance_info)
+    ainstance_info = AnsibleCloudStackInstanceInfo(module=module)
+    instance_info = ainstance_info.run()
+    module.exit_json(**instance_info)
 
 
 if __name__ == "__main__":

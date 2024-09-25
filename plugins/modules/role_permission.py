@@ -9,9 +9,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_role_permission
+module: role_permission
 short_description: Manages role permissions on Apache CloudStack based clouds.
 description:
     - Create, update and remove CloudStack role permissions.
@@ -51,36 +51,36 @@ options:
     type: str
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Create a role permission
-  ngine_io.cloudstack.cs_role_permission:
+  ngine_io.cloudstack.role_permission:
     role: My_Custom_role
     name: createVPC
     permission: allow
     description: My comments
 
 - name: Remove a role permission
-  ngine_io.cloudstack.cs_role_permission:
+  ngine_io.cloudstack.role_permission:
     state: absent
     role: My_Custom_role
     name: createVPC
 
 - name: Update a system role permission
-  ngine_io.cloudstack.cs_role_permission:
+  ngine_io.cloudstack.role_permission:
     role: Domain Admin
     name: createVPC
     permission: deny
 
 - name: Update rules order. Move the rule at the top of list
-  ngine_io.cloudstack.cs_role_permission:
+  ngine_io.cloudstack.role_permission:
     role: Domain Admin
     name: createVPC
     parent: 0
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: The ID of the role permission.
@@ -107,7 +107,7 @@ description:
   returned: success
   type: str
   sample: Deny createVPC for users
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.six import raise_from
@@ -118,25 +118,24 @@ except ImportError:
     try:
         from distutils.version import LooseVersion
     except ImportError as exc:
-        msg = 'To use this plugin or module with ansible-core 2.11, you need to use Python < 3.12 with distutils.version present'
+        msg = "To use this plugin or module with ansible-core 2.11, you need to use Python < 3.12 with distutils.version present"
         raise_from(ImportError(msg), exc)
 
-from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
-                                       cs_required_together)
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackRolePermission(AnsibleCloudStack):
 
     def __init__(self, module):
         super(AnsibleCloudStackRolePermission, self).__init__(module)
-        cloudstack_min_version = LooseVersion('4.9.2')
+        cloudstack_min_version = LooseVersion("4.9.2")
 
         self.returns = {
-            'id': 'id',
-            'roleid': 'role_id',
-            'rule': 'name',
-            'permission': 'permission',
-            'description': 'description',
+            "id": "id",
+            "roleid": "role_id",
+            "rule": "name",
+            "permission": "permission",
+            "description": "description",
         }
         self.role_permission = None
 
@@ -147,42 +146,42 @@ class AnsibleCloudStackRolePermission(AnsibleCloudStack):
 
     def _cloudstack_ver(self):
         capabilities = self.get_capabilities()
-        return LooseVersion(capabilities['cloudstackversion'])
+        return LooseVersion(capabilities["cloudstackversion"])
 
     def _get_role_id(self):
-        role = self.module.params.get('role')
+        role = self.module.params.get("role")
         if not role:
             return None
 
-        res = self.query_api('listRoles')
-        roles = res['role']
+        res = self.query_api("listRoles")
+        roles = res["role"]
         if roles:
             for r in roles:
-                if role in [r['name'], r['id']]:
-                    return r['id']
+                if role in [r["name"], r["id"]]:
+                    return r["id"]
         self.fail_json(msg="Role '%s' not found" % role)
 
     def _get_role_perm(self):
         role_permission = self.role_permission
 
         args = {
-            'roleid': self._get_role_id(),
+            "roleid": self._get_role_id(),
         }
 
-        rp = self.query_api('listRolePermissions', **args)
+        rp = self.query_api("listRolePermissions", **args)
 
         if rp:
-            role_permission = rp['rolepermission']
+            role_permission = rp["rolepermission"]
 
         return role_permission
 
     def _get_rule(self, rule=None):
         if not rule:
-            rule = self.module.params.get('name')
+            rule = self.module.params.get("name")
 
         if self._get_role_perm():
             for _rule in self._get_role_perm():
-                if rule == _rule['rule'] or rule == _rule['id']:
+                if rule == _rule["rule"] or rule == _rule["id"]:
                     return _rule
 
         return None
@@ -193,7 +192,7 @@ class AnsibleCloudStackRolePermission(AnsibleCloudStack):
 
         if perms:
             for i, rule in enumerate(perms):
-                rules.append(rule['id'])
+                rules.append(rule["id"])
 
         return rules
 
@@ -202,14 +201,14 @@ class AnsibleCloudStackRolePermission(AnsibleCloudStack):
 
         if old_rule:
             rules_order = self._get_rule_order()
-            old_pos = rules_order.index(old_rule['id'])
+            old_pos = rules_order.index(old_rule["id"])
 
             self.remove_role_perm()
 
             new_rule = self.create_role_perm()
 
             if new_rule:
-                perm_order = self.order_permissions(int(old_pos - 1), new_rule['id'])
+                perm_order = self.order_permissions(int(old_pos - 1), new_rule["id"])
 
                 return perm_order
 
@@ -220,19 +219,19 @@ class AnsibleCloudStackRolePermission(AnsibleCloudStack):
 
         if isinstance(parent, int):
             parent_pos = parent
-        elif parent == '0':
+        elif parent == "0":
             parent_pos = -1
         else:
             parent_rule = self._get_rule(parent)
             if not parent_rule:
                 self.fail_json(msg="Parent rule '%s' not found" % parent)
 
-            parent_pos = rules.index(parent_rule['id'])
+            parent_pos = rules.index(parent_rule["id"])
 
         r_id = rules.pop(rules.index(rule_id))
 
         rules.insert((parent_pos + 1), r_id)
-        rules = ','.join(map(str, rules))
+        rules = ",".join(map(str, rules))
 
         return rules
 
@@ -249,53 +248,53 @@ class AnsibleCloudStackRolePermission(AnsibleCloudStack):
     def create_role_perm(self):
         role_permission = None
 
-        self.result['changed'] = True
+        self.result["changed"] = True
 
         args = {
-            'rule': self.module.params.get('name'),
-            'description': self.module.params.get('description'),
-            'roleid': self._get_role_id(),
-            'permission': self.module.params.get('permission'),
+            "rule": self.module.params.get("name"),
+            "description": self.module.params.get("description"),
+            "roleid": self._get_role_id(),
+            "permission": self.module.params.get("permission"),
         }
 
         if not self.module.check_mode:
-            res = self.query_api('createRolePermission', **args)
-            role_permission = res['rolepermission']
+            res = self.query_api("createRolePermission", **args)
+            role_permission = res["rolepermission"]
 
         return role_permission
 
     def update_role_perm(self, role_perm):
         perm_order = None
 
-        if not self.module.params.get('parent'):
+        if not self.module.params.get("parent"):
             args = {
-                'ruleid': role_perm['id'],
-                'roleid': role_perm['roleid'],
-                'permission': self.module.params.get('permission'),
+                "ruleid": role_perm["id"],
+                "roleid": role_perm["roleid"],
+                "permission": self.module.params.get("permission"),
             }
 
-            if self.has_changed(args, role_perm, only_keys=['permission']):
-                self.result['changed'] = True
+            if self.has_changed(args, role_perm, only_keys=["permission"]):
+                self.result["changed"] = True
 
                 if not self.module.check_mode:
-                    if self.cloudstack_version >= LooseVersion('4.11.0'):
-                        self.query_api('updateRolePermission', **args)
+                    if self.cloudstack_version >= LooseVersion("4.11.0"):
+                        self.query_api("updateRolePermission", **args)
                         role_perm = self._get_rule()
                     else:
                         perm_order = self.replace_rule()
         else:
-            perm_order = self.order_permissions(self.module.params.get('parent'), role_perm['id'])
+            perm_order = self.order_permissions(self.module.params.get("parent"), role_perm["id"])
 
         if perm_order:
             args = {
-                'roleid': role_perm['roleid'],
-                'ruleorder': perm_order,
+                "roleid": role_perm["roleid"],
+                "ruleorder": perm_order,
             }
 
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             if not self.module.check_mode:
-                self.query_api('updateRolePermission', **args)
+                self.query_api("updateRolePermission", **args)
                 role_perm = self._get_rule()
 
         return role_perm
@@ -304,42 +303,39 @@ class AnsibleCloudStackRolePermission(AnsibleCloudStack):
         role_permission = self._get_rule()
 
         if role_permission:
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             args = {
-                'id': role_permission['id'],
+                "id": role_permission["id"],
             }
 
             if not self.module.check_mode:
-                self.query_api('deleteRolePermission', **args)
+                self.query_api("deleteRolePermission", **args)
 
         return role_permission
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        role=dict(required=True),
-        name=dict(required=True),
-        permission=dict(choices=['allow', 'deny'], default='deny'),
-        description=dict(),
-        state=dict(choices=['present', 'absent'], default='present'),
-        parent=dict(),
-    ))
+    argument_spec.update(
+        dict(
+            role=dict(required=True),
+            name=dict(required=True),
+            permission=dict(choices=["allow", "deny"], default="deny"),
+            description=dict(),
+            state=dict(choices=["present", "absent"], default="present"),
+            parent=dict(),
+        )
+    )
 
     module = AnsibleModule(
-        argument_spec=argument_spec,
-        required_together=cs_required_together(),
-        mutually_exclusive=(
-            ['permission', 'parent'],
-        ),
-        supports_check_mode=True
+        argument_spec=argument_spec, required_together=cs_required_together(), mutually_exclusive=(["permission", "parent"],), supports_check_mode=True
     )
 
     acs_role_perm = AnsibleCloudStackRolePermission(module)
 
-    state = module.params.get('state')
-    if state in ['absent']:
+    state = module.params.get("state")
+    if state in ["absent"]:
         role_permission = acs_role_perm.remove_role_perm()
     else:
         role_permission = acs_role_perm.create_or_update_role_perm()
@@ -348,5 +344,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -262,9 +262,9 @@ def main():
         supports_check_mode=True,
     )
 
-    acs_configuration = AnsibleCloudStackConfiguration(module)
-    configuration = acs_configuration.present_configuration()
-    result = acs_configuration.get_result(configuration)
+    aconfiguration = AnsibleCloudStackConfiguration(module)
+    configuration = aconfiguration.present_configuration()
+    result = aconfiguration.get_result(configuration)
     module.exit_json(**result)
 
 

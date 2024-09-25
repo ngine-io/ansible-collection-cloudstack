@@ -9,9 +9,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_user
+module: user
 short_description: Manages users on Apache CloudStack based clouds.
 description:
     - Create, update, disable, lock, enable and remove users.
@@ -78,11 +78,11 @@ options:
     default: yes
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Create an user in domain 'CUSTOMERS'
-  ngine_io.cloudstack.cs_user:
+  ngine_io.cloudstack.user:
     account: developers
     username: johndoe
     password: S3Cur3
@@ -92,31 +92,31 @@ EXAMPLES = '''
     domain: CUSTOMERS
 
 - name: Lock an existing user in domain 'CUSTOMERS'
-  ngine_io.cloudstack.cs_user:
+  ngine_io.cloudstack.user:
     username: johndoe
     domain: CUSTOMERS
     state: locked
 
 - name: Disable an existing user in domain 'CUSTOMERS'
-  ngine_io.cloudstack.cs_user:
+  ngine_io.cloudstack.user:
     username: johndoe
     domain: CUSTOMERS
     state: disabled
 
 - name: Enable/unlock an existing user in domain 'CUSTOMERS'
-  ngine_io.cloudstack.cs_user:
+  ngine_io.cloudstack.user:
     username: johndoe
     domain: CUSTOMERS
     state: enabled
 
 - name: Remove an user in domain 'CUSTOMERS'
-  ngine_io.cloudstack.cs_user:
+  ngine_io.cloudstack.user:
     name: customer_xy
     domain: CUSTOMERS
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the user.
@@ -183,12 +183,11 @@ domain:
   returned: success
   type: str
   sample: ROOT
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
-                                       cs_required_together)
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackUser(AnsibleCloudStack):
@@ -196,38 +195,38 @@ class AnsibleCloudStackUser(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackUser, self).__init__(module)
         self.returns = {
-            'username': 'username',
-            'firstname': 'first_name',
-            'lastname': 'last_name',
-            'email': 'email',
-            'secretkey': 'user_api_secret',
-            'apikey': 'user_api_key',
-            'timezone': 'timezone',
+            "username": "username",
+            "firstname": "first_name",
+            "lastname": "last_name",
+            "email": "email",
+            "secretkey": "user_api_secret",
+            "apikey": "user_api_key",
+            "timezone": "timezone",
         }
         self.account_types = {
-            'user': 0,
-            'root_admin': 1,
-            'domain_admin': 2,
+            "user": 0,
+            "root_admin": 1,
+            "domain_admin": 2,
         }
         self.user = None
 
     def get_account_type(self):
-        account_type = self.module.params.get('account_type')
+        account_type = self.module.params.get("account_type")
         return self.account_types[account_type]
 
     def get_user(self):
         if not self.user:
             args = {
-                'domainid': self.get_domain('id'),
-                'fetch_list': True,
+                "domainid": self.get_domain("id"),
+                "fetch_list": True,
             }
 
-            users = self.query_api('listUsers', **args)
+            users = self.query_api("listUsers", **args)
 
             if users:
-                user_name = self.module.params.get('username')
+                user_name = self.module.params.get("username")
                 for u in users:
-                    if user_name.lower() == u['username'].lower():
+                    if user_name.lower() == u["username"].lower():
                         self.user = u
                         break
         return self.user
@@ -237,14 +236,14 @@ class AnsibleCloudStackUser(AnsibleCloudStack):
         if not user:
             user = self.present_user()
 
-        if user['state'].lower() != 'enabled':
-            self.result['changed'] = True
+        if user["state"].lower() != "enabled":
+            self.result["changed"] = True
             args = {
-                'id': user['id'],
+                "id": user["id"],
             }
             if not self.module.check_mode:
-                res = self.query_api('enableUser', **args)
-                user = res['user']
+                res = self.query_api("enableUser", **args)
+                user = res["user"]
         return user
 
     def lock_user(self):
@@ -253,19 +252,19 @@ class AnsibleCloudStackUser(AnsibleCloudStack):
             user = self.present_user()
 
         # we need to enable the user to lock it.
-        if user['state'].lower() == 'disabled':
+        if user["state"].lower() == "disabled":
             user = self.enable_user()
 
-        if user['state'].lower() != 'locked':
-            self.result['changed'] = True
+        if user["state"].lower() != "locked":
+            self.result["changed"] = True
 
             args = {
-                'id': user['id'],
+                "id": user["id"],
             }
 
             if not self.module.check_mode:
-                res = self.query_api('lockUser', **args)
-                user = res['user']
+                res = self.query_api("lockUser", **args)
+                user = res["user"]
 
         return user
 
@@ -274,26 +273,26 @@ class AnsibleCloudStackUser(AnsibleCloudStack):
         if not user:
             user = self.present_user()
 
-        if user['state'].lower() != 'disabled':
-            self.result['changed'] = True
+        if user["state"].lower() != "disabled":
+            self.result["changed"] = True
             args = {
-                'id': user['id'],
+                "id": user["id"],
             }
             if not self.module.check_mode:
-                user = self.query_api('disableUser', **args)
+                user = self.query_api("disableUser", **args)
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    user = self.poll_job(user, 'user')
+                    user = self.poll_job(user, "user")
         return user
 
     def present_user(self):
         required_params = [
-            'account',
-            'email',
-            'password',
-            'first_name',
-            'last_name',
+            "account",
+            "email",
+            "password",
+            "first_name",
+            "last_name",
         ]
         self.module.fail_on_missing_params(required_params=required_params)
 
@@ -306,121 +305,123 @@ class AnsibleCloudStackUser(AnsibleCloudStack):
 
     def _get_common_args(self):
         return {
-            'firstname': self.module.params.get('first_name'),
-            'lastname': self.module.params.get('last_name'),
-            'email': self.module.params.get('email'),
-            'timezone': self.module.params.get('timezone'),
+            "firstname": self.module.params.get("first_name"),
+            "lastname": self.module.params.get("last_name"),
+            "email": self.module.params.get("email"),
+            "timezone": self.module.params.get("timezone"),
         }
 
     def _create_user(self, user):
-        self.result['changed'] = True
+        self.result["changed"] = True
 
         args = self._get_common_args()
-        args.update({
-            'account': self.get_account(key='name'),
-            'domainid': self.get_domain('id'),
-            'username': self.module.params.get('username'),
-            'password': self.module.params.get('password'),
-        })
+        args.update(
+            {
+                "account": self.get_account(key="name"),
+                "domainid": self.get_domain("id"),
+                "username": self.module.params.get("username"),
+                "password": self.module.params.get("password"),
+            }
+        )
 
         if not self.module.check_mode:
-            res = self.query_api('createUser', **args)
-            user = res['user']
+            res = self.query_api("createUser", **args)
+            user = res["user"]
 
             # register user api keys
-            if self.module.params.get('keys_registered'):
-                res = self.query_api('registerUserKeys', id=user['id'])
-                user.update(res['userkeys'])
+            if self.module.params.get("keys_registered"):
+                res = self.query_api("registerUserKeys", id=user["id"])
+                user.update(res["userkeys"])
 
         return user
 
     def _update_user(self, user):
         args = self._get_common_args()
-        args.update({
-            'id': user['id'],
-        })
+        args.update(
+            {
+                "id": user["id"],
+            }
+        )
 
         if self.has_changed(args, user):
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             if not self.module.check_mode:
-                res = self.query_api('updateUser', **args)
+                res = self.query_api("updateUser", **args)
 
-                user = res['user']
+                user = res["user"]
 
         # register user api keys
-        if 'apikey' not in user and self.module.params.get('keys_registered'):
-            self.result['changed'] = True
+        if "apikey" not in user and self.module.params.get("keys_registered"):
+            self.result["changed"] = True
 
             if not self.module.check_mode:
-                res = self.query_api('registerUserKeys', id=user['id'])
-                user.update(res['userkeys'])
+                res = self.query_api("registerUserKeys", id=user["id"])
+                user.update(res["userkeys"])
         return user
 
     def absent_user(self):
         user = self.get_user()
         if user:
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             if not self.module.check_mode:
-                self.query_api('deleteUser', id=user['id'])
+                self.query_api("deleteUser", id=user["id"])
 
         return user
 
     def get_result(self, resource):
         super(AnsibleCloudStackUser, self).get_result(resource)
         if resource:
-            if 'accounttype' in resource:
+            if "accounttype" in resource:
                 for key, value in self.account_types.items():
-                    if value == resource['accounttype']:
-                        self.result['account_type'] = key
+                    if value == resource["accounttype"]:
+                        self.result["account_type"] = key
                         break
 
             # secretkey has been removed since CloudStack 4.10 from listUsers API
-            if self.module.params.get('keys_registered') and 'apikey' in resource and 'secretkey' not in resource:
-                user_keys = self.query_api('getUserKeys', id=resource['id'])
+            if self.module.params.get("keys_registered") and "apikey" in resource and "secretkey" not in resource:
+                user_keys = self.query_api("getUserKeys", id=resource["id"])
                 if user_keys:
-                    self.result['user_api_secret'] = user_keys['userkeys'].get('secretkey')
+                    self.result["user_api_secret"] = user_keys["userkeys"].get("secretkey")
 
         return self.result
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        username=dict(required=True),
-        account=dict(),
-        state=dict(choices=['present', 'absent', 'enabled', 'disabled', 'locked', 'unlocked'], default='present'),
-        domain=dict(default='ROOT'),
-        email=dict(),
-        first_name=dict(),
-        last_name=dict(),
-        password=dict(no_log=True),
-        timezone=dict(),
-        keys_registered=dict(type='bool', default=False),
-        poll_async=dict(type='bool', default=True),
-    ))
-
-    module = AnsibleModule(
-        argument_spec=argument_spec,
-        required_together=cs_required_together(),
-        supports_check_mode=True
+    argument_spec.update(
+        dict(
+            username=dict(required=True),
+            account=dict(),
+            state=dict(choices=["present", "absent", "enabled", "disabled", "locked", "unlocked"], default="present"),
+            domain=dict(default="ROOT"),
+            email=dict(),
+            first_name=dict(),
+            last_name=dict(),
+            password=dict(no_log=True),
+            timezone=dict(),
+            keys_registered=dict(type="bool", default=False),
+            poll_async=dict(type="bool", default=True),
+        )
     )
+
+    module = AnsibleModule(argument_spec=argument_spec, required_together=cs_required_together(), supports_check_mode=True)
 
     acs_acc = AnsibleCloudStackUser(module)
 
-    state = module.params.get('state')
+    state = module.params.get("state")
 
-    if state == 'absent':
+    if state == "absent":
         user = acs_acc.absent_user()
 
-    elif state in ['enabled', 'unlocked']:
+    elif state in ["enabled", "unlocked"]:
         user = acs_acc.enable_user()
 
-    elif state == 'disabled':
+    elif state == "disabled":
         user = acs_acc.disable_user()
 
-    elif state == 'locked':
+    elif state == "locked":
         user = acs_acc.lock_user()
 
     else:
@@ -431,5 +432,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

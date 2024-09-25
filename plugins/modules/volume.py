@@ -6,12 +6,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_volume
+module: volume
 short_description: Manages volumes on Apache CloudStack based clouds.
 description:
     - Create, destroy, attach, detach, extract or upload volumes.
@@ -134,11 +135,11 @@ options:
     choices: [ QCOW2, RAW, VHD, VHDX, OVA ]
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: create volume within project and zone with specified storage options
-  ngine_io.cloudstack.cs_volume:
+  ngine_io.cloudstack.volume:
     name: web-vm-1-volume
     project: Integration
     zone: ch-zrh-ix-01
@@ -146,7 +147,7 @@ EXAMPLES = '''
     size: 20
 
 - name: create/attach volume to instance
-  ngine_io.cloudstack.cs_volume:
+  ngine_io.cloudstack.volume:
     name: web-vm-1-volume
     zone: zone01
     disk_offering: PerfPlus Storage
@@ -155,34 +156,34 @@ EXAMPLES = '''
     state: attached
 
 - name: detach volume
-  ngine_io.cloudstack.cs_volume:
+  ngine_io.cloudstack.volume:
     name: web-vm-1-volume
     zone: zone01
     state: detached
 
 - name: remove volume
-  ngine_io.cloudstack.cs_volume:
+  ngine_io.cloudstack.volume:
     name: web-vm-1-volume
     zone: zone01
     state: absent
 
 - name: Extract DATA volume to make it downloadable
-  ngine_io.cloudstack.cs_volume:
+  ngine_io.cloudstack.volume:
     state: extracted
     name: web-vm-1-volume
     zone: zone01
   register: data_vol_out
 
 - name: Create new volume by downloading source volume
-  ngine_io.cloudstack.cs_volume:
+  ngine_io.cloudstack.volume:
     state: uploaded
     name: web-vm-1-volume-2
     zone: zone01
     format: VHD
     url: "{{ data_vol_out.url }}"
-'''
+"""
 
-RETURN = '''
+RETURN = """
 id:
   description: ID of the volume.
   returned: success
@@ -258,14 +259,11 @@ url:
   returned: success when I(state=extracted)
   type: str
   sample: http://1.12.3.4/userdata/387e2c7c-7c42-4ecc-b4ed-84e8367a1965.vhd
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_required_together,
-    cs_argument_spec
-)
+
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackVolume(AnsibleCloudStack):
@@ -273,54 +271,54 @@ class AnsibleCloudStackVolume(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackVolume, self).__init__(module)
         self.returns = {
-            'group': 'group',
-            'attached': 'attached',
-            'vmname': 'vm',
-            'deviceid': 'device_id',
-            'type': 'type',
-            'size': 'size',
-            'url': 'url',
+            "group": "group",
+            "attached": "attached",
+            "vmname": "vm",
+            "deviceid": "device_id",
+            "type": "type",
+            "size": "size",
+            "url": "url",
         }
         self.volume = None
 
     def get_volume(self):
         if not self.volume:
             args = {
-                'account': self.get_account(key='name'),
-                'domainid': self.get_domain(key='id'),
-                'projectid': self.get_project(key='id'),
-                'zoneid': self.get_zone(key='id'),
-                'displayvolume': self.module.params.get('display_volume'),
-                'type': 'DATADISK',
-                'fetch_list': True,
+                "account": self.get_account(key="name"),
+                "domainid": self.get_domain(key="id"),
+                "projectid": self.get_project(key="id"),
+                "zoneid": self.get_zone(key="id"),
+                "displayvolume": self.module.params.get("display_volume"),
+                "type": "DATADISK",
+                "fetch_list": True,
             }
             # Do not filter on DATADISK when state=extracted
-            if self.module.params.get('state') == 'extracted':
-                del args['type']
+            if self.module.params.get("state") == "extracted":
+                del args["type"]
 
-            volumes = self.query_api('listVolumes', **args)
+            volumes = self.query_api("listVolumes", **args)
             if volumes:
-                volume_name = self.module.params.get('name')
+                volume_name = self.module.params.get("name")
                 for v in volumes:
-                    if volume_name.lower() == v['name'].lower():
+                    if volume_name.lower() == v["name"].lower():
                         self.volume = v
                         break
         return self.volume
 
     def get_snapshot(self, key=None):
-        snapshot = self.module.params.get('snapshot')
+        snapshot = self.module.params.get("snapshot")
         if not snapshot:
             return None
 
         args = {
-            'name': snapshot,
-            'account': self.get_account('name'),
-            'domainid': self.get_domain('id'),
-            'projectid': self.get_project('id'),
+            "name": snapshot,
+            "account": self.get_account("name"),
+            "domainid": self.get_domain("id"),
+            "projectid": self.get_project("id"),
         }
-        snapshots = self.query_api('listSnapshots', **args)
+        snapshots = self.query_api("listSnapshots", **args)
         if snapshots:
-            return self._get_by_key(key, snapshots['snapshot'][0])
+            return self._get_by_key(key, snapshots["snapshot"][0])
         self.module.fail_json(msg="Snapshot with name %s not found" % snapshot)
 
     def present_volume(self):
@@ -328,34 +326,34 @@ class AnsibleCloudStackVolume(AnsibleCloudStack):
         if volume:
             volume = self.update_volume(volume)
         else:
-            disk_offering_id = self.get_disk_offering(key='id')
-            snapshot_id = self.get_snapshot(key='id')
+            disk_offering_id = self.get_disk_offering(key="id")
+            snapshot_id = self.get_snapshot(key="id")
 
             if not disk_offering_id and not snapshot_id:
                 self.module.fail_json(msg="Required one of: disk_offering,snapshot")
 
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             args = {
-                'name': self.module.params.get('name'),
-                'account': self.get_account(key='name'),
-                'domainid': self.get_domain(key='id'),
-                'diskofferingid': disk_offering_id,
-                'displayvolume': self.module.params.get('display_volume'),
-                'maxiops': self.module.params.get('max_iops'),
-                'miniops': self.module.params.get('min_iops'),
-                'projectid': self.get_project(key='id'),
-                'size': self.module.params.get('size'),
-                'snapshotid': snapshot_id,
-                'zoneid': self.get_zone(key='id')
+                "name": self.module.params.get("name"),
+                "account": self.get_account(key="name"),
+                "domainid": self.get_domain(key="id"),
+                "diskofferingid": disk_offering_id,
+                "displayvolume": self.module.params.get("display_volume"),
+                "maxiops": self.module.params.get("max_iops"),
+                "miniops": self.module.params.get("min_iops"),
+                "projectid": self.get_project(key="id"),
+                "size": self.module.params.get("size"),
+                "snapshotid": snapshot_id,
+                "zoneid": self.get_zone(key="id"),
             }
             if not self.module.check_mode:
-                res = self.query_api('createVolume', **args)
-                poll_async = self.module.params.get('poll_async')
+                res = self.query_api("createVolume", **args)
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    volume = self.poll_job(res, 'volume')
+                    volume = self.poll_job(res, "volume")
         if volume:
-            volume = self.ensure_tags(resource=volume, resource_type='Volume')
+            volume = self.ensure_tags(resource=volume, resource_type="Volume")
             self.volume = volume
 
         return volume
@@ -364,81 +362,81 @@ class AnsibleCloudStackVolume(AnsibleCloudStack):
         volume = self.present_volume()
 
         if volume:
-            if volume.get('virtualmachineid') != self.get_vm(key='id'):
-                self.result['changed'] = True
+            if volume.get("virtualmachineid") != self.get_vm(key="id"):
+                self.result["changed"] = True
 
                 if not self.module.check_mode:
                     volume = self.detached_volume()
 
-            if 'attached' not in volume:
-                self.result['changed'] = True
+            if "attached" not in volume:
+                self.result["changed"] = True
 
                 args = {
-                    'id': volume['id'],
-                    'virtualmachineid': self.get_vm(key='id'),
-                    'deviceid': self.module.params.get('device_id'),
+                    "id": volume["id"],
+                    "virtualmachineid": self.get_vm(key="id"),
+                    "deviceid": self.module.params.get("device_id"),
                 }
                 if not self.module.check_mode:
-                    res = self.query_api('attachVolume', **args)
-                    poll_async = self.module.params.get('poll_async')
+                    res = self.query_api("attachVolume", **args)
+                    poll_async = self.module.params.get("poll_async")
                     if poll_async:
-                        volume = self.poll_job(res, 'volume')
+                        volume = self.poll_job(res, "volume")
         return volume
 
     def detached_volume(self):
         volume = self.present_volume()
 
         if volume:
-            if 'attached' not in volume:
+            if "attached" not in volume:
                 return volume
 
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             if not self.module.check_mode:
-                res = self.query_api('detachVolume', id=volume['id'])
-                poll_async = self.module.params.get('poll_async')
+                res = self.query_api("detachVolume", id=volume["id"])
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    volume = self.poll_job(res, 'volume')
+                    volume = self.poll_job(res, "volume")
         return volume
 
     def absent_volume(self):
         volume = self.get_volume()
 
         if volume:
-            if 'attached' in volume and not self.module.params.get('force'):
-                self.module.fail_json(msg="Volume '%s' is attached, use force=true for detaching and removing the volume." % volume.get('name'))
+            if "attached" in volume and not self.module.params.get("force"):
+                self.module.fail_json(msg="Volume '%s' is attached, use force=true for detaching and removing the volume." % volume.get("name"))
 
-            self.result['changed'] = True
+            self.result["changed"] = True
             if not self.module.check_mode:
                 volume = self.detached_volume()
-                res = self.query_api('deleteVolume', id=volume['id'])
-                poll_async = self.module.params.get('poll_async')
+                res = self.query_api("deleteVolume", id=volume["id"])
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    self.poll_job(res, 'volume')
+                    self.poll_job(res, "volume")
 
         return volume
 
     def update_volume(self, volume):
         args_resize = {
-            'id': volume['id'],
-            'diskofferingid': self.get_disk_offering(key='id'),
-            'maxiops': self.module.params.get('max_iops'),
-            'miniops': self.module.params.get('min_iops'),
-            'size': self.module.params.get('size')
+            "id": volume["id"],
+            "diskofferingid": self.get_disk_offering(key="id"),
+            "maxiops": self.module.params.get("max_iops"),
+            "miniops": self.module.params.get("min_iops"),
+            "size": self.module.params.get("size"),
         }
         # change unit from bytes to giga bytes to compare with args
         volume_copy = volume.copy()
-        volume_copy['size'] = volume_copy['size'] / (2**30)
+        volume_copy["size"] = volume_copy["size"] / (2**30)
 
         if self.has_changed(args_resize, volume_copy):
 
-            self.result['changed'] = True
+            self.result["changed"] = True
             if not self.module.check_mode:
-                args_resize['shrinkok'] = self.module.params.get('shrink_ok')
-                res = self.query_api('resizeVolume', **args_resize)
-                poll_async = self.module.params.get('poll_async')
+                args_resize["shrinkok"] = self.module.params.get("shrink_ok")
+                res = self.query_api("resizeVolume", **args_resize)
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    volume = self.poll_job(res, 'volume')
+                    volume = self.poll_job(res, "volume")
                 self.volume = volume
 
         return volume
@@ -448,19 +446,14 @@ class AnsibleCloudStackVolume(AnsibleCloudStack):
         if not volume:
             self.module.fail_json(msg="Failed: volume not found")
 
-        args = {
-            'id': volume['id'],
-            'url': self.module.params.get('url'),
-            'mode': self.module.params.get('mode').upper(),
-            'zoneid': self.get_zone(key='id')
-        }
-        self.result['changed'] = True
+        args = {"id": volume["id"], "url": self.module.params.get("url"), "mode": self.module.params.get("mode").upper(), "zoneid": self.get_zone(key="id")}
+        self.result["changed"] = True
 
         if not self.module.check_mode:
-            res = self.query_api('extractVolume', **args)
-            poll_async = self.module.params.get('poll_async')
+            res = self.query_api("extractVolume", **args)
+            poll_async = self.module.params.get("poll_async")
             if poll_async:
-                volume = self.poll_job(res, 'volume')
+                volume = self.poll_job(res, "volume")
             self.volume = volume
 
         return volume
@@ -468,27 +461,27 @@ class AnsibleCloudStackVolume(AnsibleCloudStack):
     def upload_volume(self):
         volume = self.get_volume()
         if not volume:
-            disk_offering_id = self.get_disk_offering(key='id')
+            disk_offering_id = self.get_disk_offering(key="id")
 
-            self.result['changed'] = True
+            self.result["changed"] = True
 
             args = {
-                'name': self.module.params.get('name'),
-                'account': self.get_account(key='name'),
-                'domainid': self.get_domain(key='id'),
-                'projectid': self.get_project(key='id'),
-                'zoneid': self.get_zone(key='id'),
-                'format': self.module.params.get('format'),
-                'url': self.module.params.get('url'),
-                'diskofferingid': disk_offering_id,
+                "name": self.module.params.get("name"),
+                "account": self.get_account(key="name"),
+                "domainid": self.get_domain(key="id"),
+                "projectid": self.get_project(key="id"),
+                "zoneid": self.get_zone(key="id"),
+                "format": self.module.params.get("format"),
+                "url": self.module.params.get("url"),
+                "diskofferingid": disk_offering_id,
             }
             if not self.module.check_mode:
-                res = self.query_api('uploadVolume', **args)
-                poll_async = self.module.params.get('poll_async')
+                res = self.query_api("uploadVolume", **args)
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    volume = self.poll_job(res, 'volume')
+                    volume = self.poll_job(res, "volume")
         if volume:
-            volume = self.ensure_tags(resource=volume, resource_type='Volume')
+            volume = self.ensure_tags(resource=volume, resource_type="Volume")
             self.volume = volume
 
         return volume
@@ -496,63 +489,66 @@ class AnsibleCloudStackVolume(AnsibleCloudStack):
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        name=dict(required=True),
-        disk_offering=dict(),
-        display_volume=dict(type='bool'),
-        max_iops=dict(type='int'),
-        min_iops=dict(type='int'),
-        size=dict(type='int'),
-        snapshot=dict(),
-        vm=dict(),
-        device_id=dict(type='int'),
-        custom_id=dict(),
-        force=dict(type='bool', default=False),
-        shrink_ok=dict(type='bool', default=False),
-        state=dict(default='present', choices=[
-            'present',
-            'absent',
-            'attached',
-            'detached',
-            'extracted',
-            'uploaded',
-        ]),
-        zone=dict(required=True),
-        domain=dict(),
-        account=dict(),
-        project=dict(),
-        poll_async=dict(type='bool', default=True),
-        tags=dict(type='list', elements='dict', aliases=['tag']),
-        url=dict(),
-        mode=dict(choices=['http_download', 'ftp_upload'], default='http_download'),
-        format=dict(choices=['QCOW2', 'RAW', 'VHD', 'VHDX', 'OVA']),
-    ))
+    argument_spec.update(
+        dict(
+            name=dict(required=True),
+            disk_offering=dict(),
+            display_volume=dict(type="bool"),
+            max_iops=dict(type="int"),
+            min_iops=dict(type="int"),
+            size=dict(type="int"),
+            snapshot=dict(),
+            vm=dict(),
+            device_id=dict(type="int"),
+            custom_id=dict(),
+            force=dict(type="bool", default=False),
+            shrink_ok=dict(type="bool", default=False),
+            state=dict(
+                default="present",
+                choices=[
+                    "present",
+                    "absent",
+                    "attached",
+                    "detached",
+                    "extracted",
+                    "uploaded",
+                ],
+            ),
+            zone=dict(required=True),
+            domain=dict(),
+            account=dict(),
+            project=dict(),
+            poll_async=dict(type="bool", default=True),
+            tags=dict(type="list", elements="dict", aliases=["tag"]),
+            url=dict(),
+            mode=dict(choices=["http_download", "ftp_upload"], default="http_download"),
+            format=dict(choices=["QCOW2", "RAW", "VHD", "VHDX", "OVA"]),
+        )
+    )
 
     module = AnsibleModule(
         argument_spec=argument_spec,
         required_together=cs_required_together(),
-        mutually_exclusive=(
-            ['snapshot', 'disk_offering'],
-        ),
+        mutually_exclusive=(["snapshot", "disk_offering"],),
         required_if=[
-            ('state', 'uploaded', ['url', 'format']),
+            ("state", "uploaded", ["url", "format"]),
         ],
-        supports_check_mode=True
+        supports_check_mode=True,
     )
 
     acs_vol = AnsibleCloudStackVolume(module)
 
-    state = module.params.get('state')
+    state = module.params.get("state")
 
-    if state in ['absent']:
+    if state in ["absent"]:
         volume = acs_vol.absent_volume()
-    elif state in ['attached']:
+    elif state in ["attached"]:
         volume = acs_vol.attached_volume()
-    elif state in ['detached']:
+    elif state in ["detached"]:
         volume = acs_vol.detached_volume()
-    elif state == 'extracted':
+    elif state == "extracted":
         volume = acs_vol.extract_volume()
-    elif state == 'uploaded':
+    elif state == "uploaded":
         volume = acs_vol.upload_volume()
     else:
         volume = acs_vol.present_volume()
@@ -562,5 +558,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

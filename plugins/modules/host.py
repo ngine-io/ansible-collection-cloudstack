@@ -591,15 +591,15 @@ def main():
         supports_check_mode=True,
     )
 
-    acs_host = AnsibleCloudStackHost(module)
+    ahost = AnsibleCloudStackHost(module)
 
     state = module.params.get("state")
     if state == "absent":
-        host = acs_host.absent_host()
+        host = ahost.absent_host()
     else:
-        host = acs_host.present_host()
+        host = ahost.present_host()
 
-    result = acs_host.get_result(host)
+    result = ahost.get_result(host)
 
     module.exit_json(**result)
 

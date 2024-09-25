@@ -11,7 +11,7 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 ---
-module: affinitygroup
+module: affinity_group
 short_description: Manages affinity groups on Apache CloudStack based clouds.
 description:
     - Create and remove affinity groups.
@@ -61,12 +61,12 @@ extends_documentation_fragment:
 
 EXAMPLES = """
 - name: Create a affinity group
-  ngine_io.cloudstack.affinitygroup:
+  ngine_io.cloudstack.affinity_group:
     name: haproxy
     affinity_type: host anti-affinity
 
 - name: Remove a affinity group
-  ngine_io.cloudstack.affinitygroup:
+  ngine_io.cloudstack.affinity_group:
     name: haproxy
     state: absent
 """

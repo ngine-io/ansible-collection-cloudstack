@@ -5,12 +5,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_region
+module: region
 short_description: Manages regions on Apache CloudStack based clouds.
 description:
     - Add, update and remove regions.
@@ -41,22 +42,22 @@ options:
     choices: [ present, absent ]
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: create a region
-  ngine_io.cloudstack.cs_region:
+  ngine_io.cloudstack.region:
     id: 2
     name: geneva
     endpoint: https://cloud.gva.example.com
 
 - name: remove a region with ID 2
-  ngine_io.cloudstack.cs_region:
+  ngine_io.cloudstack.region:
     id: 2
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: ID of the region.
@@ -83,15 +84,12 @@ portable_ip_service_enabled:
   returned: success
   type: bool
   sample: true
-'''
+"""
 
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.cloudstack import (
-    AnsibleCloudStack,
-    cs_argument_spec,
-    cs_required_together
-)
+
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackRegion(AnsibleCloudStack):
@@ -99,16 +97,16 @@ class AnsibleCloudStackRegion(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackRegion, self).__init__(module)
         self.returns = {
-            'endpoint': 'endpoint',
-            'gslbserviceenabled': 'gslb_service_enabled',
-            'portableipserviceenabled': 'portable_ip_service_enabled',
+            "endpoint": "endpoint",
+            "gslbserviceenabled": "gslb_service_enabled",
+            "portableipserviceenabled": "portable_ip_service_enabled",
         }
 
     def get_region(self):
-        id = self.module.params.get('id')
-        regions = self.query_api('listRegions', id=id)
+        id = self.module.params.get("id")
+        regions = self.query_api("listRegions", id=id)
         if regions:
-            return regions['region'][0]
+            return regions["region"][0]
         return None
 
     def present_region(self):
@@ -120,68 +118,62 @@ class AnsibleCloudStackRegion(AnsibleCloudStack):
         return region
 
     def _create_region(self, region):
-        self.result['changed'] = True
-        args = {
-            'id': self.module.params.get('id'),
-            'name': self.module.params.get('name'),
-            'endpoint': self.module.params.get('endpoint')
-        }
+        self.result["changed"] = True
+        args = {"id": self.module.params.get("id"), "name": self.module.params.get("name"), "endpoint": self.module.params.get("endpoint")}
         if not self.module.check_mode:
-            res = self.query_api('addRegion', **args)
-            region = res['region']
+            res = self.query_api("addRegion", **args)
+            region = res["region"]
         return region
 
     def _update_region(self, region):
-        args = {
-            'id': self.module.params.get('id'),
-            'name': self.module.params.get('name'),
-            'endpoint': self.module.params.get('endpoint')
-        }
+        args = {"id": self.module.params.get("id"), "name": self.module.params.get("name"), "endpoint": self.module.params.get("endpoint")}
         if self.has_changed(args, region):
-            self.result['changed'] = True
+            self.result["changed"] = True
             if not self.module.check_mode:
-                res = self.query_api('updateRegion', **args)
-                region = res['region']
+                res = self.query_api("updateRegion", **args)
+                region = res["region"]
         return region
 
     def absent_region(self):
         region = self.get_region()
         if region:
-            self.result['changed'] = True
+            self.result["changed"] = True
             if not self.module.check_mode:
-                self.query_api('removeRegion', id=region['id'])
+                self.query_api("removeRegion", id=region["id"])
         return region
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        id=dict(required=True, type='int'),
-        name=dict(),
-        endpoint=dict(),
-        state=dict(choices=['present', 'absent'], default='present'),
-    ))
+    argument_spec.update(
+        dict(
+            id=dict(required=True, type="int"),
+            name=dict(),
+            endpoint=dict(),
+            state=dict(choices=["present", "absent"], default="present"),
+        )
+    )
 
     module = AnsibleModule(
         argument_spec=argument_spec,
         required_together=cs_required_together(),
         required_if=[
-            ('state', 'present', ['name', 'endpoint']),
+            ("state", "present", ["name", "endpoint"]),
         ],
-        supports_check_mode=True
+        supports_check_mode=True,
     )
 
-    acs_region = AnsibleCloudStackRegion(module)
+    aregion = AnsibleCloudStackRegion(module)
 
-    state = module.params.get('state')
-    if state == 'absent':
-        region = acs_region.absent_region()
+    state = module.params.get("state")
+    if state == "absent":
+        region = aregion.absent_region()
     else:
-        region = acs_region.present_region()
+        region = aregion.present_region()
 
-    result = acs_region.get_result(region)
+    result = aregion.get_result(region)
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

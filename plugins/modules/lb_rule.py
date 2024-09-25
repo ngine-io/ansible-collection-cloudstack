@@ -10,9 +10,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_loadbalancer_rule
+module: lb_rule
 short_description: Manages load balancer rules on Apache CloudStack based clouds.
 description:
     - Add, update and remove load balancer rules.
@@ -114,11 +114,11 @@ options:
     type: str
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Create a load balancer rule
-  ngine_io.cloudstack.cs_loadbalancer_rule:
+  ngine_io.cloudstack.lb_rule:
     name: balance_http
     public_ip: 1.2.3.4
     algorithm: leastconn
@@ -126,7 +126,7 @@ EXAMPLES = '''
     private_port: 8080
 
 - name: Update algorithm of an existing load balancer rule
-  ngine_io.cloudstack.cs_loadbalancer_rule:
+  ngine_io.cloudstack.lb_rule:
     name: balance_http
     public_ip: 1.2.3.4
     algorithm: roundrobin
@@ -134,13 +134,13 @@ EXAMPLES = '''
     private_port: 8080
 
 - name: Delete a load balancer rule
-  ngine_io.cloudstack.cs_loadbalancer_rule:
+  ngine_io.cloudstack.lb_rule:
     name: balance_http
     public_ip: 1.2.3.4
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the rule.
@@ -217,12 +217,11 @@ state:
   returned: success
   type: str
   sample: Add
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
-                                       cs_required_together)
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackLBRule(AnsibleCloudStack):
@@ -230,37 +229,37 @@ class AnsibleCloudStackLBRule(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackLBRule, self).__init__(module)
         self.returns = {
-            'publicip': 'public_ip',
-            'algorithm': 'algorithm',
-            'cidrlist': 'cidr',
-            'protocol': 'protocol',
+            "publicip": "public_ip",
+            "algorithm": "algorithm",
+            "cidrlist": "cidr",
+            "protocol": "protocol",
         }
         # these values will be casted to int
         self.returns_to_int = {
-            'publicport': 'public_port',
-            'privateport': 'private_port',
+            "publicport": "public_port",
+            "privateport": "private_port",
         }
 
     def get_rule(self, **kwargs):
-        rules = self.query_api('listLoadBalancerRules', **kwargs)
+        rules = self.query_api("listLoadBalancerRules", **kwargs)
         if rules:
-            return rules['loadbalancerrule'][0]
+            return rules["loadbalancerrule"][0]
 
     def _get_common_args(self):
         return {
-            'account': self.get_account(key='name'),
-            'domainid': self.get_domain(key='id'),
-            'projectid': self.get_project(key='id'),
-            'zoneid': self.get_zone(key='id') if self.module.params.get('zone') else None,
-            'publicipid': self.get_ip_address(key='id'),
-            'name': self.module.params.get('name'),
+            "account": self.get_account(key="name"),
+            "domainid": self.get_domain(key="id"),
+            "projectid": self.get_project(key="id"),
+            "zoneid": self.get_zone(key="id") if self.module.params.get("zone") else None,
+            "publicipid": self.get_ip_address(key="id"),
+            "name": self.module.params.get("name"),
         }
 
     def present_lb_rule(self):
         required_params = [
-            'algorithm',
-            'private_port',
-            'public_port',
+            "algorithm",
+            "private_port",
+            "public_port",
         ]
         self.module.fail_on_missing_params(required_params=required_params)
 
@@ -272,92 +271,92 @@ class AnsibleCloudStackLBRule(AnsibleCloudStack):
             rule = self._create_lb_rule(rule)
 
         if rule:
-            rule = self.ensure_tags(resource=rule, resource_type='LoadBalancer')
+            rule = self.ensure_tags(resource=rule, resource_type="LoadBalancer")
         return rule
 
     def _create_lb_rule(self, rule):
-        self.result['changed'] = True
+        self.result["changed"] = True
         if not self.module.check_mode:
             args = self._get_common_args()
-            args.update({
-                'algorithm': self.module.params.get('algorithm'),
-                'privateport': self.module.params.get('private_port'),
-                'publicport': self.module.params.get('public_port'),
-                'cidrlist': self.module.params.get('cidr'),
-                'description': self.module.params.get('description'),
-                'protocol': self.module.params.get('protocol'),
-                'networkid': self.get_network(key='id'),
-            })
-            res = self.query_api('createLoadBalancerRule', **args)
+            args.update(
+                {
+                    "algorithm": self.module.params.get("algorithm"),
+                    "privateport": self.module.params.get("private_port"),
+                    "publicport": self.module.params.get("public_port"),
+                    "cidrlist": self.module.params.get("cidr"),
+                    "description": self.module.params.get("description"),
+                    "protocol": self.module.params.get("protocol"),
+                    "networkid": self.get_network(key="id"),
+                }
+            )
+            res = self.query_api("createLoadBalancerRule", **args)
 
-            poll_async = self.module.params.get('poll_async')
+            poll_async = self.module.params.get("poll_async")
             if poll_async:
-                rule = self.poll_job(res, 'loadbalancer')
+                rule = self.poll_job(res, "loadbalancer")
         return rule
 
     def _update_lb_rule(self, rule):
         args = {
-            'id': rule['id'],
-            'algorithm': self.module.params.get('algorithm'),
-            'description': self.module.params.get('description'),
+            "id": rule["id"],
+            "algorithm": self.module.params.get("algorithm"),
+            "description": self.module.params.get("description"),
         }
         if self.has_changed(args, rule):
-            self.result['changed'] = True
+            self.result["changed"] = True
             if not self.module.check_mode:
-                res = self.query_api('updateLoadBalancerRule', **args)
+                res = self.query_api("updateLoadBalancerRule", **args)
 
-                poll_async = self.module.params.get('poll_async')
+                poll_async = self.module.params.get("poll_async")
                 if poll_async:
-                    rule = self.poll_job(res, 'loadbalancer')
+                    rule = self.poll_job(res, "loadbalancer")
         return rule
 
     def absent_lb_rule(self):
         args = self._get_common_args()
         rule = self.get_rule(**args)
         if rule:
-            self.result['changed'] = True
+            self.result["changed"] = True
         if rule and not self.module.check_mode:
-            res = self.query_api('deleteLoadBalancerRule', id=rule['id'])
+            res = self.query_api("deleteLoadBalancerRule", id=rule["id"])
 
-            poll_async = self.module.params.get('poll_async')
+            poll_async = self.module.params.get("poll_async")
             if poll_async:
-                self.poll_job(res, 'loadbalancer')
+                self.poll_job(res, "loadbalancer")
         return rule
 
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        name=dict(required=True),
-        description=dict(),
-        algorithm=dict(choices=['source', 'roundrobin', 'leastconn'], default='source'),
-        private_port=dict(type='int'),
-        public_port=dict(type='int'),
-        protocol=dict(),
-        state=dict(choices=['present', 'absent'], default='present'),
-        ip_address=dict(required=True, aliases=['public_ip']),
-        cidr=dict(),
-        project=dict(),
-        open_firewall=dict(type='bool', default=False),
-        tags=dict(type='list', elements='dict', aliases=['tag']),
-        zone=dict(),
-        domain=dict(),
-        account=dict(),
-        vpc=dict(),
-        network=dict(),
-        poll_async=dict(type='bool', default=True),
-    ))
-
-    module = AnsibleModule(
-        argument_spec=argument_spec,
-        required_together=cs_required_together(),
-        supports_check_mode=True
+    argument_spec.update(
+        dict(
+            name=dict(required=True),
+            description=dict(),
+            algorithm=dict(choices=["source", "roundrobin", "leastconn"], default="source"),
+            private_port=dict(type="int"),
+            public_port=dict(type="int"),
+            protocol=dict(),
+            state=dict(choices=["present", "absent"], default="present"),
+            ip_address=dict(required=True, aliases=["public_ip"]),
+            cidr=dict(),
+            project=dict(),
+            open_firewall=dict(type="bool", default=False),
+            tags=dict(type="list", elements="dict", aliases=["tag"]),
+            zone=dict(),
+            domain=dict(),
+            account=dict(),
+            vpc=dict(),
+            network=dict(),
+            poll_async=dict(type="bool", default=True),
+        )
     )
+
+    module = AnsibleModule(argument_spec=argument_spec, required_together=cs_required_together(), supports_check_mode=True)
 
     acs_lb_rule = AnsibleCloudStackLBRule(module)
 
-    state = module.params.get('state')
-    if state in ['absent']:
+    state = module.params.get("state")
+    if state in ["absent"]:
         rule = acs_lb_rule.absent_lb_rule()
     else:
         rule = acs_lb_rule.present_lb_rule()
@@ -366,5 +365,5 @@ def main():
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

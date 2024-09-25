@@ -9,9 +9,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
-module: cs_snapshot_policy
+module: volume_snapshot_policy
 short_description: Manages volume snapshot policies on Apache CloudStack based clouds.
 description:
     - Create, update and delete volume snapshot policies.
@@ -93,17 +93,17 @@ options:
     type: str
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: ensure a snapshot policy daily at 1h00 UTC
-  ngine_io.cloudstack.cs_snapshot_policy:
+  ngine_io.cloudstack.volume_snapshot_policy:
     volume: ROOT-478
     schedule: '00:1'
     max_snaps: 3
 
 - name: ensure a snapshot policy daily at 1h00 UTC on the second DATADISK of VM web-01
-  ngine_io.cloudstack.cs_snapshot_policy:
+  ngine_io.cloudstack.volume_snapshot_policy:
     vm: web-01
     volume_type: DATADISK
     device_id: 2
@@ -111,14 +111,14 @@ EXAMPLES = '''
     max_snaps: 3
 
 - name: ensure a snapshot policy hourly at minute 5 UTC
-  ngine_io.cloudstack.cs_snapshot_policy:
+  ngine_io.cloudstack.volume_snapshot_policy:
     volume: ROOT-478
     schedule: '5'
     interval_type: hourly
     max_snaps: 1
 
 - name: ensure a snapshot policy weekly on Sunday at 05h00, TZ Europe/Zurich
-  ngine_io.cloudstack.cs_snapshot_policy:
+  ngine_io.cloudstack.volume_snapshot_policy:
     volume: ROOT-478
     schedule: '00:5:1'
     interval_type: weekly
@@ -126,13 +126,13 @@ EXAMPLES = '''
     time_zone: 'Europe/Zurich'
 
 - name: ensure a snapshot policy is absent
-  ngine_io.cloudstack.cs_snapshot_policy:
+  ngine_io.cloudstack.volume_snapshot_policy:
     volume: ROOT-478
     interval_type: hourly
     state: absent
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ---
 id:
   description: UUID of the snapshot policy.
@@ -184,12 +184,11 @@ domain:
   returned: success
   type: str
   sample: example domain
-'''
+"""
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
-                                       cs_required_together)
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackSnapshotPolicy(AnsibleCloudStack):
@@ -197,20 +196,20 @@ class AnsibleCloudStackSnapshotPolicy(AnsibleCloudStack):
     def __init__(self, module):
         super(AnsibleCloudStackSnapshotPolicy, self).__init__(module)
         self.returns = {
-            'schedule': 'schedule',
-            'timezone': 'time_zone',
-            'maxsnaps': 'max_snaps',
+            "schedule": "schedule",
+            "timezone": "time_zone",
+            "maxsnaps": "max_snaps",
         }
         self.interval_types = {
-            'hourly': 0,
-            'daily': 1,
-            'weekly': 2,
-            'monthly': 3,
+            "hourly": 0,
+            "daily": 1,
+            "weekly": 2,
+            "monthly": 3,
         }
         self.volume = None
 
     def get_interval_type(self):
-        interval_type = self.module.params.get('interval_type')
+        interval_type = self.module.params.get("interval_type")
         return self.interval_types[interval_type]
 
     def get_volume(self, key=None):
@@ -218,88 +217,84 @@ class AnsibleCloudStackSnapshotPolicy(AnsibleCloudStack):
             return self._get_by_key(key, self.volume)
 
         args = {
-            'name': self.module.params.get('volume'),
-            'account': self.get_account(key='name'),
-            'domainid': self.get_domain(key='id'),
-            'projectid': self.get_project(key='id'),
-            'virtualmachineid': self.get_vm(key='id', filter_zone=False),
-            'type': self.module.params.get('volume_type'),
+            "name": self.module.params.get("volume"),
+            "account": self.get_account(key="name"),
+            "domainid": self.get_domain(key="id"),
+            "projectid": self.get_project(key="id"),
+            "virtualmachineid": self.get_vm(key="id", filter_zone=False),
+            "type": self.module.params.get("volume_type"),
         }
-        volumes = self.query_api('listVolumes', **args)
+        volumes = self.query_api("listVolumes", **args)
         if volumes:
-            if volumes['count'] > 1:
-                device_id = self.module.params.get('device_id')
+            if volumes["count"] > 1:
+                device_id = self.module.params.get("device_id")
                 if not device_id:
                     self.module.fail_json(msg="Found more then 1 volume: combine params 'vm', 'volume_type', 'device_id' and/or 'volume' to select the volume")
                 else:
-                    for v in volumes['volume']:
-                        if v.get('deviceid') == device_id:
+                    for v in volumes["volume"]:
+                        if v.get("deviceid") == device_id:
                             self.volume = v
                             return self._get_by_key(key, self.volume)
                     self.module.fail_json(msg="No volume found with device id %s" % device_id)
-            self.volume = volumes['volume'][0]
+            self.volume = volumes["volume"][0]
             return self._get_by_key(key, self.volume)
         return None
 
     def get_snapshot_policy(self):
-        args = {
-            'volumeid': self.get_volume(key='id')
-        }
-        policies = self.query_api('listSnapshotPolicies', **args)
+        args = {"volumeid": self.get_volume(key="id")}
+        policies = self.query_api("listSnapshotPolicies", **args)
         if policies:
-            for policy in policies['snapshotpolicy']:
-                if policy['intervaltype'] == self.get_interval_type():
+            for policy in policies["snapshotpolicy"]:
+                if policy["intervaltype"] == self.get_interval_type():
                     return policy
             return None
 
     def present_snapshot_policy(self):
         required_params = [
-            'schedule',
+            "schedule",
         ]
         self.module.fail_on_missing_params(required_params=required_params)
 
         policy = self.get_snapshot_policy()
         args = {
-            'id': policy.get('id') if policy else None,
-            'intervaltype': self.module.params.get('interval_type'),
-            'schedule': self.module.params.get('schedule'),
-            'maxsnaps': self.module.params.get('max_snaps'),
-            'timezone': self.module.params.get('time_zone'),
-            'volumeid': self.get_volume(key='id')
+            "id": policy.get("id") if policy else None,
+            "intervaltype": self.module.params.get("interval_type"),
+            "schedule": self.module.params.get("schedule"),
+            "maxsnaps": self.module.params.get("max_snaps"),
+            "timezone": self.module.params.get("time_zone"),
+            "volumeid": self.get_volume(key="id"),
         }
-        if not policy or (policy and self.has_changed(policy, args, only_keys=['schedule', 'maxsnaps', 'timezone'])):
-            self.result['changed'] = True
+        if not policy or (policy and self.has_changed(policy, args, only_keys=["schedule", "maxsnaps", "timezone"])):
+            self.result["changed"] = True
             if not self.module.check_mode:
-                res = self.query_api('createSnapshotPolicy', **args)
-                policy = res['snapshotpolicy']
+                res = self.query_api("createSnapshotPolicy", **args)
+                policy = res["snapshotpolicy"]
         return policy
 
     def absent_snapshot_policy(self):
         policy = self.get_snapshot_policy()
         if policy:
-            self.result['changed'] = True
-            args = {
-                'id': policy['id']
-            }
+            self.result["changed"] = True
+            args = {"id": policy["id"]}
             if not self.module.check_mode:
-                self.query_api('deleteSnapshotPolicies', **args)
+                self.query_api("deleteSnapshotPolicies", **args)
         return policy
 
     def get_result(self, resource):
         super(AnsibleCloudStackSnapshotPolicy, self).get_result(resource)
-        if resource and 'intervaltype' in resource:
+        if resource and "intervaltype" in resource:
             for key, value in self.interval_types.items():
-                if value == resource['intervaltype']:
-                    self.result['interval_type'] = key
+                if value == resource["intervaltype"]:
+                    self.result["interval_type"] = key
                     break
         volume = self.get_volume()
         if volume:
             volume_results = {
-                'volume': volume.get('name'),
-                'zone': volume.get('zonename'),
-                'project': volume.get('project'),
-                'account': volume.get('account'),
-                'domain': volume.get('domain'),
+                "volume": volume.get("name"),
+                "zone": volume.get("zonename"),
+                "project": volume.get("project"),
+                "account": volume.get("account"),
+                "domain": volume.get("domain"),
             }
             self.result.update(volume_results)
         return self.result
@@ -307,42 +302,37 @@ class AnsibleCloudStackSnapshotPolicy(AnsibleCloudStack):
 
 def main():
     argument_spec = cs_argument_spec()
-    argument_spec.update(dict(
-        volume=dict(),
-        volume_type=dict(choices=['DATADISK', 'ROOT']),
-        vm=dict(),
-        device_id=dict(type='int'),
-        vpc=dict(),
-        interval_type=dict(default='daily', choices=['hourly', 'daily', 'weekly', 'monthly'], aliases=['interval']),
-        schedule=dict(),
-        time_zone=dict(default='UTC', aliases=['timezone']),
-        max_snaps=dict(type='int', default=8, aliases=['max']),
-        state=dict(choices=['present', 'absent'], default='present'),
-        domain=dict(),
-        account=dict(),
-        project=dict(),
-    ))
-
-    module = AnsibleModule(
-        argument_spec=argument_spec,
-        required_together=cs_required_together(),
-        required_one_of=(
-            ['vm', 'volume'],
-        ),
-        supports_check_mode=True
+    argument_spec.update(
+        dict(
+            volume=dict(),
+            volume_type=dict(choices=["DATADISK", "ROOT"]),
+            vm=dict(),
+            device_id=dict(type="int"),
+            vpc=dict(),
+            interval_type=dict(default="daily", choices=["hourly", "daily", "weekly", "monthly"], aliases=["interval"]),
+            schedule=dict(),
+            time_zone=dict(default="UTC", aliases=["timezone"]),
+            max_snaps=dict(type="int", default=8, aliases=["max"]),
+            state=dict(choices=["present", "absent"], default="present"),
+            domain=dict(),
+            account=dict(),
+            project=dict(),
+        )
     )
 
-    acs_snapshot_policy = AnsibleCloudStackSnapshotPolicy(module)
+    module = AnsibleModule(argument_spec=argument_spec, required_together=cs_required_together(), required_one_of=(["vm", "volume"],), supports_check_mode=True)
 
-    state = module.params.get('state')
-    if state in ['absent']:
-        policy = acs_snapshot_policy.absent_snapshot_policy()
+    asnapshot_policy = AnsibleCloudStackSnapshotPolicy(module)
+
+    state = module.params.get("state")
+    if state in ["absent"]:
+        policy = asnapshot_policy.absent_snapshot_policy()
     else:
-        policy = acs_snapshot_policy.present_snapshot_policy()
+        policy = asnapshot_policy.present_snapshot_policy()
 
-    result = acs_snapshot_policy.get_result(policy)
+    result = asnapshot_policy.get_result(policy)
     module.exit_json(**result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
