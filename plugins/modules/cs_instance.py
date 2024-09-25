@@ -605,9 +605,10 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         return self.instance
 
     def get_user_data_id_by_name(self):
-      name = self.module.params.get('user_data_name')
-      user_data_id = None
-      if name:
+        name = self.module.params.get('user_data_name')
+        if not name:
+            return None
+
         args = {
             'account': self.get_account(key='name'),
             'domainid': self.get_domain(key='id'),
@@ -620,14 +621,10 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
 
         user_data_list = self.query_api('listUserData', **args)
         if user_data_list:
-            for v in user_data_list.get('userdata', []):
-                if name.lower() in [v['name'].lower()]:
-                    user_data_id = v['id']
-                    break
-        if user_data_id is None:
-          self.module.fail_json(msg="User data '%s' not found" % user_data_list)
-
-      return user_data_id
+            for v in user_data_list.get('userdata') or []:
+                if name in [v['name'], v['id']]:
+                    return v['id']
+        self.module.fail_json(msg="User data '%s' not found" % user_data_list)
 
     def _get_instance_user_data(self, instance):
         # Query the user data if we need to
