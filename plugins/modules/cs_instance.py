@@ -181,6 +181,7 @@ options:
       - Optional data (ASCII) that can be sent to the instance upon a successful deployment.
       - The data will be automatically base64 encoded.
       - Consider switching to HTTP_POST by using I(CLOUDSTACK_METHOD=post) to increase the HTTP_GET size limit of 2KB to 32 KB.
+      - Mutually exclusive with I(user_data_name) option.
     type: str
   user_data_details:
     description:
@@ -189,7 +190,8 @@ options:
     version_added: 2.5.0
   user_data_name:
     description:
-      - Name of user data to be used. This have precedence over I(user_data).
+      - Name of user data to be used.
+      - Mutually exclusive with I(user_data) option.
     type: str
     version_added: 2.5.0
   force:
@@ -1171,6 +1173,7 @@ def main():
         ),
         mutually_exclusive=(
             ['template', 'iso'],
+            ["user_data", "user_data_name"],
         ),
         supports_check_mode=True
     )
