@@ -96,6 +96,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackRole(AnsibleCloudStack):
+    """AnsibleCloudStackRole"""
 
     def __init__(self, module):
         super(AnsibleCloudStackRole, self).__init__(module)

@@ -218,6 +218,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackPhysicalNetwork(AnsibleCloudStack):
+    """AnsibleCloudStackPhysicalNetwork"""
 
     def __init__(self, module):
         super(AnsibleCloudStackPhysicalNetwork, self).__init__(module)

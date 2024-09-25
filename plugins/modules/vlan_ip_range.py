@@ -241,6 +241,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackVlanIpRange(AnsibleCloudStack):
+    """AnsibleCloudStackVlanIpRange"""
 
     def __init__(self, module):
         super(AnsibleCloudStackVlanIpRange, self).__init__(module)

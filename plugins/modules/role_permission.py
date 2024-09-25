@@ -125,6 +125,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackRolePermission(AnsibleCloudStack):
+    """AnsibleCloudStackRolePermission"""
 
     def __init__(self, module):
         super(AnsibleCloudStackRolePermission, self).__init__(module)

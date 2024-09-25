@@ -217,6 +217,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackFirewall(AnsibleCloudStack):
+    """AnsibleCloudStackFirewall"""
 
     def __init__(self, module):
         super(AnsibleCloudStackFirewall, self).__init__(module)

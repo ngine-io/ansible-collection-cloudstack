@@ -189,6 +189,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackVpnConnection(AnsibleCloudStack):
+    """AnsibleCloudStackVpnConnection"""
 
     def __init__(self, module):
         super(AnsibleCloudStackVpnConnection, self).__init__(module)

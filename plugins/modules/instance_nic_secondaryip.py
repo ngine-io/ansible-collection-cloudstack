@@ -152,6 +152,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackInstanceNicSecondaryIp(AnsibleCloudStack):
+    """AnsibleCloudStackInstanceNicSecondaryIp"""
 
     def __init__(self, module):
         super(AnsibleCloudStackInstanceNicSecondaryIp, self).__init__(module)

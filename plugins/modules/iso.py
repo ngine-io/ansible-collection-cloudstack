@@ -243,6 +243,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackIso(AnsibleCloudStack):
+    """AnsibleCloudStackIso"""
 
     def __init__(self, module):
         super(AnsibleCloudStackIso, self).__init__(module)

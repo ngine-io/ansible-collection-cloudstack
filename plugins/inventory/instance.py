@@ -155,6 +155,7 @@ except ImportError:
 
 
 class InventoryModule(BaseInventoryPlugin, Constructable):
+    """InventoryModule"""
 
     NAME = "ngine_io.cloudstack.instance"
 

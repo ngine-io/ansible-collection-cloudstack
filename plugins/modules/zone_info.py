@@ -152,6 +152,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec
 
 
 class AnsibleCloudStackZoneInfo(AnsibleCloudStack):
+    """AnsibleCloudStackZoneInfo"""
 
     def __init__(self, module):
         super(AnsibleCloudStackZoneInfo, self).__init__(module)

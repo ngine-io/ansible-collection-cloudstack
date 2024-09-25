@@ -106,6 +106,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackSecurityGroup(AnsibleCloudStack):
+    """AnsibleCloudStackSecurityGroup"""
 
     def __init__(self, module):
         super(AnsibleCloudStackSecurityGroup, self).__init__(module)

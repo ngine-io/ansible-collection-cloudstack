@@ -274,6 +274,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec
 
 
 class AnsibleCloudStackInstanceInfo(AnsibleCloudStack):
+    """AnsibleCloudStackInstanceInfo"""
 
     def __init__(self, module):
         super(AnsibleCloudStackInstanceInfo, self).__init__(module)

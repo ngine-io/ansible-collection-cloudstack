@@ -221,6 +221,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackDiskOffering(AnsibleCloudStack):
+    """AnsibleCloudStackDiskOffering"""
 
     def __init__(self, module):
         super(AnsibleCloudStackDiskOffering, self).__init__(module)

@@ -120,6 +120,7 @@ CS_USERDATA_BASE_URL = "http://%s/latest/user-data"
 
 
 class CloudStackFacts(object):
+    """CloudStackFacts"""
 
     def __init__(self):
         collector = ansible_collector.get_ansible_collector(

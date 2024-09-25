@@ -92,11 +92,11 @@ password:
 
 from ansible.module_utils.basic import AnsibleModule
 
-from ..module_utils.cloudstack import (AnsibleCloudStack, cs_argument_spec,
-                                       cs_required_together)
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_required_together
 
 
 class AnsibleCloudStackPasswordReset(AnsibleCloudStack):
+    """AnsibleCloudStackPasswordReset"""
 
     def __init__(self, module):
         super(AnsibleCloudStackPasswordReset, self).__init__(module)

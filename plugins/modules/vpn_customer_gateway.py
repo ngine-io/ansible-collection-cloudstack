@@ -190,6 +190,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackVpnCustomerGateway(AnsibleCloudStack):
+    """AnsibleCloudStackVpnCustomerGateway"""
 
     def __init__(self, module):
         super(AnsibleCloudStackVpnCustomerGateway, self).__init__(module)

@@ -124,6 +124,7 @@ RESOURCE_TYPES = {
 
 
 class AnsibleCloudStackResourceLimit(AnsibleCloudStack):
+    """AnsibleCloudStackResourceLimit"""
 
     def __init__(self, module):
         super(AnsibleCloudStackResourceLimit, self).__init__(module)

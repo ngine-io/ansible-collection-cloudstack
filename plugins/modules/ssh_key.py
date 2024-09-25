@@ -113,6 +113,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackSshKey(AnsibleCloudStack):
+    """AnsibleCloudStackSshKey"""
 
     def __init__(self, module):
         super(AnsibleCloudStackSshKey, self).__init__(module)

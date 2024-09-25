@@ -199,34 +199,14 @@ def main():
     argument_spec = cs_argument_spec()
     argument_spec.update(
         dict(
-            name=dict(
-                type="str",
-                required=True,
-            ),
-            affinity_type=dict(
-                type="str",
-            ),
-            description=dict(
-                type="str",
-            ),
-            state=dict(
-                type="str",
-                choices=["present", "absent"],
-                default="present",
-            ),
-            domain=dict(
-                type="str",
-            ),
-            account=dict(
-                type="str",
-            ),
-            project=dict(
-                type="str",
-            ),
-            poll_async=dict(
-                type="bool",
-                default=True,
-            ),
+            name=dict(type="str", required=True),
+            affinity_type=dict(type="str"),
+            description=dict(type="str"),
+            state=dict(type="str", choices=["present", "absent"], default="present"),
+            domain=dict(type="str"),
+            account=dict(type="str"),
+            project=dict(type="str"),
+            poll_async=dict(type="bool", default=True),
         )
     )
 

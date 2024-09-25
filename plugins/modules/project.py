@@ -132,6 +132,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackProject(AnsibleCloudStack):
+    """AnsibleCloudStackProject"""
 
     def get_project(self):
         if not self.project:

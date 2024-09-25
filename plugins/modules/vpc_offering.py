@@ -157,6 +157,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackVPCOffering(AnsibleCloudStack):
+    """AnsibleCloudStackVPCOffering"""
 
     def __init__(self, module):
         super(AnsibleCloudStackVPCOffering, self).__init__(module)

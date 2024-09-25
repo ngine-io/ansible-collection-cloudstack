@@ -156,6 +156,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackIPAddress(AnsibleCloudStack):
+    """AnsibleCloudStackIPAddress"""
 
     def __init__(self, module):
         super(AnsibleCloudStackIPAddress, self).__init__(module)

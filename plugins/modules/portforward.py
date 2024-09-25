@@ -233,6 +233,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackPortforwarding(AnsibleCloudStack):
+    """AnsibleCloudStackPortforwarding"""
 
     def __init__(self, module):
         super(AnsibleCloudStackPortforwarding, self).__init__(module)

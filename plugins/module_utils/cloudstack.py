@@ -46,6 +46,7 @@ def cs_required_together():
 
 
 class AnsibleCloudStack:
+    """AnsibleCloudStack"""
 
     def __init__(self, module):
         if not HAS_LIB_CS:

@@ -383,6 +383,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackServiceOffering(AnsibleCloudStack):
+    """AnsibleCloudStackServiceOffering"""
 
     def __init__(self, module):
         super(AnsibleCloudStackServiceOffering, self).__init__(module)

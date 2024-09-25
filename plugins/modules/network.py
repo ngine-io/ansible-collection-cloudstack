@@ -365,6 +365,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackNetwork(AnsibleCloudStack):
+    """AnsibleCloudStackNetwork"""
 
     def __init__(self, module):
         super(AnsibleCloudStackNetwork, self).__init__(module)

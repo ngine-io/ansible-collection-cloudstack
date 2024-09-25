@@ -393,59 +393,21 @@ def main():
     argument_spec = cs_argument_spec()
     argument_spec.update(
         dict(
-            name=dict(
-                type="str",
-                required=True,
-            ),
-            state=dict(
-                type="str",
-                choices=["present", "absent", "enabled", "disabled", "locked", "unlocked"],
-                default="present",
-            ),
-            account_type=dict(
-                choices=["user", "root_admin", "domain_admin"],
-                default="user",
-            ),
-            network_domain=dict(
-                type="str",
-            ),
-            domain=dict(
-                default="ROOT",
-            ),
-            email=dict(
-                type="str",
-            ),
-            first_name=dict(
-                type="str",
-            ),
-            last_name=dict(
-                type="str",
-            ),
-            username=dict(
-                type="str",
-            ),
-            password=dict(
-                type="str",
-                no_log=True,
-            ),
-            timezone=dict(
-                type="str",
-            ),
-            role=dict(
-                type="str",
-            ),
-            ldap_domain=dict(
-                type="str",
-            ),
-            ldap_type=dict(
-                type="str",
-                choices=["GROUP", "OU"],
-                default="GROUP",
-            ),
-            poll_async=dict(
-                type="bool",
-                default=True,
-            ),
+            name=dict(type="str", required=True),
+            state=dict(type="str", choices=["present", "absent", "enabled", "disabled", "locked", "unlocked"], default="present"),
+            account_type=dict(choices=["user", "root_admin", "domain_admin"], default="user"),
+            network_domain=dict(type="str"),
+            domain=dict(default="ROOT"),
+            email=dict(type="str"),
+            first_name=dict(type="str"),
+            last_name=dict(type="str"),
+            username=dict(type="str"),
+            password=dict(type="str", no_log=True),
+            timezone=dict(type="str"),
+            role=dict(type="str"),
+            ldap_domain=dict(type="str"),
+            ldap_type=dict(type="str", choices=["GROUP", "OU"], default="GROUP"),
+            poll_async=dict(type="bool", default=True),
         )
     )
 

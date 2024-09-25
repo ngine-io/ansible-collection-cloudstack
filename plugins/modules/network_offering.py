@@ -277,6 +277,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackNetworkOffering(AnsibleCloudStack):
+    """AnsibleCloudStackNetworkOffering"""
 
     def __init__(self, module):
         super(AnsibleCloudStackNetworkOffering, self).__init__(module)

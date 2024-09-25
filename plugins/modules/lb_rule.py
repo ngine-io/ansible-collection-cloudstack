@@ -225,6 +225,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackLBRule(AnsibleCloudStack):
+    """AnsibleCloudStackLBRule"""
 
     def __init__(self, module):
         super(AnsibleCloudStackLBRule, self).__init__(module)

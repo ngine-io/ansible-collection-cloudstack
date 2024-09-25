@@ -162,6 +162,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackRouter(AnsibleCloudStack):
+    """AnsibleCloudStackRouter"""
 
     def __init__(self, module):
         super(AnsibleCloudStackRouter, self).__init__(module)

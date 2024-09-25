@@ -101,6 +101,7 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 
 
 class AnsibleCloudStackDomain(AnsibleCloudStack):
+    """AnsibleCloudStackDomain"""
 
     def __init__(self, module):
         super(AnsibleCloudStackDomain, self).__init__(module)
