@@ -617,7 +617,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             # commented util will work it
             # 'name': name,
         }
-        
+
         user_data_list = self.query_api('listUserData', **args)
         if user_data_list:
             for v in user_data_list.get('userdata', []):
@@ -833,7 +833,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         args['podid'] = self.get_pod_id()
 
         template_iso = self.get_template_or_iso()
-        if 'hypervisor' not in template_iso:
+        if template_iso and 'hypervisor' not in template_iso:
             args['hypervisor'] = self.get_hypervisor()
 
         instance = None
@@ -856,20 +856,20 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
 
         # Instance UserData
         if self.module.params.get('user_data_name') is not None:
-          args_instance_update = {
-              'id': instance['id'],
-              'userdataid': self.get_user_data_id_by_name()
-          }
+            args_instance_update = {
+                'id': instance['id'],
+                'userdataid': self.get_user_data_id_by_name()
+            }
         else:
-          args_instance_update = {
-              'id': instance['id'],
-              'userdata': self.get_user_data()
-          }
-          instance['userdata'] = self._get_instance_user_data(instance)
-          
+            args_instance_update = {
+                'id': instance['id'],
+                'userdata': self.get_user_data()
+            }
+            instance['userdata'] = self._get_instance_user_data(instance)
+
         if self.module.params.get('user_data_details'):
             args_instance_update['userdatadetails'] = self.module.params.get('user_data_details')
-            
+
         args_instance_update['ostypeid'] = self.get_os_type(key='id')
         if self.module.params.get('group'):
             args_instance_update['group'] = self.module.params.get('group')
