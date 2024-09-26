@@ -11,7 +11,7 @@ __metaclass__ = type
 class ModuleDocFragment(object):
 
     # Standard cloudstack documentation fragment
-    DOCUMENTATION = r"""
+    DOCUMENTATION = """
 options:
   api_key:
     description:

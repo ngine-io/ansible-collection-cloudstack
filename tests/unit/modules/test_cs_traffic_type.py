@@ -1,5 +1,7 @@
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
+
 import sys
+
 import pytest
 from units.compat import unittest
 from units.compat.mock import MagicMock
@@ -12,12 +14,13 @@ __metaclass__ = type
 # Exoscale's cs doesn't support Python 2.6
 pytestmark = []
 if sys.version_info[:2] != (2, 6):
-    from ansible.modules.cloud.cloudstack.cs_traffic_type import AnsibleCloudStackTrafficType, setup_module_object
     from ansible.module_utils.cloudstack import HAS_LIB_CS
+    from ansible.modules.cloud.cloudstack.cs_traffic_type import AnsibleCloudStackTrafficType, setup_module_object
+
     if not HAS_LIB_CS:
         pytestmark.append(pytest.mark.skip('The cloudstack library, "cs", is needed to test cs_traffic_type'))
 else:
-    pytestmark.append(pytest.mark.skip('Exoscale\'s cs doesn\'t support Python 2.6'))
+    pytestmark.append(pytest.mark.skip("Exoscale's cs doesn't support Python 2.6"))
 
 
 EXISTING_TRAFFIC_TYPES_RESPONSE = {
@@ -27,21 +30,21 @@ EXISTING_TRAFFIC_TYPES_RESPONSE = {
             "id": "9801cf73-5a73-4883-97e4-fa20c129226f",
             "kvmnetworklabel": "cloudbr0",
             "physicalnetworkid": "659c1840-9374-440d-a412-55ca360c9d3c",
-            "traffictype": "Management"
+            "traffictype": "Management",
         },
         {
             "id": "28ed70b7-9a1f-41bf-94c3-53a9f22da8b6",
             "kvmnetworklabel": "cloudbr0",
             "physicalnetworkid": "659c1840-9374-440d-a412-55ca360c9d3c",
-            "traffictype": "Guest"
+            "traffictype": "Guest",
         },
         {
             "id": "9c05c802-84c0-4eda-8f0a-f681364ffb46",
             "kvmnetworklabel": "cloudbr0",
             "physicalnetworkid": "659c1840-9374-440d-a412-55ca360c9d3c",
-            "traffictype": "Storage"
-        }
-    ]
+            "traffictype": "Storage",
+        },
+    ],
 }
 
 VALID_LIST_NETWORKS_RESPONSE = {
@@ -53,9 +56,9 @@ VALID_LIST_NETWORKS_RESPONSE = {
             "name": "eth1",
             "state": "Enabled",
             "vlan": "3900-4000",
-            "zoneid": "49acf813-a8dd-4da0-aa53-1d826d6003e7"
+            "zoneid": "49acf813-a8dd-4da0-aa53-1d826d6003e7",
         }
-    ]
+    ],
 }
 
 VALID_LIST_ZONES_RESPONSE = {
@@ -74,9 +77,9 @@ VALID_LIST_ZONES_RESPONSE = {
             "networktype": "Advanced",
             "securitygroupsenabled": False,
             "tags": [],
-            "zonetoken": "df20d65a-c6c8-3880-9064-4f77de2291ef"
+            "zonetoken": "df20d65a-c6c8-3880-9064-4f77de2291ef",
         }
-    ]
+    ],
 }
 
 
@@ -89,22 +92,21 @@ base_module_args = {
     "poll_async": True,
     "state": "present",
     "traffic_type": "Guest",
-    "zone": "DevCloud-01"
+    "zone": "DevCloud-01",
 }
 
 
 class TestAnsibleCloudstackTraffiType(TestCase):
-
     def test_module_is_created_sensibly(self):
         set_module_args(base_module_args)
         module = setup_module_object()
-        assert module.params['traffic_type'] == 'Guest'
+        assert module.params["traffic_type"] == "Guest"
 
     def test_update_called_when_traffic_type_exists(self):
         set_module_args(base_module_args)
         module = setup_module_object()
         actt = AnsibleCloudStackTrafficType(module)
-        actt.get_traffic_type = MagicMock(return_value=EXISTING_TRAFFIC_TYPES_RESPONSE['traffictype'][0])
+        actt.get_traffic_type = MagicMock(return_value=EXISTING_TRAFFIC_TYPES_RESPONSE["traffictype"][0])
         actt.update_traffic_type = MagicMock()
         actt.present_traffic_type()
         self.assertTrue(actt.update_traffic_type.called)
@@ -124,12 +126,12 @@ class TestAnsibleCloudstackTraffiType(TestCase):
         set_module_args(base_module_args)
         module = setup_module_object()
         actt = AnsibleCloudStackTrafficType(module)
-        actt.get_physical_network = MagicMock(return_value=VALID_LIST_NETWORKS_RESPONSE['physicalnetwork'][0])
+        actt.get_physical_network = MagicMock(return_value=VALID_LIST_NETWORKS_RESPONSE["physicalnetwork"][0])
         actt.get_traffic_types = MagicMock(return_value=EXISTING_TRAFFIC_TYPES_RESPONSE)
         tt = actt.present_traffic_type()
-        self.assertTrue(tt.get('kvmnetworklabel') == base_module_args['kvm_networklabel'])
-        self.assertTrue(tt.get('traffictype') == base_module_args['traffic_type'])
+        self.assertTrue(tt.get("kvmnetworklabel") == base_module_args["kvm_networklabel"])
+        self.assertTrue(tt.get("traffictype") == base_module_args["traffic_type"])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
