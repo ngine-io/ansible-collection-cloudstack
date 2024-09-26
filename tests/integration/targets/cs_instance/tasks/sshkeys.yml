@@ -11,8 +11,8 @@
 - name: verify update instance ssh key non existent
   assert:
     that:
-    - instance is failed
-    - 'instance.msg == "SSH key not found: {{ cs_resource_prefix }}-sshkey-does-not-exist"'
+      - instance is failed
+      - 'instance.msg == "SSH key not found: {{ cs_resource_prefix }}-sshkey-does-not-exist"'
 
 - name: test create instance without keypair in check mode
   cs_instance:
@@ -25,8 +25,8 @@
 - name: verify create instance without keypair in check mode
   assert:
     that:
-    - instance is successful
-    - instance is changed
+      - instance is successful
+      - instance is changed
 
 - name: test create instance without keypair
   cs_instance:
@@ -38,9 +38,9 @@
 - name: verify create instance without keypair
   assert:
     that:
-    - instance is successful
-    - instance is changed
-    - instance.ssh_key is not defined
+      - instance is successful
+      - instance is changed
+      - instance.ssh_keys is not defined
 
 - name: test create instance without keypair idempotence
   cs_instance:
@@ -52,9 +52,9 @@
 - name: verify create instance without keypair idempotence
   assert:
     that:
-    - instance is successful
-    - instance is not changed
-    - instance.ssh_key is not defined
+      - instance is successful
+      - instance is not changed
+      - instance.ssh_keys is not defined
 
 - name: setup ssh key2
   cs_sshkeypair:
@@ -63,7 +63,7 @@
 - name: verify setup ssh key2
   assert:
     that:
-    - sshkey is successful
+      - sshkey is successful
 
 - name: test update instance ssh key2 in check mode
   cs_instance:
@@ -76,8 +76,8 @@
 - name: verify update instance ssh key2 in check mode
   assert:
     that:
-    - instance is changed
-    - instance.ssh_key is not defined
+      - instance is changed
+      - instance.ssh_key is not defined
 
 - name: test update instance ssh key2
   cs_instance:
@@ -89,8 +89,8 @@
 - name: verify update instance ssh key2
   assert:
     that:
-    - instance is changed
-    - instance.ssh_key == "{{ cs_resource_prefix }}-sshkey2"
+      - instance is changed
+      - instance.ssh_key == "{{ cs_resource_prefix }}-sshkey2"
 
 - name: test update instance ssh key2 idempotence
   cs_instance:
@@ -102,8 +102,8 @@
 - name: verify update instance ssh key2 idempotence
   assert:
     that:
-    - instance is not changed
-    - instance.ssh_key == "{{ cs_resource_prefix }}-sshkey2"
+      - instance is not changed
+      - instance.ssh_key == "{{ cs_resource_prefix }}-sshkey2"
 
 - name: cleanup ssh key2
   cs_sshkeypair:
@@ -113,7 +113,7 @@
 - name: verify cleanup ssh key2
   assert:
     that:
-    - sshkey2 is successful
+      - sshkey2 is successful
 
 - name: test update instance ssh key2 idempotence2
   cs_instance:
@@ -126,8 +126,8 @@
 - name: verify update instance ssh key2 idempotence2
   assert:
     that:
-    - instance is failed
-    - 'instance.msg == "SSH key not found: {{ cs_resource_prefix }}-sshkey2"'
+      - instance is failed
+      - 'instance.msg == "SSH key not found: {{ cs_resource_prefix }}-sshkey2"'
 
 - name: test update instance ssh key in check mode
   cs_instance:
@@ -140,8 +140,8 @@
 - name: verify update instance ssh key in check mode
   assert:
     that:
-    - instance is changed
-    - instance.ssh_key is not defined
+      - instance is changed
+      - instance.ssh_keys is not defined
 
 - name: test update instance ssh key
   cs_instance:
@@ -153,8 +153,8 @@
 - name: verify update instance ssh key
   assert:
     that:
-    - instance is changed
-    - instance.ssh_key == "{{ cs_resource_prefix }}-sshkey"
+      - instance is changed
+      - "'{{ cs_resource_prefix }}-sshkey' in instance.ssh_keys"
 
 - name: test update instance ssh key idempotence
   cs_instance:
@@ -166,8 +166,8 @@
 - name: verify update instance ssh key idempotence
   assert:
     that:
-    - instance is not changed
-    - instance.ssh_key == "{{ cs_resource_prefix }}-sshkey"
+      - instance is not changed
+      - "'{{ cs_resource_prefix }}-sshkey' in instance.ssh_keys"
 
 - name: cleanup expunge instance
   cs_instance:
@@ -178,4 +178,4 @@
 - name: verify cleanup expunge instance
   assert:
     that:
-    - instance is successful
+      - instance is successful
