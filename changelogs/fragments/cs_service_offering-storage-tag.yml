@@ -1,0 +1,2 @@
+minor_changes:
+  - cs_service_offering - Add support for storagetag (https://github.com/ngine-io/ansible-collection-cloudstack/pull/118).
