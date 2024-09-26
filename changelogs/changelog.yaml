@@ -144,3 +144,13 @@ releases:
     fragments:
     - fix_validate_certs.yml
     release_date: '2024-09-25'
+  2.5.0:
+    changes:
+      minor_changes:
+      - cs_instance - Added new arguments ``user_data_name`` and ``user_data_details``
+        (https://github.com/ngine-io/ansible-collection-cloudstack/pull/134).
+      - cs_service_offering - Add support for storagetag (https://github.com/ngine-io/ansible-collection-cloudstack/pull/118).
+    fragments:
+    - cs_instance-user_data_name.yml
+    - cs_service_offering-storage-tag.yml
+    release_date: '2024-09-26'
