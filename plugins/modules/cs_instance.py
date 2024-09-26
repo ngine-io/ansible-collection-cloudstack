@@ -346,7 +346,7 @@ ssh_keys:
   returned: if available
   type: list
   sample: [key@work, key@home]
-  version_added: 2.4.0
+  version_added: 2.5.0
 domain:
   description: Domain the instance is related to.
   returned: success
