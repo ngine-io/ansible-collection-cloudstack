@@ -198,7 +198,7 @@
       - config.value == "0.7"
       - config.name == "agent.load.threshold"
 
-- ansible.builtin_import_tasks: storage.yml
-- ansible.builtin_import_tasks: account.yml
-- ansible.builtin_import_tasks: zone.yml
-- ansible.builtin_import_tasks: cluster.yml
+- ansible.builtin.import_tasks: storage.yml
+- ansible.builtin.import_tasks: account.yml
+- ansible.builtin.import_tasks: zone.yml
+- ansible.builtin.import_tasks: cluster.yml
