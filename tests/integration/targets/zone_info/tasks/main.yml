@@ -1,6 +1,6 @@
 ---
 - name: setup zone is present
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
@@ -12,7 +12,7 @@
       - zone is successful
 
 - name: get info from zone in check mode
-  cs_zone_info:
+  ngine_io.cloudstack.zone_info:
     name: "{{ cs_resource_prefix }}-zone"
   register: zone
   check_mode: yes
@@ -33,7 +33,7 @@
       - zone.zones[0].local_storage_enabled == false
 
 - name: get info from zone
-  cs_zone_info:
+  ngine_io.cloudstack.zone_info:
     name: "{{ cs_resource_prefix }}-zone"
   register: zone
 - name: verify get info from zone
@@ -53,7 +53,7 @@
       - zone.zones[0].local_storage_enabled == false
 
 - name: get info from all zones
-  cs_zone_info:
+  ngine_io.cloudstack.zone_info:
   register: zones
 - name: verify get info from all zones
   assert:
