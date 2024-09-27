@@ -1,6 +1,6 @@
 ---
 - name: test configuration cluster
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: cpu.overprovisioning.factor
     cluster: "{{ test_cs_configuration_cluster }}"
     value: 1.0
@@ -8,10 +8,10 @@
 - name: verify test configuration cluster
   assert:
     that:
-    - config is successful
+      - config is successful
 
 - name: test update configuration cluster in check mode
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: cpu.overprovisioning.factor
     cluster: "{{ test_cs_configuration_cluster }}"
     value: 2.0
@@ -20,15 +20,15 @@
 - name: verify update configuration cluster in check mode
   assert:
     that:
-    - config is successful
-    - config is changed
-    - config.value == "1.0"
-    - config.name == "cpu.overprovisioning.factor"
-    - config.scope == "cluster"
-    - config.cluster == "{{ test_cs_configuration_cluster }}"
+      - config is successful
+      - config is changed
+      - config.value == "1.0"
+      - config.name == "cpu.overprovisioning.factor"
+      - config.scope == "cluster"
+      - config.cluster == test_cs_configuration_cluster
 
 - name: test update configuration cluster
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: cpu.overprovisioning.factor
     cluster: "{{ test_cs_configuration_cluster }}"
     value: 2.0
@@ -36,15 +36,15 @@
 - name: verify update configuration cluster
   assert:
     that:
-    - config is successful
-    - config is changed
-    - config.value == "2.0"
-    - config.name == "cpu.overprovisioning.factor"
-    - config.scope == "cluster"
-    - config.cluster == "{{ test_cs_configuration_cluster }}"
+      - config is successful
+      - config is changed
+      - config.value == "2.0"
+      - config.name == "cpu.overprovisioning.factor"
+      - config.scope == "cluster"
+      - config.cluster == test_cs_configuration_cluster
 
 - name: test update configuration cluster idempotence
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: cpu.overprovisioning.factor
     cluster: "{{ test_cs_configuration_cluster }}"
     value: 2.0
@@ -52,15 +52,15 @@
 - name: verify update configuration cluster idempotence
   assert:
     that:
-    - config is successful
-    - config is not changed
-    - config.value == "2.0"
-    - config.name == "cpu.overprovisioning.factor"
-    - config.scope == "cluster"
-    - config.cluster == "{{ test_cs_configuration_cluster }}"
+      - config is successful
+      - config is not changed
+      - config.value == "2.0"
+      - config.name == "cpu.overprovisioning.factor"
+      - config.scope == "cluster"
+      - config.cluster == test_cs_configuration_cluster
 
 - name: test reset configuration cluster
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: cpu.overprovisioning.factor
     cluster: "{{ test_cs_configuration_cluster }}"
     value: 1.0
@@ -68,9 +68,9 @@
 - name: verify reset configuration cluster
   assert:
     that:
-    - config is successful
-    - config is changed
-    - config.value == "1.0"
-    - config.name == "cpu.overprovisioning.factor"
-    - config.scope == "cluster"
-    - config.cluster == "{{ test_cs_configuration_cluster }}"
+      - config is successful
+      - config is changed
+      - config.value == "1.0"
+      - config.name == "cpu.overprovisioning.factor"
+      - config.scope == "cluster"
+      - config.cluster == test_cs_configuration_cluster

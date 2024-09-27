@@ -1,6 +1,6 @@
 ---
 - name: test configuration storage
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: storage.overprovisioning.factor
     storage: "{{ test_cs_configuration_storage }}"
     value: 2.0
@@ -8,10 +8,10 @@
 - name: verify test configuration storage
   assert:
     that:
-    - config is successful
+      - config is successful
 
 - name: test update configuration storage in check mode
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: storage.overprovisioning.factor
     storage: "{{ test_cs_configuration_storage }}"
     value: 3.0
@@ -20,15 +20,15 @@
 - name: verify update configuration storage in check mode
   assert:
     that:
-    - config is successful
-    - config is changed
-    - config.value == "2.0"
-    - config.name == "storage.overprovisioning.factor"
-    - config.scope == "storagepool"
-    - config.storage == "{{ test_cs_configuration_storage }}"
+      - config is successful
+      - config is changed
+      - config.value == "2.0"
+      - config.name == "storage.overprovisioning.factor"
+      - config.scope == "storagepool"
+      - config.storage == test_cs_configuration_storage
 
 - name: test update configuration storage
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: storage.overprovisioning.factor
     storage: "{{ test_cs_configuration_storage }}"
     value: 3.0
@@ -36,15 +36,15 @@
 - name: verify update configuration storage
   assert:
     that:
-    - config is successful
-    - config is changed
-    - config.value == "3.0"
-    - config.name == "storage.overprovisioning.factor"
-    - config.scope == "storagepool"
-    - config.storage == "{{ test_cs_configuration_storage }}"
+      - config is successful
+      - config is changed
+      - config.value == "3.0"
+      - config.name == "storage.overprovisioning.factor"
+      - config.scope == "storagepool"
+      - config.storage == test_cs_configuration_storage
 
 - name: test update configuration storage idempotence
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: storage.overprovisioning.factor
     storage: "{{ test_cs_configuration_storage }}"
     value: 3.0
@@ -52,15 +52,15 @@
 - name: verify update configuration storage idempotence
   assert:
     that:
-    - config is successful
-    - config is not changed
-    - config.value == "3.0"
-    - config.name == "storage.overprovisioning.factor"
-    - config.scope == "storagepool"
-    - config.storage == "{{ test_cs_configuration_storage }}"
+      - config is successful
+      - config is not changed
+      - config.value == "3.0"
+      - config.name == "storage.overprovisioning.factor"
+      - config.scope == "storagepool"
+      - config.storage == test_cs_configuration_storage
 
 - name: test reset configuration storage
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: storage.overprovisioning.factor
     storage: "{{ test_cs_configuration_storage }}"
     value: 2.0
@@ -68,9 +68,9 @@
 - name: verify reset configuration storage
   assert:
     that:
-    - config is successful
-    - config is changed
-    - config.value == "2.0"
-    - config.name == "storage.overprovisioning.factor"
-    - config.scope == "storagepool"
-    - config.storage == "{{ test_cs_configuration_storage }}"
+      - config is successful
+      - config is changed
+      - config.value == "2.0"
+      - config.name == "storage.overprovisioning.factor"
+      - config.scope == "storagepool"
+      - config.storage == test_cs_configuration_storage

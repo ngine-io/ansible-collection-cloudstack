@@ -1,6 +1,6 @@
 ---
 - name: test configuration zone
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: use.external.dns
     zone: "{{ test_cs_configuration_zone }}"
     value: false
@@ -8,10 +8,10 @@
 - name: verify test configuration zone
   assert:
     that:
-    - config is successful
+      - config is successful
 
 - name: test update configuration zone
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: use.external.dns
     zone: "{{ test_cs_configuration_zone }}"
     value: true
@@ -19,15 +19,15 @@
 - name: verify update configuration zone
   assert:
     that:
-    - config is successful
-    - config is changed
-    - config.value == "true"
-    - config.name == "use.external.dns"
-    - config.scope == "zone"
-    - config.zone == "{{ test_cs_configuration_zone }}"
+      - config is successful
+      - config is changed
+      - config.value == "true"
+      - config.name == "use.external.dns"
+      - config.scope == "zone"
+      - config.zone == test_cs_configuration_zone
 
 - name: test update configuration zone idempotence
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: use.external.dns
     zone: "{{ test_cs_configuration_zone }}"
     value: true
@@ -35,15 +35,15 @@
 - name: verify update configuration zone idempotence
   assert:
     that:
-    - config is successful
-    - config is not changed
-    - config.value == "true"
-    - config.name == "use.external.dns"
-    - config.scope == "zone"
-    - config.zone == "{{ test_cs_configuration_zone }}"
+      - config is successful
+      - config is not changed
+      - config.value == "true"
+      - config.name == "use.external.dns"
+      - config.scope == "zone"
+      - config.zone == test_cs_configuration_zone
 
 - name: test reset configuration zone
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: use.external.dns
     zone: "{{ test_cs_configuration_zone }}"
     value: false
@@ -51,9 +51,9 @@
 - name: verify reset configuration zone
   assert:
     that:
-    - config is successful
-    - config is changed
-    - config.value == "false"
-    - config.name == "use.external.dns"
-    - config.scope == "zone"
-    - config.zone == "{{ test_cs_configuration_zone }}"
+      - config is successful
+      - config is changed
+      - config.value == "false"
+      - config.name == "use.external.dns"
+      - config.scope == "zone"
+      - config.zone == test_cs_configuration_zone
