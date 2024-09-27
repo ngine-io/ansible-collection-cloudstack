@@ -54,7 +54,6 @@ jobs:
           -v
           --diff
           --color
-          --retry-on-error
           --python ${{ matrix.python-version }}
           cs/group${{ matrix.group }}/
         env:
