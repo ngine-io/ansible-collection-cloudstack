@@ -1,6 +1,6 @@
 ---
 - name: setup cluster is absent
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     state: absent
@@ -11,7 +11,7 @@
       - cluster is successful
 
 - name: setup zone is present
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
@@ -23,7 +23,7 @@
       - zone is successful
 
 - name: setup pod is present
-  cs_pod:
+  ngine_io.cloudstack.pod:
     name: "{{ cs_resource_prefix }}-pod"
     zone: "{{ cs_resource_prefix }}-zone"
     start_ip: 10.100.10.101
@@ -36,7 +36,7 @@
       - pod is successful
 
 - name: test fail if missing name
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     zone: "{{ cs_resource_prefix }}-zone"
   register: cluster
   ignore_errors: true
@@ -47,7 +47,7 @@
       - "cluster.msg == 'missing required arguments: name'"
 
 - name: test fail if pod not found
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     hypervisor: Simulator
@@ -62,7 +62,7 @@
       - "cluster.msg == 'Pod unexistent not found in zone {{ cs_resource_prefix }}-zone'"
 
 - name: test create cluster in check mode
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     pod: "{{ cs_resource_prefix }}-pod"
@@ -77,7 +77,7 @@
       - cluster_origin is changed
 
 - name: test create cluster
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     pod: "{{ cs_resource_prefix }}-pod"
@@ -89,14 +89,14 @@
   assert:
     that:
       - cluster_origin is changed
-      - cluster_origin.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster_origin.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster_origin.name == cs_resource_prefix + "-cluster"
+      - cluster_origin.zone == cs_resource_prefix + "-zone"
       - cluster_origin.allocation_state == "Enabled"
       - cluster_origin.hypervisor == "Simulator"
       - cluster_origin.cluster_type == "CloudManaged"
 
 - name: test create cluster idempotence
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-Cluster"
     zone: "{{ cs_resource_prefix }}-Zone"
     pod: "{{ cs_resource_prefix }}-pod"
@@ -108,14 +108,14 @@
     that:
       - cluster.id == cluster_origin.id
       - cluster is not changed
-      - cluster.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster.name == cs_resource_prefix + "-cluster"
+      - cluster.zone == cs_resource_prefix + "-zone"
       - cluster.allocation_state == "Enabled"
       - cluster_origin.hypervisor == "Simulator"
       - cluster.cluster_type == "CloudManaged"
 
 - name: test update cluster in check mode
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     hypervisor: Simulator
@@ -126,15 +126,15 @@
   assert:
     that:
       - cluster is changed
-      - cluster.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster.name == cs_resource_prefix + "-cluster"
+      - cluster.zone == cs_resource_prefix + "-zone"
       - cluster.allocation_state == "Enabled"
       - cluster.hypervisor == "Simulator"
       - cluster.cluster_type == "CloudManaged"
       - cluster.id == cluster_origin.id
 
 - name: test update cluster
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     hypervisor: Simulator
@@ -144,15 +144,15 @@
   assert:
     that:
       - cluster is changed
-      - cluster.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster.name == cs_resource_prefix + "-cluster"
+      - cluster.zone == cs_resource_prefix + "-zone"
       - cluster.allocation_state == "Enabled"
       - cluster.hypervisor == "Simulator"
       - cluster.cluster_type == "ExternalManaged"
       - cluster.id == cluster_origin.id
 
 - name: test update cluster idempotence
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     hypervisor: Simulator
@@ -162,15 +162,15 @@
   assert:
     that:
       - cluster is not changed
-      - cluster.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster.name == cs_resource_prefix + "-cluster"
+      - cluster.zone == cs_resource_prefix + "-zone"
       - cluster.allocation_state == "Enabled"
       - cluster.hypervisor == "Simulator"
       - cluster.cluster_type == "ExternalManaged"
       - cluster.id == cluster_origin.id
 
 - name: test disable cluster in check mode
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     state: disabled
@@ -180,15 +180,15 @@
   assert:
     that:
       - cluster is changed
-      - cluster.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster.name == cs_resource_prefix + "-cluster"
+      - cluster.zone == cs_resource_prefix + "-zone"
       - cluster.allocation_state == "Enabled"
       - cluster.hypervisor == "Simulator"
       - cluster.cluster_type == "ExternalManaged"
       - cluster.id == cluster_origin.id
 
 - name: test disable cluster
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     state: disabled
@@ -197,15 +197,15 @@
   assert:
     that:
       - cluster is changed
-      - cluster.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster.name == cs_resource_prefix + "-cluster"
+      - cluster.zone == cs_resource_prefix + "-zone"
       - cluster.allocation_state == "Disabled"
       - cluster.hypervisor == "Simulator"
       - cluster.cluster_type == "ExternalManaged"
       - cluster.id == cluster_origin.id
 
 - name: test disable cluster idempotence
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     state: disabled
@@ -214,14 +214,14 @@
   assert:
     that:
       - cluster is not changed
-      - cluster.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster.name == cs_resource_prefix + "-cluster"
+      - cluster.zone == cs_resource_prefix + "-zone"
       - cluster.allocation_state == "Disabled"
       - cluster.hypervisor == "Simulator"
       - cluster.cluster_type == "ExternalManaged"
 
 - name: test enable cluster in check mode
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     state: enabled
@@ -231,15 +231,15 @@
   assert:
     that:
       - cluster is changed
-      - cluster.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster.name == cs_resource_prefix + "-cluster"
+      - cluster.zone == cs_resource_prefix + "-zone"
       - cluster.allocation_state == "Disabled"
       - cluster.hypervisor == "Simulator"
       - cluster.cluster_type == "ExternalManaged"
       - cluster.id == cluster_origin.id
 
 - name: test enable cluster
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     state: enabled
@@ -248,15 +248,15 @@
   assert:
     that:
       - cluster is changed
-      - cluster.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster.name == cs_resource_prefix + "-cluster"
+      - cluster.zone == cs_resource_prefix + "-zone"
       - cluster.allocation_state == "Enabled"
       - cluster.hypervisor == "Simulator"
       - cluster.cluster_type == "ExternalManaged"
       - cluster.id == cluster_origin.id
 
 - name: test enable cluster idempotence
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     state: enabled
@@ -265,15 +265,15 @@
   assert:
     that:
       - cluster is not changed
-      - cluster.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster.name == cs_resource_prefix + "-cluster"
+      - cluster.zone == cs_resource_prefix + "-zone"
       - cluster.allocation_state == "Enabled"
       - cluster.hypervisor == "Simulator"
       - cluster.cluster_type == "ExternalManaged"
       - cluster.id == cluster_origin.id
 
 - name: test remove cluster in check mode
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     state: absent
@@ -284,13 +284,13 @@
     that:
       - cluster.id == cluster_origin.id
       - cluster is changed
-      - cluster.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster.name == cs_resource_prefix + "-cluster"
+      - cluster.zone == cs_resource_prefix + "-zone"
       - cluster.allocation_state == "Enabled"
       - cluster_origin.hypervisor == "Simulator"
 
 - name: test remove cluster
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     state: absent
@@ -300,13 +300,13 @@
     that:
       - cluster.id == cluster_origin.id
       - cluster is changed
-      - cluster.name == "{{ cs_resource_prefix }}-cluster"
-      - cluster.zone == "{{ cs_resource_prefix }}-zone"
+      - cluster.name == cs_resource_prefix + "-cluster"
+      - cluster.zone == cs_resource_prefix + "-zone"
       - cluster.allocation_state == "Enabled"
       - cluster_origin.hypervisor == "Simulator"
 
 - name: test remove cluster idempotence
-  cs_cluster:
+  ngine_io.cloudstack.cluster:
     name: "{{ cs_resource_prefix }}-cluster"
     zone: "{{ cs_resource_prefix }}-zone"
     state: absent
