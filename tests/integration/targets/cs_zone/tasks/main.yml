@@ -1,6 +1,6 @@
 ---
 - name: setup zone is absent
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone1"
     state: absent
   register: zone
@@ -10,7 +10,7 @@
       - zone is successful
 
 - name: test fail missing param
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone1"
   register: zone
   ignore_errors: true
@@ -21,7 +21,7 @@
       - "zone.msg == 'missing required arguments: dns1'"
 
 - name: test create zone in check mode
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone1"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
@@ -35,7 +35,7 @@
       - zone is changed
 
 - name: test create zone
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone1"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
@@ -57,7 +57,7 @@
       - zone.dhcp_provider == "VirtualRouter"
 
 - name: test create zone idempotency
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone1"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
@@ -79,7 +79,7 @@
       - zone.dhcp_provider == "VirtualRouter"
 
 - name: test update zone in check mode
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone1"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
@@ -105,7 +105,7 @@
       - zone.dhcp_provider == "VirtualRouter"
 
 - name: test update zone
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone1"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
@@ -130,7 +130,7 @@
       - zone.dhcp_provider == "VirtualRouter"
 
 - name: test update zone idempotency
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone1"
     dns1: 8.8.8.8
     dns2: 8.8.4.4
@@ -155,7 +155,7 @@
       - zone.dhcp_provider == "VirtualRouter"
 
 - name: test absent zone in check mode
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone1"
     state: absent
   register: zone
@@ -175,7 +175,7 @@
       - zone.securitygroups_enabled == true
 
 - name: test absent zone
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone1"
     state: absent
   register: zone
@@ -194,7 +194,7 @@
       - zone.securitygroups_enabled == true
 
 - name: test absent zone idempotency
-  cs_zone:
+  ngine_io.cloudstack.zone:
     name: "{{ cs_resource_prefix }}-zone1"
     state: absent
   register: zone
