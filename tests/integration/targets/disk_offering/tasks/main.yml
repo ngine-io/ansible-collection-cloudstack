@@ -1,16 +1,16 @@
 ---
 - name: setup disk offering
-  cs_disk_offering:
+  ngine_io.cloudstack.disk_offering:
     name: Small
     state: absent
   register: do
 - name: verify setup disk offering
   assert:
     that:
-    - do is successful
+      - do is successful
 
 - name: create disk offering in check mode
-  cs_disk_offering:
+  ngine_io.cloudstack.disk_offering:
     name: Small
     disk_size: 10
     storage_tags:
@@ -22,10 +22,10 @@
 - name: verify create disk offering in check mode
   assert:
     that:
-    - do is changed
+      - do is changed
 
 - name: create disk offering
-  cs_disk_offering:
+  ngine_io.cloudstack.disk_offering:
     name: Small
     disk_size: 10
     storage_tags:
@@ -36,13 +36,13 @@
 - name: verify create disk offering
   assert:
     that:
-    - do is changed
-    - do.name == "Small"
-    - do.storage_tags == ['eco', 'backup']
-    - do.storage_type == "local"
+      - do is changed
+      - do.name == "Small"
+      - do.storage_tags == ['eco', 'backup']
+      - do.storage_type == "local"
 
 - name: create disk offering idempotence
-  cs_disk_offering:
+  ngine_io.cloudstack.disk_offering:
     name: Small
     disk_size: 10
     storage_tags:
@@ -53,13 +53,13 @@
 - name: verify create disk offering idempotence
   assert:
     that:
-    - do is not changed
-    - do.name == "Small"
-    - do.storage_tags == ['eco', 'backup']
-    - do.storage_type == "local"
+      - do is not changed
+      - do.name == "Small"
+      - do.storage_tags == ['eco', 'backup']
+      - do.storage_type == "local"
 
 - name: update disk offering in check mode
-  cs_disk_offering:
+  ngine_io.cloudstack.disk_offering:
     name: Small
     disk_size: 10
     display_text: Small 10GB
@@ -68,13 +68,13 @@
 - name: verify create update offering in check mode
   assert:
     that:
-    - do is changed
-    - do.name == "Small"
-    - do.storage_tags == ['eco', 'backup']
-    - do.storage_type == "local"
+      - do is changed
+      - do.name == "Small"
+      - do.storage_tags == ['eco', 'backup']
+      - do.storage_type == "local"
 
 - name: update disk offering
-  cs_disk_offering:
+  ngine_io.cloudstack.disk_offering:
     name: Small
     disk_size: 10
     display_text: Small 10GB
@@ -82,14 +82,14 @@
 - name: verify update disk offerin
   assert:
     that:
-    - do is changed
-    - do.name == "Small"
-    - do.display_text == "Small 10GB"
-    - do.storage_tags == ['eco', 'backup']
-    - do.storage_type == "local"
+      - do is changed
+      - do.name == "Small"
+      - do.display_text == "Small 10GB"
+      - do.storage_tags == ['eco', 'backup']
+      - do.storage_type == "local"
 
 - name: update disk offering idempotence
-  cs_disk_offering:
+  ngine_io.cloudstack.disk_offering:
     name: Small
     disk_size: 10
     display_text: Small 10GB
@@ -97,14 +97,14 @@
 - name: verify update disk offering idempotence
   assert:
     that:
-    - do is not changed
-    - do.name == "Small"
-    - do.display_text == "Small 10GB"
-    - do.storage_tags == ['eco', 'backup']
-    - do.storage_type == "local"
+      - do is not changed
+      - do.name == "Small"
+      - do.display_text == "Small 10GB"
+      - do.storage_tags == ['eco', 'backup']
+      - do.storage_type == "local"
 
 - name: remove disk offering in check mode
-  cs_disk_offering:
+  ngine_io.cloudstack.disk_offering:
     name: Small
     state: absent
   check_mode: true
@@ -112,32 +112,32 @@
 - name: verify remove disk offering in check mode
   assert:
     that:
-    - do is changed
-    - do.name == "Small"
-    - do.display_text == "Small 10GB"
-    - do.storage_tags == ['eco', 'backup']
-    - do.storage_type == "local"
+      - do is changed
+      - do.name == "Small"
+      - do.display_text == "Small 10GB"
+      - do.storage_tags == ['eco', 'backup']
+      - do.storage_type == "local"
 
 - name: remove disk offering
-  cs_disk_offering:
+  ngine_io.cloudstack.disk_offering:
     name: Small
     state: absent
   register: do
 - name: verify remove disk offering
   assert:
     that:
-    - do is changed
-    - do.name == "Small"
-    - do.display_text == "Small 10GB"
-    - do.storage_tags == ['eco', 'backup']
-    - do.storage_type == "local"
+      - do is changed
+      - do.name == "Small"
+      - do.display_text == "Small 10GB"
+      - do.storage_tags == ['eco', 'backup']
+      - do.storage_type == "local"
 
 - name: remove disk offering idempotence
-  cs_disk_offering:
+  ngine_io.cloudstack.disk_offering:
     name: Small
     state: absent
   register: do
 - name: verify remove disk offering idempotence
   assert:
     that:
-    - do is not changed
+      - do is not changed
