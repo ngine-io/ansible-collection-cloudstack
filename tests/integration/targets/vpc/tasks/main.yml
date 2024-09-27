@@ -94,8 +94,8 @@
     that:
       - vpc is successful
       - vpc is changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc_custom"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text_custom"
+      - vpc.name == cs_resource_prefix + "_vpc_custom"
+      - vpc.display_text == cs_resource_prefix + "_display_text_custom"
       - vpc.cidr == "10.10.1.0/16"
       - vpc.network_domain == "test.example.com"
 
@@ -114,8 +114,8 @@
     that:
       - vpc is successful
       - vpc is not changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc_custom"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text_custom"
+      - vpc.name == cs_resource_prefix + "_vpc_custom"
+      - vpc.display_text == cs_resource_prefix + "_display_text_custom"
       - vpc.cidr == "10.10.1.0/16"
       - vpc.network_domain == "test.example.com"
 
@@ -145,8 +145,8 @@
     that:
       - vpc is successful
       - vpc is changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text"
+      - vpc.name == cs_resource_prefix + "_vpc"
+      - vpc.display_text == cs_resource_prefix + "_display_text"
       - vpc.cidr == "10.10.0.0/16"
 
 - name: test create vpc with default offering idempotence
@@ -161,8 +161,8 @@
     that:
       - vpc is successful
       - vpc is not changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text"
+      - vpc.name == cs_resource_prefix + "_vpc"
+      - vpc.display_text == cs_resource_prefix + "_display_text"
       - vpc.cidr == "10.10.0.0/16"
 
 - name: test create vpc with default offering idempotence2
@@ -176,8 +176,8 @@
     that:
       - vpc is successful
       - vpc is not changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text"
+      - vpc.name == cs_resource_prefix + "_vpc"
+      - vpc.display_text == cs_resource_prefix + "_display_text"
       - vpc.cidr == "10.10.0.0/16"
 
 - name: test update vpc with default offering in check mode
@@ -193,8 +193,8 @@
     that:
       - vpc is successful
       - vpc is changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text"
+      - vpc.name == cs_resource_prefix + "_vpc"
+      - vpc.display_text == cs_resource_prefix + "_display_text"
       - vpc.cidr == "10.10.0.0/16"
 
 - name: test update vpc with default offering
@@ -209,8 +209,8 @@
     that:
       - vpc is successful
       - vpc is changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text2"
+      - vpc.name == cs_resource_prefix + "_vpc"
+      - vpc.display_text == cs_resource_prefix + "_display_text2"
       - vpc.cidr == "10.10.0.0/16"
 
 - name: test update vpc with default offering idempotence
@@ -225,8 +225,8 @@
     that:
       - vpc is successful
       - vpc is not changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text2"
+      - vpc.name == cs_resource_prefix + "_vpc"
+      - vpc.display_text == cs_resource_prefix + "_display_text2"
       - vpc.cidr == "10.10.0.0/16"
 
 - name: test restart vpc with default offering with clean up in check mode
@@ -244,8 +244,8 @@
     that:
       - vpc is successful
       - vpc is changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text2"
+      - vpc.name == cs_resource_prefix + "_vpc"
+      - vpc.display_text == cs_resource_prefix + "_display_text2"
       - vpc.cidr == "10.10.0.0/16"
 
 - name: test restart vpc with default offering with clean up
@@ -262,8 +262,8 @@
     that:
       - vpc is successful
       - vpc is changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text2"
+      - vpc.name == cs_resource_prefix + "_vpc"
+      - vpc.display_text == cs_resource_prefix + "_display_text2"
       - vpc.cidr == "10.10.0.0/16"
 
 - name: test restart vpc with default offering without clean up
@@ -279,8 +279,8 @@
     that:
       - vpc is successful
       - vpc is changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text2"
+      - vpc.name == cs_resource_prefix + "_vpc"
+      - vpc.display_text == cs_resource_prefix + "_display_text2"
       - vpc.cidr == "10.10.0.0/16"
 
 - name: test create network in vpc in check mode
@@ -313,7 +313,7 @@
     that:
       - vpc_net is successful
       - vpc_net is changed
-      - vpc_net.name == "{{ cs_resource_prefix }}_net_vpc"
+      - vpc_net.name == cs_resource_prefix + "_net_vpc"
 
 - name: test create network in vpc idempotence
   ngine_io.cloudstack.network:
@@ -329,7 +329,7 @@
     that:
       - vpc_net is successful
       - vpc_net is not changed
-      - vpc_net.name == "{{ cs_resource_prefix }}_net_vpc"
+      - vpc_net.name == cs_resource_prefix + "_net_vpc"
 
 - name: test create instance in vpc in check mode
   ngine_io.cloudstack.instance:
@@ -359,7 +359,7 @@
     that:
       - instance is successful
       - instance is changed
-      - instance.name == "{{ cs_resource_prefix }}-vm-vpc"
+      - instance.name == cs_resource_prefix + "-vm-vpc"
       - instance.state == "Running"
 
 - name: test create instance in vpc idempotence
@@ -375,7 +375,7 @@
     that:
       - instance is successful
       - instance is not changed
-      - instance.name == "{{ cs_resource_prefix }}-vm-vpc"
+      - instance.name == cs_resource_prefix + "-vm-vpc"
       - instance.state == "Running"
 
 - name: test get ip address in vpc
@@ -600,7 +600,7 @@
     that:
       - instance is successful
       - instance is changed
-      - instance.name == "{{ cs_resource_prefix }}-vm-vpc"
+      - instance.name == cs_resource_prefix + "-vm-vpc"
       - instance.state == "Running"
 
 - name: test remove instance in vpc
@@ -614,7 +614,7 @@
     that:
       - instance is successful
       - instance is changed
-      - instance.name == "{{ cs_resource_prefix }}-vm-vpc"
+      - instance.name == cs_resource_prefix + "-vm-vpc"
       - instance.state == "Running"
 
 - name: test remove instance in vpc idempotence
@@ -642,7 +642,7 @@
     that:
       - vpc_net is successful
       - vpc_net is changed
-      - vpc_net.name == "{{ cs_resource_prefix }}_net_vpc"
+      - vpc_net.name == cs_resource_prefix + "_net_vpc"
 
 - name: test remove network in vpc
   ngine_io.cloudstack.network:
@@ -656,7 +656,7 @@
     that:
       - vpc_net is successful
       - vpc_net is changed
-      - vpc_net.name == "{{ cs_resource_prefix }}_net_vpc"
+      - vpc_net.name == cs_resource_prefix + "_net_vpc"
 
 - name: test remove network in vpc idempotence
   ngine_io.cloudstack.network:
@@ -683,8 +683,8 @@
     that:
       - vpc is successful
       - vpc is changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text2"
+      - vpc.name == cs_resource_prefix + "_vpc"
+      - vpc.display_text == cs_resource_prefix + "_display_text2"
       - vpc.cidr == "10.10.0.0/16"
 
 - name: test remove vpc with default offering
@@ -698,8 +698,8 @@
     that:
       - vpc is successful
       - vpc is changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc"
-      - vpc.display_text == "{{ cs_resource_prefix }}_display_text2"
+      - vpc.name == cs_resource_prefix + "_vpc"
+      - vpc.display_text == cs_resource_prefix + "_display_text2"
       - vpc.cidr == "10.10.0.0/16"
 
 - name: test remove vpc with default offering idempotence
@@ -725,5 +725,5 @@
     that:
       - vpc is successful
       - vpc is changed
-      - vpc.name == "{{ cs_resource_prefix }}_vpc_custom"
+      - vpc.name == cs_resource_prefix + "_vpc_custom"
       - vpc.cidr == "10.10.1.0/16"
