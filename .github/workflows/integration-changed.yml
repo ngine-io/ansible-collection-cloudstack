@@ -1,19 +1,15 @@
-name: Collection integration
+name: Collection integration of changed
 
 on:
   pull_request:
-    types: [labeled]
   push:
     paths:
       - "plugins/**"
       - "tests/integration/**"
-  schedule:
-    - cron: 30 6 * * 2
 
 jobs:
   integration-test:
-    name: Integration v${{ matrix.container-version }} Ansible-${{ matrix.ansible-branch }} group${{ matrix.group }} Py${{ matrix.python-version }}
-    if: ${{ github.event.label.name == 'automation' || github.ref_name == 'master' || github.event_name == 'schedule' }}
+    name: Integration of changes v${{ matrix.container-version }} Ansible-${{ matrix.ansible-branch }} Py${{ matrix.python-version }}
     defaults:
       run:
         working-directory: ansible_collections/ngine_io/cloudstack
@@ -23,9 +19,6 @@ jobs:
       matrix:
         python-version:
           - "3.11"
-        group:
-          - 1
-          - 2
         ansible-branch:
           - stable-2.17
         container-version:
@@ -63,20 +56,6 @@ jobs:
           --color
           --retry-on-error
           --python ${{ matrix.python-version }}
-          --continue-on-error
-          --coverage
-          shippable/cs/group${{ matrix.group }}/
+          --changed
         env:
           ANSIBLE_CLOUDSTACK_CONTAINER: quay.io/ansible/cloudstack-test-container:${{ matrix.container-version }}
-
-      - name: Generate coverage report.
-        run: >-
-          ansible-test
-          coverage xml
-          -v
-          --requirements
-          --group-by command
-          --group-by version
-      - uses: codecov/codecov-action@v4
-        with:
-          fail_ci_if_error: false
