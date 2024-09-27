@@ -2,7 +2,6 @@ name: Collection integration of changed
 
 on:
   pull_request:
-  push:
     paths:
       - "plugins/**"
       - "tests/integration/**"
@@ -21,9 +20,10 @@ jobs:
           - "3.11"
         ansible-branch:
           - stable-2.17
+        group:
+          - 3
         container-version:
-          - 1.6.1
-          - 1.4.0
+          - 1.7.0
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -56,6 +56,6 @@ jobs:
           --color
           --retry-on-error
           --python ${{ matrix.python-version }}
-          --changed
+          cs/group${{ matrix.group }}/
         env:
           ANSIBLE_CLOUDSTACK_CONTAINER: quay.io/ansible/cloudstack-test-container:${{ matrix.container-version }}
