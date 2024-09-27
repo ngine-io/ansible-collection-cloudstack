@@ -4,6 +4,8 @@ on:
   pull_request:
     types: [labeled]
   push:
+    branches:
+      - master
     paths:
       - "plugins/**"
       - "tests/integration/**"
