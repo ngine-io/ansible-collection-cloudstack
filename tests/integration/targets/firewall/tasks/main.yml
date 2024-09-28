@@ -36,7 +36,7 @@
 
 - name: set ip address as fact
   set_fact:
-    ngine_io.cloudstack.firewall_ip_address: "{{ ip_address.ip_address }}"
+    cs_firewall_ip_address: "{{ ip_address.ip_address }}"
 
 - name: setup 80
   ngine_io.cloudstack.firewall:
