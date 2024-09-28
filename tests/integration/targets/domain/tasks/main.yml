@@ -227,7 +227,7 @@
     that:
       - dom is changed
       - dom.path == "ROOT/" + cs_resource_prefix + "_domain"
-      - dom.name == "{{ cs_resource_prefix }}_domain"
+      - dom.name == cs_resource_prefix + "_domain"
 
 - name: test delete a domain with clean up idempotence
   ngine_io.cloudstack.domain:
