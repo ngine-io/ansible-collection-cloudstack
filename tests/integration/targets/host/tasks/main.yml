@@ -1,6 +1,6 @@
 ---
 - name: test fail missing params
-  cs_host:
+  ngine_io.cloudstack.host:
     zone: "{{ cs_common_zone_basic }}"
   register: host
   ignore_errors: true
@@ -11,7 +11,7 @@
       - 'host.msg == "missing required arguments: name"'
 
 - name: test fail missing params if host is not existent
-  cs_host:
+  ngine_io.cloudstack.host:
     name: sim
     zone: "{{ cs_common_zone_basic }}"
   register: host
@@ -23,7 +23,7 @@
       - 'host.msg == "missing required arguments: password, username, hypervisor, pod"'
 
 - name: test create a host in check mode
-  cs_host:
+  ngine_io.cloudstack.host:
     name: sim
     zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
@@ -34,8 +34,8 @@
     hypervisor: Simulator
     allocation_state: enabled
     host_tags:
-    - perf
-    - gpu
+      - perf
+      - gpu
   register: host
   check_mode: true
 - name: verify test create a host in check mode
@@ -44,7 +44,7 @@
       - host is changed
 
 - name: test create a host
-  cs_host:
+  ngine_io.cloudstack.host:
     name: sim
     zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
@@ -55,8 +55,8 @@
     hypervisor: Simulator
     allocation_state: enabled
     host_tags:
-    - perf
-    - gpu
+      - perf
+      - gpu
   register: host
 - name: verify test create a host
   assert:
@@ -69,7 +69,7 @@
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
       - "host.name.startswith('SimulatedAgent.')"
-      - host.host_tags == ['perf', 'gpu']
+      - host.host_tags|sort == ['gpu', 'perf']
 
 # This is special in simulator mode, we can not predict the full hostname.
 # That is why we gather the infos from the returns and use a fact.
@@ -79,7 +79,7 @@
     host_ip_address: "{{ host.ip_address }}"
 
 - name: test create a host idempotence
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
@@ -90,8 +90,8 @@
     hypervisor: Simulator
     allocation_state: enabled
     host_tags:
-    - perf
-    - gpu
+      - perf
+      - gpu
   register: host
 - name: verify test create a host idempotence
   assert:
@@ -103,11 +103,11 @@
       - host.allocation_state == 'enabled'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
-      - host.host_tags == ['perf', 'gpu']
+      - host.name == host_hostname
+      - host.host_tags|sort == ['gpu', 'perf']
 
 - name: test update host in check mode
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
@@ -118,9 +118,9 @@
     hypervisor: Simulator
     allocation_state: enabled
     host_tags:
-    - perf
-    - gpu
-    - x2
+      - perf
+      - gpu
+      - x2
   register: host
   check_mode: true
 - name: verify test update a host in check mode
@@ -133,11 +133,11 @@
       - host.allocation_state == 'enabled'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
-      - host.host_tags == ['perf', 'gpu']
+      - host.name == host_hostname
+      - host.host_tags|sort == ['gpu', 'perf']
 
 - name: test update host
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
@@ -148,9 +148,9 @@
     hypervisor: Simulator
     allocation_state: enabled
     host_tags:
-    - perf
-    - gpu
-    - x2
+      - perf
+      - gpu
+      - x2
   register: host
 - name: verify test update a host in check mode
   assert:
@@ -162,11 +162,11 @@
       - host.allocation_state == 'enabled'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
-      - host.host_tags == ['perf', 'gpu', 'x2']
+      - host.name == host_hostname
+      - host.host_tags|sort == ['gpu', 'perf', 'x2']
 
 - name: test update host idempotence
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
@@ -177,9 +177,9 @@
     hypervisor: Simulator
     allocation_state: enabled
     host_tags:
-    - perf
-    - gpu
-    - x2
+      - perf
+      - gpu
+      - x2
   register: host
 - name: verify test update a host idempotence
   assert:
@@ -191,12 +191,12 @@
       - host.allocation_state == 'enabled'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
-      - host.host_tags == ['perf', 'gpu', 'x2']
+      - host.name == host_hostname
+      - host.host_tags|sort == ['gpu', 'perf', 'x2']
 
 # FIXME: Removing by empty list seems to be an issue in the used lib cs underneath, disabled
 - name: test update host remove host_tags
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
@@ -220,12 +220,12 @@
       - host.allocation_state == 'enabled'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
+      - host.name == host_hostname
   when: false
 
 # FIXME: Removing by empty list seems to be an issue in the used lib cs underneath, disabled
 - name: test update host remove host_tags idempotence
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     url: "http://sim/c0-basic/h2"
@@ -249,12 +249,11 @@
       - host.allocation_state == 'enabled'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
+      - host.name == host_hostname
   when: false
 
-
 - name: test put host in maintenance in check mode
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
@@ -272,11 +271,11 @@
       - host.allocation_state == 'enabled'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
-      - host.host_tags == ['perf', 'gpu', 'x2']
+      - host.name == host_hostname
+      - host.host_tags|sort == ['gpu', 'perf', 'x2']
 
 - name: test put host in maintenance
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
@@ -293,11 +292,11 @@
       - host.allocation_state == 'maintenance'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
-      - host.host_tags == ['perf', 'gpu', 'x2']
+      - host.name == host_hostname
+      - host.host_tags|sort == ['gpu', 'perf', 'x2']
 
 - name: test put host in maintenance idempotence
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
@@ -314,11 +313,11 @@
       - host.allocation_state == 'maintenance'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
-      - host.host_tags == ['perf', 'gpu', 'x2']
+      - host.name == host_hostname
+      - host.host_tags|sort == ['gpu', 'perf', 'x2']
 
 - name: test put host out of maintenance in check mode
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
@@ -336,11 +335,11 @@
       - host.allocation_state == 'maintenance'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
-      - host.host_tags == ['perf', 'gpu', 'x2']
+      - host.name == host_hostname
+      - host.host_tags|sort == ['gpu', 'perf', 'x2']
 
 - name: test put host out of maintenance
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
@@ -357,11 +356,11 @@
       - host.allocation_state == 'enabled'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
-      - host.host_tags == ['perf', 'gpu', 'x2']
+      - host.name == host_hostname
+      - host.host_tags|sort == ['gpu', 'perf', 'x2']
 
 - name: test put host out of maintenance idempotence
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
@@ -378,11 +377,11 @@
       - host.allocation_state == 'enabled'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
-      - host.host_tags == ['perf', 'gpu', 'x2']
+      - host.name == host_hostname
+      - host.host_tags|sort == ['gpu', 'perf', 'x2']
 
 - name: test remove host in check mode
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
@@ -400,11 +399,11 @@
       - host.allocation_state == 'enabled'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
-      - host.host_tags == ['perf', 'gpu', 'x2']
+      - host.name == host_hostname
+      - host.host_tags|sort == ['gpu', 'perf', 'x2']
 
 - name: test remove host
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
@@ -421,11 +420,11 @@
       - host.allocation_state == 'enabled'
       - host.zone == 'Sandbox-simulator-basic'
       - host.state == 'Up'
-      - host.name == '{{ host_hostname }}'
-      - host.host_tags == ['perf', 'gpu', 'x2']
+      - host.name == host_hostname
+      - host.host_tags|sort == ['gpu', 'perf', 'x2']
 
 - name: test remove host idempotence
-  cs_host:
+  ngine_io.cloudstack.host:
     name: "{{ host_hostname }}"
     zone: "{{ cs_common_zone_basic }}"
     cluster: C0-basic
