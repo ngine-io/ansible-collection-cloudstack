@@ -59,7 +59,7 @@
   assert:
     that:
       - cluster is failed
-      - "cluster.msg == 'Pod unexistent not found in zone {{ cs_resource_prefix }}-zone'"
+      - "cluster.msg == 'Pod unexistent not found in zone ' + cs_resource_prefix + '-zone'"
 
 - name: test create cluster in check mode
   ngine_io.cloudstack.cluster:
