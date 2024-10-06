@@ -285,7 +285,7 @@ resource_state:
   returned: success
   type: str
   sample: Enabled
-allocation_state::
+allocation_state:
   description: Allocation state of the host.
   returned: success
   type: str
