@@ -2,8 +2,8 @@
 - name: install cs
   pip:
     name:
-    - cs
-    - sshpubkeys
+      - cs
+      - sshpubkeys
 
 - name: wait for system template available
   cs_template:
