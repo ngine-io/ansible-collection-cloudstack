@@ -1,6 +1,6 @@
 ---
 - name: setup instance limits account
-  cs_resourcelimit:
+  ngine_io.cloudstack.resource_limit:
     type: instance
     limit: 20
     account: "{{ cs_resource_prefix }}_user"
@@ -16,7 +16,7 @@
       - rl.resource_type == "instance"
 
 - name: set instance limits for domain in check mode
-  cs_resourcelimit:
+  ngine_io.cloudstack.resource_limit:
     type: instance
     limit: 12
     domain: "{{ cs_resource_prefix }}-domain"
@@ -31,7 +31,7 @@
       - rl.resource_type == "instance"
 
 - name: set instance limits for domain
-  cs_resourcelimit:
+  ngine_io.cloudstack.resource_limit:
     type: instance
     limit: 12
     domain: "{{ cs_resource_prefix }}-domain"
@@ -45,7 +45,7 @@
       - rl.resource_type == "instance"
 
 - name: set instance limits for domain idempotence
-  cs_resourcelimit:
+  ngine_io.cloudstack.resource_limit:
     type: instance
     limit: 12
     domain: "{{ cs_resource_prefix }}-domain"
@@ -59,7 +59,7 @@
       - rl.resource_type == "instance"
 
 - name: set instance limits for account in check mode
-  cs_resourcelimit:
+  ngine_io.cloudstack.resource_limit:
     type: instance
     limit: 10
     account: "{{ cs_resource_prefix }}_user"
@@ -76,7 +76,7 @@
       - rl.resource_type == "instance"
 
 - name: set instance limits for account
-  cs_resourcelimit:
+  ngine_io.cloudstack.resource_limit:
     type: instance
     limit: 10
     account: "{{ cs_resource_prefix }}_user"
@@ -92,7 +92,7 @@
       - rl.resource_type == "instance"
 
 - name: set instance limits for account idempotence
-  cs_resourcelimit:
+  ngine_io.cloudstack.resource_limit:
     type: instance
     limit: 10
     account: "{{ cs_resource_prefix }}_user"
