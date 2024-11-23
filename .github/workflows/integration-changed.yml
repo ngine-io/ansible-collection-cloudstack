@@ -14,6 +14,7 @@ jobs:
         working-directory: ansible_collections/ngine_io/cloudstack
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         python-version:
@@ -52,6 +53,7 @@ jobs:
           integration
           --docker
           -v
+          --continue-on-error
           --diff
           --color
           --python ${{ matrix.python-version }}
