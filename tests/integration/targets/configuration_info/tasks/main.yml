@@ -1,6 +1,6 @@
 ---
 - name: setup configuration is present
-  cs_configuration:
+  ngine_io.cloudstack.configuration:
     name: consoleproxy.sslEnabled
     value: true
   register: config
@@ -10,10 +10,10 @@
       - config is successful
 
 - name: get info from configuration in check mode
-  cs_configuration_info:
+  ngine_io.cloudstack.configuration_info:
     name: consoleproxy.sslEnabled
   register: config_info
-  check_mode: yes
+  check_mode: true
 - name: verify get info from configuration in check mode
   assert:
     that:
@@ -23,7 +23,7 @@
       - config_info.configurations[0].value == "true"
 
 - name: get info from configuration
-  cs_configuration_info:
+  ngine_io.cloudstack.configuration_info:
     name: consoleproxy.sslEnabled
   register: config_info
 - name: verify get info from configuration
@@ -35,7 +35,7 @@
       - config_info.configurations[0].value == "true"
 
 - name: get info from all configurations
-  cs_configuration_info:
+  ngine_io.cloudstack.configuration_info:
   register: configs
 - name: verify get info from all configurations
   assert:
