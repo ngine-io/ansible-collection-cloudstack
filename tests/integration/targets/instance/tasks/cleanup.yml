@@ -1,0 +1,36 @@
+---
+- name: cleanup ssh key
+  ngine_io.cloudstack.ssh_key:
+    name: "{{ cs_resource_prefix }}-sshkey"
+    state: absent
+  register: sshkey
+- name: verify cleanup ssh key
+  assert:
+    that:
+      - sshkey is successful
+
+- name: cleanup affinity group
+  ngine_io.cloudstack.affinity_group:
+    name: "{{ cs_resource_prefix }}-ag"
+    state: absent
+  register: ag
+  until: ag is successful
+  retries: 20
+  delay: 5
+- name: verify cleanup affinity group
+  assert:
+    that:
+      - ag is successful
+
+- name: cleanup security group ...take a while unless instance is expunged
+  ngine_io.cloudstack.security_group:
+    name: "{{ cs_resource_prefix }}-sg"
+    state: absent
+  register: sg
+  until: sg is successful
+  retries: 100
+  delay: 10
+- name: verify cleanup security group
+  assert:
+    that:
+      - sg is successful
