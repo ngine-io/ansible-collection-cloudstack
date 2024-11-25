@@ -48,7 +48,7 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.host is not defined
       - instance.state == "Stopped"
 
@@ -63,7 +63,7 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.host == host.name
       - instance.state == "Running"
 
@@ -78,7 +78,7 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.host == host.name
       - instance.state == "Running"
 
@@ -101,7 +101,7 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.host != host.name
       - instance.state == "Running"
 
@@ -116,7 +116,7 @@
   assert:
     that:
       - instance is changed
-      - instance.name cs_resource_prefix + "-vm-" + instance_number
+      - instance.name cs_resource_prefix + "-vm-" + instance_number|string
       - instance.host == host.name
       - instance.state == "Running"
 
@@ -131,7 +131,7 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.host == host.name
       - instance.state == "Running"

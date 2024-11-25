@@ -77,7 +77,7 @@
   assert:
     that:
       - instance is changed
-      - instance.ssh_key is not defined
+      - instance.ssh_keys is not defined
 
 - name: test update instance ssh key2
   ngine_io.cloudstack.instance:
@@ -90,7 +90,7 @@
   assert:
     that:
       - instance is changed
-      - instance.ssh_key == cs_resource_prefix + "-sshkey2"
+      - 'cs_resource_prefix + "-sshkey2" in instance.ssh_keys'
 
 - name: test update instance ssh key2 idempotence
   ngine_io.cloudstack.instance:
@@ -103,7 +103,7 @@
   assert:
     that:
       - instance is not changed
-      - instance.ssh_key == cs_resource_prefix + "-sshkey2"
+      - 'cs_resource_prefix + "-sshkey2" in instance.ssh_keys'
 
 - name: cleanup ssh key2
   ngine_io.cloudstack.ssh_key:
@@ -154,7 +154,7 @@
   assert:
     that:
       - instance is changed
-      - "'{{ cs_resource_prefix }}-sshkey' in instance.ssh_keys"
+      - 'cs_resource_prefix + "-sshkey" in instance.ssh_keys'
 
 - name: test update instance ssh key idempotence
   ngine_io.cloudstack.instance:
@@ -167,7 +167,7 @@
   assert:
     that:
       - instance is not changed
-      - "'{{ cs_resource_prefix }}-sshkey' in instance.ssh_keys"
+      - 'cs_resource_prefix + "-sshkey" in instance.ssh_keys'
 
 - name: cleanup expunge instance
   ngine_io.cloudstack.instance:

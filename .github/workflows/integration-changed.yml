@@ -22,7 +22,7 @@ jobs:
         ansible-branch:
           - stable-2.17
         group:
-          - 3
+          - 4
         container-version:
           - 1.7.0
     steps:

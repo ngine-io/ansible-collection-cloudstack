@@ -20,7 +20,7 @@
     that:
 
 - name: setup ssh key in project
-  ngine_io.cloudstack.sshkeypair:
+  ngine_io.cloudstack.ssh_key:
     name: "{{ cs_resource_prefix }}-sshkey-prj"
     project: "{{ cs_resource_prefix }}-prj"
   register: sshkey
@@ -30,7 +30,7 @@
       - sshkey is successful
 
 - name: setup affinity group in project
-  ngine_io.cloudstack.affinitygroup:
+  ngine_io.cloudstack.affinity_group:
     name: "{{ cs_resource_prefix }}-ag-prj"
     project: "{{ cs_resource_prefix }}-prj"
   register: ag
@@ -40,7 +40,7 @@
       - ag is successful
 
 - name: setup security group in project
-  ngine_io.cloudstack.securitygroup:
+  ngine_io.cloudstack.security_group:
     name: "{{ cs_resource_prefix }}-sg-prj"
     project: "{{ cs_resource_prefix }}-prj"
   register: sg
@@ -83,12 +83,12 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
-      - instance.ssh_key == cs_resource_prefix + "-sshkey-prj"
+      - 'cs_resource_prefix + "-sshkey-prj" in instance.ssh_keys'
       - not instance.tags
 
 - name: test create instance in project idempotence
@@ -107,12 +107,12 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
-      - instance.ssh_key == cs_resource_prefix + "-sshkey-prj"
+      - 'cs_resource_prefix + "-sshkey-prj" in instance.ssh_keys'
       - not instance.tags
 
 - name: test running instance in project not updated in check mode
@@ -127,9 +127,9 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
 
@@ -144,9 +144,9 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
 
@@ -162,9 +162,9 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
 
@@ -179,9 +179,9 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Stopped"
 
@@ -211,9 +211,9 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Stopped"
 
@@ -229,9 +229,9 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Stopped"
 
@@ -247,9 +247,9 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Stopped"
 
@@ -265,9 +265,9 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Stopped"
 
@@ -282,9 +282,9 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Running"
 
@@ -299,9 +299,9 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Running"
 
@@ -318,9 +318,9 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Running"
 
@@ -336,9 +336,9 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
 
@@ -354,9 +354,9 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
 
@@ -373,9 +373,9 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
 
 - name: test restore instance in project
@@ -390,9 +390,9 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.project == cs_resource_prefix + "-prj"
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
 
 - name: test destroy instance in project in check mode
@@ -520,7 +520,7 @@
       - instance is not changed
 
 - name: cleanup ssh key in project
-  ngine_io.cloudstack.sshkeypair:
+  ngine_io.cloudstack.ssh_key:
     name: "{{ cs_resource_prefix }}-sshkey-prj"
     project: "{{ cs_resource_prefix }}-prj"
     state: absent
@@ -531,7 +531,7 @@
       - sshkey is successful
 
 - name: cleanup affinity group in project
-  ngine_io.cloudstack.affinitygroup:
+  ngine_io.cloudstack.affinity_group:
     name: "{{ cs_resource_prefix }}-ag-prj"
     project: "{{ cs_resource_prefix }}-prj"
     state: absent
@@ -545,7 +545,7 @@
       - ag is successful
 
 - name: cleanup security group in project ...take a while unless instance in project is expunged
-  ngine_io.cloudstack.securitygroup:
+  ngine_io.cloudstack.security_group:
     name: "{{ cs_resource_prefix }}-sg-prj"
     project: "{{ cs_resource_prefix }}-prj"
     state: absent

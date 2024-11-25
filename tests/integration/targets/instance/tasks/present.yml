@@ -47,11 +47,11 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
-      - instance.ssh_key == cs_resource_prefix + "-sshkey"
+      - 'cs_resource_prefix + "-sshkey" in instance.ssh_keys'
       - not instance.tags
 
 - name: test create instance idempotence
@@ -74,11 +74,11 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
-      - instance.ssh_key == cs_resource_prefix + "-sshkey"
+      - 'cs_resource_prefix + "-sshkey" in instance.ssh_keys'
       - not instance.tags
 
 - name: gather host infos of running instance
@@ -96,8 +96,8 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
 
@@ -111,8 +111,8 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
 
@@ -127,8 +127,8 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
 
@@ -142,8 +142,8 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Stopped"
 
@@ -171,8 +171,8 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Stopped"
 
@@ -187,8 +187,8 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Stopped"
 
@@ -203,8 +203,8 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == "{{ cs_resource_prefix }}-display-{{ instance_number }}"
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Stopped"
 
@@ -218,8 +218,8 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Running"
 
@@ -233,8 +233,8 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Running"
 
@@ -250,8 +250,8 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Running"
 
@@ -266,8 +266,8 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
 
@@ -282,8 +282,8 @@
   assert:
     that:
       - instance is not changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
       - instance.state == "Running"
 
@@ -299,8 +299,8 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1
 
 - name: test restore instance
@@ -314,6 +314,6 @@
   assert:
     that:
       - instance is changed
-      - instance.name == cs_resource_prefix + "-vm-" + instance_number
-      - instance.display_name == cs_resource_prefix + "-display-" + instance_number
+      - instance.name == cs_resource_prefix + "-vm-" + instance_number|string
+      - instance.display_name == cs_resource_prefix + "-display-" + instance_number|string
       - instance.service_offering == test_cs_instance_offering_1

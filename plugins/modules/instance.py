@@ -1093,6 +1093,10 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
     def get_result(self, resource):
         super(AnsibleCloudStackInstance, self).get_result(resource)
         if resource:
+            # 4.18 does not return keypairs as list as doc claims
+            if "ssh_keys" in self.result and not isinstance(self.result["ssh_keys"], list):
+                self.result["ssh_keys"] = [self.result["ssh_keys"]]
+
             self.result["user_data"] = self._get_instance_user_data(resource)
             if "securitygroup" in resource:
                 security_groups = []
