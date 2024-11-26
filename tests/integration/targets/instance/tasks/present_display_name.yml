@@ -102,7 +102,7 @@
     that:
       - instance is changed
       - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
-      - instance.service_offering == "{{ test_cs_instance_offering_2 }}"
+      - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Stopped"
 
 - name: test starting instance with display_name
@@ -116,7 +116,7 @@
     that:
       - instance is changed
       - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
-      - instance.service_offering == "{{ test_cs_instance_offering_2 }}"
+      - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Running"
 
 - name: test starting instance with display_name idempotence
@@ -130,7 +130,7 @@
     that:
       - instance is not changed
       - instance.display_name == cs_resource_prefix + "-vm-" + instance_number|string
-      - instance.service_offering == "{{ test_cs_instance_offering_2 }}"
+      - instance.service_offering == test_cs_instance_offering_2
       - instance.state == "Running"
 
 - name: test force update running instance with display_name
