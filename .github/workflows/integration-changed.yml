@@ -57,6 +57,19 @@ jobs:
           --diff
           --color
           --python ${{ matrix.python-version }}
+          --coverage
           cs/group${{ matrix.group }}/
         env:
           ANSIBLE_CLOUDSTACK_CONTAINER: quay.io/ansible/cloudstack-test-container:${{ matrix.container-version }}
+
+      - name: Generate coverage report.
+        run: >-
+          ansible-test
+          coverage xml
+          -v
+          --requirements
+          --group-by command
+          --group-by version
+      - uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: false
