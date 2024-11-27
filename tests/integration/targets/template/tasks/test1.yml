@@ -1,0 +1,161 @@
+---
+- name: setup template
+  ngine_io.cloudstack.template:
+    name: "ansible-template-test1"
+    cross_zones: true
+    state: absent
+  register: template
+- name: verify setup template
+  assert:
+    that:
+      - template is successful
+
+- name: test download template in check mode
+  ngine_io.cloudstack.template:
+    name: "ansible-template-test1"
+    url: "{{ cs_template_url }}"
+    format: "{{ cs_template_format }}"
+    hypervisor: "{{ cs_template_hypervisor }}"
+    os_type: "{{ cs_template_os_type }}"
+    cross_zones: true
+  register: template
+  check_mode: true
+- name: verify test download template in check mode
+  assert:
+    that:
+      - template is changed
+
+- name: test download template
+  ngine_io.cloudstack.template:
+    name: "ansible-template-test1"
+    url: "{{ cs_template_url }}"
+    format: "{{ cs_template_format }}"
+    hypervisor: "{{ cs_template_hypervisor }}"
+    os_type: "{{ cs_template_os_type }}"
+    cross_zones: true
+  register: template
+- name: verify test download template
+  assert:
+    that:
+      - template is changed
+      - template.name == "ansible-template-test1"
+      - template.display_text == "ansible-template-test1"
+      - template.cross_zones == true
+
+- name: test download template idempotence
+  ngine_io.cloudstack.template:
+    name: "ansible-template-test1"
+    url: "{{ cs_template_url }}"
+    format: "{{ cs_template_format }}"
+    hypervisor: "{{ cs_template_hypervisor }}"
+    os_type: "{{ cs_template_os_type }}"
+    cross_zones: true
+  register: template
+- name: verify test download template idempotence
+  assert:
+    that:
+      - template is not changed
+      - template.name == "ansible-template-test1"
+      - template.display_text == "ansible-template-test1"
+      - template.cross_zones == true
+
+- name: test update template in check mode
+  ngine_io.cloudstack.template:
+    name: "ansible-template-test1"
+    display_text: "{{ cs_resource_prefix }}-template display_text"
+    url: "{{ cs_template_url }}"
+    format: "{{ cs_template_format }}"
+    hypervisor: "{{ cs_template_hypervisor }}"
+    os_type: "{{ cs_template_os_type }}"
+    is_featured: true
+    cross_zones: true
+  register: template
+  check_mode: true
+- name: verify test update template in check mode
+  assert:
+    that:
+      - template is changed
+      - template.name == "ansible-template-test1"
+      - template.display_text == "ansible-template-test1"
+      - template.cross_zones == true
+      - template.is_featured == false
+
+- name: test update template
+  ngine_io.cloudstack.template:
+    name: "ansible-template-test1"
+    display_text: "{{ cs_resource_prefix }}-template display_text"
+    url: "{{ cs_template_url }}"
+    format: "{{ cs_template_format }}"
+    hypervisor: "{{ cs_template_hypervisor }}"
+    os_type: "{{ cs_template_os_type }}"
+    is_featured: true
+    cross_zones: true
+  register: template
+- name: verify test update template
+  assert:
+    that:
+      - template is changed
+      - template.name == "ansible-template-test1"
+      - template.display_text == cs_resource_prefix + "-template display_text"
+      - template.cross_zones == true
+      - template.is_featured == true
+
+- name: test update template idempotence
+  ngine_io.cloudstack.template:
+    name: "ansible-template-test1"
+    display_text: "{{ cs_resource_prefix }}-template display_text"
+    url: "{{ cs_template_url }}"
+    format: "{{ cs_template_format }}"
+    hypervisor: "{{ cs_template_hypervisor }}"
+    os_type: "{{ cs_template_os_type }}"
+    is_featured: true
+    cross_zones: true
+  register: template
+- name: verify test update template idempotence
+  assert:
+    that:
+      - template is not changed
+      - template.name == "ansible-template-test1"
+      - template.display_text == cs_resource_prefix + "-template display_text"
+      - template.cross_zones == true
+      - template.is_featured == true
+
+- name: test remove template in check mode
+  ngine_io.cloudstack.template:
+    name: "ansible-template-test1"
+    state: absent
+    cross_zones: true
+  register: template
+  check_mode: true
+- name: verify test remove template in check mode
+  assert:
+    that:
+      - template is changed
+      - template.name == "ansible-template-test1"
+      - template.display_text == cs_resource_prefix + "-template display_text"
+      - template.cross_zones == true
+
+- name: test remove template
+  ngine_io.cloudstack.template:
+    name: "ansible-template-test1"
+    state: absent
+    cross_zones: true
+  register: template
+- name: verify test remove template
+  assert:
+    that:
+      - template is changed
+      - template.name == "ansible-template-test1"
+      - template.display_text == cs_resource_prefix + "-template display_text"
+      - template.cross_zones == true
+
+- name: test remove template idempotence
+  ngine_io.cloudstack.template:
+    name: "ansible-template-test1"
+    state: absent
+    cross_zones: true
+  register: template
+- name: verify test remove template idempotence
+  assert:
+    that:
+      - template is not changed

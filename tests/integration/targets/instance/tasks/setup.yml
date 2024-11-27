@@ -1,0 +1,27 @@
+---
+- name: setup ssh key
+  ngine_io.cloudstack.ssh_key:
+    name: "{{ cs_resource_prefix }}-sshkey"
+  register: sshkey
+- name: verify setup ssh key
+  assert:
+    that:
+      - sshkey is successful
+
+- name: setup affinity group
+  ngine_io.cloudstack.affinity_group:
+    name: "{{ cs_resource_prefix }}-ag"
+  register: ag
+- name: verify setup affinity group
+  assert:
+    that:
+      - ag is successful
+
+- name: setup security group
+  ngine_io.cloudstack.security_group:
+    name: "{{ cs_resource_prefix }}-sg"
+  register: sg
+- name: verify setup security group
+  assert:
+    that:
+      - sg is successful

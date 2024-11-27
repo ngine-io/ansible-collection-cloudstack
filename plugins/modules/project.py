@@ -195,7 +195,7 @@ class AnsibleCloudStackProject(AnsibleCloudStack):
     def state_project(self, state="active"):
         project = self.present_project()
 
-        if project["state"].lower() != state:
+        if project and project["state"].lower() != state:
             self.result["changed"] = True
 
             args = {"id": project["id"]}

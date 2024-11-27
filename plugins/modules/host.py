@@ -285,7 +285,7 @@ resource_state:
   returned: success
   type: str
   sample: Enabled
-allocation_state::
+allocation_state:
   description: Allocation state of the host.
   returned: success
   type: str
@@ -414,6 +414,7 @@ class AnsibleCloudStackHost(AnsibleCloudStack):
             for h in res:
                 if name in [h["ipaddress"], h["name"]]:
                     self.host = h
+                    break
         return self.host
 
     def _handle_allocation_state(self, host):
@@ -440,13 +441,12 @@ class AnsibleCloudStackHost(AnsibleCloudStack):
         return host
 
     def _set_host_allocation_state(self, host):
-        if host is None:
-            host["allocationstate"] = "Enable"
+        if not host:
+            self.module.fail_json("Unexptected error: host is empty")
 
         # Set host allocationstate to be disabled/enabled
-        elif host["resourcestate"].lower() in list(self.allocation_states_for_update.keys()):
+        if host["resourcestate"].lower() in list(self.allocation_states_for_update.keys()):
             host["allocationstate"] = self.allocation_states_for_update[host["resourcestate"].lower()]
-
         else:
             host["allocationstate"] = host["resourcestate"]
 
@@ -456,7 +456,7 @@ class AnsibleCloudStackHost(AnsibleCloudStack):
         host = self.get_host()
 
         if not host:
-            host = self._create_host(host)
+            host = self._create_host()
         else:
             host = self._update_host(host)
 
@@ -472,7 +472,8 @@ class AnsibleCloudStackHost(AnsibleCloudStack):
         else:
             return "http://%s" % self.module.params.get("name")
 
-    def _create_host(self, host):
+    def _create_host(self):
+        host = None
         required_params = [
             "password",
             "username",
