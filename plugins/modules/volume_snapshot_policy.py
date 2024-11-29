@@ -32,11 +32,12 @@ options:
       - ROOT
   vm:
     description:
-      - Name of the instance to select the volume from.
+      - Name of the VM/instance to select the volume from.
       - Use I(volume_type) if VM has a DATADISK and ROOT volume.
       - In case of I(volume_type=DATADISK), additionally use I(device_id) if VM has more than one DATADISK volume.
       - Either I(volume) or I(vm) is required.
     type: str
+    aliases: [ instance ]
   device_id:
     description:
       - ID of the device on a VM the volume is attached to.
@@ -307,7 +308,7 @@ def main():
         dict(
             volume=dict(),
             volume_type=dict(choices=["DATADISK", "ROOT"]),
-            vm=dict(),
+            vm=dict(type="str", aliases=["instance"]),
             device_id=dict(type="int"),
             vpc=dict(),
             interval_type=dict(default="daily", choices=["hourly", "daily", "weekly", "monthly"], aliases=["interval"]),
