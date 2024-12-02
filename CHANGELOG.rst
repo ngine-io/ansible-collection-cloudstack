@@ -5,6 +5,23 @@ Apache CloudStack Collection Release Notes
 .. contents:: Topics
 
 
+v2.5.0
+======
+
+Minor Changes
+-------------
+
+- cs_instance - Added new arguments ``user_data_name`` and ``user_data_details`` (https://github.com/ngine-io/ansible-collection-cloudstack/pull/134).
+- cs_service_offering - Add support for storagetag (https://github.com/ngine-io/ansible-collection-cloudstack/pull/118).
+
+v2.4.1
+======
+
+Bugfixes
+--------
+
+- Fixed a bug related to the new option ``validate_certs`` (https://github.com/ngine-io/ansible-collection-cloudstack/pull/135).
+
 v2.4.0
 ======
 

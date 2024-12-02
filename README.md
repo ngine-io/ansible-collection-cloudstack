@@ -35,7 +35,7 @@ To use a module from Apache CloudStack collection, please reference the full nam
 - name: Using Apache CloudStack collection
   hosts: localhost
   tasks:
-    - ngine_io.cloudstack.cs_instance:
+    - ngine_io.cloudstack.instance:
       ...
 ```
 
@@ -48,7 +48,7 @@ Or you can add full namepsace and collecton name in the `collections` element:
   collections:
     - ngine_io.cloudstack
   tasks:
-    - cs_instance:
+    - instance:
       ...
 ```
 
@@ -61,7 +61,7 @@ For existing Ansible roles, please also reference the full namespace, collection
 To use a plugin, please reference the full namespace, collection name, and plugin name that you want to use:
 
 ```yaml
-plugin: ngine_io.cloudstack.cloudstack
+plugin: ngine_io.cloudstack.instance
 ```
 
 ## Contributing
