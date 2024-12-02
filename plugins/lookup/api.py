@@ -83,7 +83,7 @@ class LookupModule(LookupBase):
 
         if res is None:
             return []
-        if type(res) is list:
+        if isinstance(res, list):
             return res
 
         return [res]
