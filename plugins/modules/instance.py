@@ -166,10 +166,12 @@ options:
       - Name of the zone in which the instance should be deployed.
     type: str
     required: true
-  ssh_key:
+  ssh_keys:
     description:
-      - Name of the SSH key to be deployed on the new instance.
-    type: str
+      - List of names of SSH keys to be deployed on the new instance.
+    type: list
+    elements: str
+    aliases: [ ssh_key ]
   affinity_groups:
     description:
       - Affinity groups names to be applied to the new instance.
@@ -336,11 +338,6 @@ password:
   returned: if available
   type: str
   sample: Ge2oe7Do
-ssh_key:
-  description: Name of SSH key deployed to instance.
-  returned: if available
-  type: str
-  sample: key@work
 ssh_keys:
   description: Names of SSH key deployed to instance.
   returned: if available
@@ -467,7 +464,6 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             "isoname": "iso",
             "templatename": "template",
             "templatedisplaytext": "template_display_text",
-            "keypair": "ssh_key",
             "keypairs": "ssh_keys",
             "hostname": "host",
         }
@@ -587,9 +583,9 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
 
             self.module.fail_json(msg="ISO '%s' not found" % iso)
 
-    def get_instance(self):
+    def get_instance(self, refresh=False):
         instance = self.instance
-        if not instance:
+        if not instance or refresh:
             instance_name = self.get_or_fallback("name", "display_name")
             args = {
                 "account": self.get_account(key="name"),
@@ -602,8 +598,17 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             if instances:
                 for v in instances:
                     if instance_name.lower() in [v["name"].lower(), v["displayname"].lower(), v["id"]]:
+
+                        if "keypairs" not in v:
+                            v["keypairs"] = list()
+
+                        # Workaround for keypairs not a list
+                        if not isinstance(v["keypairs"], list):
+                            v["keypairs"] = [v["keypairs"]]
+
                         self.instance = v
                         break
+
         return self.instance
 
     def get_user_data_id_by_name(self):
@@ -654,48 +659,45 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             res.append(dict(networkid=ids[i], **data))
         return res
 
-    def get_ssh_keypair(self, key=None, name=None, fail_on_missing=True):
-        ssh_key_name = name or self.module.params.get("ssh_key")
-        if ssh_key_name is None:
-            return
-
+    def get_ssh_keypair(self, name, key=None, fail_on_missing=True):
         args = {
             "domainid": self.get_domain("id"),
             "account": self.get_account("name"),
             "projectid": self.get_project("id"),
-            "name": ssh_key_name,
+            "name": name,
         }
         ssh_key_pairs = self.query_api("listSSHKeyPairs", **args)
         if "sshkeypair" in ssh_key_pairs:
             return self._get_by_key(key=key, my_dict=ssh_key_pairs["sshkeypair"][0])
 
         elif fail_on_missing:
-            self.module.fail_json(msg="SSH key not found: %s" % ssh_key_name)
+            self.module.fail_json(msg="SSH key not found: %s" % name)
 
-    def ssh_key_has_changed(self):
-        ssh_key_name = self.module.params.get("ssh_key")
-        if ssh_key_name is None:
+    def ssh_keys_changed(self):
+        ssh_keys = self.module.params.get("ssh_keys")
+        if ssh_keys is None:
             return False
 
-        # Fails if keypair for param is inexistent
-        param_ssh_key_fp = self.get_ssh_keypair(key="fingerprint")
+        instance_ssh_keys = self.instance.get("keypairs") or [self.instance.get("keypair") or ""]
 
-        # CloudStack 4.5 does return keypair on instance for a non existent key.
-        instance_ssh_key_name = self.instance.get("keypair")
-        if instance_ssh_key_name is None:
-            return True
+        param_ssh_key_fingerprints = [self.get_ssh_keypair(key="fingerprint", name=ssh_key) for ssh_key in ssh_keys]
 
-        # Get fingerprint for keypair of instance but do not fail if inexistent.
-        instance_ssh_key_fp = self.get_ssh_keypair(key="fingerprint", name=instance_ssh_key_name, fail_on_missing=False)
-        if not instance_ssh_key_fp:
-            return True
+        for instance_ssh_key in instance_ssh_keys:
 
-        # Compare fingerprints to ensure the keypair changed
-        if instance_ssh_key_fp != param_ssh_key_fp:
-            return True
+            if not ssh_keys:
+                return True
+
+            # Get fingerprint for keypair of instance but do not fail if inexistent.
+            instance_ssh_key_fingerprint = self.get_ssh_keypair(key="fingerprint", name=instance_ssh_key, fail_on_missing=False)
+            if not instance_ssh_key_fingerprint:
+                return True
+
+            # Compare fingerprints to ensure the keypair changed
+            if instance_ssh_key_fingerprint not in param_ssh_key_fingerprints:
+                return True
         return False
 
-    def security_groups_has_changed(self):
+    def security_groups_changed(self):
         security_groups = self.module.params.get("security_groups")
         if security_groups is None:
             return False
@@ -758,6 +760,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
 
         # In check mode, we do not necessarily have an instance
         if instance:
+            instance = self.get_instance(refresh=True)
             instance = self.ensure_tags(resource=instance, resource_type="UserVm")
             # refresh instance data
             self.instance = instance
@@ -820,7 +823,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         args["name"] = self.module.params.get("name")
         args["displayname"] = self.get_or_fallback("display_name", "name")
         args["group"] = self.module.params.get("group")
-        args["keypair"] = self.get_ssh_keypair(key="name")
+        args["keypairs"] = self.module.params.get("ssh_keys")
         args["size"] = self.module.params.get("disk_size")
         args["startvm"] = start_vm
         args["rootdisksize"] = self.module.params.get("root_disk_size")
@@ -870,9 +873,9 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             args_instance_update["displayname"] = self.module.params.get("display_name")
         instance_changed = self.has_changed(args_instance_update, instance)
 
-        ssh_key_changed = self.ssh_key_has_changed()
+        ssh_keys_changed = self.ssh_keys_changed()
 
-        security_groups_changed = self.security_groups_has_changed()
+        security_groups_changed = self.security_groups_changed()
 
         # Volume data
         args_volume_update = {}
@@ -905,7 +908,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             service_offering_changed,
             instance_changed,
             security_groups_changed,
-            ssh_key_changed,
+            ssh_keys_changed,
             root_disk_size_changed,
         ]
 
@@ -936,12 +939,13 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
                         self.instance = instance
 
                     # Reset SSH key
-                    if ssh_key_changed:
+                    if ssh_keys_changed:
                         # SSH key data
-                        args_ssh_key = {}
-                        args_ssh_key["id"] = instance["id"]
-                        args_ssh_key["projectid"] = self.get_project(key="id")
-                        args_ssh_key["keypair"] = self.module.params.get("ssh_key")
+                        args_ssh_key = {
+                            "id": instance["id"],
+                            "projectid": self.get_project(key="id"),
+                            "keypairs": self.module.params.get("ssh_keys"),
+                        }
                         instance = self.query_api("resetSSHKeyForVirtualMachine", **args_ssh_key)
                         instance = self.poll_job(instance, "virtualmachine")
                         self.instance = instance
@@ -1091,6 +1095,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         return instance
 
     def get_result(self, resource):
+        resource = self.get_instance(refresh=True)
         super(AnsibleCloudStackInstance, self).get_result(resource)
         if resource:
             self.result["user_data"] = self._get_instance_user_data(resource)
@@ -1154,7 +1159,7 @@ def main():
             user_data_name=dict(),
             user_data_details=dict(type="dict"),
             zone=dict(required=True),
-            ssh_key=dict(no_log=False),
+            ssh_keys=dict(type="list", elements="str", aliases=["ssh_key"], no_log=False),
             force=dict(type="bool", default=False),
             tags=dict(type="list", elements="dict", aliases=["tag"]),
             details=dict(type="dict"),

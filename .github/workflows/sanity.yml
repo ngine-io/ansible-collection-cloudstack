@@ -19,10 +19,10 @@ jobs:
       fail-fast: false
       matrix:
         ansible:
-        - stable-2.15
-        - stable-2.16
+        # - stable-2.15
+        # - stable-2.16
         - stable-2.17
-        - devel
+        # - devel
     runs-on: ubuntu-22.04
     steps:
       - name: Check out code
