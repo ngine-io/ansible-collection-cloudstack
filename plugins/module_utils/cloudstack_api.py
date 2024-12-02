@@ -18,6 +18,7 @@ from ansible.module_utils.basic import missing_required_lib, AnsibleModule
 CS_IMP_ERR = None
 try:
     from cs import CloudStack, CloudStackException
+
     HAS_LIB_CS = True
 except ImportError:
     CS_IMP_ERR = traceback.format_exc()
@@ -33,24 +34,24 @@ class AnsibleCloudStackAPI(AnsibleModule):
     error_callback = None
     warn_callback = None
     AUTH_ARGSPEC = dict(
-        api_key=os.getenv('CLOUDSTACK_KEY'),
-        api_secret=os.getenv('CLOUDSTACK_SECRET'),
-        api_url=os.getenv('CLOUDSTACK_ENDPOINT'),
-        api_http_method=os.getenv('CLOUDSTACK_METHOD', 'get'),
-        api_timeout=os.getenv('CLOUDSTACK_TIMEOUT', 10),
-        api_verify_ssl_cert=os.getenv('CLOUDSTACK_VERIFY'),
-        validate_certs=os.getenv('CLOUDSTACK_DANGEROUS_NO_TLS_VERIFY', True),
+        api_key=os.getenv("CLOUDSTACK_KEY"),
+        api_secret=os.getenv("CLOUDSTACK_SECRET"),
+        api_url=os.getenv("CLOUDSTACK_ENDPOINT"),
+        api_http_method=os.getenv("CLOUDSTACK_METHOD", "get"),
+        api_timeout=os.getenv("CLOUDSTACK_TIMEOUT", 10),
+        api_verify_ssl_cert=os.getenv("CLOUDSTACK_VERIFY"),
+        validate_certs=os.getenv("CLOUDSTACK_DANGEROUS_NO_TLS_VERIFY", True),
     )
 
     def __init__(self, argument_spec=None, direct_params=None, error_callback=None, warn_callback=None, **kwargs):
 
         if not HAS_LIB_CS:
-            self.fail_json(msg=missing_required_lib('cs'), exception=CS_IMP_ERR)
+            self.fail_json(msg=missing_required_lib("cs"), exception=CS_IMP_ERR)
 
         full_argspec = {}
         full_argspec.update(AnsibleCloudStackAPI.AUTH_ARGSPEC)
         full_argspec.update(argument_spec)
-        kwargs['supports_check_mode'] = True
+        kwargs["supports_check_mode"] = True
 
         self.error_callback = error_callback
         self.warn_callback = warn_callback
@@ -68,7 +69,7 @@ class AnsibleCloudStackAPI(AnsibleModule):
             super(AnsibleCloudStackAPI, self).__init__(argument_spec=full_argspec, **kwargs)
 
         # Perform some basic validation
-        if not re.match('^https{0,1}://', self.api_url):
+        if not re.match("^https{0,1}://", self.api_url):
             self.api_url = "https://{0}".format(self.api_url)
 
     def fail_json(self, **kwargs):
@@ -89,23 +90,15 @@ class AnsibleCloudStackAPI(AnsibleModule):
 
     def get_api_config(self):
         api_config = {
-            'endpoint': self.api_url,
-            'key': self.api_key,
-            'secret': self.api_secret,
-            'timeout': self.api_timeout,
-            'method': self.api_http_method,
-            'verify': self.api_verify_ssl_cert,
-            'dangerous_no_tls_verify': not self.validate_certs,
+            "endpoint": self.api_url,
+            "key": self.api_key,
+            "secret": self.api_secret,
+            "timeout": self.api_timeout,
+            "method": self.api_http_method,
+            "verify": self.api_verify_ssl_cert,
+            "dangerous_no_tls_verify": not self.validate_certs,
         }
 
-        # self.result.update({
-        #     'api_url': api_config['endpoint'],
-        #     'api_key': api_config['key'],
-        #     'api_timeout': int(api_config['timeout']),
-        #     'api_http_method': api_config['method'],
-        #     'api_verify_ssl_cert': api_config['verify'],
-        #     'validate_certs': not api_config['dangerous_no_tls_verify'],
-        # })
         return api_config
 
     def query_api(self, command, **args):
@@ -113,11 +106,11 @@ class AnsibleCloudStackAPI(AnsibleModule):
         try:
             res = getattr(self.cs, command)(**args)
 
-            if 'errortext' in res:
-                self.fail_json(msg="Failed: '%s'" % res['errortext'])
+            if "errortext" in res:
+                self.fail_json(msg="Failed: '%s'" % res["errortext"])
 
         except CloudStackException as e:
-            self.fail_json(msg='CloudStackException: %s' % to_native(e))
+            self.fail_json(msg="CloudStackException: %s" % to_native(e))
 
         except Exception as e:
             self.fail_json(msg=to_native(e))

@@ -62,22 +62,22 @@ class LookupModule(LookupBase):
     display = Display()
 
     def handle_error(self, **kwargs):
-        raise AnsibleError(to_native(kwargs.get('msg')))
+        raise AnsibleError(to_native(kwargs.get("msg")))
 
     def warn_callback(self, warning):
         self.display.warning(warning)
 
     def run(self, terms, variables=None, **kwargs):
         if len(terms) != 1:
-            raise AnsibleError('You must pass exactly one endpoint to query')
+            raise AnsibleError("You must pass exactly one endpoint to query")
 
         self.set_options(direct=kwargs)
 
         module = AnsibleCloudStackAPI(argument_spec={}, direct_params=kwargs, error_callback=self.handle_error, warn_callback=self.warn_callback)
 
         args = {}
-        if self.get_option('query_params'):
-            args.update(self.get_option('query_params', {}))
+        if self.get_option("query_params"):
+            args.update(self.get_option("query_params", {}))
 
         res = module.query_api(terms[0], **args)
 
