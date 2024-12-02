@@ -1,0 +1,3 @@
+major_changes:
+  - General overhaul (black code style) and renaming of all modules (dropping ``cs_`` prefix) (https://github.com/ngine-io/ansible-collection-cloudstack/pull/141).
+  - Ensuring backwards compatibility and integration tests with CloudStack 4.17 and 4.18.
