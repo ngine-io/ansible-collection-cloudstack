@@ -1,0 +1,9 @@
+- name: cleanup custom security group
+  ngine_io.cloudstack.security_group:
+    name: "{{ cs_resource_prefix }}_sg"
+    state: absent
+  register: sg
+- name: verify setup
+  assert:
+    that:
+      - sg is successful

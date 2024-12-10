@@ -1,32 +1,36 @@
 name: Collection integration
 
 on:
-  push:
-    tags: "v*"
   pull_request:
+    types: [labeled]
+  push:
+    paths:
+      - "plugins/**"
+      - "tests/integration/**"
   schedule:
     - cron: 30 6 * * 2
 
 jobs:
   integration-test:
     name: Integration v${{ matrix.container-version }} Ansible-${{ matrix.ansible-branch }} group${{ matrix.group }} Py${{ matrix.python-version }}
+    if: ${{ github.event.label.name == 'automation' || github.ref_name == 'master' || github.event_name == 'schedule' }}
     defaults:
       run:
         working-directory: ansible_collections/ngine_io/cloudstack
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         python-version:
-          - "3.10"
+          - "3.11"
         group:
           - 1
           - 2
         ansible-branch:
-          - stable-2.14
+          - stable-2.17
         container-version:
-          - 1.4.0
-          - 1.2.0
+          - 1.6.1
+          - 1.7.0
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -57,11 +61,10 @@ jobs:
           -v
           --diff
           --color
-          --retry-on-error
           --python ${{ matrix.python-version }}
           --continue-on-error
           --coverage
-          shippable/cs/group${{ matrix.group }}/
+          cs/group${{ matrix.group }}/
         env:
           ANSIBLE_CLOUDSTACK_CONTAINER: quay.io/ansible/cloudstack-test-container:${{ matrix.container-version }}
 
@@ -73,6 +76,6 @@ jobs:
           --requirements
           --group-by command
           --group-by version
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: false

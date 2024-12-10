@@ -1,0 +1,197 @@
+---
+- name: setup cleanup
+  ngine_io.cloudstack.ssh_key:
+    name: "{{ item }}"
+    state: absent
+  register: sshkey
+  with_items:
+    - first-sshkey
+    - first-sshkey-renamed
+    - second-sshkey
+- name: verify setup cleanup
+  assert:
+    that:
+      - sshkey is success
+
+- name: test fail on missing name
+  ngine_io.cloudstack.ssh_key:
+  ignore_errors: true
+  register: sshkey
+- name: verify results of fail on missing name
+  assert:
+    that:
+      - sshkey is failed
+      - "sshkey.msg == 'missing required arguments: name'"
+
+- name: test ssh key creation in check mode
+  ngine_io.cloudstack.ssh_key:
+    name: first-sshkey
+  register: sshkey
+  check_mode: true
+- name: verify results of ssh key creation in check mode
+  assert:
+    that:
+      - sshkey is successful
+      - sshkey is changed
+
+- name: test ssh key creation
+  ngine_io.cloudstack.ssh_key:
+    name: first-sshkey
+  register: sshkey
+- name: verify results of ssh key creation
+  assert:
+    that:
+      - sshkey is successful
+      - sshkey is changed
+      - sshkey.fingerprint is defined and sshkey.fingerprint != ""
+      - sshkey.private_key is defined and sshkey.private_key != ""
+      - sshkey.name == "first-sshkey"
+
+- name: test ssh key creation idempotence
+  ngine_io.cloudstack.ssh_key:
+    name: first-sshkey
+  register: sshkey2
+- name: verify results of ssh key creation idempotence
+  assert:
+    that:
+      - sshkey2 is successful
+      - sshkey2 is not changed
+      - sshkey2.fingerprint is defined and sshkey2.fingerprint == sshkey.fingerprint
+      - sshkey2.private_key is not defined
+      - sshkey2.name == "first-sshkey"
+
+- name: test replace ssh public key in check mode
+  ngine_io.cloudstack.ssh_key:
+    name: first-sshkey
+    public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDsTI7KJZ8tz/CwQIrSol41c6s3vzkGYCMI8o7P9Et48UG9eRoGaMaGYaTvBTj/VQrD7cfurI6Bn0HTT3FLK3OHOweyelm9rIiQ2hjkSl+2lIKWHu992GO58E5Gcy9yYW4sHGgGLNZkPBKrrj0w7lhmiHjPtVnf+2+7Ix1WOO2/HXPcAHhsX/AlyItDewIL4mr/BT83vq0202sPCiM2cFQJl+5WGwS1wYYK8d167cspsmdyX7OyAFCUB0vueuqjE8MFqJvyIJR9y8Lj9Ny71pSV5/QWrXUgELxMYOKSby3gHkxcIXgYBMFLl4DipRTO74OWQlRRaOlqXlOOQbikcY4T rene.moser@swisstxt.ch"
+  register: sshkey2
+  check_mode: true
+- name: verify results of replace ssh public key in check mode
+  assert:
+    that:
+      - sshkey2 is successful
+      - sshkey2 is changed
+      - sshkey2.fingerprint is defined and sshkey2.fingerprint == sshkey.fingerprint
+      - sshkey2.private_key is not defined
+      - sshkey2.name == "first-sshkey"
+
+- name: test replace ssh public key
+  ngine_io.cloudstack.ssh_key:
+    name: first-sshkey
+    public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDsTI7KJZ8tz/CwQIrSol41c6s3vzkGYCMI8o7P9Et48UG9eRoGaMaGYaTvBTj/VQrD7cfurI6Bn0HTT3FLK3OHOweyelm9rIiQ2hjkSl+2lIKWHu992GO58E5Gcy9yYW4sHGgGLNZkPBKrrj0w7lhmiHjPtVnf+2+7Ix1WOO2/HXPcAHhsX/AlyItDewIL4mr/BT83vq0202sPCiM2cFQJl+5WGwS1wYYK8d167cspsmdyX7OyAFCUB0vueuqjE8MFqJvyIJR9y8Lj9Ny71pSV5/QWrXUgELxMYOKSby3gHkxcIXgYBMFLl4DipRTO74OWQlRRaOlqXlOOQbikcY4T rene.moser@swisstxt.ch"
+  register: sshkey3
+- name: verify results of replace ssh public key
+  assert:
+    that:
+      - sshkey3 is changed
+      - sshkey3.fingerprint is defined and sshkey3.fingerprint != sshkey2.fingerprint
+      - sshkey3.private_key is not defined
+      - sshkey3.name == "first-sshkey"
+
+- name: test replace ssh public key idempotence
+  ngine_io.cloudstack.ssh_key:
+    name: first-sshkey
+    public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDsTI7KJZ8tz/CwQIrSol41c6s3vzkGYCMI8o7P9Et48UG9eRoGaMaGYaTvBTj/VQrD7cfurI6Bn0HTT3FLK3OHOweyelm9rIiQ2hjkSl+2lIKWHu992GO58E5Gcy9yYW4sHGgGLNZkPBKrrj0w7lhmiHjPtVnf+2+7Ix1WOO2/HXPcAHhsX/AlyItDewIL4mr/BT83vq0202sPCiM2cFQJl+5WGwS1wYYK8d167cspsmdyX7OyAFCUB0vueuqjE8MFqJvyIJR9y8Lj9Ny71pSV5/QWrXUgELxMYOKSby3gHkxcIXgYBMFLl4DipRTO74OWQlRRaOlqXlOOQbikcY4T rene.moser@swisstxt.ch"
+  register: sshkey4
+- name: verify results of ssh public key idempotence
+  assert:
+    that:
+      - sshkey4 is not changed
+      - sshkey4.fingerprint is defined and sshkey4.fingerprint == sshkey3.fingerprint
+      - sshkey4.private_key is not defined
+      - sshkey4.name == "first-sshkey"
+
+- name: test rename ssh key in check mode
+  ngine_io.cloudstack.ssh_key:
+    name: first-sshkey-renamed
+    public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDsTI7KJZ8tz/CwQIrSol41c6s3vzkGYCMI8o7P9Et48UG9eRoGaMaGYaTvBTj/VQrD7cfurI6Bn0HTT3FLK3OHOweyelm9rIiQ2hjkSl+2lIKWHu992GO58E5Gcy9yYW4sHGgGLNZkPBKrrj0w7lhmiHjPtVnf+2+7Ix1WOO2/HXPcAHhsX/AlyItDewIL4mr/BT83vq0202sPCiM2cFQJl+5WGwS1wYYK8d167cspsmdyX7OyAFCUB0vueuqjE8MFqJvyIJR9y8Lj9Ny71pSV5/QWrXUgELxMYOKSby3gHkxcIXgYBMFLl4DipRTO74OWQlRRaOlqXlOOQbikcY4T rene.moser@swisstxt.ch"
+  register: sshkey4
+  check_mode: true
+- name: verify test rename ssh key in check mode
+  assert:
+    that:
+      - sshkey4 is changed
+      - sshkey4.fingerprint is defined and sshkey4.fingerprint == sshkey3.fingerprint
+      - sshkey4.private_key is not defined
+      - sshkey4.name == "first-sshkey"
+
+- name: test rename ssh key
+  ngine_io.cloudstack.ssh_key:
+    name: first-sshkey-renamed
+    public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDsTI7KJZ8tz/CwQIrSol41c6s3vzkGYCMI8o7P9Et48UG9eRoGaMaGYaTvBTj/VQrD7cfurI6Bn0HTT3FLK3OHOweyelm9rIiQ2hjkSl+2lIKWHu992GO58E5Gcy9yYW4sHGgGLNZkPBKrrj0w7lhmiHjPtVnf+2+7Ix1WOO2/HXPcAHhsX/AlyItDewIL4mr/BT83vq0202sPCiM2cFQJl+5WGwS1wYYK8d167cspsmdyX7OyAFCUB0vueuqjE8MFqJvyIJR9y8Lj9Ny71pSV5/QWrXUgELxMYOKSby3gHkxcIXgYBMFLl4DipRTO74OWQlRRaOlqXlOOQbikcY4T rene.moser@swisstxt.ch"
+  register: sshkey4
+- name: verify test rename ssh key
+  assert:
+    that:
+      - sshkey4 is changed
+      - sshkey4.fingerprint is defined and sshkey4.fingerprint == sshkey3.fingerprint
+      - sshkey4.private_key is not defined
+      - sshkey4.name == "first-sshkey-renamed"
+
+- name: test rename ssh key idempotence
+  ngine_io.cloudstack.ssh_key:
+    name: first-sshkey-renamed
+    public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDsTI7KJZ8tz/CwQIrSol41c6s3vzkGYCMI8o7P9Et48UG9eRoGaMaGYaTvBTj/VQrD7cfurI6Bn0HTT3FLK3OHOweyelm9rIiQ2hjkSl+2lIKWHu992GO58E5Gcy9yYW4sHGgGLNZkPBKrrj0w7lhmiHjPtVnf+2+7Ix1WOO2/HXPcAHhsX/AlyItDewIL4mr/BT83vq0202sPCiM2cFQJl+5WGwS1wYYK8d167cspsmdyX7OyAFCUB0vueuqjE8MFqJvyIJR9y8Lj9Ny71pSV5/QWrXUgELxMYOKSby3gHkxcIXgYBMFLl4DipRTO74OWQlRRaOlqXlOOQbikcY4T rene.moser@swisstxt.ch"
+  register: sshkey4
+- name: verify test rename ssh key idempotence
+  assert:
+    that:
+      - sshkey4 is not changed
+      - sshkey4.fingerprint is defined and sshkey4.fingerprint == sshkey3.fingerprint
+      - sshkey4.private_key is not defined
+      - sshkey4.name == "first-sshkey-renamed"
+
+- name: setup ssh key with name "second-sshkey"
+  ngine_io.cloudstack.ssh_key:
+    name: second-sshkey
+
+- name: test different but exisitng name but same ssh public key as first-sshkey
+  ngine_io.cloudstack.ssh_key:
+    name: second-sshkey
+    public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDsTI7KJZ8tz/CwQIrSol41c6s3vzkGYCMI8o7P9Et48UG9eRoGaMaGYaTvBTj/VQrD7cfurI6Bn0HTT3FLK3OHOweyelm9rIiQ2hjkSl+2lIKWHu992GO58E5Gcy9yYW4sHGgGLNZkPBKrrj0w7lhmiHjPtVnf+2+7Ix1WOO2/HXPcAHhsX/AlyItDewIL4mr/BT83vq0202sPCiM2cFQJl+5WGwS1wYYK8d167cspsmdyX7OyAFCUB0vueuqjE8MFqJvyIJR9y8Lj9Ny71pSV5/QWrXUgELxMYOKSby3gHkxcIXgYBMFLl4DipRTO74OWQlRRaOlqXlOOQbikcY4T rene.moser@swisstxt.ch"
+  register: sshkey
+- name: verify test different but exisitng name but same ssh public key as first-sshkey
+  assert:
+    that:
+      - sshkey is changed
+      - sshkey.fingerprint is defined and sshkey.fingerprint == sshkey4.fingerprint
+      - sshkey.private_key is not defined
+      - sshkey.name == "second-sshkey"
+
+- name: test ssh key absent in check mode
+  ngine_io.cloudstack.ssh_key: name=second-sshkey state=absent
+  register: sshkey5
+  check_mode: true
+- name: verify result of key absent in check mode
+  assert:
+    that:
+      - sshkey5 is changed
+      - sshkey5.fingerprint is defined and sshkey5.fingerprint == sshkey3.fingerprint
+      - sshkey5.private_key is not defined
+      - sshkey5.name == "second-sshkey"
+
+- name: test ssh key absent
+  ngine_io.cloudstack.ssh_key:
+    name: second-sshkey
+    state: absent
+  register: sshkey5
+- name: verify result of key absent
+  assert:
+    that:
+      - sshkey5 is changed
+      - sshkey5.fingerprint is defined and sshkey5.fingerprint == sshkey3.fingerprint
+      - sshkey5.private_key is not defined
+      - sshkey5.name == "second-sshkey"
+
+- name: test ssh key absent idempotence
+  ngine_io.cloudstack.ssh_key:
+    name: second-sshkey
+    state: absent
+  register: sshkey6
+- name: verify result of ssh key absent idempotence
+  assert:
+    that:
+      - sshkey6 is not changed
+      - sshkey6.fingerprint is not defined
+      - sshkey6.private_key is not defined
+      - sshkey6.name is not defined

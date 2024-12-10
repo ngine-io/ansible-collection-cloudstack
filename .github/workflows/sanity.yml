@@ -19,11 +19,11 @@ jobs:
       fail-fast: false
       matrix:
         ansible:
-          - stable-2.12
-          - stable-2.13
-          - stable-2.14
-          - devel
-    runs-on: ubuntu-20.04
+        # - stable-2.15
+        # - stable-2.16
+        - stable-2.17
+        # - devel
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
