@@ -516,6 +516,7 @@ class AnsibleCloudStackTemplate(AnsibleCloudStack):
         if not self.module.check_mode:
             self.query_api("registerTemplate", **args)
             template = self.get_template()
+            template = self.ensure_tags(resource=template, resource_type="Template")
         return template
 
     def update_template(self, template):
