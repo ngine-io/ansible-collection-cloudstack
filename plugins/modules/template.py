@@ -458,6 +458,10 @@ class AnsibleCloudStackTemplate(AnsibleCloudStack):
             template = self.create_template()
         else:
             self.fail_json(msg="one of the following is required on state=present: url, vm")
+
+        if template:
+            template = self.ensure_tags(resource=template, resource_type="Template")
+
         return template
 
     def create_template(self):
