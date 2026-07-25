@@ -32,7 +32,7 @@ options:
     type: str
   match_display_name:
     description:
-      - When searching for an instance, also match the display name.
+      - When searching for an instance name, also match the display name.
     type: bool
     default: true
     version_added: 3.1.0
