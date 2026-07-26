@@ -437,14 +437,24 @@ class AnsibleCloudStack:
             "fetch_list": True,
         }
         vms = self.query_api("listVirtualMachines", **args)
+
+        # If module has param match_display_name, use it to determine if we should match against the display name as well. Default is True.
+        match_display_name = self.module.params.get("match_display_name", True)
+
         matches = []
         if vms:
             for v in vms:
-                if vm.lower() in [v["name"].lower(), v["displayname"].lower()]:
+                if vm.lower() == v["name"].lower() or (match_display_name and vm.lower() == v["displayname"].lower()):
                     matches.append(v)
 
         if len(matches) > 1:
-            self.fail_json(msg="More than one virtual machine found matching param 'vm': %s" % vm)
+            if self.module.params.get("match_display_name") is not None:
+                self.fail_json(
+                    msg="More than one virtual machine found matching param 'vm': %s. "
+                    "Consider setting 'match_display_name=false' to only match against the name and not the display name." % vm
+                )
+            else:
+                self.fail_json(msg="More than one virtual machine found matching param 'vm': %s" % vm)
 
         if len(matches) == 1:
             self.vm = matches[0]
