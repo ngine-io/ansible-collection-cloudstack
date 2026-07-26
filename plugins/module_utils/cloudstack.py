@@ -429,6 +429,7 @@ class AnsibleCloudStack:
             self.fail_json(msg="Virtual machine param 'vm' is required")
 
         args = {
+            "keyword": vm,
             "account": self.get_account(key="name"),
             "domainid": self.get_domain(key="id"),
             "projectid": self.get_project(key="id"),
@@ -436,11 +437,19 @@ class AnsibleCloudStack:
             "fetch_list": True,
         }
         vms = self.query_api("listVirtualMachines", **args)
+        matches = []
         if vms:
             for v in vms:
-                if vm.lower() in [v["name"].lower(), v["displayname"].lower(), v["id"]]:
-                    self.vm = v
-                    return self._get_by_key(key, self.vm)
+                if vm.lower() in [v["name"].lower(), v["displayname"].lower()]:
+                    matches.append(v)
+
+        if len(matches) > 1:
+            self.fail_json(msg="More than one virtual machine found matching param 'vm': %s" % vm)
+
+        if len(matches) == 1:
+            self.vm = matches[0]
+            return self._get_by_key(key, self.vm)
+
         self.fail_json(msg="Virtual machine '%s' not found" % vm)
 
     def get_disk_offering(self, key=None):
