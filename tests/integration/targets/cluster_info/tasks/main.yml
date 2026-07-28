@@ -1,0 +1,92 @@
+---
+- name: setup zone is present
+  ngine_io.cloudstack.zone:
+    name: "{{ cs_resource_prefix }}-zone"
+    dns1: 8.8.8.8
+    dns2: 8.8.4.4
+    network_type: Basic
+  register: zone
+- name: verify setup zone is present
+  assert:
+    that:
+      - zone is successful
+
+- name: setup pod is present
+  ngine_io.cloudstack.pod:
+    name: "{{ cs_resource_prefix }}-pod"
+    zone: "{{ cs_resource_prefix }}-zone"
+    start_ip: 10.100.10.101
+    gateway: 10.100.10.1
+    netmask: 255.255.255.0
+  register: pod
+- name: verify setup pod is present
+  assert:
+    that:
+      - pod is successful
+
+- name: setup cluster is absent
+  ngine_io.cloudstack.cluster:
+    name: "{{ cs_resource_prefix }}-cluster"
+    zone: "{{ cs_resource_prefix }}-zone"
+    state: absent
+  register: cluster
+- name: verify setup cluster is absent
+  assert:
+    that:
+      - cluster is successful
+
+- name: setup cluster is present
+  ngine_io.cloudstack.cluster:
+    name: "{{ cs_resource_prefix }}-cluster"
+    zone: "{{ cs_resource_prefix }}-zone"
+    pod: "{{ cs_resource_prefix }}-pod"
+    hypervisor: Simulator
+    cluster_type: CloudManaged
+  register: cluster
+- name: verify setup cluster is present
+  assert:
+    that:
+      - cluster is successful
+
+- name: get info from cluster
+  ngine_io.cloudstack.cluster_info:
+    name: "{{ cs_resource_prefix }}-cluster"
+    zone: "{{ cs_resource_prefix }}-zone"
+  register: cluster_info
+- name: verify get info from cluster
+  assert:
+    that:
+      - cluster_info is successful
+      - cluster_info is not changed
+      - cluster_info.clusters | length == 1
+      - cluster_info.clusters[0].name == cs_resource_prefix + "-cluster"
+      - cluster_info.clusters[0].zone == cs_resource_prefix + "-zone"
+      - cluster_info.clusters[0].cluster_type == "CloudManaged"
+      - cluster_info.clusters[0].hypervisor == "Simulator"
+
+- name: get info from clusters in a pod
+  ngine_io.cloudstack.cluster_info:
+    zone: "{{ cs_resource_prefix }}-zone"
+    pod: "{{ cs_resource_prefix }}-pod"
+  register: pod_clusters
+- name: verify get info from clusters in a pod
+  assert:
+    that:
+      - pod_clusters is successful
+      - pod_clusters is not changed
+      - pod_clusters.clusters | length >= 1
+      - pod_clusters.clusters[0].name == cs_resource_prefix + "-cluster"
+      - pod_clusters.clusters[0].pod == cs_resource_prefix + "-pod"
+
+- name: get info from all clusters
+  ngine_io.cloudstack.cluster_info:
+  register: clusters
+- name: verify get info from all clusters
+  assert:
+    that:
+      - clusters is successful
+      - clusters is not changed
+      - clusters.clusters | length > 0
+      - '"name" in clusters.clusters[0]'
+      - '"cluster_type" in clusters.clusters[0]'
+      - '"hypervisor" in clusters.clusters[0]'

@@ -4,6 +4,7 @@ action_groups:
     - account
     - affinity_group
     - cluster
+    - cluster_info
     - configuration_info
     - configuration
     - disk_offering
@@ -29,6 +30,7 @@ action_groups:
     - network
     - physical_network
     - pod
+    - pod_info
     - portforward
     - project
     - region
