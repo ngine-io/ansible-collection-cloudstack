@@ -14,7 +14,7 @@ DOCUMENTATION = """
 module: iso
 short_description: Manages ISO images on Apache CloudStack based clouds.
 description:
-    - Register and remove ISO images.
+  - Register, attach, detach, and remove ISO images.
 author: René Moser (@resmo)
 version_added: 0.1.0
 options:
@@ -94,9 +94,16 @@ options:
   state:
     description:
       - State of the ISO.
+      - C(attached) and C(detached) was added in version 3.1.0.
     type: str
     default: present
-    choices: [ present, absent ]
+    choices: [ present, absent, attached, detached ]
+  vm:
+    description:
+      - Virtual machine to attach or detach the ISO from.
+      - Required when I(state) is C(attached) or C(detached).
+    type: str
+    version_added: 3.1.0
   poll_async:
     description:
       - Poll async jobs until job has finished.
@@ -141,6 +148,29 @@ EXAMPLES = """
     zone: zone01
     checksum: 0b31bccccb048d20b551f70830bb7ad0
     state: absent
+
+- name: Register and attach an ISO to a VM
+  ngine_io.cloudstack.iso:
+    name: Debian 7 64-bit
+    zone: zone01
+    url: http://mirror.switch.ch/ftp/mirror/debian-cd/current/amd64/iso-cd/debian-7.7.0-amd64-netinst.iso
+    os_type: Debian GNU/Linux 7(64-bit)
+    vm: my-vm-01
+    state: attached
+
+- name: Attach an existing ISO to a VM
+  ngine_io.cloudstack.iso:
+    name: Debian 7 64-bit
+    zone: zone01
+    vm: my-vm-01
+    state: attached
+
+- name: Detach an ISO from a VM
+  ngine_io.cloudstack.iso:
+    name: Debian 7 64-bit
+    zone: zone01
+    vm: my-vm-01
+    state: detached
 """
 
 RETURN = """
@@ -196,7 +226,7 @@ format:
   type: str
   sample: ISO
 os_type:
-  description: Typo of the OS.
+  description: Type of the OS.
   returned: success
   type: str
   sample: CentOS 6.5 (64-bit)
@@ -215,6 +245,11 @@ cross_zones:
   returned: success
   type: bool
   sample: false
+vm:
+  description: Name of the virtual machine the ISO is attached to.
+  returned: success
+  type: str
+  sample: my-vm-01
 domain:
   description: Domain the ISO is related to.
   returned: success
@@ -301,15 +336,72 @@ class AnsibleCloudStackIso(AnsibleCloudStack):
         return self.iso
 
     def present_iso(self):
+        state = self.module.params.get("state")
         iso = self.get_iso()
-        if not iso:
-            iso = self.register_iso()
+
+        if state == "detached":
+            iso = self.detach_iso(iso)
         else:
-            iso = self.update_iso(iso)
+            if not iso:
+                iso = self.register_iso()
+            else:
+                iso = self.update_iso(iso)
+
+            if state == "attached":
+                iso = self.attach_iso(iso)
 
         if iso:
             iso = self.ensure_tags(resource=iso, resource_type="ISO")
             self.iso = iso
+        return iso
+
+    def attach_iso(self, iso):
+        if not iso:
+            return iso
+
+        vm = self.get_vm(filter_zone=False)
+        if vm.get("isoid") == iso["id"]:
+            return iso
+
+        self.result["changed"] = True
+        if not self.module.check_mode:
+            args = {
+                "id": iso["id"],
+                "virtualmachineid": vm["id"],
+            }
+            res = self.query_api("attachIso", **args)
+            poll_async = self.module.params.get("poll_async")
+            if poll_async:
+                self.poll_job(res, "iso")
+
+            # Refresh cached values after VM ISO attachment state has changed.
+            self.vm = None
+            self.iso = None
+            iso = self.get_iso()
+        return iso
+
+    def detach_iso(self, iso):
+        if not iso:
+            return iso
+
+        vm = self.get_vm(filter_zone=False)
+        if vm.get("isoid") != iso["id"]:
+            return iso
+
+        self.result["changed"] = True
+        if not self.module.check_mode:
+            args = {
+                "virtualmachineid": vm["id"],
+            }
+            res = self.query_api("detachIso", **args)
+            poll_async = self.module.params.get("poll_async")
+            if poll_async:
+                self.poll_job(res, "iso")
+
+            # Refresh cached values after VM ISO detachment state has changed.
+            self.vm = None
+            self.iso = None
+            iso = self.get_iso()
         return iso
 
     def update_iso(self, iso):
@@ -385,6 +477,9 @@ class AnsibleCloudStackIso(AnsibleCloudStack):
 
     def get_result(self, resource):
         super(AnsibleCloudStackIso, self).get_result(resource)
+        if self.module.params.get("state") in ["attached", "detached"]:
+            self.result["vm"] = self.get_vm(key="name", filter_zone=False)
+
         # Workaround API does not return cross_zones=true
         if self.module.params.get("cross_zones"):
             self.result["cross_zones"] = True
@@ -407,20 +502,25 @@ def main():
             domain=dict(),
             account=dict(),
             project=dict(),
+            vm=dict(type="str"),
             checksum=dict(),
             is_ready=dict(type="bool", default=False),
             bootable=dict(type="bool"),
             is_featured=dict(type="bool"),
             is_public=dict(type="bool"),
             is_dynamically_scalable=dict(type="bool"),
-            state=dict(choices=["present", "absent"], default="present"),
+            state=dict(choices=["present", "absent", "attached", "detached"], default="present"),
             poll_async=dict(type="bool", default=True),
             tags=dict(type="list", elements="dict", aliases=["tag"]),
         )
     )
 
     module = AnsibleModule(
-        argument_spec=argument_spec, required_together=cs_required_together(), mutually_exclusive=(["zone", "cross_zones"],), supports_check_mode=True
+        argument_spec=argument_spec,
+        required_together=cs_required_together(),
+        mutually_exclusive=(["zone", "cross_zones"],),
+        required_if=[("state", "attached", ["vm"]), ("state", "detached", ["vm"])],
+        supports_check_mode=True,
     )
 
     aiso = AnsibleCloudStackIso(module)
