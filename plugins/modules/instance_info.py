@@ -24,6 +24,12 @@ options:
       - If not specified, all instances are returned
     type: str
     required: false
+  match_display_name:
+    description:
+      - When searching for an instance name, also match the display name.
+    type: bool
+    default: true
+    version_added: 3.1.0
   domain:
     description:
       - Domain the instance is related to.
@@ -308,8 +314,6 @@ class AnsibleCloudStackInstanceInfo(AnsibleCloudStack):
         self.fail_json(msg="Host not found: %s" % host)
 
     def get_instances(self):
-        instance_name = self.module.params.get("name")
-
         args = {
             "account": self.get_account(key="name"),
             "domainid": self.get_domain(key="id"),
@@ -317,15 +321,24 @@ class AnsibleCloudStackInstanceInfo(AnsibleCloudStack):
             "hostid": self.get_host(key="id"),
             "fetch_list": True,
         }
+        instance_name = self.module.params.get("name")
+
+        if instance_name:
+            args["keyword"] = instance_name
+
         # Do not pass zoneid, as the instance name must be unique across zones.
         instances = self.query_api("listVirtualMachines", **args)
+
         if not instance_name:
             return instances or []
+
+        match_display_name = self.module.params.get("match_display_name")
+        matches = []
         if instances:
             for v in instances:
-                if instance_name.lower() in [v["name"].lower(), v["displayname"].lower(), v["id"]]:
-                    return [v]
-        return []
+                if instance_name.lower() == v["name"].lower() or (match_display_name and instance_name.lower() == v["displayname"].lower()):
+                    matches.append(v)
+        return matches
 
     def get_volumes(self, instance):
         volume_details = []
@@ -378,11 +391,12 @@ def main():
     argument_spec = cs_argument_spec()
     argument_spec.update(
         dict(
-            name=dict(),
-            domain=dict(),
-            account=dict(),
-            project=dict(),
-            host=dict(),
+            name=dict(type="str"),
+            domain=dict(type="str"),
+            account=dict(type="str"),
+            project=dict(type="str"),
+            host=dict(type="str"),
+            match_display_name=dict(type="bool", default=True),
         )
     )
 

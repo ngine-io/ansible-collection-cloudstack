@@ -30,6 +30,12 @@ options:
       - Display name will be set to I(name) if not specified.
       - Either I(name) or I(display_name) is required.
     type: str
+  match_display_name:
+    description:
+      - When searching for an instance name, also match the display name.
+    type: bool
+    default: true
+    version_added: 3.1.0
   group:
     description:
       - Group in where the new instance should be in.
@@ -588,6 +594,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
         if not instance or refresh:
             instance_name = self.get_or_fallback("name", "display_name")
             args = {
+                "keyword": instance_name,
                 "account": self.get_account(key="name"),
                 "domainid": self.get_domain(key="id"),
                 "projectid": self.get_project(key="id"),
@@ -595,9 +602,14 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             }
             # Do not pass zoneid, as the instance name must be unique across zones.
             instances = self.query_api("listVirtualMachines", **args)
+
+            # How many instances match the name or displayname?
+            matches = []
+
+            match_display_name = self.module.params.get("match_display_name")
             if instances:
                 for v in instances:
-                    if instance_name.lower() in [v["name"].lower(), v["displayname"].lower(), v["id"]]:
+                    if instance_name.lower() == v["name"].lower() or (match_display_name and instance_name.lower() == v["displayname"].lower()):
 
                         if "keypairs" not in v:
                             v["keypairs"] = list()
@@ -606,8 +618,17 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
                         if not isinstance(v["keypairs"], list):
                             v["keypairs"] = [v["keypairs"]]
 
-                        self.instance = v
-                        break
+                        matches.append(v)
+
+                # Keyword filter may return multiple instances: we need to ensure we get exactly one or none match
+                if matches:
+                    if len(matches) > 1:
+                        self.module.fail_json(
+                            msg="Multiple instances found with name / displayname '%s' in zone '%s', consider using the 'match_display_name=false' option"
+                            % (instance_name, self.get_zone(key="name"))
+                        )
+                    else:
+                        self.instance = matches[0]
 
         return self.instance
 
@@ -1165,6 +1186,7 @@ def main():
             details=dict(type="dict"),
             poll_async=dict(type="bool", default=True),
             allow_root_disk_shrink=dict(type="bool", default=False),
+            match_display_name=dict(type="bool", default=True),
         )
     )
 

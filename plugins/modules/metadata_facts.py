@@ -165,7 +165,7 @@ class CloudStackFacts(object):
         if not api_ip:
             return None
         api_url = path % api_ip
-        (response, info) = fetch_url(module, api_url, force=True)
+        response, info = fetch_url(module, api_url, force=True)
         if response:
             data = response.read()
         else:
