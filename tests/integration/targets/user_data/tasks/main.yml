@@ -29,7 +29,7 @@
   assert:
     that:
       - user_data is failed
-      - 'user_data.msg == "missing required arguments: user_data"'
+      - 'user_data.msg == "state is present but all of the following are missing: user_data"'
 
 - name: test create user data in check mode
   ngine_io.cloudstack.user_data:
