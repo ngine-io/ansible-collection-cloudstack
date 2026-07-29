@@ -60,7 +60,7 @@ options:
     elements: str
     type: list
     aliases: [ dest_cidr ]
-    version_added: 2.2.0
+    version_added: 3.1.0
   start_port:
     description:
       - Start port for this rule.
@@ -190,7 +190,7 @@ dest_cidrs:
   returned: success
   type: list
   sample: [ '0.0.0.0/0' ]
-  version_added: 2.2.0
+  version_added: 3.1.0
 protocol:
   description: Protocol of the rule.
   returned: success
