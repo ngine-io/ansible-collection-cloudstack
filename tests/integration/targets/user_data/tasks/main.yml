@@ -1,0 +1,143 @@
+---
+- name: setup
+  ngine_io.cloudstack.user_data:
+    name: "{{ cs_resource_prefix }}_userdata"
+    state: absent
+  register: user_data
+
+- name: verify setup
+  assert:
+    that:
+      - user_data is successful
+
+- name: test fail if missing name
+  ngine_io.cloudstack.user_data:
+  register: user_data
+  ignore_errors: true
+- name: verify results of fail if missing name
+  assert:
+    that:
+      - user_data is failed
+      - 'user_data.msg == "missing required arguments: name"'
+
+- name: test fail if missing user_data if state=present
+  ngine_io.cloudstack.user_data:
+    name: "{{ cs_resource_prefix }}_userdata"
+  register: user_data
+  ignore_errors: true
+- name: verify results of fail if missing user_data if state=present
+  assert:
+    that:
+      - user_data is failed
+      - 'user_data.msg == "missing required arguments: user_data"'
+
+- name: test create user data in check mode
+  ngine_io.cloudstack.user_data:
+    name: "{{ cs_resource_prefix }}_userdata"
+    user_data: |
+      #!/bin/sh
+      echo hello
+    params:
+      - hostname
+  register: user_data
+  check_mode: true
+- name: verify results of create user data in check mode
+  assert:
+    that:
+      - user_data is successful
+      - user_data is changed
+
+- name: test create user data
+  ngine_io.cloudstack.user_data:
+    name: "{{ cs_resource_prefix }}_userdata"
+    user_data: |
+      #!/bin/sh
+      echo hello
+    params:
+      - hostname
+  register: user_data
+- name: verify results of create user data
+  assert:
+    that:
+      - user_data is successful
+      - user_data is changed
+      - user_data.name == cs_resource_prefix + "_userdata"
+      - user_data.user_data == "#!/bin/sh\necho hello\n"
+      - user_data.params == ["hostname"]
+
+- name: test create user data idempotence
+  ngine_io.cloudstack.user_data:
+    name: "{{ cs_resource_prefix }}_userdata"
+    user_data: |
+      #!/bin/sh
+      echo hello
+    params:
+      - hostname
+  register: user_data
+- name: verify results of create user data idempotence
+  assert:
+    that:
+      - user_data is successful
+      - user_data is not changed
+      - user_data.name == cs_resource_prefix + "_userdata"
+      - user_data.user_data == "#!/bin/sh\necho hello\n"
+      - user_data.params == ["hostname"]
+
+- name: test drifted user data emits warning without update
+  ngine_io.cloudstack.user_data:
+    name: "{{ cs_resource_prefix }}_userdata"
+    user_data: |
+      #!/bin/sh
+      echo goodbye
+    params:
+      - hostname
+      - fqdn
+  register: user_data_warning
+- name: verify drifted user data emits warning without update
+  assert:
+    that:
+      - user_data_warning is successful
+      - user_data_warning is not changed
+      - user_data_warning.name == cs_resource_prefix + "_userdata"
+      - user_data_warning.user_data == "#!/bin/sh\necho hello\n"
+      - user_data_warning.params == ["hostname"]
+      - user_data_warning.warnings is defined
+      - user_data_warning.warnings | length == 1
+      - "'Updating registered user data is not supported by the CloudStack API' in user_data_warning.warnings[0]"
+
+- name: test absent user data in check mode
+  ngine_io.cloudstack.user_data:
+    name: "{{ cs_resource_prefix }}_userdata"
+    state: absent
+  register: user_data
+  check_mode: true
+- name: verify results of absent user data in check mode
+  assert:
+    that:
+      - user_data is successful
+      - user_data is changed
+      - user_data.name == cs_resource_prefix + "_userdata"
+
+- name: test absent user data
+  ngine_io.cloudstack.user_data:
+    name: "{{ cs_resource_prefix }}_userdata"
+    state: absent
+  register: user_data
+- name: verify results of absent user data
+  assert:
+    that:
+      - user_data is successful
+      - user_data is changed
+      - user_data.name == cs_resource_prefix + "_userdata"
+
+- name: test absent user data idempotence
+  ngine_io.cloudstack.user_data:
+    name: "{{ cs_resource_prefix }}_userdata"
+    state: absent
+  register: user_data
+- name: verify results of absent user data idempotence
+  assert:
+    that:
+      - user_data is successful
+      - user_data is not changed
+      - user_data.name is undefined
