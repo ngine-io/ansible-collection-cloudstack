@@ -6,7 +6,7 @@
     simulator: http://172.17.0.2:8888
   tasks:
     - name: Retrieve Simulator Keys
-      uri:
+      ansible.builtin.uri:
         url: "{{ simulator }}/admin.json"
         return_content: true
       register: admin
@@ -15,11 +15,11 @@
       delay: 1
 
     - name: Create cloudstack.env
-      template:
+      ansible.builtin.template:
         src: templates/cloudstack.env.j2
         dest: ../cloudstack.env
 
     - name: Create cloudstack-instances.yml
-      template:
+      ansible.builtin.template:
         src: templates/cloudstack-instances.yml.j2
         dest: ../cloudstack-instances.yml

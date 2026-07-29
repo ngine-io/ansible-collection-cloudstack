@@ -6,7 +6,7 @@
   register: acc
 
 - name: test fail if missing name
-  action: cs_account
+  ngine_io.cloudstack.account:
   register: acc
   ignore_errors: true
 - name: verify results of fail if missing params

@@ -6,7 +6,7 @@
   register: netoffer
 
 - name: test fail if missing name
-  action: cs_network_offering
+  ngine_io.cloudstack.network_offering:
   register: netoffer
   ignore_errors: true
 - name: verify results of fail if missing name
