@@ -13,7 +13,7 @@
 
 - name: setup pod is absent
   ngine_io.cloudstack.pod:
-    name: "{{ cs_resource_prefix }}-pod"
+    name: "pod-info-{{ cs_resource_prefix }}-pod"
     zone: "{{ cs_resource_prefix }}-zone"
     state: absent
   register: pod
@@ -24,7 +24,7 @@
 
 - name: setup pod is present
   ngine_io.cloudstack.pod:
-    name: "{{ cs_resource_prefix }}-pod"
+    name: "pod-info-{{ cs_resource_prefix }}-pod"
     zone: "{{ cs_resource_prefix }}-zone"
     start_ip: 10.100.10.101
     gateway: 10.100.10.1
@@ -37,7 +37,7 @@
 
 - name: get info from pod
   ngine_io.cloudstack.pod_info:
-    name: "{{ cs_resource_prefix }}-pod"
+    name: "pod-info-{{ cs_resource_prefix }}-pod"
     zone: "{{ cs_resource_prefix }}-zone"
   register: pod_info
 - name: verify get info from pod
@@ -46,7 +46,7 @@
       - pod_info is successful
       - pod_info is not changed
       - pod_info.pods | length == 1
-      - pod_info.pods[0].name == cs_resource_prefix + "-pod"
+      - pod_info.pods[0].name == "pod-info-" + cs_resource_prefix + "-pod"
       - pod_info.pods[0].zone == cs_resource_prefix + "-zone"
       - pod_info.pods[0].start_ip == "10.100.10.101"
       - pod_info.pods[0].gateway == "10.100.10.1"
