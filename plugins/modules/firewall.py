@@ -50,6 +50,7 @@ options:
   cidrs:
     description:
       - List of CIDRs (full notation) to be used for firewall rule.
+      - Since version 2.5, it is a list of CIDR.
     elements: str
     type: list
     default: 0.0.0.0/0
