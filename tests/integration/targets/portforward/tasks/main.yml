@@ -53,7 +53,7 @@
       - pf is successful
 
 - name: test fail if missing params
-  action: cs_portforward
+  ngine_io.cloudstack.portforward:
   register: pf
   ignore_errors: true
 - name: verify results of fail if missing params

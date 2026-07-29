@@ -440,11 +440,16 @@ instance_name:
   returned: success
   type: str
   sample: i-44-3992-VM
-user-data:
+user_data:
   description: Optional data sent to the instance.
   returned: success
   type: str
   sample: VXNlciBkYXRhIGV4YW1wbGUK
+user_data_name:
+  description: Name of user data used for the instance.
+  returned: success
+  type: str
+  sample: my_userdata
 """
 
 import base64
@@ -472,6 +477,9 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             "templatedisplaytext": "template_display_text",
             "keypairs": "ssh_keys",
             "hostname": "host",
+            "userdata": "user_data",
+            "userdataname": "user_data_name",
+            "userdatadateils": "user_data_details",
         }
         self.instance = None
         self.template = None
@@ -638,21 +646,19 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             return None
 
         args = {
+            "name": name,
             "account": self.get_account(key="name"),
             "domainid": self.get_domain(key="id"),
             "projectid": self.get_project(key="id"),
             "listall": True,
-            # name or keyword is documented but not work on cloudstack 4.19
-            # commented util will work it
-            # 'name': name,
+            "fetch_list": True,
         }
 
         user_data_list = self.query_api("listUserData", **args)
         if user_data_list:
-            for v in user_data_list.get("userdata") or []:
-                if name in [v["name"], v["id"]]:
-                    return v["id"]
-        self.module.fail_json(msg="User data '%s' not found" % user_data_list)
+            return user_data_list[0]["id"]
+
+        self.module.fail_json(msg="User data '%s' not found" % name)
 
     def _get_instance_user_data(self, instance):
         # Query the user data if we need to
