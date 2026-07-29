@@ -8,7 +8,7 @@
       - sg is successful
 
 - name: test fail if missing name
-  action: cs_securitygroup
+  ngine_io.cloudstack.security_group:
   register: sg
   ignore_errors: true
 - name: verify results of fail if missing name

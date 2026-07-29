@@ -10,7 +10,7 @@
       - dom is successful
 
 - name: test fail if missing name
-  action: cs_domain
+  ngine_io.cloudstack.domain:
   register: dom
   ignore_errors: true
 - name: verify results of fail if missing params
