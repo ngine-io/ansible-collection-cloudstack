@@ -15,8 +15,8 @@
   ngine_io.cloudstack.pod:
     name: "cluster-info-{{ cs_resource_prefix }}-pod"
     zone: "{{ cs_resource_prefix }}-zone"
-    start_ip: 10.100.10.101
-    gateway: 10.100.10.1
+    start_ip: 10.62.65.101
+    gateway: 10.62.65.1
     netmask: 255.255.255.0
   register: pod
 - name: verify setup pod is present
