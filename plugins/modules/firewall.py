@@ -55,6 +55,13 @@ options:
     type: list
     default: 0.0.0.0/0
     aliases: [ cidr ]
+  dest_cidrs:
+    description:
+      - List of destination CIDRs (full notation) to forward traffic to if I(type=egress).
+    elements: str
+    type: list
+    aliases: [ dest_cidr ]
+    version_added: 3.1.0
   start_port:
     description:
       - Start port for this rule.
@@ -179,6 +186,12 @@ cidrs:
   returned: success
   type: list
   sample: [ '0.0.0.0/0' ]
+dest_cidrs:
+  description: CIDR list of the rule to forward traffic to.
+  returned: success
+  type: list
+  sample: [ '0.0.0.0/0' ]
+  version_added: 3.1.0
 protocol:
   description: Protocol of the rule.
   returned: success
@@ -223,6 +236,7 @@ class AnsibleCloudStackFirewall(AnsibleCloudStack):
         super(AnsibleCloudStackFirewall, self).__init__(module)
         self.returns = {
             "cidrlist": "cidr",
+            "destcidrlist": "dest_cidrs",
             "startport": "start_port",
             "endport": "end_port",
             "protocol": "protocol",
@@ -236,6 +250,7 @@ class AnsibleCloudStackFirewall(AnsibleCloudStack):
     def get_firewall_rule(self):
         if not self.firewall_rule:
             cidrs = self.module.params.get("cidrs")
+            dest_cidrs = self.module.params.get("destcidrs")
             protocol = self.module.params.get("protocol")
             start_port = self.module.params.get("start_port")
             end_port = self.get_or_fallback("end_port", "start_port")
@@ -279,7 +294,7 @@ class AnsibleCloudStackFirewall(AnsibleCloudStack):
 
             if firewall_rules:
                 for rule in firewall_rules:
-                    type_match = self._type_cidrs_match(rule, cidrs, egress_cidrs)
+                    type_match = self._type_cidrs_match(rule, cidrs, egress_cidrs) and self._type_dest_cidrs_match(rule, dest_cidrs)
 
                     protocol_match = (
                         self._tcp_udp_match(rule, protocol, start_port, end_port)
@@ -307,6 +322,12 @@ class AnsibleCloudStackFirewall(AnsibleCloudStack):
         else:
             return ",".join(cidrs) == rule["cidrlist"]
 
+    def _type_dest_cidrs_match(self, rule, dest_cidrs):
+        if dest_cidrs is not None and "destcidrlist" in rule:
+            return set(dest_cidrs) == set(rule["destcidrlist"].split(","))
+        else:
+            return True
+
     def create_firewall_rule(self):
         firewall_rule = self.get_firewall_rule()
         if not firewall_rule:
@@ -314,6 +335,7 @@ class AnsibleCloudStackFirewall(AnsibleCloudStack):
 
             args = {
                 "cidrlist": self.module.params.get("cidrs"),
+                "destcidrlist": self.module.params.get("dest_cidrs"),
                 "protocol": self.module.params.get("protocol"),
                 "startport": self.module.params.get("start_port"),
                 "endport": self.get_or_fallback("end_port", "start_port"),
@@ -377,6 +399,7 @@ def main():
             ip_address=dict(type="str"),
             network=dict(type="str"),
             cidrs=dict(type="list", elements="str", default="0.0.0.0/0", aliases=["cidr"]),
+            dest_cidrs=dict(type="list", elements="str", aliases=["dest_cidr"]),
             protocol=dict(type="str", choices=["tcp", "udp", "icmp", "all"], default="tcp"),
             type=dict(type="str", choices=["ingress", "egress"], default="ingress"),
             icmp_type=dict(type="int"),
