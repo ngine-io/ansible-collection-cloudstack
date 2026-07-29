@@ -4,6 +4,107 @@ Apache CloudStack Collection Release Notes
 
 .. contents:: Topics
 
+v3.0.0
+======
+
+Major Changes
+-------------
+
+- Ensuring backwards compatibility and integration tests with CloudStack 4.17 and 4.18.
+- General overhaul (black code style) and renaming of all modules (dropping ``cs_`` prefix) (https://github.com/ngine-io/ansible-collection-cloudstack/pull/141).
+- Update cs dependency to ``>=3.4.0``.
+
+Bugfixes
+--------
+
+- Ensure tags are applied when creating or updating a template (https://github.com/ngine-io/ansible-collection-cloudstack/pull/154).
+
+New Modules
+-----------
+
+- configuration_info - Gathering information about configurations from Apache CloudStack based clouds.
+
+v2.5.0
+======
+
+Minor Changes
+-------------
+
+- cs_instance - Added new arguments ``user_data_name`` and ``user_data_details`` (https://github.com/ngine-io/ansible-collection-cloudstack/pull/134).
+- cs_service_offering - Add support for storagetag (https://github.com/ngine-io/ansible-collection-cloudstack/pull/118).
+
+v2.4.1
+======
+
+Bugfixes
+--------
+
+- Fixed a bug related to the new option ``validate_certs`` (https://github.com/ngine-io/ansible-collection-cloudstack/pull/135).
+
+v2.4.0
+======
+
+Minor Changes
+-------------
+
+- Added possiblity to disable certs validation using ``validate_certs`` argument (https://github.com/ngine-io/ansible-collection-cloudstack/pull/131).
+- cs_project - Extended to pass ``cleanup=true`` to the deleteProject API when deleting a project (https://github.com/ngine-io/ansible-collection-cloudstack/pull/122).
+
+v2.3.0
+======
+
+Minor Changes
+-------------
+
+- cs_instance - The arguments ``cpu``, ``cpu_speed`` and ``memory`` are no longer required to be set together (https://github.com/ngine-io/ansible-collection-cloudstack/issues/111).
+- cs_instance - The optional arguments ``pod`` and ``cluster`` has been added.
+
+v2.2.4
+======
+
+Minor Changes
+-------------
+
+- Various documentation fixes and code improvements to address ansible sanity tests failure.
+
+v2.2.3
+======
+
+Bugfixes
+--------
+
+- cs_instance - Fixed regression project ID KeyError if no project is used (https://github.com/ngine-io/ansible-collection-cloudstack/pull/94).
+
+v2.2.2
+======
+
+Bugfixes
+--------
+
+- cs_instance - Fixed missing project ID to volume query when checking root disk size. (https://github.com/ngine-io/ansible-collection-cloudstack/pull/90).
+
+v2.2.1
+======
+
+Bugfixes
+--------
+
+- cs_instance - Fixed attribute error in custom service offerings handling (https://github.com/ngine-io/ansible-collection-cloudstack/pull/87).
+
+v2.2.0
+======
+
+Minor Changes
+-------------
+
+- cs_instance - add support for MAC address and IPv6 in ``ip_to_networks`` (https://github.com/ngine-io/ansible-collection-cloudstack/issues/78).
+- cs_instance_info - implemented support for ``host`` filter (https://github.com/ngine-io/ansible-collection-cloudstack/pull/83).
+- cs_network_offering - implemented support for ``tags``, ``zones`` and ``domains`` (https://github.com/ngine-io/ansible-collection-cloudstack/pull/82).
+
+Bugfixes
+--------
+
+- cs_instance - Fixed custom service offerings usage (https://github.com/ngine-io/ansible-collection-cloudstack/issues/79).
 
 v2.1.0
 ======

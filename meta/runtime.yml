@@ -1,68 +1,57 @@
-requires_ansible: '>=2.9.10'
+requires_ansible: ">=2.9.10"
 action_groups:
   cloudstack:
-  - cs_traffic_type
-  - cs_cluster
-  - cs_network_acl
-  - cs_affinitygroup
-  - cs_user
-  - cs_host
-  - cs_resourcelimit
-  - cs_zone_info
-  - cs_loadbalancer_rule
-  - cs_vpn_connection
-  - cs_iso
-  - cs_sshkeypair
-  - cs_instancegroup
-  - cs_securitygroup
-  - cs_vlan_ip_range
-  - cs_vpn_gateway
-  - cs_loadbalancer_rule_member
-  - cs_ip_address
-  - cs_pod
-  - cs_portforward
-  - cs_role_permission
-  - cs_vpc_offering
-  - cs_securitygroup_rule
-  - cs_vpc
-  - cs_instance_nic
-  - cs_region
-  - cs_firewall
-  - cs_role
-  - cs_router
-  - cs_template
-  - cs_disk_offering
-  - cs_vpn_customer_gateway
-  - cs_snapshot_policy
-  - cs_project
-  - cs_instance_password_reset
-  - cs_staticnat
-  - cs_storage_pool
-  - cs_zone
-  - cs_configuration
-  - cs_service_offering
-  - cs_vmsnapshot
-  - cs_network_offering
-  - cs_physical_network
-  - cs_instance_nic_secondaryip
-  - cs_network_acl_rule
-  - cs_image_store
-  - cs_domain
-  - cs_network
-  - cs_instance_info
-  - cs_account
-  - cs_instance
-  - cs_volume
-
-plugin_routing:
-  modules:
-    cs_instance_facts:
-      deprecation:
-        removal_date: 2021-12-12
-        warning_text: module was renamed to ngine_io.cloudstack.cs_instance_info
-      redirect: ngine_io.cloudstack.cs_instance_info
-    cs_zone_facts:
-      deprecation:
-        removal_date: 2021-12-12
-        warning_text: module was renamed to ngine_io.cloudstack.cs_zone_info
-      redirect: ngine_io.cloudstack.cs_zone_info
+    - account
+    - affinity_group
+    - cluster
+    - configuration_info
+    - configuration
+    - disk_offering
+    - domain
+    - firewall
+    - host
+    - image_store
+    - instance_group
+    - instance_info
+    - instance_nic
+    - instance_nic_secondaryip
+    - instance_password_reset
+    - instance
+    - instance_snapshot
+    - ip_address
+    - iso
+    - lb_rule_member
+    - lb_rule
+    - metadata_facts
+    - network_acl
+    - network_acl_rule
+    - network_offering
+    - network
+    - physical_network
+    - pod
+    - portforward
+    - project
+    - region
+    - resource_limit
+    - role_permission
+    - role
+    - router
+    - security_group
+    - security_group_rule
+    - service_offering
+    - ssh_key
+    - static_nat
+    - storage_pool
+    - template
+    - traffic_type
+    - user
+    - vlan_ip_range
+    - volume
+    - volume_snapshot_policy
+    - vpc_offering
+    - vpc
+    - vpn_connection
+    - vpn_customer_gateway
+    - vpn_gateway
+    - zone_info
+    - zone

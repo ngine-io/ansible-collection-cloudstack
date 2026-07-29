@@ -1,0 +1,58 @@
+- name: setup custom security group
+  ngine_io.cloudstack.security_group:
+    name: "{{ cs_resource_prefix }}_sg"
+  register: sg
+- name: verify setup
+  assert:
+    that:
+      - sg is successful
+
+- name: setup default security group
+  ngine_io.cloudstack.security_group:
+    name: default
+  register: sg
+- name: verify setup
+  assert:
+    that:
+      - sg is successful
+
+- name: setup remove icmp rule
+  ngine_io.cloudstack.security_group_rule:
+    security_group: default
+    protocol: icmp
+    type: ingress
+    icmp_type: -1
+    icmp_code: -1
+    state: absent
+  register: sg_rule
+- name: verify remove icmp rule
+  assert:
+    that:
+      - sg_rule is successful
+
+- name: setup remove http range rule
+  ngine_io.cloudstack.security_group_rule:
+    security_group: default
+    start_port: 8000
+    end_port: 8888
+    cidr: 1.2.3.4/32
+    state: absent
+  register: sg_rule
+- name: verify remove http range rule
+  assert:
+    that:
+      - sg_rule is successful
+
+- name: setup remove single port udp rule
+  ngine_io.cloudstack.security_group_rule:
+    security_group: default
+    port: 5353
+    protocol: udp
+    type: egress
+    user_security_group: "{{ cs_resource_prefix }}-user-sg"
+    state: absent
+  register: sg_rule
+- name: verify remove single port udp rule
+  assert:
+    that:
+      - sg_rule is successful

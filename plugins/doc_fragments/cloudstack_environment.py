@@ -4,13 +4,14 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
 class ModuleDocFragment(object):
 
     # Additional Cloudstack Configuration with Environment Variables Mappings
-    DOCUMENTATION = r'''
+    DOCUMENTATION = """
 options:
   api_key:
     env:
@@ -30,4 +31,4 @@ options:
   api_verify_ssl_cert:
     env:
       - name: CLOUDSTACK_VERIFY
-'''
+"""

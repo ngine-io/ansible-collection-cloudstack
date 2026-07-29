@@ -1,2 +1,0 @@
-minor_changes:
-  - cs_network_offering - implemented support for ``tags``, ``zones`` and ``domains`` (https://github.com/ngine-io/ansible-collection-cloudstack/pull/82).
