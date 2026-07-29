@@ -243,8 +243,8 @@ class AnsibleCloudStackUserData(AnsibleCloudStack):
         current_user_data = self._get_current_user_data(user_data)
         if self.has_changed(desired_user_data, current_user_data):
             self.module.warn(
-                "User data '%s' already exists but differs from the requested values. Updating registered user data is not supported by the CloudStack API, so the existing record was left unchanged."
-                % self.module.params.get("name")
+                "User data '%s' already exists but differs from the requested values. "
+                "Updating user data is not supported (yet) by the CloudStack API, existing record was left unchanged." % self.module.params.get("name")
             )
         return user_data
 
