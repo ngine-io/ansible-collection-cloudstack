@@ -103,7 +103,7 @@
       - user_data_warning.params == ["hostname"]
       - user_data_warning.warnings is defined
       - user_data_warning.warnings | length == 1
-      - "'Updating registered user data is not supported by the CloudStack API' in user_data_warning.warnings[0]"
+      - "'Updating user data is not supported by the CloudStack API' in user_data_warning.warnings[0]"
 
 - name: test absent user data in check mode
   ngine_io.cloudstack.user_data:
