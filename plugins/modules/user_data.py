@@ -204,7 +204,8 @@ class AnsibleCloudStackUserData(AnsibleCloudStack):
         name = self.module.params.get("name")
 
         args = {
-            "name": name,
+            # We see issues with the API when using the name filter, so we fetch all and filter locally
+            # "name": name,
             "account": self.get_account(key="name"),
             "domainid": self.get_domain(key="id"),
             "projectid": self.get_project(key="id"),
@@ -213,7 +214,10 @@ class AnsibleCloudStackUserData(AnsibleCloudStack):
         }
         user_data_list = self.query_api("listUserData", **args)
         if user_data_list:
-            self.user_data = self._normalize_user_data(user_data_list[0])
+            for user_data in user_data_list:
+                if user_data.get("name").lower() == name.lower():
+                    self.user_data = self._normalize_user_data(user_data)
+                    break
 
         return self.user_data
 
@@ -239,6 +243,7 @@ class AnsibleCloudStackUserData(AnsibleCloudStack):
                     user_data = self.get_user_data(refresh=True)
                     if user_data:
                         break
+                    self.module.warn("User data '%s' was registered but could not be retrieved afterwards, retrying..." % self.module.params.get("name"))
                     sleep(i + 1)
                 else:
                     self.fail_json(msg="User data '%s' was registered but could not be retrieved afterwards" % self.module.params.get("name"))

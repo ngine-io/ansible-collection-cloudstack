@@ -27,7 +27,7 @@ jobs:
           - 1
           - 2
         ansible-branch:
-          - stable-2.17
+          - stable-2.21
         container-version:
           - 1.6.1
           - 1.7.0

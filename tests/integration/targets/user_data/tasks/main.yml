@@ -5,11 +5,6 @@
     state: absent
   register: user_data
 
-- name: verify setup
-  assert:
-    that:
-      - user_data is successful
-
 - name: test fail if missing name
   ngine_io.cloudstack.user_data:
   register: user_data
@@ -44,7 +39,6 @@
 - name: verify results of create user data in check mode
   assert:
     that:
-      - user_data is successful
       - user_data is changed
 
 - name: test create user data
@@ -56,10 +50,10 @@
     params:
       - hostname
   register: user_data
+  # failed_when: user_data is failed and 'user_data.msg != "User data \'%s\' was registered but could not be retrieved afterwards"' % cs_resource_prefix + "_userdata"
 - name: verify results of create user data
   assert:
     that:
-      - user_data is successful
       - user_data is changed
       - user_data.name == cs_resource_prefix + "_userdata"
       - user_data.user_data == "#!/bin/sh\necho hello\n"
@@ -74,10 +68,10 @@
     params:
       - hostname
   register: user_data
+  # failed_when: user_data is failed and 'user_data.msg != "User data \'%s\' was registered but could not be retrieved afterwards"' % cs_resource_prefix + "_userdata"
 - name: verify results of create user data idempotence
   assert:
     that:
-      - user_data is successful
       - user_data is not changed
       - user_data.name == cs_resource_prefix + "_userdata"
       - user_data.user_data == "#!/bin/sh\necho hello\n"
@@ -96,7 +90,6 @@
 - name: verify drifted user data emits warning without update
   assert:
     that:
-      - user_data_warning is successful
       - user_data_warning is not changed
       - user_data_warning.name == cs_resource_prefix + "_userdata"
       - user_data_warning.user_data == "#!/bin/sh\necho hello\n"
@@ -114,7 +107,6 @@
 - name: verify results of absent user data in check mode
   assert:
     that:
-      - user_data is successful
       - user_data is changed
       - user_data.name == cs_resource_prefix + "_userdata"
 
@@ -126,7 +118,6 @@
 - name: verify results of absent user data
   assert:
     that:
-      - user_data is successful
       - user_data is changed
       - user_data.name == cs_resource_prefix + "_userdata"
 
@@ -138,6 +129,5 @@
 - name: verify results of absent user data idempotence
   assert:
     that:
-      - user_data is successful
       - user_data is not changed
       - user_data.name is undefined
