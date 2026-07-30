@@ -126,6 +126,7 @@ user_data:
 """
 
 import base64
+from time import sleep
 
 from ansible.module_utils._text import to_bytes, to_text
 from ansible.module_utils.basic import AnsibleModule
@@ -234,8 +235,12 @@ class AnsibleCloudStackUserData(AnsibleCloudStack):
 
             if not self.module.check_mode:
                 self.query_api("registerUserData", **args)
-                user_data = self.get_user_data(refresh=True)
-                if not user_data:
+                for i in range(10):
+                    user_data = self.get_user_data(refresh=True)
+                    if user_data:
+                        break
+                    sleep(i + 1)
+                else:
                     self.fail_json(msg="User data '%s' was registered but could not be retrieved afterwards" % self.module.params.get("name"))
             return user_data
 
