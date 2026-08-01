@@ -69,7 +69,7 @@ options:
     type: bool
   vm_guest_ip:
     description:
-      - VM guest NIC secondary IP address for the port forwarding rule.
+      - VM guest NIC IP address for the port forwarding rule.
     type: str
   network:
     description:

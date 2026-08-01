@@ -400,7 +400,7 @@ class AnsibleCloudStack:
         vm_guest_ip = self.module.params.get("vm_guest_ip")
         default_nic = self.get_vm_default_nic()
 
-        if not vm_guest_ip:
+        if not vm_guest_ip or (default_nic is not None and vm_guest_ip == default_nic["ipaddress"]):
             return default_nic["ipaddress"] if default_nic is not None else ""
 
         for secondary_ip in default_nic.get("secondaryip", []) if default_nic is not None else []:
