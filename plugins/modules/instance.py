@@ -450,6 +450,11 @@ user_data_name:
   returned: success
   type: str
   sample: my_userdata
+user_data_details:
+  description: Parameter values used for the variables in user data.
+  returned: success
+  type: dict
+  sample: { "foo": "bar" }
 """
 
 import base64
@@ -479,7 +484,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             "hostname": "host",
             "userdata": "user_data",
             "userdataname": "user_data_name",
-            "userdatadateils": "user_data_details",
+            "userdatadetails": "user_data_details",
         }
         self.instance = None
         self.template = None
@@ -714,7 +719,7 @@ class AnsibleCloudStackInstance(AnsibleCloudStack):
             if not ssh_keys:
                 return True
 
-            # Get fingerprint for keypair of instance but do not fail if inexistent.
+            # Get fingerprint for the instance keypair but do not fail if it does not exist.
             instance_ssh_key_fingerprint = self.get_ssh_keypair(key="fingerprint", name=instance_ssh_key, fail_on_missing=False)
             if not instance_ssh_key_fingerprint:
                 return True

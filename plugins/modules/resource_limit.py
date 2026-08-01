@@ -76,7 +76,7 @@ EXAMPLES = """
 
 RETURN = """
 ---
-recource_type:
+resource_type:
   description: Type of the resource
   returned: success
   type: str
