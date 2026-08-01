@@ -479,10 +479,10 @@ class AnsibleCloudStackNetwork(AnsibleCloudStack):
             }
             ip_addresses = self.query_api("listPublicIpAddresses", **args)
             if ip_addresses:
-                self.network["public_ips"] = ip_addresses.get("publicipaddress") or []
-                for n in self.network["public_ips"]:
-                    if n["issourcenat"]:
-                        self.network["snat_ip"] = n["ipaddress"]
+                self.network["public_ips"] = ip_addresses or []
+                for ip_address in ip_addresses:
+                    if ip_address["issourcenat"]:
+                        self.network["snat_ip"] = ip_address["ipaddress"]
                         break
         return self.network
 
