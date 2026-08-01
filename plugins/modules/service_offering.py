@@ -361,7 +361,7 @@ system_vm_type:
   type: str
   sample: consoleproxy
 service_offering_details:
-  description: Additioanl service offering details
+  description: Additional service offering details
   returned: success
   type: dict
   sample: "{'vgpuType': 'GRID K180Q','pciDevice':'Group of NVIDIA Corporation GK107GL [GRID K1] GPUs'}"

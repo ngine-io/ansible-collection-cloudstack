@@ -84,7 +84,7 @@ options:
     type: str
   local_storage_enabled:
     description:
-      - Whether to enable local storage for the zone or not..
+      - Whether to enable local storage for the zone or not.
     type: bool
   securitygroups_enabled:
     description:

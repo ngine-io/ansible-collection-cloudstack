@@ -139,7 +139,7 @@ last_name:
   type: str
   sample: Doe
 email:
-  description: Emailof the user.
+  description: Email of the user.
   returned: success
   type: str
   sample: john.doe@example.com
