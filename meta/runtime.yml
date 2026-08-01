@@ -47,6 +47,7 @@ action_groups:
     - template
     - traffic_type
     - user
+    - user_data
     - vlan_ip_range
     - volume
     - volume_snapshot_policy

@@ -15,9 +15,6 @@
     project: "{{ cs_resource_prefix }}-prj"
     state: absent
   register: instance
-- name: verify instance in project to be absent
-  assert:
-    that:
 
 - name: setup ssh key in project
   ngine_io.cloudstack.ssh_key:
