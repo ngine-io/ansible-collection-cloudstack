@@ -15,7 +15,7 @@ module: router
 short_description: Manages routers on Apache CloudStack based clouds.
 description:
     - Start, restart, stop and destroy routers.
-    - I(state=present) is not able to create routers, use M(ngine_io.cloudstack.cs_network) instead.
+    - I(state=present) is not able to create routers, use M(ngine_io.cloudstack.network) instead.
 author: René Moser (@resmo)
 version_added: 0.1.0
 options:
