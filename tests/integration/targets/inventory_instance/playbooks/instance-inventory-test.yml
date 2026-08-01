@@ -1,2 +1,98 @@
 ---
 - import_playbook: common-cloudstack-objects.yml
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - include_vars:
+        file: vars/common.yml
+
+    - name: Define inventory tag filter fixtures
+      ansible.builtin.set_fact:
+        inventory_tag_key: "{{ cs_resource_prefix }}-inventory-tag"
+        inventory_tag_value: "{{ cs_resource_prefix }}-inventory-value"
+        inventory_tagged_vm_name: "{{ cs_resource_prefix }}-inventory-tagged-vm"
+        inventory_untagged_vm_name: "{{ cs_resource_prefix }}-inventory-untagged-vm"
+
+    - name: Create tagged inventory instance
+      ngine_io.cloudstack.instance:
+        name: "{{ inventory_tagged_vm_name }}"
+        template: "{{ cs_common_template }}"
+        service_offering: "{{ cs_common_service_offering }}"
+        zone: "{{ cs_common_zone_basic }}"
+        tags:
+          - key: "{{ inventory_tag_key }}"
+            value: "{{ inventory_tag_value }}"
+      register: tagged_inventory_instance
+      until: tagged_inventory_instance is successful
+      retries: 2
+      delay: 5
+
+    - name: Create untagged inventory instance
+      ngine_io.cloudstack.instance:
+        name: "{{ inventory_untagged_vm_name }}"
+        template: "{{ cs_common_template }}"
+        service_offering: "{{ cs_common_service_offering }}"
+        zone: "{{ cs_common_zone_basic }}"
+        tags: []
+      register: untagged_inventory_instance
+      until: untagged_inventory_instance is successful
+      retries: 2
+      delay: 5
+
+    - name: Create filter-by-tags inventory configuration
+      ansible.builtin.template:
+        src: templates/cloudstack-instances.yml.j2
+        dest: ../filter-by-tags.cloudstack-instances.yml
+      vars:
+        inventory_filter_by_tags:
+          - key: "{{ inventory_tag_key }}"
+            value: "{{ inventory_tag_value }}"
+
+    - name: Collect unfiltered inventory output
+      ansible.builtin.command:
+        argv:
+          - ansible-inventory
+          - --list
+          - -i
+          - ../cloudstack-instances.yml
+      args:
+        chdir: "{{ playbook_dir }}"
+      register: inventory_all
+      changed_when: false
+
+    - name: Parse unfiltered inventory output
+      ansible.builtin.set_fact:
+        inventory_all_json: "{{ inventory_all.stdout | from_yaml }}"
+
+    - name: Verify unfiltered inventory contains both test instances
+      ansible.builtin.assert:
+        that:
+          - inventory_tagged_vm_name in inventory_all_json.cloudstack.hosts
+          - inventory_untagged_vm_name in inventory_all_json.cloudstack.hosts
+
+    - name: Collect filter-by-tags inventory output
+      ansible.builtin.command:
+        argv:
+          - ansible-inventory
+          - --list
+          - -i
+          - ../filter-by-tags.cloudstack-instances.yml
+      args:
+        chdir: "{{ playbook_dir }}"
+      register: inventory_filtered
+      changed_when: false
+
+    - name: Parse filter-by-tags inventory output
+      ansible.builtin.set_fact:
+        inventory_filtered_json: "{{ inventory_filtered.stdout | from_yaml }}"
+
+    - name: Verify filter-by-tags inventory output
+      ansible.builtin.assert:
+        that:
+          - inventory_filtered_json.cloudstack.hosts | length == 1
+          - inventory_tagged_vm_name in inventory_filtered_json.cloudstack.hosts
+          - inventory_untagged_vm_name not in inventory_filtered_json.cloudstack.hosts
+          - inventory_tag_key in inventory_filtered_json._meta.hostvars[inventory_tagged_vm_name].tags
+          - inventory_filtered_json._meta.hostvars[inventory_tagged_vm_name].tags[inventory_tag_key].__ansible_unsafe == inventory_tag_value

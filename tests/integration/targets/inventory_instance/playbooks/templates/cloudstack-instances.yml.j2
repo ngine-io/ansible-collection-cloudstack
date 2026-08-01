@@ -1,5 +1,13 @@
 plugin: ngine_io.cloudstack.instance
 
+{% if inventory_filter_by_tags is defined and inventory_filter_by_tags %}
+filter_by_tags:
+{% for tag in inventory_filter_by_tags %}
+  - key: {{ tag.key }}
+    value: {{ tag.value }}
+{% endfor %}
+{% endif %}
+
 keyed_groups:
   - prefix: cs_zone
     key: zone | lower

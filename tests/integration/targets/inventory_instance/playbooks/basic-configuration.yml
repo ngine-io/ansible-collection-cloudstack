@@ -3,7 +3,7 @@
   connection: local
   gather_facts: false
   vars:
-    simulator: http://172.17.0.2:8888
+    simulator: "{{ (lookup('env', 'CLOUDSTACK_ENDPOINT') | regex_replace('/client/api$', '')) if lookup('env', 'CLOUDSTACK_ENDPOINT') else 'http://172.17.0.2:8888' }}"
   tasks:
     - name: Retrieve Simulator Keys
       ansible.builtin.uri:
