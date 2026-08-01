@@ -32,13 +32,13 @@ options:
     description:
       - State of the VPN connection.
       - Only considered when I(state=present).
-    default: no
+    default: false
     type: bool
   force:
     description:
       - Activate the VPN gateway if not already activated on I(state=present).
-      - Also see M(ngine_io.cloudstack.cs_vpn_gateway).
-    default: no
+      - Also see M(ngine_io.cloudstack.vpn_gateway).
+    default: false
     type: bool
   state:
     description:
@@ -66,7 +66,7 @@ options:
   poll_async:
     description:
       - Poll async jobs until job has finished.
-    default: yes
+    default: true
     type: bool
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
@@ -84,7 +84,7 @@ EXAMPLES = """
     vpn_customer_gateway: my vpn connection
     vpc: my vpc
     zone: zone01
-    force: yes
+    force: true
 
 - name: Remove a vpn connection
   ngine_io.cloudstack.vpn_connection:

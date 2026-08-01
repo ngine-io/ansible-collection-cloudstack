@@ -91,7 +91,7 @@ options:
   poll_async:
     description:
       - Poll async jobs until job has finished.
-    default: yes
+    default: true
     type: bool
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack

@@ -106,17 +106,17 @@ options:
     type: str
   for_virtual_network:
     description:
-      - C(yes) if VLAN is of Virtual type, C(no) if Direct.
-      - If set to C(yes) but neither I(physical_network) or I(network) is set CloudStack will try to add the
+      - C(true) if VLAN is of Virtual type, C(false) if Direct.
+      - If set to C(true) but neither I(physical_network) or I(network) is set CloudStack will try to add the
         VLAN range to the Physical Network with a Public traffic type.
     type: bool
-    default: no
+    default: false
     version_added: 1.0.0
   for_system_vms:
     description:
-      - C(yes) if IP range is set to system vms, C(no) if not
+      - C(true) if IP range is set to system vms, C(false) if not
     type: bool
-    default: no
+    default: false
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
 """

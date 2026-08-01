@@ -104,7 +104,7 @@ options:
     description:
       - Poll async jobs until job has finished.
     type: bool
-    default: yes
+    default: true
   tags:
     description:
       - List of tags. Tags are a list of dictionaries having keys I(key) and I(value).

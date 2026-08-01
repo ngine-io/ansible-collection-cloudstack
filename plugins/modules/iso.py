@@ -38,10 +38,10 @@ options:
     type: str
   is_ready:
     description:
-      - This flag is used for searching existing ISOs. If set to C(yes), it will only list ISO ready for deployment e.g.
-        successfully downloaded and installed. Recommended to set it to C(no).
+      - This flag is used for searching existing ISOs. If set to C(true), it will only list ISO ready for deployment e.g.
+        successfully downloaded and installed. Recommended to set it to C(false).
     type: bool
-    default: no
+    default: false
   is_public:
     description:
       - Register the ISO to be publicly available to all users. Only used if I(state) is present.
@@ -77,14 +77,14 @@ options:
   zone:
     description:
       - Name of the zone you wish the ISO to be registered or deleted from.
-      - Required when I(cross_zones) is C(no)
+      - Required when I(cross_zones) is C(false)
     type: str
   cross_zones:
     description:
       - Whether the ISO should be synced or removed across zones.
       - Mutually exclusive with I(zone).
     type: bool
-    default: no
+    default: false
   iso_filter:
     description:
       - Name of the filter used to search for the ISO.
@@ -108,7 +108,7 @@ options:
     description:
       - Poll async jobs until job has finished.
     type: bool
-    default: yes
+    default: true
   tags:
     description:
       - List of tags. Tags are a list of dictionaries having keys I(key) and I(value).

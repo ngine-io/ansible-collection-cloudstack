@@ -58,9 +58,9 @@ options:
   open_firewall:
     description:
       - Whether the firewall rule for public port should be created, while creating the new rule.
-      - Use M(ngine_io.cloudstack.cs_firewall) for managing firewall rules.
+      - Use M(ngine_io.cloudstack.firewall) for managing firewall rules.
     type: bool
-    default: no
+    default: false
   cidr:
     description:
       - CIDR (full notation) to be used for firewall rule if required.
@@ -96,7 +96,7 @@ options:
     description:
       - Poll async jobs until job has finished.
     type: bool
-    default: yes
+    default: true
   tags:
     description:
       - List of tags. Tags are a list of dictionaries having keys I(key) and I(value).

@@ -80,12 +80,12 @@ options:
     description:
       - Force removal of volume even it is attached to a VM.
       - Considered on I(state=absent) only.
-    default: no
+    default: false
     type: bool
   shrink_ok:
     description:
       - Whether to allow to shrink the volume.
-    default: no
+    default: false
     type: bool
   vm:
     description:
@@ -105,7 +105,7 @@ options:
   poll_async:
     description:
       - Poll async jobs until job has finished.
-    default: yes
+    default: true
     type: bool
   tags:
     description:

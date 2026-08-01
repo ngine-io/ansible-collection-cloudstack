@@ -70,7 +70,7 @@ options:
     description:
       - Whether the template should be synced or removed across zones.
       - Only used if I(state) is C(present) or C(absent).
-    default: no
+    default: false
     type: bool
   mode:
     description:
@@ -94,7 +94,7 @@ options:
   zone:
     description:
       - Name of the zone you wish the template to be registered or deleted from.
-      - Required when I(cross_zones) is C(no)
+      - Required when I(cross_zones) is C(false)
     type: str
   template_filter:
     description:
@@ -174,7 +174,7 @@ options:
   poll_async:
     description:
       - Poll async jobs until job has finished.
-    default: yes
+    default: true
     type: bool
   tags:
     description:
@@ -194,7 +194,7 @@ EXAMPLES = """
     url: "http://packages.shapeblue.com/systemvmtemplate/4.5/systemvm64template-4.5-vmware.ova"
     hypervisor: VMware
     format: OVA
-    cross_zones: yes
+    cross_zones: true
     os_type: Debian GNU/Linux 7(64-bit)
 
 - name: Create a template from a stopped virtual machine's volume
@@ -203,8 +203,8 @@ EXAMPLES = """
     vm: debian-9-base-vm
     os_type: Debian GNU/Linux 9 (64-bit)
     zone: tokio-ix
-    password_enabled: yes
-    is_public: yes
+    password_enabled: true
+    is_public: true
 
 
 # Note: Use template_find_option(s) when a template name is not unique
@@ -216,8 +216,8 @@ EXAMPLES = """
     vm: debian-9-base-vm
     os_type: Debian GNU/Linux 9 (64-bit)
     zone: tokio-ix
-    password_enabled: yes
-    is_public: yes
+    password_enabled: true
+    is_public: true
 
 - name: create a template from a virtual machine's root volume snapshot
   ngine_io.cloudstack.template:
@@ -225,13 +225,13 @@ EXAMPLES = """
     snapshot: ROOT-233_2015061509114
     os_type: Debian GNU/Linux 9 (64-bit)
     zone: tokio-ix
-    password_enabled: yes
-    is_public: yes
+    password_enabled: true
+    is_public: true
 
 - name: Remove a template
   ngine_io.cloudstack.template:
     name: systemvm-4.2
-    cross_zones: yes
+    cross_zones: true
     state: absent
 """
 

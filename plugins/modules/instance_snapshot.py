@@ -36,7 +36,7 @@ options:
   snapshot_memory:
     description:
       - Snapshot memory if set to true.
-    default: no
+    default: false
     type: bool
   zone:
     description:
@@ -64,7 +64,7 @@ options:
   poll_async:
     description:
       - Poll async jobs until job has finished.
-    default: yes
+    default: true
     type: bool
   tags:
     description:
@@ -83,7 +83,7 @@ EXAMPLES = """
     name: Snapshot before upgrade
     vm: web-01
     zone: zone01
-    snapshot_memory: yes
+    snapshot_memory: true
 
 - name: Revert a VM to a snapshot after a failed upgrade
   ngine_io.cloudstack.instance_snapshot:

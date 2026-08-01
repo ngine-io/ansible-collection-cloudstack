@@ -58,7 +58,7 @@ options:
       - If API keys of the user should be generated.
       - "Note: Keys can not be removed by the API again."
     type: bool
-    default: no
+    default: false
   domain:
     description:
       - Domain the user is related to.
@@ -75,7 +75,7 @@ options:
     description:
       - Poll async jobs until job has finished.
     type: bool
-    default: yes
+    default: true
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
 """

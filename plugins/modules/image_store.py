@@ -45,11 +45,11 @@ options:
     type: str
   force_recreate:
     description:
-      - Set to C(yes) if you're changing an existing Image Store.
+      - Set to C(true) if you're changing an existing Image Store.
       - This will force the recreation of the Image Store.
       - Recreation might fail if there are snapshots present on the Image Store. Delete them before running the recreation.
     type: bool
-    default: no
+    default: false
 
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
@@ -73,7 +73,7 @@ EXAMPLES = """
     zone: zone-01
     name: nfs-01
     provider: NFS
-    force_recreate: yes
+    force_recreate: true
     url: nfs://192.168.21.10/shares/secondary
 
 - name: delete the image store
@@ -183,7 +183,7 @@ class AnsibleCloudstackImageStore(AnsibleCloudStack):
                     self.image_store = None
                     self.image_store = self.present_image_store()
                 else:
-                    self.module.warn("Changes to the Image Store won't be applied. Use force_recreate=yes to allow the store to be recreated")
+                    self.module.warn("Changes to the Image Store won't be applied. Use force_recreate=true to allow the store to be recreated")
 
         return self.image_store
 

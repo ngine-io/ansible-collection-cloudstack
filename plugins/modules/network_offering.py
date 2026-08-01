@@ -110,7 +110,7 @@ options:
   specify_ip_ranges:
     description:
       - Whether the network offering supports specifying IP ranges.
-      - Defaulted to C(no) by the API if not specified.
+      - Defaulted to C(false) by the API if not specified.
     type: bool
   specify_vlan:
     description:

@@ -94,7 +94,7 @@ options:
     description:
       - Cleanup old network elements.
       - Only considered on I(state=restarted).
-    default: no
+    default: false
     type: bool
   acl_type:
     description:
@@ -144,7 +144,7 @@ options:
   poll_async:
     description:
       - Poll async jobs until job has finished.
-    default: yes
+    default: true
     type: bool
   tags:
     description:
@@ -195,7 +195,7 @@ EXAMPLES = """
   ngine_io.cloudstack.network:
     name: my network
     zone: zone01
-    clean_up: yes
+    clean_up: true
     state: restarted
 
 - name: Remove a network

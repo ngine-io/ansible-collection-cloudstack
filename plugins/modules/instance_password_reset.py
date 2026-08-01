@@ -47,14 +47,14 @@ options:
     description:
       - Poll async jobs until job has finished.
     type: bool
-    default: yes
+    default: true
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
 """
 
 EXAMPLES = """
 - name: stop the virtual machine before resetting the password
-  ngine_io.cloudstack.cs_instance:
+  ngine_io.cloudstack.instance:
     name: myvirtualmachine
     zone: zone01
     state: stopped
@@ -69,7 +69,7 @@ EXAMPLES = """
     msg: "new default password is {{ root.password }}"
 
 - name: boot the virtual machine to activate the new password
-  ngine_io.cloudstack.cs_instance:
+  ngine_io.cloudstack.instance:
     name: myvirtualmachine
     zone: zone01
     state: started

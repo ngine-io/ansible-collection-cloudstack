@@ -206,12 +206,12 @@ options:
     description:
       - Force stop/start the instance if required to apply changes, otherwise a running instance will not be changed.
     type: bool
-    default: no
+    default: false
   allow_root_disk_shrink:
     description:
       - Enables a volume shrinkage when the new size is smaller than the old one.
     type: bool
-    default: no
+    default: false
   tags:
     description:
       - List of tags. Tags are a list of dictionaries having keys C(key) and C(value).
@@ -223,7 +223,7 @@ options:
     description:
       - Poll async jobs until job has finished.
     type: bool
-    default: yes
+    default: true
   details:
     description:
       - Map to specify custom parameters.
@@ -256,7 +256,7 @@ EXAMPLES = """
     display_name: web-vm-01.example.com
     iso: Linux Debian 7 64-bit
     service_offering: 2cpu_2gb
-    force: yes
+    force: true
 
 # NOTE: user_data can be used to kickstart the instance using cloud-init yaml config.
 - name: create or update a instance on Exoscale's public cloud using display_name.

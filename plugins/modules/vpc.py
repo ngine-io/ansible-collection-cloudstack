@@ -88,7 +88,7 @@ options:
   poll_async:
     description:
       - Poll async jobs until job has finished.
-    default: yes
+    default: true
     type: bool
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
@@ -120,7 +120,7 @@ EXAMPLES = """
   ngine_io.cloudstack.vpc:
     name: my_vpc
     zone: zone01
-    clean_up: yes
+    clean_up: true
     state: restarted
 """
 

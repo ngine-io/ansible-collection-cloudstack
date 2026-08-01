@@ -64,8 +64,8 @@ options:
     description:
       - Whether the firewall rule for public port should be created, while creating the new rule.
       - Not supported when forwarding ports in a VPC.
-      - Use M(ngine_io.cloudstack.cs_firewall) for managing firewall rules.
-    default: no
+      - Use M(ngine_io.cloudstack.firewall) for managing firewall rules.
+    default: false
     type: bool
   vm_guest_ip:
     description:
@@ -99,7 +99,7 @@ options:
   poll_async:
     description:
       - Poll async jobs until job has finished.
-    default: yes
+    default: true
     type: bool
   tags:
     description:

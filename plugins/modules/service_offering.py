@@ -93,7 +93,7 @@ options:
     description:
       - Whether it is a system VM offering or not.
     type: bool
-    default: no
+    default: false
   is_volatile:
     description:
       - Whether the virtual machine needs to be volatile or not.
@@ -149,7 +149,7 @@ options:
   system_vm_type:
     description:
       - The system VM type.
-      - Required if I(is_system=yes).
+      - Required if I(is_system=true).
     type: str
     choices:
       - domainrouter
@@ -189,7 +189,7 @@ EXAMPLES = """
     cpu_speed: 2198
     memory: 1024
     storage_type: shared
-    is_volatile: yes
+    is_volatile: true
     host_tags: eco
     storage_tags: eco
 
@@ -201,7 +201,7 @@ EXAMPLES = """
     cpu_speed: 2198
     memory: 1024
     storage_type: shared
-    is_volatile: yes
+    is_volatile: true
     host_tags: eco
     storage_tags: eco
 
@@ -209,7 +209,7 @@ EXAMPLES = """
   ngine_io.cloudstack.service_offering:
     name: custom
     display_text: custom compute offer
-    is_customized: yes
+    is_customized: true
     storage_type: shared
     host_tags: eco
     storage_tags: eco
@@ -223,7 +223,7 @@ EXAMPLES = """
   ngine_io.cloudstack.service_offering:
     name: System Offering for Console Proxy 2GB
     display_text: System Offering for Console Proxy 2GB RAM
-    is_system: yes
+    is_system: true
     system_vm_type: consoleproxy
     cpu_number: 1
     cpu_speed: 2198
@@ -234,7 +234,7 @@ EXAMPLES = """
 - name: Remove a system offering
   ngine_io.cloudstack.service_offering:
     name: System Offering for Console Proxy 2GB
-    is_system: yes
+    is_system: true
     state: absent
 """
 

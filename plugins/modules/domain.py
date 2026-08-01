@@ -33,7 +33,7 @@ options:
       - Clean up all domain resources like child domains and accounts.
       - Considered on I(state=absent).
     type: bool
-    default: no
+    default: false
   state:
     description:
       - State of the domain.
@@ -44,7 +44,7 @@ options:
     description:
       - Poll async jobs until job has finished.
     type: bool
-    default: yes
+    default: true
 extends_documentation_fragment:
 - ngine_io.cloudstack.cloudstack
 """
