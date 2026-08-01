@@ -357,6 +357,16 @@ vpc:
   returned: if available
   type: str
   sample: My VPC
+public_ips:
+   description: A list of all public ip addresses associated to the network
+   returned: if available
+   type: list
+   version_added: 3.1.0
+snat_ip:
+   description: The public IP address configured for snat
+   returned: if available
+   type: str
+   version_added: 3.1.0
 """
 
 from ansible.module_utils.basic import AnsibleModule
@@ -389,6 +399,8 @@ class AnsibleCloudStackNetwork(AnsibleCloudStack):
             "broadcastdomaintype": "broadcast_domain_type",
             "dns1": "dns1",
             "dns2": "dns2",
+            "public_ips": "public_ips",
+            "snat_ip": "snat_ip",
         }
         self.network = None
 
@@ -455,6 +467,22 @@ class AnsibleCloudStackNetwork(AnsibleCloudStack):
                     if network in [n["name"], n["displaytext"], n["id"]]:
                         self.network = n
                         self.network["acl"] = self.get_network_acl(key="name", acl_id=n.get("aclid"))
+                        break
+
+        if self.network:
+            self.network["public_ips"] = []
+            self.network["snat_ip"] = None
+
+            args = {
+                "associatednetworkid": self.network["id"],
+                "fetch_list": True,
+            }
+            ip_addresses = self.query_api("listPublicIpAddresses", **args)
+            if ip_addresses:
+                self.network["public_ips"] = ip_addresses or []
+                for ip_address in ip_addresses:
+                    if ip_address["issourcenat"]:
+                        self.network["snat_ip"] = ip_address["ipaddress"]
                         break
         return self.network
 
