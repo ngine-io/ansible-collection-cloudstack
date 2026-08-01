@@ -1,0 +1,139 @@
+---
+- name: setup account
+  ngine_io.cloudstack.account:
+    name: "{{ cs_resource_prefix }}_acc"
+    username: "{{ cs_resource_prefix }}_acc_username"
+    password: "{{ cs_resource_prefix }}_acc_password"
+    last_name: "{{ cs_resource_prefix }}_acc_last_name"
+    first_name: "{{ cs_resource_prefix }}_acc_first_name"
+    email: "{{ cs_resource_prefix }}@example.com"
+    network_domain: "example.com"
+  register: account
+- name: verify setup account
+  assert:
+    that:
+      - account is successful
+
+- name: setup vpn user absent
+  ngine_io.cloudstack.vpn_user:
+    username: "{{ cs_resource_prefix }}_vpn_user"
+    account: "{{ cs_resource_prefix }}_acc"
+    domain: ROOT
+    state: absent
+  register: vpn_user
+- name: verify setup vpn user absent
+  assert:
+    that:
+      - vpn_user is successful
+
+- name: test fail if missing username
+  ngine_io.cloudstack.vpn_user:
+  ignore_errors: true
+  register: vpn_user
+- name: verify results of fail if missing username
+  assert:
+    that:
+      - vpn_user is failed
+      - 'vpn_user.msg == "missing required arguments: username"'
+
+- name: test fail if missing password if state=present
+  ngine_io.cloudstack.vpn_user:
+    username: "{{ cs_resource_prefix }}_vpn_user"
+    account: "{{ cs_resource_prefix }}_acc"
+    domain: ROOT
+  ignore_errors: true
+  register: vpn_user
+- name: verify results of fail if missing password if state=present
+  assert:
+    that:
+      - vpn_user is failed
+      - 'vpn_user.msg == "missing required arguments: password"'
+
+- name: test create vpn user in check mode
+  ngine_io.cloudstack.vpn_user:
+    username: "{{ cs_resource_prefix }}_vpn_user"
+    password: "Vpn1-pass"
+    account: "{{ cs_resource_prefix }}_acc"
+    domain: ROOT
+  register: vpn_user
+  check_mode: true
+- name: verify results of create vpn user in check mode
+  assert:
+    that:
+      - vpn_user is successful
+      - vpn_user is changed
+
+- name: test create vpn user
+  ngine_io.cloudstack.vpn_user:
+    username: "{{ cs_resource_prefix }}_vpn_user"
+    password: "Vpn1-pass"
+    account: "{{ cs_resource_prefix }}_acc"
+    domain: ROOT
+  register: vpn_user
+- name: verify results of create vpn user
+  assert:
+    that:
+      - vpn_user is successful
+      - vpn_user is changed
+      - vpn_user.username == cs_resource_prefix + "_vpn_user"
+      - vpn_user.account == cs_resource_prefix + "_acc"
+      - vpn_user.domain == "ROOT"
+      - vpn_user.state in ["Add", "Active"]
+
+- name: test create vpn user idempotence
+  ngine_io.cloudstack.vpn_user:
+    username: "{{ cs_resource_prefix }}_vpn_user"
+    password: "Vpn1-pass"
+    account: "{{ cs_resource_prefix }}_acc"
+    domain: ROOT
+  register: vpn_user
+- name: verify results of create vpn user idempotence
+  assert:
+    that:
+      - vpn_user is successful
+      - vpn_user is not changed
+      - vpn_user.username == cs_resource_prefix + "_vpn_user"
+      - vpn_user.account == cs_resource_prefix + "_acc"
+      - vpn_user.domain == "ROOT"
+
+- name: test remove vpn user in check mode
+  ngine_io.cloudstack.vpn_user:
+    username: "{{ cs_resource_prefix }}_vpn_user"
+    account: "{{ cs_resource_prefix }}_acc"
+    domain: ROOT
+    state: absent
+  register: vpn_user
+  check_mode: true
+- name: verify results of remove vpn user in check mode
+  assert:
+    that:
+      - vpn_user is successful
+      - vpn_user is changed
+      - vpn_user.username == cs_resource_prefix + "_vpn_user"
+
+- name: test remove vpn user
+  ngine_io.cloudstack.vpn_user:
+    username: "{{ cs_resource_prefix }}_vpn_user"
+    account: "{{ cs_resource_prefix }}_acc"
+    domain: ROOT
+    state: absent
+  register: vpn_user
+- name: verify results of remove vpn user
+  assert:
+    that:
+      - vpn_user is successful
+      - vpn_user is changed
+      - vpn_user.username == cs_resource_prefix + "_vpn_user"
+
+- name: test remove vpn user idempotence
+  ngine_io.cloudstack.vpn_user:
+    username: "{{ cs_resource_prefix }}_vpn_user"
+    account: "{{ cs_resource_prefix }}_acc"
+    domain: ROOT
+    state: absent
+  register: vpn_user
+- name: verify results of remove vpn user idempotence
+  assert:
+    that:
+      - vpn_user is successful
+      - vpn_user is not changed
