@@ -14,9 +14,6 @@
     role: "{{ testRole.id }}"
     state: absent
   register: roleperm
-- name: verify setup
-  assert:
-    that:
 
 - name: setup2
   ngine_io.cloudstack.role_permission:

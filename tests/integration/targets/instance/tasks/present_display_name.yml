@@ -4,10 +4,6 @@
     display_name: "{{ cs_resource_prefix }}-vm-{{ instance_number }}"
     zone: "{{ cs_common_zone_basic }}"
     state: expunged
-  register: instance
-- name: verify instance with display_name to be absent
-  assert:
-    that:
 
 - name: test create instance with display_name
   ngine_io.cloudstack.instance:
