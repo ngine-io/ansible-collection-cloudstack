@@ -1,0 +1,2 @@
+bugfixes:
+- portforward - Fixed rule creation for primary IP of default NIC (https://github.com/ngine-io/ansible-collection-cloudstack/issues/108)
