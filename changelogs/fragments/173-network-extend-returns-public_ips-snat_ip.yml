@@ -1,2 +1,0 @@
-minor_changes:
-- network - Extended returns with ``public_ips`` and ``snat_ip`` (https://github.com/ngine-io/ansible-collection-cloudstack/issues/121).

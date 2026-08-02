@@ -4,6 +4,41 @@ Apache CloudStack Collection Release Notes
 
 .. contents:: Topics
 
+v3.1.0
+======
+
+Minor Changes
+-------------
+
+- firewall - Implemented support for ``dest_cidrs`` (https://github.com/ngine-io/ansible-collection-cloudstack/issues/76).
+- instance - Added a new argument ``match_display_name`` to control whether to find instances by display name (https://github.com/ngine-io/ansible-collection-cloudstack/pull/164).
+- instance - Improved return values related to user data (https://github.com/ngine-io/ansible-collection-cloudstack/pull/168).
+- instance - Optimized API query with keyword filtering resulting in reduced time consumption in larger environments (https://github.com/ngine-io/ansible-collection-cloudstack/pull/164).
+- inventory - Added option to use public ip as hostname (https://github.com/ngine-io/ansible-collection-cloudstack/pull/116).
+- inventory - Extended projects filter to allow project=-1, added project to returns (https://github.com/ngine-io/ansible-collection-cloudstack/pull/176).
+- network - Extended returns with ``public_ips`` and ``snat_ip`` (https://github.com/ngine-io/ansible-collection-cloudstack/issues/121).
+- role_permissions - Removed version check for EOL CloudStack version (https://github.com/ngine-io/ansible-collection-cloudstack/pull/168).
+
+Removed Features (previously deprecated)
+----------------------------------------
+
+- The deprecated routing to module names with ``cs_`` prefix has been removed. Use the new module names instead.
+
+Bugfixes
+--------
+
+- portforward - Fixed rule creation for primary IP of default NIC (https://github.com/ngine-io/ansible-collection-cloudstack/issues/108)
+
+New Modules
+-----------
+
+- api_request - Executes ad\-hoc Apache CloudStack API requests.
+- cluster_info - Gathering information about clusters from Apache CloudStack based clouds.
+- pod_info - Gathering information about pods from Apache CloudStack based clouds.
+- user_data - Manages user data on Apache CloudStack based clouds.
+- vpc_private_gateway - Manages private gateways for VPCs on Apache CloudStack based clouds.
+- vpn_user - Manages VPN users on Apache CloudStack based clouds.
+
 v3.0.0
 ======
 
@@ -12,7 +47,7 @@ Major Changes
 
 - Ensuring backwards compatibility and integration tests with CloudStack 4.17 and 4.18.
 - General overhaul (black code style) and renaming of all modules (dropping ``cs_`` prefix) (https://github.com/ngine-io/ansible-collection-cloudstack/pull/141).
-- Update cs dependency to ``>=3.4.0``.
+- Update cs dependency to >=3.4.0.
 
 Bugfixes
 --------

@@ -1,5 +1,0 @@
-  minor_changes:
-  - cs_instance - Added a new argument ``match_display_name`` to control whether to find instances by display name (
-    (https://github.com/ngine-io/ansible-collection-cloudstack/pull/164).
-  - cs_instance - Optimized API query with keyword filtering resulting in reduced time consumption in larger environments (
-    https://github.com/ngine-io/ansible-collection-cloudstack/pull/164).

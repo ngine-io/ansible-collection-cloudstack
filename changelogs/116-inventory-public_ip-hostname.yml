@@ -1,2 +1,0 @@
-minor_changes:
-  - inventory - Added option to use public ip as hostname (https://github.com/ngine-io/ansible-collection-cloudstack/pull/116).
