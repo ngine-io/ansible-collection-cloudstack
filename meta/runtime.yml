@@ -56,5 +56,6 @@ action_groups:
     - vpn_connection
     - vpn_customer_gateway
     - vpn_gateway
+    - vpn_user
     - zone_info
     - zone
