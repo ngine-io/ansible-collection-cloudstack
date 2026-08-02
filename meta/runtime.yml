@@ -2,6 +2,7 @@ requires_ansible: ">=2.9.10"
 action_groups:
   cloudstack:
     - account
+    - api_request
     - affinity_group
     - cluster
     - cluster_info

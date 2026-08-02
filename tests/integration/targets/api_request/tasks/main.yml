@@ -1,0 +1,81 @@
+---
+- name: setup vpc
+  ngine_io.cloudstack.vpc:
+    name: "{{ cs_resource_prefix }}_vpc"
+    display_text: "{{ cs_resource_prefix }}_display_text"
+    cidr: 10.10.0.0/16
+    zone: "{{ cs_common_zone_adv }}"
+  register: vpc
+- name: verify setup vpc
+  assert:
+    that:
+      - vpc is successful
+
+- name: test fail if command is missing
+  ngine_io.cloudstack.api_request:
+  ignore_errors: true
+  register: api_request
+- name: verify results of fail if command is missing
+  assert:
+    that:
+      - api_request is failed
+      - 'api_request.msg == "missing required arguments: command"'
+
+- name: test free-form api request
+  ngine_io.cloudstack.api_request: listVPCs keyword={{ cs_resource_prefix }}_vpc
+  register: api_request
+- name: verify test free-form api request
+  assert:
+    that:
+      - api_request is successful
+      - api_request is changed
+      - api_request.command == "listVPCs"
+      - api_request.params.keyword == cs_resource_prefix + "_vpc"
+      - api_request.response.vpc | length >= 1
+
+- name: test structured api request
+  ngine_io.cloudstack.api_request:
+    command: listCapabilities
+  register: api_request
+- name: verify test structured api request
+  assert:
+    that:
+      - api_request is successful
+      - api_request is changed
+      - api_request.command == "listCapabilities"
+      - api_request.response.capability is defined
+
+- name: test structured params api request
+  ngine_io.cloudstack.api_request:
+    command: listVPCs
+    params:
+      keyword: "{{ cs_resource_prefix }}_vpc"
+  register: api_request
+- name: verify test structured params api request
+  assert:
+    that:
+      - api_request is successful
+      - api_request is changed
+      - api_request.command == "listVPCs"
+      - api_request.params.keyword == cs_resource_prefix + "_vpc"
+      - api_request.response.vpc | length >= 1
+
+- name: test fail invalid free-form args
+  ngine_io.cloudstack.api_request: listVPCs invalid-token
+  ignore_errors: true
+  register: api_request
+- name: verify test fail invalid free-form args
+  assert:
+    that:
+      - api_request is failed
+      - api_request.msg == "Free-form argument 'invalid-token' must use key=value syntax"
+
+- name: test fail invalid api command
+  ngine_io.cloudstack.api_request:
+    command: doesNotExist
+  ignore_errors: true
+  register: api_request
+- name: verify test fail invalid api command
+  assert:
+    that:
+      - api_request is failed
