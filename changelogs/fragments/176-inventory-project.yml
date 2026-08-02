@@ -1,0 +1,2 @@
+minor_changes:
+  - inventory - Extended projects filter to allow project=-1, added project to returns (https://github.com/ngine-io/ansible-collection-cloudstack/pull/176).
