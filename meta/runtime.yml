@@ -53,6 +53,7 @@ action_groups:
     - volume_snapshot_policy
     - vpc_offering
     - vpc
+    - vpc_private_gateway
     - vpn_connection
     - vpn_customer_gateway
     - vpn_gateway
