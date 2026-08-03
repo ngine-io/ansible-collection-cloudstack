@@ -1,0 +1,166 @@
+---
+- name: setup cleanup
+  ngine_io.cloudstack.ssl_cert:
+    name: "{{ item }}"
+    state: absent
+  register: ssl_cert
+  with_items:
+    - "{{ cs_resource_prefix }}-ssl-cert"
+- name: verify setup cleanup
+  assert:
+    that:
+      - ssl_cert is success
+
+- name: test fail on missing name
+  ngine_io.cloudstack.ssl_cert:
+  ignore_errors: true
+  register: ssl_cert
+- name: verify results of fail on missing name
+  assert:
+    that:
+      - ssl_cert is failed
+      - "ssl_cert.msg == 'missing required arguments: name'"
+
+- name: test fail on missing certificate when present
+  ngine_io.cloudstack.ssl_cert:
+    name: "{{ cs_resource_prefix }}-ssl-cert"
+  ignore_errors: true
+  register: ssl_cert
+- name: verify results of fail on missing certificate when present
+  assert:
+    that:
+      - ssl_cert is failed
+
+- name: test ssl cert upload in check mode
+  ngine_io.cloudstack.ssl_cert:
+    name: "{{ cs_resource_prefix }}-ssl-cert"
+    certificate: "{{ ssl_cert_certificate }}"
+    private_key: "{{ ssl_cert_private_key }}"
+  register: ssl_cert
+  check_mode: true
+- name: verify results of ssl cert upload in check mode
+  assert:
+    that:
+      - ssl_cert is successful
+      - ssl_cert is changed
+
+- name: test ssl cert upload
+  ngine_io.cloudstack.ssl_cert:
+    name: "{{ cs_resource_prefix }}-ssl-cert"
+    certificate: "{{ ssl_cert_certificate }}"
+    private_key: "{{ ssl_cert_private_key }}"
+  register: ssl_cert
+- name: verify results of ssl cert upload
+  assert:
+    that:
+      - ssl_cert is successful
+      - ssl_cert is changed
+      - ssl_cert.id is defined and ssl_cert.id != ""
+      - ssl_cert.name == cs_resource_prefix + "-ssl-cert"
+      - ssl_cert.certificate is defined and ssl_cert.certificate != ""
+      - ssl_cert.fingerprint is defined and ssl_cert.fingerprint != ""
+
+- name: test ssl cert upload idempotence
+  ngine_io.cloudstack.ssl_cert:
+    name: "{{ cs_resource_prefix }}-ssl-cert"
+    certificate: "{{ ssl_cert_certificate }}"
+    private_key: "{{ ssl_cert_private_key }}"
+  register: ssl_cert2
+- name: verify results of ssl cert upload idempotence
+  assert:
+    that:
+      - ssl_cert2 is successful
+      - ssl_cert2 is not changed
+      - ssl_cert2.id == ssl_cert.id
+      - ssl_cert2.name == cs_resource_prefix + "-ssl-cert"
+      - ssl_cert2.fingerprint == ssl_cert.fingerprint
+
+- name: test ssl cert update without force
+  ngine_io.cloudstack.ssl_cert:
+    name: "{{ cs_resource_prefix }}-ssl-cert"
+    certificate: "{{ ssl_cert_certificate_updated }}"
+    private_key: "{{ ssl_cert_private_key_updated }}"
+  register: ssl_cert_update_no_force
+- name: verify results of ssl cert update without force
+  assert:
+    that:
+      - ssl_cert_update_no_force is successful
+      - ssl_cert_update_no_force is not changed
+      - ssl_cert_update_no_force.id == ssl_cert.id
+      - ssl_cert_update_no_force.fingerprint == ssl_cert.fingerprint
+      - ssl_cert_update_no_force.warnings is defined
+      - ssl_cert_update_no_force.warnings | length > 0
+
+
+- name: test ssl cert update with force in check mode
+  ngine_io.cloudstack.ssl_cert:
+    name: "{{ cs_resource_prefix }}-ssl-cert"
+    certificate: "{{ ssl_cert_certificate_updated }}"
+    private_key: "{{ ssl_cert_private_key_updated }}"
+    force: true
+  register: ssl_cert_update_force
+  check_mode: true
+- name: verify results of ssl cert update with force in check mode
+  assert:
+    that:
+      - ssl_cert_update_force is successful
+      - ssl_cert_update_force is changed
+      - ssl_cert_update_force.id == ssl_cert.id
+      - ssl_cert_update_force.certificate is defined and ssl_cert_update_force.certificate != ""
+      - ssl_cert_update_force.fingerprint == ssl_cert.fingerprint
+
+- name: test ssl cert update with force
+  ngine_io.cloudstack.ssl_cert:
+    name: "{{ cs_resource_prefix }}-ssl-cert"
+    certificate: "{{ ssl_cert_certificate_updated }}"
+    private_key: "{{ ssl_cert_private_key_updated }}"
+    force: true
+  register: ssl_cert_update_force
+- name: verify results of ssl cert update with force
+  assert:
+    that:
+      - ssl_cert_update_force is successful
+      - ssl_cert_update_force is changed
+      - ssl_cert_update_force.id != ssl_cert.id
+      - ssl_cert_update_force.certificate is defined and ssl_cert_update_force.certificate != ""
+      - ssl_cert_update_force.fingerprint != ssl_cert.fingerprint
+
+- name: test ssl cert absent in check mode
+  ngine_io.cloudstack.ssl_cert:
+    name: "{{ cs_resource_prefix }}-ssl-cert"
+    state: absent
+  register: ssl_cert3
+  check_mode: true
+- name: verify results of ssl cert absent in check mode
+  assert:
+    that:
+      - ssl_cert3 is successful
+      - ssl_cert3 is changed
+      - ssl_cert3.id == ssl_cert_update_force.id
+      - ssl_cert3.name == cs_resource_prefix + "-ssl-cert"
+
+- name: test ssl cert absent
+  ngine_io.cloudstack.ssl_cert:
+    name: "{{ cs_resource_prefix }}-ssl-cert"
+    state: absent
+  register: ssl_cert4
+- name: verify results of ssl cert absent
+  assert:
+    that:
+      - ssl_cert4 is successful
+      - ssl_cert4 is changed
+      - ssl_cert4.id == ssl_cert_update_force.id
+      - ssl_cert4.name == cs_resource_prefix + "-ssl-cert"
+
+- name: test ssl cert absent idempotence
+  ngine_io.cloudstack.ssl_cert:
+    name: "{{ cs_resource_prefix }}-ssl-cert"
+    state: absent
+  register: ssl_cert5
+- name: verify results of ssl cert absent idempotence
+  assert:
+    that:
+      - ssl_cert5 is successful
+      - ssl_cert5 is not changed
+      - ssl_cert5.id is not defined
+      - ssl_cert5.name is not defined
