@@ -103,6 +103,7 @@ class AnsibleCloudStack:
         self.hypervisor = None
         self.capabilities = None
         self.network_acl = None
+        self.caller_user = None
 
     @property
     def cs(self):
@@ -224,6 +225,17 @@ class AnsibleCloudStack:
             self.fail_json(msg=to_native(e))
 
         return res
+
+    def getCallerUser(self):
+        if self.caller_user:
+            return self.caller_user
+        args = {
+            "userapikey": self.module.params.get("api_key"),
+        }
+        res = self.query_api("getUser", **args)
+        if res and "user" in res:
+            self.caller_user = res["user"]
+        return self.caller_user
 
     def get_network_acl(self, key=None):
         if self.network_acl is None:
@@ -536,7 +548,7 @@ class AnsibleCloudStack:
                 return self.hypervisor
         self.fail_json(msg="Hypervisor '%s' not found" % hypervisor)
 
-    def get_account(self, key=None):
+    def get_account(self, key=None, use_fallback=False):
         if self.account:
             return self._get_by_key(key, self.account)
 
@@ -544,13 +556,20 @@ class AnsibleCloudStack:
         if not account:
             account = os.environ.get("CLOUDSTACK_ACCOUNT")
         if not account:
-            return None
+            if use_fallback:
+                caller = self.getCallerUser()
+                if caller and "account" in caller:
+                    account = caller["account"]
+                else:
+                    self.fail_json(msg="Could not find account for user by API key")
+            else:
+                return None
 
-        domain = self.module.params.get("domain")
-        if not domain:
+        domain_id = self.get_domain(key="id", use_fallback=use_fallback)
+        if not domain_id:
             self.fail_json(msg="Account must be specified with Domain")
 
-        args = {"name": account, "domainid": self.get_domain(key="id"), "listall": True}
+        args = {"name": account, "domainid": domain_id, "listall": True}
         accounts = self.query_api("listAccounts", **args)
         if accounts:
             self.account = accounts["account"][0]
@@ -558,7 +577,7 @@ class AnsibleCloudStack:
             return self._get_by_key(key, self.account)
         self.fail_json(msg="Account '%s' not found" % account)
 
-    def get_domain(self, key=None):
+    def get_domain(self, key=None, use_fallback=False):
         if self.domain:
             return self._get_by_key(key, self.domain)
 
@@ -566,7 +585,14 @@ class AnsibleCloudStack:
         if not domain:
             domain = os.environ.get("CLOUDSTACK_DOMAIN")
         if not domain:
-            return None
+            if use_fallback:
+                caller = self.getCallerUser()
+                if caller and "domain" in caller:
+                    domain = caller["domain"]
+                else:
+                    self.fail_json(msg="Could not find domain for user by API key")
+            else:
+                return None
 
         args = {
             "listall": True,
