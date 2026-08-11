@@ -1,3 +1,0 @@
-bugfixes:
-  - The removed routing to module names with ``cs_`` prefix instroduced in 3.1.0 has been restored.
-    Backwards compatibility with existing playbooks is now ensured.

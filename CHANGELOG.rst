@@ -4,6 +4,19 @@ Apache CloudStack Collection Release Notes
 
 .. contents:: Topics
 
+v3.2.0
+======
+
+Bugfixes
+--------
+
+- The removed routing to module names with ``cs_`` prefix instroduced in 3.1.0 has been restored. Backwards compatibility with existing playbooks is now ensured.
+
+New Modules
+-----------
+
+- ssl_cert - Manages SSL certificates on Apache CloudStack based clouds.
+
 v3.1.0
 ======
 

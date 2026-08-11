@@ -222,3 +222,16 @@ releases:
       name: vpn_user
       namespace: ''
     release_date: '2026-08-02'
+  3.2.0:
+    changes:
+      bugfixes:
+      - The removed routing to module names with ``cs_`` prefix instroduced in 3.1.0
+        has been restored. Backwards compatibility with existing playbooks is now
+        ensured.
+    fragments:
+    - 3-2-0-restore-routing.yml
+    modules:
+    - description: Manages SSL certificates on Apache CloudStack based clouds.
+      name: ssl_cert
+      namespace: ''
+    release_date: '2026-08-11'
