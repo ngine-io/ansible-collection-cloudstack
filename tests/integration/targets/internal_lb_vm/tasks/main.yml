@@ -1,0 +1,250 @@
+---
+- name: setup vpc
+  ngine_io.cloudstack.vpc:
+    name: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    display_text: "{{ cs_resource_prefix }}_display_text"
+    cidr: 10.13.0.0/16
+    vpc_offering: "{{ cs_lb_internal_vpc_offering }}"
+    zone: "{{ cs_common_zone_adv }}"
+  register: vpc
+- name: verify setup vpc
+  assert:
+    that:
+      - vpc is successful
+
+- name: setup vpc tier with internal lb support
+  ngine_io.cloudstack.network:
+    name: "{{ cs_resource_prefix }}_ilbvm_tier"
+    vpc: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    network_offering: "{{ cs_lb_internal_network_offering }}"
+    gateway: 10.13.1.1
+    netmask: 255.255.255.0
+    zone: "{{ cs_common_zone_adv }}"
+  register: tier
+- name: verify setup vpc tier with internal lb support
+  assert:
+    that:
+      - tier is successful
+
+- name: test fail no internal lb instance deployed yet
+  ngine_io.cloudstack.internal_lb_vm:
+    vpc: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    network: "{{ cs_resource_prefix }}_ilbvm_tier"
+    zone: "{{ cs_common_zone_adv }}"
+  ignore_errors: true
+  register: ilb_vm
+- name: verify test fail no internal lb instance deployed yet
+  assert:
+    that:
+      - ilb_vm is failed
+      - "'Internal load balancer instance not found' in ilb_vm.msg"
+
+- name: setup internal lb
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_ilbvm_lb"
+    vpc: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    network: "{{ cs_resource_prefix }}_ilbvm_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 80
+    instance_port: 8080
+    algorithm: roundrobin
+  register: lb
+- name: verify setup internal lb
+  assert:
+    that:
+      - lb is successful
+
+- name: setup instance in the tier
+  ngine_io.cloudstack.instance:
+    name: "{{ cs_resource_prefix }}-ilbvm-vm"
+    template: "{{ cs_common_template }}"
+    service_offering: "{{ cs_common_service_offering }}"
+    networks:
+      - "{{ cs_resource_prefix }}_ilbvm_tier"
+    zone: "{{ cs_common_zone_adv }}"
+  register: instance
+- name: verify setup instance in the tier
+  assert:
+    that:
+      - instance is successful
+
+# CloudStack only deploys the InternalLbVm once the first member is assigned.
+- name: setup internal lb member
+  ngine_io.cloudstack.lb_internal_member:
+    name: "{{ cs_resource_prefix }}_ilbvm_lb"
+    vpc: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    network: "{{ cs_resource_prefix }}_ilbvm_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    vm: "{{ cs_resource_prefix }}-ilbvm-vm"
+  register: member
+- name: verify setup internal lb member
+  assert:
+    that:
+      - member is changed
+
+- name: test fail missing required args for internal lb vm
+  ngine_io.cloudstack.internal_lb_vm:
+  ignore_errors: true
+  register: ilb_vm
+- name: verify test fail missing required args for internal lb vm
+  assert:
+    that:
+      - ilb_vm is failed
+      - "ilb_vm.msg.startswith('missing required arguments: ')"
+
+- name: test fail no selector given for internal lb vm
+  ngine_io.cloudstack.internal_lb_vm:
+    zone: "{{ cs_common_zone_adv }}"
+  ignore_errors: true
+  register: ilb_vm
+- name: verify test fail no selector given for internal lb vm
+  assert:
+    that:
+      - ilb_vm is failed
+      - "'one of the following is required: name, network, vpc' in ilb_vm.msg"
+
+- name: test internal lb vm is already started
+  ngine_io.cloudstack.internal_lb_vm:
+    vpc: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    network: "{{ cs_resource_prefix }}_ilbvm_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    state: started
+  register: ilb_vm
+- name: verify test internal lb vm is already started
+  assert:
+    that:
+      - ilb_vm is not changed
+      - ilb_vm.state == 'Running'
+      - ilb_vm.network_id == tier.id
+
+- name: test stop internal lb vm in check mode
+  ngine_io.cloudstack.internal_lb_vm:
+    vpc: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    network: "{{ cs_resource_prefix }}_ilbvm_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    state: stopped
+  check_mode: true
+  register: ilb_vm
+- name: verify test stop internal lb vm in check mode
+  assert:
+    that:
+      - ilb_vm is changed
+      - ilb_vm.state == 'Running'
+
+- name: test stop internal lb vm
+  ngine_io.cloudstack.internal_lb_vm:
+    vpc: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    network: "{{ cs_resource_prefix }}_ilbvm_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    state: stopped
+  register: ilb_vm
+- name: verify test stop internal lb vm
+  assert:
+    that:
+      - ilb_vm is changed
+      - ilb_vm.state == 'Stopped'
+
+- name: test stop internal lb vm idempotence
+  ngine_io.cloudstack.internal_lb_vm:
+    vpc: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    network: "{{ cs_resource_prefix }}_ilbvm_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    state: stopped
+  register: ilb_vm
+- name: verify test stop internal lb vm idempotence
+  assert:
+    that:
+      - ilb_vm is not changed
+      - ilb_vm.state == 'Stopped'
+
+- name: test start internal lb vm by name
+  ngine_io.cloudstack.internal_lb_vm:
+    name: "{{ ilb_vm.name }}"
+    zone: "{{ cs_common_zone_adv }}"
+    state: started
+  register: ilb_vm_started
+- name: verify test start internal lb vm by name
+  assert:
+    that:
+      - ilb_vm_started is changed
+      - ilb_vm_started.state == 'Running'
+      - ilb_vm_started.id == ilb_vm.id
+
+- name: test start internal lb vm idempotence
+  ngine_io.cloudstack.internal_lb_vm:
+    vpc: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    network: "{{ cs_resource_prefix }}_ilbvm_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    state: started
+  register: ilb_vm
+- name: verify test start internal lb vm idempotence
+  assert:
+    that:
+      - ilb_vm is not changed
+      - ilb_vm.state == 'Running'
+
+- name: cleanup internal lb member
+  ngine_io.cloudstack.lb_internal_member:
+    name: "{{ cs_resource_prefix }}_ilbvm_lb"
+    vpc: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    network: "{{ cs_resource_prefix }}_ilbvm_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    vm: "{{ cs_resource_prefix }}-ilbvm-vm"
+    state: absent
+  register: member
+- name: verify cleanup internal lb member
+  assert:
+    that:
+      - member is successful
+
+- name: cleanup instance
+  ngine_io.cloudstack.instance:
+    name: "{{ cs_resource_prefix }}-ilbvm-vm"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: instance
+- name: verify cleanup instance
+  assert:
+    that:
+      - instance is successful
+
+- name: cleanup internal lb
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_ilbvm_lb"
+    vpc: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    network: "{{ cs_resource_prefix }}_ilbvm_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: lb
+- name: verify cleanup internal lb
+  assert:
+    that:
+      - lb is successful
+
+# The InternalLbVm is garbage collected asynchronously once the last member is gone, and the
+# tier can not be deleted while it is still attached.
+- name: cleanup vpc tier
+  ngine_io.cloudstack.network:
+    name: "{{ cs_resource_prefix }}_ilbvm_tier"
+    vpc: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: tier
+  until: tier is successful
+  retries: 20
+  delay: 5
+- name: verify cleanup vpc tier
+  assert:
+    that:
+      - tier is successful
+
+- name: cleanup vpc
+  ngine_io.cloudstack.vpc:
+    name: "{{ cs_resource_prefix }}_ilbvm_vpc"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: vpc
+- name: verify cleanup vpc
+  assert:
+    that:
+      - vpc is successful

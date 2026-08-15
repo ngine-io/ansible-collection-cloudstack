@@ -1,0 +1,223 @@
+---
+- name: setup vpc
+  ngine_io.cloudstack.vpc:
+    name: "{{ cs_resource_prefix }}_mem_vpc"
+    display_text: "{{ cs_resource_prefix }}_display_text"
+    cidr: 10.12.0.0/16
+    vpc_offering: "{{ cs_lb_internal_vpc_offering }}"
+    zone: "{{ cs_common_zone_adv }}"
+  register: vpc
+- name: verify setup vpc
+  assert:
+    that:
+      - vpc is successful
+
+- name: setup vpc tier with internal lb support
+  ngine_io.cloudstack.network:
+    name: "{{ cs_resource_prefix }}_mem_tier"
+    vpc: "{{ cs_resource_prefix }}_mem_vpc"
+    network_offering: "{{ cs_lb_internal_network_offering }}"
+    gateway: 10.12.1.1
+    netmask: 255.255.255.0
+    zone: "{{ cs_common_zone_adv }}"
+  register: tier
+- name: verify setup vpc tier with internal lb support
+  assert:
+    that:
+      - tier is successful
+
+- name: setup internal lb
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_mem_lb"
+    vpc: "{{ cs_resource_prefix }}_mem_vpc"
+    network: "{{ cs_resource_prefix }}_mem_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 80
+    instance_port: 8080
+    algorithm: roundrobin
+  register: lb
+- name: verify setup internal lb
+  assert:
+    that:
+      - lb is successful
+
+- name: setup instance in the tier
+  ngine_io.cloudstack.instance:
+    name: "{{ cs_resource_prefix }}-mem-vm"
+    template: "{{ cs_common_template }}"
+    service_offering: "{{ cs_common_service_offering }}"
+    networks:
+      - "{{ cs_resource_prefix }}_mem_tier"
+    zone: "{{ cs_common_zone_adv }}"
+  register: instance
+- name: verify setup instance in the tier
+  assert:
+    that:
+      - instance is successful
+
+- name: test fail missing required args for internal lb member
+  ngine_io.cloudstack.lb_internal_member:
+  ignore_errors: true
+  register: member
+- name: verify test fail missing required args for internal lb member
+  assert:
+    that:
+      - member is failed
+      - "member.msg.startswith('missing required arguments: ')"
+
+- name: test fail unknown internal lb
+  ngine_io.cloudstack.lb_internal_member:
+    name: "{{ cs_resource_prefix }}_mem_does_not_exist"
+    vpc: "{{ cs_resource_prefix }}_mem_vpc"
+    network: "{{ cs_resource_prefix }}_mem_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    vm: "{{ cs_resource_prefix }}-mem-vm"
+  ignore_errors: true
+  register: member
+- name: verify test fail unknown internal lb
+  assert:
+    that:
+      - member is failed
+      - "'Internal load balancer not found' in member.msg"
+
+- name: test add member to internal lb in check mode
+  ngine_io.cloudstack.lb_internal_member:
+    name: "{{ cs_resource_prefix }}_mem_lb"
+    vpc: "{{ cs_resource_prefix }}_mem_vpc"
+    network: "{{ cs_resource_prefix }}_mem_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    vm: "{{ cs_resource_prefix }}-mem-vm"
+  check_mode: true
+  register: member
+- name: verify test add member to internal lb in check mode
+  assert:
+    that:
+      - member is changed
+      - member.vms == []
+
+- name: test add member to internal lb
+  ngine_io.cloudstack.lb_internal_member:
+    name: "{{ cs_resource_prefix }}_mem_lb"
+    vpc: "{{ cs_resource_prefix }}_mem_vpc"
+    network: "{{ cs_resource_prefix }}_mem_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    vm: "{{ cs_resource_prefix }}-mem-vm"
+  register: member
+- name: verify test add member to internal lb
+  assert:
+    that:
+      - member is changed
+      - member.id == lb.id
+      - instance.name in member.vms
+
+- name: test add member to internal lb idempotence
+  ngine_io.cloudstack.lb_internal_member:
+    name: "{{ cs_resource_prefix }}_mem_lb"
+    vpc: "{{ cs_resource_prefix }}_mem_vpc"
+    network: "{{ cs_resource_prefix }}_mem_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    vm: "{{ cs_resource_prefix }}-mem-vm"
+  register: member
+- name: verify test add member to internal lb idempotence
+  assert:
+    that:
+      - member is not changed
+      - instance.name in member.vms
+
+- name: test remove member from internal lb in check mode
+  ngine_io.cloudstack.lb_internal_member:
+    name: "{{ cs_resource_prefix }}_mem_lb"
+    vpc: "{{ cs_resource_prefix }}_mem_vpc"
+    network: "{{ cs_resource_prefix }}_mem_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    vm: "{{ cs_resource_prefix }}-mem-vm"
+    state: absent
+  check_mode: true
+  register: member
+- name: verify test remove member from internal lb in check mode
+  assert:
+    that:
+      - member is changed
+      - instance.name in member.vms
+
+- name: test remove member from internal lb
+  ngine_io.cloudstack.lb_internal_member:
+    name: "{{ cs_resource_prefix }}_mem_lb"
+    vpc: "{{ cs_resource_prefix }}_mem_vpc"
+    network: "{{ cs_resource_prefix }}_mem_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    vm: "{{ cs_resource_prefix }}-mem-vm"
+    state: absent
+  register: member
+- name: verify test remove member from internal lb
+  assert:
+    that:
+      - member is changed
+      - member.vms == []
+
+- name: test remove member from internal lb idempotence
+  ngine_io.cloudstack.lb_internal_member:
+    name: "{{ cs_resource_prefix }}_mem_lb"
+    vpc: "{{ cs_resource_prefix }}_mem_vpc"
+    network: "{{ cs_resource_prefix }}_mem_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    vm: "{{ cs_resource_prefix }}-mem-vm"
+    state: absent
+  register: member
+- name: verify test remove member from internal lb idempotence
+  assert:
+    that:
+      - member is not changed
+      - member.vms == []
+
+- name: cleanup instance
+  ngine_io.cloudstack.instance:
+    name: "{{ cs_resource_prefix }}-mem-vm"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: instance
+- name: verify cleanup instance
+  assert:
+    that:
+      - instance is successful
+
+- name: cleanup internal lb
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_mem_lb"
+    vpc: "{{ cs_resource_prefix }}_mem_vpc"
+    network: "{{ cs_resource_prefix }}_mem_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: lb
+- name: verify cleanup internal lb
+  assert:
+    that:
+      - lb is successful
+
+# The InternalLbVm is garbage collected asynchronously once the last member is gone, and the
+# tier can not be deleted while it is still attached.
+- name: cleanup vpc tier
+  ngine_io.cloudstack.network:
+    name: "{{ cs_resource_prefix }}_mem_tier"
+    vpc: "{{ cs_resource_prefix }}_mem_vpc"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: tier
+  until: tier is successful
+  retries: 20
+  delay: 5
+- name: verify cleanup vpc tier
+  assert:
+    that:
+      - tier is successful
+
+- name: cleanup vpc
+  ngine_io.cloudstack.vpc:
+    name: "{{ cs_resource_prefix }}_mem_vpc"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: vpc
+- name: verify cleanup vpc
+  assert:
+    that:
+      - vpc is successful
