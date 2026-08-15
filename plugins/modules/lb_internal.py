@@ -401,8 +401,7 @@ class AnsibleCloudStackLbInternal(AnsibleCloudStack):
             if diff:
                 self.fail_json(
                     msg="Internal load balancer '%s' exists but the following options can not be "
-                    "changed: %s. Use state=absent followed by state=present to recreate it."
-                    % (self.module.params.get("name"), ", ".join(diff))
+                    "changed: %s. Use state=absent followed by state=present to recreate it." % (self.module.params.get("name"), ", ".join(diff))
                 )
             lb_internal = self._update_for_display(lb_internal)
         else:
