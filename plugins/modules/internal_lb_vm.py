@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
+# Copyright (c) 2026, Mitch Drage <mitch@lsnetworks.com.au>
 # Copyright (c) 2026, René Moser <mail@renemoser.net>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -19,7 +20,7 @@ description:
     - The instance itself can not be created or destroyed through this API family. CloudStack
       deploys it automatically once the first member is assigned to an internal load balancer,
       see M(ngine_io.cloudstack.lb_internal_member).
-author: René Moser (@resmo)
+author: Mitch Drage (@MitchDrage)
 options:
   name:
     description:

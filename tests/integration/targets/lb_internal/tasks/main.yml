@@ -201,6 +201,61 @@
     that:
       - lb_internal_display_idem is not changed
 
+- name: test internal lb force recreate in check mode
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 8081
+    instance_port: 8080
+    algorithm: roundrobin
+    force: true
+  check_mode: true
+  register: lb_internal_force
+- name: verify test internal lb force recreate in check mode
+  assert:
+    that:
+      - lb_internal_force is changed
+      - lb_internal_force.id == lb_internal.id
+      - lb_internal_force.source_port == 80
+
+- name: test internal lb force recreate
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 8081
+    instance_port: 8080
+    algorithm: roundrobin
+    force: true
+  register: lb_internal_force
+- name: verify test internal lb force recreate
+  assert:
+    that:
+      - lb_internal_force is changed
+      - lb_internal_force.id != lb_internal.id
+      - lb_internal_force.source_port == 8081
+      - lb_internal_force.instance_port == 8080
+
+- name: test internal lb force recreate idempotence
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 8081
+    instance_port: 8080
+    algorithm: roundrobin
+    force: true
+  register: lb_internal_force_idem
+- name: verify test internal lb force recreate idempotence
+  assert:
+    that:
+      - lb_internal_force_idem is not changed
+      - lb_internal_force_idem.id == lb_internal_force.id
+
 - name: test absent internal lb in check mode
   ngine_io.cloudstack.lb_internal:
     name: "{{ cs_resource_prefix }}_lb"

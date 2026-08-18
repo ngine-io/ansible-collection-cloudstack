@@ -74,6 +74,14 @@ options:
       - Whether the internal load balancer is displayed to the regular user.
       - Requires an admin account to be idempotent, see the notes below.
     type: bool
+  force:
+    description:
+      - Whether to delete and recreate the internal load balancer when an option which can not
+        be updated differs from the existing one.
+      - Without it, such a difference fails the task instead.
+      - Only considered on I(state=present). See the notes below for the consequences.
+    type: bool
+    default: false
   vpc:
     description:
       - Name of the VPC the I(network) belongs to.
@@ -108,10 +116,17 @@ options:
     default: true
 notes:
   - The CloudStack API only allows I(for_display) to be updated on an existing internal
-    load balancer. When any other option differs from an existing load balancer, this
-    module fails and names the differing options instead of recreating it, so a live load
-    balancer is never torn down by an unrelated playbook run. Use I(state=absent) followed
-    by I(state=present) to apply such a change.
+    load balancer. When any other option differs, this module fails and names the differing
+    options, so a live load balancer is never torn down by an unrelated playbook run. Set
+    I(force=true) to delete and recreate it instead, or use I(state=absent) followed by
+    I(state=present).
+  - I(force=true) only acts when an option actually differs, so it stays idempotent and can
+    safely be driven by a playbook variable.
+  - Recreating drops every member assigned to the load balancer. Re-apply them with
+    M(ngine_io.cloudstack.lb_internal_member) afterwards.
+  - Recreating allocates a new source IP address unless I(source_ip) is given. Anything
+    pointing at the previous address stops working, so pin I(source_ip) when using
+    I(force=true).
   - The API returns C(fordisplay) to admin accounts only. When running as a regular user,
     this module can not detect drift on I(for_display) and will emit a warning instead of
     updating it. I(for_display) is always applied on creation.
@@ -143,6 +158,17 @@ EXAMPLES = """
     source_port: 80
     instance_port: 8080
     source_ip: 10.10.1.100
+
+- name: Ensure an internal load balancer, recreating it if an immutable option changed
+  ngine_io.cloudstack.lb_internal:
+    name: web-ilb
+    vpc: my-vpc
+    network: web-tier
+    zone: zone01
+    source_ip: 10.10.1.100
+    source_port: 8080
+    instance_port: 8080
+    force: true
 
 - name: Ensure an internal load balancer is absent
   ngine_io.cloudstack.lb_internal:
@@ -331,7 +357,7 @@ class AnsibleCloudStackLbInternal(AnsibleCloudStack):
         return lb_rules[0] if lb_rules else {}
 
     def _get_immutable_diff(self, lb_internal):
-        """Return a list of human readable diffs of options which can not be updated."""
+        """Return a list of (option, current, wanted) for options which can not be updated."""
         lb_rule = self._get_lb_rule(lb_internal)
 
         # (module option, wanted value, current value)
@@ -354,10 +380,12 @@ class AnsibleCloudStackLbInternal(AnsibleCloudStack):
                 continue
 
             if isinstance(wanted, int):
-                if current is None or int(current) != wanted:
-                    diff.append("%s (current: %s, wanted: %s)" % (option, current, wanted))
-            elif str(current).lower() != str(wanted).lower():
-                diff.append("%s (current: %s, wanted: %s)" % (option, current, wanted))
+                differs = current is None or int(current) != wanted
+            else:
+                differs = str(current).lower() != str(wanted).lower()
+
+            if differs:
+                diff.append((option, current, wanted))
 
         return diff
 
@@ -393,37 +421,67 @@ class AnsibleCloudStackLbInternal(AnsibleCloudStack):
 
         return lb_internal
 
+    def _create_lb_internal(self):
+        args = self._get_common_args()
+        args.update(
+            {
+                "algorithm": self.module.params.get("algorithm"),
+                "description": self.module.params.get("description"),
+                "fordisplay": self.module.params.get("for_display"),
+                "instanceport": self.module.params.get("instance_port"),
+                "scheme": LB_SCHEME,
+                "sourceipaddress": self.module.params.get("source_ip"),
+                "sourceipaddressnetworkid": self.get_source_ip_network(key="id"),
+                "sourceport": self.module.params.get("source_port"),
+            }
+        )
+
+        lb_internal = None
+        if not self.module.check_mode:
+            res = self.query_api("createLoadBalancer", **args)
+            if self.module.params.get("poll_async"):
+                lb_internal = self.poll_job(res, "loadbalancer")
+        return lb_internal
+
+    def _recreate_lb_internal(self, lb_internal, diff):
+        """Delete and recreate, the only way to change an option the API treats as immutable."""
+        self.result["changed"] = True
+        for option, current, wanted in diff:
+            self.result["diff"]["before"][option] = current
+            self.result["diff"]["after"][option] = wanted
+
+        if self.module.check_mode:
+            return lb_internal
+
+        res = self.query_api("deleteLoadBalancer", id=lb_internal["id"])
+        if self.module.params.get("poll_async"):
+            self.poll_job(res)
+
+        self.lb_internal = None
+        return self._create_lb_internal()
+
     def present_lb_internal(self):
         lb_internal = self.get_lb_internal()
 
         if lb_internal:
             diff = self._get_immutable_diff(lb_internal)
-            if diff:
+            if not diff:
+                lb_internal = self._update_for_display(lb_internal)
+            elif self.module.params.get("force"):
+                lb_internal = self._recreate_lb_internal(lb_internal, diff)
+            else:
                 self.fail_json(
                     msg="Internal load balancer '%s' exists but the following options can not be "
-                    "changed: %s. Use state=absent followed by state=present to recreate it." % (self.module.params.get("name"), ", ".join(diff))
+                    "changed: %s. Use force=true to delete and recreate it, or state=absent "
+                    "followed by state=present."
+                    % (
+                        self.module.params.get("name"),
+                        ", ".join("%s (current: %s, wanted: %s)" % d for d in diff),
+                    )
                 )
-            lb_internal = self._update_for_display(lb_internal)
         else:
             self.result["changed"] = True
-            args = self._get_common_args()
-            args.update(
-                {
-                    "algorithm": self.module.params.get("algorithm"),
-                    "description": self.module.params.get("description"),
-                    "fordisplay": self.module.params.get("for_display"),
-                    "instanceport": self.module.params.get("instance_port"),
-                    "scheme": LB_SCHEME,
-                    "sourceipaddress": self.module.params.get("source_ip"),
-                    "sourceipaddressnetworkid": self.get_source_ip_network(key="id"),
-                    "sourceport": self.module.params.get("source_port"),
-                }
-            )
-
-            if not self.module.check_mode:
-                res = self.query_api("createLoadBalancer", **args)
-                if self.module.params.get("poll_async"):
-                    lb_internal = self.poll_job(res, "loadbalancer")
+            lb_internal = self._create_lb_internal()
 
         self.lb_internal = lb_internal
         return lb_internal
@@ -459,6 +517,7 @@ def main():
             description=dict(type="str"),
             domain=dict(type="str"),
             for_display=dict(type="bool"),
+            force=dict(type="bool", default=False),
             instance_port=dict(type="int"),
             name=dict(type="str", required=True),
             network=dict(type="str", required=True),
