@@ -49,14 +49,16 @@ options:
   algorithm:
     description:
       - Load balancing algorithm.
+      - Defaults to C(source) when the load balancer is created.
+      - When not given, the algorithm of an existing load balancer is left as it is.
       - Can not be changed after creation.
     type: str
-    default: source
     choices: [ source, roundrobin, leastconn ]
   source_ip:
     description:
       - Source IP address of the internal load balancer.
       - Automatically allocated from I(source_ip_network) when not given.
+      - On I(force=true), the address of the existing load balancer is kept when not given.
       - Can not be changed after creation.
     type: str
   source_ip_network:
@@ -125,9 +127,8 @@ notes:
     safely be driven by a playbook variable.
   - Recreating drops every member assigned to the load balancer. Re-apply them with
     M(ngine_io.cloudstack.lb_internal_member) afterwards.
-  - Recreating allocates a new source IP address unless I(source_ip) is given. Anything
-    pointing at the previous address stops working, so pin I(source_ip) when using
-    I(force=true).
+  - Recreating keeps the source IP address of the existing load balancer, so the address
+    stays stable across a recreate. Give I(source_ip) to move it to a different address.
   - The API returns C(fordisplay) to admin accounts only. When running as a regular user,
     this module can not detect drift on I(for_display) and will emit a warning instead of
     updating it. I(for_display) is always applied on creation.
@@ -166,7 +167,6 @@ EXAMPLES = """
     vpc: my-vpc
     network: web-tier
     zone: zone01
-    source_ip: 10.10.1.100
     source_port: 8080
     instance_port: 8080
     force: true
@@ -266,6 +266,9 @@ from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec, cs_re
 # The API only accepts this scheme, see CreateApplicationLoadBalancerCmd. It is deliberately
 # not exposed as an option, as that would imply a Public option the API rejects.
 LB_SCHEME = "Internal"
+
+# Applied on creation only, see _create_lb_internal().
+LB_DEFAULT_ALGORITHM = "source"
 
 
 class AnsibleCloudStackLbInternal(AnsibleCloudStack):
@@ -422,16 +425,19 @@ class AnsibleCloudStackLbInternal(AnsibleCloudStack):
 
         return lb_internal
 
-    def _create_lb_internal(self):
+    def _create_lb_internal(self, source_ip=None):
         args = self._get_common_args()
         args.update(
             {
-                "algorithm": self.module.params.get("algorithm"),
+                # The default is applied here rather than in the argument spec: a spec level
+                # default is indistinguishable from a value the user asked for, and would make
+                # an omitted algorithm look like drift on an existing load balancer.
+                "algorithm": self.module.params.get("algorithm") or LB_DEFAULT_ALGORITHM,
                 "description": self.module.params.get("description"),
                 "fordisplay": self.module.params.get("for_display"),
                 "instanceport": self.module.params.get("instance_port"),
                 "scheme": LB_SCHEME,
-                "sourceipaddress": self.module.params.get("source_ip"),
+                "sourceipaddress": self.module.params.get("source_ip") or source_ip,
                 "sourceipaddressnetworkid": self.get_source_ip_network(key="id"),
                 "sourceport": self.module.params.get("source_port"),
             }
@@ -454,12 +460,16 @@ class AnsibleCloudStackLbInternal(AnsibleCloudStack):
         if self.module.check_mode:
             return lb_internal
 
+        # Keep the address the load balancer already has, so consumers pointing at the VIP
+        # keep working across the recreate. An explicit source_ip still wins.
+        source_ip = lb_internal.get("sourceipaddress")
+
         res = self.query_api("deleteLoadBalancer", id=lb_internal["id"])
         if self.module.params.get("poll_async"):
             self.poll_job(res)
 
         self.lb_internal = None
-        return self._create_lb_internal()
+        return self._create_lb_internal(source_ip=source_ip)
 
     def present_lb_internal(self):
         lb_internal = self.get_lb_internal()
@@ -514,7 +524,7 @@ def main():
     argument_spec.update(
         dict(
             account=dict(type="str"),
-            algorithm=dict(type="str", choices=["source", "roundrobin", "leastconn"], default="source"),
+            algorithm=dict(type="str", choices=["source", "roundrobin", "leastconn"]),
             description=dict(type="str"),
             domain=dict(type="str"),
             for_display=dict(type="bool"),

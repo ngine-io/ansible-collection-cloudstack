@@ -132,6 +132,39 @@
       - lb_internal_idem.instance_port == 8080
       - lb_internal_idem.algorithm == "roundrobin"
 
+- name: test internal lb omitting algorithm is not a diff
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 80
+    instance_port: 8080
+  register: lb_internal_no_algo
+- name: verify test internal lb omitting algorithm is not a diff
+  assert:
+    that:
+      - lb_internal_no_algo is not changed
+      - lb_internal_no_algo.id == lb_internal.id
+      - lb_internal_no_algo.algorithm == "roundrobin"
+
+- name: test internal lb omitting algorithm does not recreate even with force
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 80
+    instance_port: 8080
+    force: true
+  register: lb_internal_no_algo_force
+- name: verify test internal lb omitting algorithm does not recreate even with force
+  assert:
+    that:
+      - lb_internal_no_algo_force is not changed
+      - lb_internal_no_algo_force.id == lb_internal.id
+      - lb_internal_no_algo_force.algorithm == "roundrobin"
+
 - name: test internal lb fails on immutable option change
   ngine_io.cloudstack.lb_internal:
     name: "{{ cs_resource_prefix }}_lb"
@@ -238,6 +271,8 @@
       - lb_internal_force.id != lb_internal.id
       - lb_internal_force.source_port == 8081
       - lb_internal_force.instance_port == 8080
+      # the address is carried over, so consumers of the VIP keep working
+      - lb_internal_force.source_ip == lb_internal.source_ip
 
 - name: test internal lb force recreate idempotence
   ngine_io.cloudstack.lb_internal:
