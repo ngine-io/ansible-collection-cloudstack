@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
+# Copyright (c) 2026, Mitch Drage <mitch@lsnetworks.com.au>
 # Copyright (c) 2026, René Moser <mail@renemoser.net>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -19,7 +20,7 @@ description:
       which manages public load balancer rules only and can not see or manage internal ones.
     - Existing internal load balancers are matched by name within the network scope.
     - Only I(for_display) can be changed after creation. See the notes below.
-author: René Moser (@resmo)
+author: Mitch Drage (@MitchDrage)
 options:
   name:
     description:

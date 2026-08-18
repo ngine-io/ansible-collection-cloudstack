@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
+# Copyright (c) 2026, Mitch Drage <mitch@lsnetworks.com.au>
 # Copyright (c) 2026, René Moser <mail@renemoser.net>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
@@ -17,7 +18,7 @@ description:
     - Add and remove instances to and from an internal load balancer created by
       M(ngine_io.cloudstack.lb_internal).
     - For public load balancer rules use M(ngine_io.cloudstack.lb_rule_member) instead.
-author: René Moser (@resmo)
+author: Mitch Drage (@MitchDrage)
 options:
   name:
     description:
