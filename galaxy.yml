@@ -9,6 +9,7 @@ authors:
   - "Jefferson Girão <jefferson@girao.net>"
   - "Gregor Riepl (@onitake)"
   - "Rafael del Valle (@rvalle)"
+  - "Mitch Drage <mitch@lsnetworks.com.au>"
 dependencies: {}
 description: "Ansible Collection for Apache CloudStack based clouds"
 documentation: ""
