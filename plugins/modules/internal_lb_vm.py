@@ -21,6 +21,7 @@ description:
       deploys it automatically once the first member is assigned to an internal load balancer,
       see M(ngine_io.cloudstack.lb_internal_member).
 author: Mitch Drage (@MitchDrage)
+version_added: 3.3.0
 options:
   name:
     description:
