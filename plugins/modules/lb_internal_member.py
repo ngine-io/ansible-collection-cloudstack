@@ -19,6 +19,7 @@ description:
       M(ngine_io.cloudstack.lb_internal).
     - For public load balancer rules use M(ngine_io.cloudstack.lb_rule_member) instead.
 author: Mitch Drage (@MitchDrage)
+version_added: 3.3.0
 options:
   name:
     description:

@@ -21,6 +21,7 @@ description:
     - Existing internal load balancers are matched by name within the network scope.
     - Only I(for_display) can be changed after creation. See the notes below.
 author: Mitch Drage (@MitchDrage)
+version_added: 3.3.0
 options:
   name:
     description:
