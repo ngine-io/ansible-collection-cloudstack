@@ -4,6 +4,16 @@ Apache CloudStack Collection Release Notes
 
 .. contents:: Topics
 
+v3.3.0
+======
+
+New Modules
+-----------
+
+- internal_lb_vm - Manages internal load balancer instances on Apache CloudStack based clouds.
+- lb_internal - Manages internal load balancers on Apache CloudStack based clouds.
+- lb_internal_member - Manages internal load balancer members on Apache CloudStack based clouds.
+
 v3.2.0
 ======
 
