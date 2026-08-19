@@ -165,7 +165,7 @@
       - lb_internal_no_algo_force.id == lb_internal.id
       - lb_internal_no_algo_force.algorithm == "roundrobin"
 
-- name: test internal lb fails on immutable option change
+- name: test internal lb warns on immutable option change
   ngine_io.cloudstack.lb_internal:
     name: "{{ cs_resource_prefix }}_lb"
     vpc: "{{ cs_resource_prefix }}_vpc"
@@ -174,18 +174,18 @@
     source_port: 8081
     instance_port: 8080
     algorithm: leastconn
-  ignore_errors: true
   register: lb_internal_drift
-- name: verify test internal lb fails on immutable option change
+- name: verify test internal lb warns on immutable option change
   assert:
     that:
-      - lb_internal_drift is failed
-      - "'can not be changed' in lb_internal_drift.msg"
-      - "'source_port' in lb_internal_drift.msg"
-      - "'algorithm' in lb_internal_drift.msg"
-      - "'instance_port' not in lb_internal_drift.msg"
+      - lb_internal_drift is not changed
+      - lb_internal_drift.id == lb_internal.id
+      - "'can not be changed' in (lb_internal_drift.warnings | default([]) | join(' '))"
+      - "'source_port' in (lb_internal_drift.warnings | default([]) | join(' '))"
+      - "'algorithm' in (lb_internal_drift.warnings | default([]) | join(' '))"
+      - "'instance_port' not in (lb_internal_drift.warnings | default([]) | join(' '))"
 
-- name: verify internal lb still exists after failed immutable option change
+- name: verify internal lb is untouched after the immutable option warning
   ngine_io.cloudstack.lb_internal:
     name: "{{ cs_resource_prefix }}_lb"
     vpc: "{{ cs_resource_prefix }}_vpc"
@@ -195,7 +195,7 @@
     instance_port: 8080
     algorithm: roundrobin
   register: lb_internal_survived
-- name: verify internal lb still exists after failed immutable option change
+- name: verify internal lb is untouched after the immutable option warning
   assert:
     that:
       - lb_internal_survived is not changed

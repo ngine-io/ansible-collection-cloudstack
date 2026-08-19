@@ -81,7 +81,8 @@ options:
     description:
       - Whether to delete and recreate the internal load balancer when an option which can not
         be updated differs from the existing one.
-      - Without it, such a difference fails the task instead.
+      - Without it, such a difference only produces a warning and the load balancer is left
+        unchanged.
       - Only considered on I(state=present). See the notes below for the consequences.
     type: bool
     default: false
@@ -119,10 +120,10 @@ options:
     default: true
 notes:
   - The CloudStack API only allows I(for_display) to be updated on an existing internal
-    load balancer. When any other option differs, this module fails and names the differing
-    options, so a live load balancer is never torn down by an unrelated playbook run. Set
-    I(force=true) to delete and recreate it instead, or use I(state=absent) followed by
-    I(state=present).
+    load balancer. When any other option differs, this module leaves the load balancer as it
+    is and warns, naming the differing options, so a live load balancer is never torn down by
+    an unrelated playbook run. Set I(force=true) to delete and recreate it instead, or use
+    I(state=absent) followed by I(state=present).
   - I(force=true) only acts when an option actually differs, so it stays idempotent and can
     safely be driven by a playbook variable.
   - Recreating drops every member assigned to the load balancer. Re-apply them with
@@ -481,8 +482,10 @@ class AnsibleCloudStackLbInternal(AnsibleCloudStack):
             elif self.module.params.get("force"):
                 lb_internal = self._recreate_lb_internal(lb_internal, diff)
             else:
-                self.fail_json(
-                    msg="Internal load balancer '%s' exists but the following options can not be "
+                # Warn rather than fail, consistent with the other modules of this collection:
+                # a failed task aborts the play and a rerun would not trigger handlers again.
+                self.module.warn(
+                    "Internal load balancer '%s' exists but the following options can not be "
                     "changed: %s. Use force=true to delete and recreate it, or state=absent "
                     "followed by state=present."
                     % (
@@ -490,6 +493,7 @@ class AnsibleCloudStackLbInternal(AnsibleCloudStack):
                         ", ".join("%s (current: %s, wanted: %s)" % d for d in diff),
                     )
                 )
+                lb_internal = self._update_for_display(lb_internal)
         else:
             self.result["changed"] = True
             lb_internal = self._create_lb_internal()
