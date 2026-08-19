@@ -1,0 +1,355 @@
+---
+- name: setup vpc
+  ngine_io.cloudstack.vpc:
+    name: "{{ cs_resource_prefix }}_vpc"
+    display_text: "{{ cs_resource_prefix }}_display_text"
+    cidr: 10.10.0.0/16
+    vpc_offering: "{{ cs_lb_internal_vpc_offering }}"
+    zone: "{{ cs_common_zone_adv }}"
+  register: vpc
+- name: verify setup vpc
+  assert:
+    that:
+      - vpc is successful
+
+- name: setup vpc tier with internal lb support
+  ngine_io.cloudstack.network:
+    name: "{{ cs_resource_prefix }}_tier"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network_offering: "{{ cs_lb_internal_network_offering }}"
+    gateway: 10.10.1.1
+    netmask: 255.255.255.0
+    zone: "{{ cs_common_zone_adv }}"
+  register: tier
+- name: verify setup vpc tier with internal lb support
+  assert:
+    that:
+      - tier is successful
+
+- name: setup internal lb absent
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: lb_internal
+- name: verify setup internal lb absent
+  assert:
+    that:
+      - lb_internal is successful
+
+- name: test fail missing required args for internal lb
+  ngine_io.cloudstack.lb_internal:
+  ignore_errors: true
+  register: lb_internal
+- name: verify test fail missing required args for internal lb
+  assert:
+    that:
+      - lb_internal is failed
+      - "lb_internal.msg.startswith('missing required arguments: ')"
+
+- name: test fail missing create params for internal lb
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+  ignore_errors: true
+  register: lb_internal
+- name: verify test fail missing create params for internal lb
+  assert:
+    that:
+      - lb_internal is failed
+      - 'lb_internal.msg == "state is present but all of the following are missing: source_port, instance_port"'
+
+- name: test create internal lb in check mode
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 80
+    instance_port: 8080
+    algorithm: roundrobin
+  check_mode: true
+  register: lb_internal
+- name: verify test create internal lb in check mode
+  assert:
+    that:
+      - lb_internal is changed
+
+- name: verify internal lb was not created in check mode
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: lb_internal
+- name: verify internal lb was not created in check mode
+  assert:
+    that:
+      - lb_internal is not changed
+
+- name: test create internal lb
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 80
+    instance_port: 8080
+    algorithm: roundrobin
+  register: lb_internal
+- name: verify test create internal lb
+  assert:
+    that:
+      - lb_internal is changed
+      - lb_internal.name == "{{ cs_resource_prefix }}_lb"
+      - lb_internal.source_port == 80
+      - lb_internal.instance_port == 8080
+      - lb_internal.algorithm == "roundrobin"
+      - lb_internal.source_ip is defined
+      - lb_internal.network_id == tier.id
+
+- name: test create internal lb idempotence
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 80
+    instance_port: 8080
+    algorithm: roundrobin
+  register: lb_internal_idem
+- name: verify test create internal lb idempotence
+  assert:
+    that:
+      - lb_internal_idem is not changed
+      - lb_internal_idem.id == lb_internal.id
+      - lb_internal_idem.source_port == 80
+      - lb_internal_idem.instance_port == 8080
+      - lb_internal_idem.algorithm == "roundrobin"
+
+- name: test internal lb omitting algorithm is not a diff
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 80
+    instance_port: 8080
+  register: lb_internal_no_algo
+- name: verify test internal lb omitting algorithm is not a diff
+  assert:
+    that:
+      - lb_internal_no_algo is not changed
+      - lb_internal_no_algo.id == lb_internal.id
+      - lb_internal_no_algo.algorithm == "roundrobin"
+
+- name: test internal lb omitting algorithm does not recreate even with force
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 80
+    instance_port: 8080
+    force: true
+  register: lb_internal_no_algo_force
+- name: verify test internal lb omitting algorithm does not recreate even with force
+  assert:
+    that:
+      - lb_internal_no_algo_force is not changed
+      - lb_internal_no_algo_force.id == lb_internal.id
+      - lb_internal_no_algo_force.algorithm == "roundrobin"
+
+- name: test internal lb warns on immutable option change
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 8081
+    instance_port: 8080
+    algorithm: leastconn
+  register: lb_internal_drift
+- name: verify test internal lb warns on immutable option change
+  assert:
+    that:
+      - lb_internal_drift is not changed
+      - lb_internal_drift.id == lb_internal.id
+      - "'can not be changed' in (lb_internal_drift.warnings | default([]) | join(' '))"
+      - "'source_port' in (lb_internal_drift.warnings | default([]) | join(' '))"
+      - "'algorithm' in (lb_internal_drift.warnings | default([]) | join(' '))"
+      - "'instance_port' not in (lb_internal_drift.warnings | default([]) | join(' '))"
+
+- name: verify internal lb is untouched after the immutable option warning
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 80
+    instance_port: 8080
+    algorithm: roundrobin
+  register: lb_internal_survived
+- name: verify internal lb is untouched after the immutable option warning
+  assert:
+    that:
+      - lb_internal_survived is not changed
+      - lb_internal_survived.id == lb_internal.id
+
+- name: test update internal lb for_display
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 80
+    instance_port: 8080
+    algorithm: roundrobin
+    for_display: false
+  register: lb_internal_display
+- name: verify test update internal lb for_display
+  assert:
+    that:
+      - lb_internal_display is changed
+      - lb_internal_display.id == lb_internal.id
+
+- name: test update internal lb for_display idempotence
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 80
+    instance_port: 8080
+    algorithm: roundrobin
+    for_display: false
+  register: lb_internal_display_idem
+- name: verify test update internal lb for_display idempotence
+  assert:
+    that:
+      - lb_internal_display_idem is not changed
+
+- name: test internal lb force recreate in check mode
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 8081
+    instance_port: 8080
+    algorithm: roundrobin
+    force: true
+  check_mode: true
+  register: lb_internal_force
+- name: verify test internal lb force recreate in check mode
+  assert:
+    that:
+      - lb_internal_force is changed
+      - lb_internal_force.id == lb_internal.id
+      - lb_internal_force.source_port == 80
+
+- name: test internal lb force recreate
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 8081
+    instance_port: 8080
+    algorithm: roundrobin
+    force: true
+  register: lb_internal_force
+- name: verify test internal lb force recreate
+  assert:
+    that:
+      - lb_internal_force is changed
+      - lb_internal_force.id != lb_internal.id
+      - lb_internal_force.source_port == 8081
+      - lb_internal_force.instance_port == 8080
+      # the address is carried over, so consumers of the VIP keep working
+      - lb_internal_force.source_ip == lb_internal.source_ip
+
+- name: test internal lb force recreate idempotence
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    source_port: 8081
+    instance_port: 8080
+    algorithm: roundrobin
+    force: true
+  register: lb_internal_force_idem
+- name: verify test internal lb force recreate idempotence
+  assert:
+    that:
+      - lb_internal_force_idem is not changed
+      - lb_internal_force_idem.id == lb_internal_force.id
+
+- name: test absent internal lb in check mode
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  check_mode: true
+  register: lb_internal
+- name: verify test absent internal lb in check mode
+  assert:
+    that:
+      - lb_internal is changed
+
+- name: test absent internal lb
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: lb_internal
+- name: verify test absent internal lb
+  assert:
+    that:
+      - lb_internal is changed
+
+- name: test absent internal lb idempotence
+  ngine_io.cloudstack.lb_internal:
+    name: "{{ cs_resource_prefix }}_lb"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    network: "{{ cs_resource_prefix }}_tier"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: lb_internal
+- name: verify test absent internal lb idempotence
+  assert:
+    that:
+      - lb_internal is not changed
+
+- name: cleanup vpc tier
+  ngine_io.cloudstack.network:
+    name: "{{ cs_resource_prefix }}_tier"
+    vpc: "{{ cs_resource_prefix }}_vpc"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: tier
+- name: verify cleanup vpc tier
+  assert:
+    that:
+      - tier is successful
+
+- name: cleanup vpc
+  ngine_io.cloudstack.vpc:
+    name: "{{ cs_resource_prefix }}_vpc"
+    zone: "{{ cs_common_zone_adv }}"
+    state: absent
+  register: vpc
+- name: verify cleanup vpc
+  assert:
+    that:
+      - vpc is successful

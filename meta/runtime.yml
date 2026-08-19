@@ -20,8 +20,11 @@ action_groups:
     - instance_password_reset
     - instance
     - instance_snapshot
+    - internal_lb_vm
     - ip_address
     - iso
+    - lb_internal_member
+    - lb_internal
     - lb_rule_member
     - lb_rule
     - metadata_facts

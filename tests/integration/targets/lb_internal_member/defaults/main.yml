@@ -1,0 +1,3 @@
+---
+cs_lb_internal_vpc_offering: Default VPC offering
+cs_lb_internal_network_offering: DefaultIsolatedNetworkOfferingForVpcNetworksWithInternalLB

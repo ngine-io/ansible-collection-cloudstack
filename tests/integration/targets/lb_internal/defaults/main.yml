@@ -1,0 +1,6 @@
+---
+# An internal load balancer requires a VPC offering which supports the Lb service with the
+# InternalLbVm provider, and a tier network offering which uses it. Both are shipped as
+# defaults by CloudStack.
+cs_lb_internal_vpc_offering: Default VPC offering
+cs_lb_internal_network_offering: DefaultIsolatedNetworkOfferingForVpcNetworksWithInternalLB
