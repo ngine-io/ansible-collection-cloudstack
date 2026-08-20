@@ -1,0 +1,25 @@
+---
+# Copyright (c) Ansible Project
+# GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+edit_on_github:
+  repository: ngine_io/cloudstack
+  branch: master
+  path_prefix: ''
+
+extra_links:
+  - description: Submit a bug report
+    url: https://github.com/ngine_io/cloudstack/issues/new
+  - description: Request a feature
+    url: https://github.com/ngine_io/cloudstack/issues/new
+
+communication:
+  irc_channels:
+    - topic: General usage and support questions
+      network: Libera
+      channel: '#ansible-community'
+  forums:
+    - topic: "Ansible Forum: Discussions about Ansible CloudStack"
+      # The following URL directly points to the "cloudstack" tag
+      url: https://forum.ansible.com/tag/cloudstack
