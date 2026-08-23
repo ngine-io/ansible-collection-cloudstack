@@ -138,6 +138,14 @@ enabled:
   returned: success
   type: bool
   sample: true
+token_url:
+  description: Token URL of the OAuth provider.
+  returned: success
+  type: str
+authorized_url:
+  description: Authorized URL of the OAuth provider.
+  returned: success
+  type: str
 """
 
 from ansible.module_utils.basic import AnsibleModule
