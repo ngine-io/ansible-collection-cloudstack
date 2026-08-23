@@ -46,7 +46,7 @@ docker run --rm -p 8088:8080 \
   docker.io/swaggerapi/swagger-ui
 ```
 
-Then open <http://localhost>. `SWAGGER_JSON` takes YAML as happily as JSON
+Then open <http://localhost:8088>. `SWAGGER_JSON` takes YAML as happily as JSON
 despite its name — the entrypoint copies the file next to the bundle and points
 Swagger UI at it. On a rootless container runtime, publish an unprivileged port
 (`-p 8080:8080`) instead of `80`, and add `:ro,Z` to the volume if SELinux is
