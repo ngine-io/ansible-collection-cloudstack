@@ -76,7 +76,7 @@ There are many ways in which you can participate in the project, for example:
 ## OpenAPI specification
 
 CloudStack describes its own API through the non-standard `listApis` command.
-`scripts/cs_openapi.py` translates that catalogue into an OpenAPI 3.2.0 document:
+`scripts/cs_openapi.py` (available in the source repository; the `scripts/` directory is excluded from the built collection) translates that catalogue into an OpenAPI 3.2.0 document:
 
 ```bash
 # uses the endpoint from ~/.cloudstack.ini or the CLOUDSTACK_* env variables
