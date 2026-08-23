@@ -1,2 +1,22 @@
+# Editors / IDEs
 .idea
+.vscode
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Virtualenvs
+.venv/
+venv/
+env/
+
+# ansible-test artifacts
 tests/output
+.ansible/
+
+# Built collection artifacts
+*.tar.gz

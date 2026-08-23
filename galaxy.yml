@@ -10,6 +10,11 @@ authors:
   - "Gregor Riepl (@onitake)"
   - "Rafael del Valle (@rvalle)"
   - "Mitch Drage <mitch@lsnetworks.com.au>"
+build_ignore:
+  - .github
+  - .venv
+  - scripts
+  - tests/output
 dependencies: {}
 description: "Ansible Collection for Apache CloudStack based clouds"
 documentation: ""
