@@ -73,6 +73,18 @@ There are many ways in which you can participate in the project, for example:
 - Review the documentation and make pull requests for anything from typos to new content
 - If you are interested in fixing issues and contributing directly to the code base, please see the [CONTRIBUTING](CONTRIBUTING.md) document.
 
+## OpenAPI specification
+
+CloudStack describes its own API through the non-standard `listApis` command.
+`scripts/cs_openapi.py` translates that catalogue into an OpenAPI 3.2.0 document:
+
+```bash
+# uses the endpoint from ~/.cloudstack.ini or the CLOUDSTACK_* env variables
+python scripts/cs_openapi.py -o cloudstack-openapi.yaml
+```
+
+See [scripts/README.md](scripts/README.md) for the mapping rules and their limits.
+
 ## Run tests
 
 Activate env setup of ansible core:
