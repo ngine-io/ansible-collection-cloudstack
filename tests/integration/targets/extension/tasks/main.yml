@@ -1,0 +1,327 @@
+---
+- name: setup
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    state: absent
+  register: extension
+- name: verify setup
+  assert:
+    that:
+      - extension is successful
+
+- name: test fail if missing params
+  ngine_io.cloudstack.extension:
+  register: extension
+  ignore_errors: true
+- name: verify test fail if missing params
+  assert:
+    that:
+      - extension is failed
+      - "extension.msg.startswith('missing required arguments: ')"
+
+- name: test fail if details and cleanup_details are used together
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    details:
+      endpoint: https://example.com
+    cleanup_details: true
+  register: extension
+  ignore_errors: true
+- name: verify test fail if details and cleanup_details are used together
+  assert:
+    that:
+      - extension is failed
+      - "'mutually exclusive' in extension.msg"
+
+- name: test fail register without resource
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    state: register
+  register: extension
+  ignore_errors: true
+- name: verify test fail register without resource
+  assert:
+    that:
+      - extension is failed
+      - "'resource_id' in extension.msg"
+
+- name: test create extension in check mode
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    description: "{{ cs_resource_prefix }} description"
+  register: extension
+  check_mode: true
+- name: verify test create extension in check mode
+  assert:
+    that:
+      - extension is changed
+
+- name: test create extension
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    description: "{{ cs_resource_prefix }} description"
+  register: extension
+- name: verify test create extension
+  assert:
+    that:
+      - extension is changed
+      - extension.name == cs_resource_prefix + "-ext"
+      - extension.description == cs_resource_prefix + " description"
+      - extension.extension_type == 'Orchestrator'
+      - extension.state == 'Enabled'
+      - extension.is_user_defined
+      - extension.path is defined
+
+- name: test create extension idempotence
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    description: "{{ cs_resource_prefix }} description"
+  register: extension
+- name: verify test create extension idempotence
+  assert:
+    that:
+      - extension is not changed
+      - extension.name == cs_resource_prefix + "-ext"
+      - extension.description == cs_resource_prefix + " description"
+
+- name: test update extension in check mode
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    description: "{{ cs_resource_prefix }} updated"
+  register: extension
+  check_mode: true
+- name: verify test update extension in check mode
+  assert:
+    that:
+      - extension is changed
+      - extension.description == cs_resource_prefix + " description"
+
+- name: test update extension
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    description: "{{ cs_resource_prefix }} updated"
+  register: extension
+- name: verify test update extension
+  assert:
+    that:
+      - extension is changed
+      - extension.description == cs_resource_prefix + " updated"
+
+- name: test update extension idempotence
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    description: "{{ cs_resource_prefix }} updated"
+  register: extension
+- name: verify test update extension idempotence
+  assert:
+    that:
+      - extension is not changed
+      - extension.description == cs_resource_prefix + " updated"
+
+- name: test set details
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    details:
+      endpoint: https://example.com
+      timeout: "30"
+  register: extension
+- name: verify test set details
+  assert:
+    that:
+      - extension is changed
+      - extension.details.endpoint == 'https://example.com'
+      - extension.details.timeout == '30'
+
+- name: test set details idempotence
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    details:
+      endpoint: https://example.com
+      timeout: "30"
+  register: extension
+- name: verify test set details idempotence
+  assert:
+    that:
+      - extension is not changed
+      - extension.details.endpoint == 'https://example.com'
+
+- name: test details are replaced not merged
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    details:
+      endpoint: https://example.com
+  register: extension
+- name: verify test details are replaced not merged
+  assert:
+    that:
+      - extension is changed
+      - extension.details.endpoint == 'https://example.com'
+      - "'timeout' not in extension.details"
+
+- name: test cleanup details
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    cleanup_details: true
+  register: extension
+- name: verify test cleanup details
+  assert:
+    that:
+      - extension is changed
+      - extension.details is not defined
+
+- name: test cleanup details idempotence
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    cleanup_details: true
+  register: extension
+- name: verify test cleanup details idempotence
+  assert:
+    that:
+      - extension is not changed
+
+- name: test disable extension
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    extension_state: disabled
+  register: extension
+- name: verify test disable extension
+  assert:
+    that:
+      - extension is changed
+      - extension.state == 'Disabled'
+
+- name: test disable extension idempotence
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    extension_state: disabled
+  register: extension
+- name: verify test disable extension idempotence
+  assert:
+    that:
+      - extension is not changed
+      - extension.state == 'Disabled'
+
+- name: test enable extension
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    extension_state: enabled
+  register: extension
+- name: verify test enable extension
+  assert:
+    that:
+      - extension is changed
+      - extension.state == 'Enabled'
+
+- name: test set orchestrator_requires_prepare_vm
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    orchestrator_requires_prepare_vm: true
+  register: extension
+- name: verify test set orchestrator_requires_prepare_vm
+  assert:
+    that:
+      - extension is changed
+      - extension.orchestrator_requires_prepare_vm == true
+
+- name: test set orchestrator_requires_prepare_vm idempotence
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    orchestrator_requires_prepare_vm: true
+  register: extension
+- name: verify test set orchestrator_requires_prepare_vm idempotence
+  assert:
+    that:
+      - extension is not changed
+      - extension.orchestrator_requires_prepare_vm == true
+
+- name: test unset orchestrator_requires_prepare_vm
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    orchestrator_requires_prepare_vm: false
+  register: extension
+- name: verify test unset orchestrator_requires_prepare_vm
+  assert:
+    that:
+      - extension is changed
+
+- name: test unregister an unregistered resource
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    resource_id: "{{ cs_resource_prefix }}-not-registered"
+    resource_type: Cluster
+    state: unregister
+  register: extension
+- name: verify test unregister an unregistered resource
+  assert:
+    that:
+      - extension is not changed
+
+- name: test register resource in check mode
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    resource_id: "{{ cs_resource_prefix }}-cluster"
+    resource_type: Cluster
+    state: register
+  register: extension
+  check_mode: true
+- name: verify test register resource in check mode
+  assert:
+    that:
+      - extension is changed
+
+- name: test register resource
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    resource_id: "{{ cs_resource_prefix }}-cluster"
+    resource_type: Cluster
+    state: register
+  register: extension
+- name: verify test register resource
+  assert:
+    that:
+      - extension is changed
+
+- name: test register resource idempotence
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    resource_id: "{{ cs_resource_prefix }}-cluster"
+    resource_type: Cluster
+    state: register
+  register: extension
+- name: verify test register resource idempotence
+  assert:
+    that:
+      - extension is not changed
+
+- name: test remove extension in check mode
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    state: absent
+  register: extension
+  check_mode: true
+- name: verify test remove extension in check mode
+  assert:
+    that:
+      - extension is changed
+      - extension.name == cs_resource_prefix + "-ext"
+
+- name: test remove extension
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    state: absent
+  register: extension
+- name: verify test remove extension
+  assert:
+    that:
+      - extension is changed
+      - extension.name == cs_resource_prefix + "-ext"
+
+- name: test remove extension idempotence
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    state: absent
+  register: extension
+- name: verify test remove extension idempotence
+  assert:
+    that:
+      - extension is not changed
