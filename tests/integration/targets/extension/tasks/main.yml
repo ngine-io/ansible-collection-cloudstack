@@ -269,6 +269,30 @@
     that:
       - extension is changed
 
+- name: test register resource
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    resource_id: "{{ cs_resource_prefix }}-cluster"
+    resource_type: Cluster
+    state: register
+  register: extension
+- name: verify test register resource
+  assert:
+    that:
+      - extension is changed
+
+- name: test register resource idempotence
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    resource_id: "{{ cs_resource_prefix }}-cluster"
+    resource_type: Cluster
+    state: register
+  register: extension
+- name: verify test register resource idempotence
+  assert:
+    that:
+      - extension is not changed
+
 - name: test remove extension in check mode
   ngine_io.cloudstack.extension:
     name: "{{ cs_resource_prefix }}-ext"

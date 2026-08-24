@@ -347,11 +347,14 @@
     name: "{{ cs_resource_prefix }}-action"
     extension: "{{ cs_resource_prefix }}-unknown"
     state: absent
+  ignore_errors: true
   register: custom_action
 - name: verify test remove custom action of an unknown extension
   assert:
     that:
-      - custom_action is not changed
+      - custom_action is failed
+      - "'Extension ' in custom_action.msg"
+      - "'not found' in custom_action.msg"
 
 - name: cleanup extension
   ngine_io.cloudstack.extension:

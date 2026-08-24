@@ -287,8 +287,8 @@ class AnsibleCloudStackCustomAction(AnsibleCloudStack):
         custom_actions = self.query_api("listCustomActions", **args)
         if custom_actions:
             # The name filter of listCustomActions matches exactly.
-            self.custom_action = custom_actions["extensioncustomaction"][0]
-        return self.custom_action
+            return custom_actions["extensioncustomaction"][0]
+        return None
 
     def _get_wanted_details(self):
         details = self.module.params.get("details")
