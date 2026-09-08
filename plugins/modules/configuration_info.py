@@ -70,7 +70,7 @@ configurations:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.ngine_io.cloudstack.plugins.module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec
+from ..module_utils.cloudstack import AnsibleCloudStack, cs_argument_spec
 
 
 class AnsibleCloudStackConfigurationInfo(AnsibleCloudStack):
@@ -84,20 +84,11 @@ class AnsibleCloudStackConfigurationInfo(AnsibleCloudStack):
         }
 
     def get_configuration(self):
-        args = {}
+        args = {"fetch_list": True}
         if self.module.params["name"]:
             args["name"] = self.module.params["name"]
-            configurations = self.query_api("listConfigurations", **args)
-            if configurations and "configuration" in configurations:
-                configurations = configurations["configuration"]
-            else:
-                configurations = []
-        else:
-            configurations = self.query_api("listConfigurations")
-            if configurations and "configuration" in configurations:
-                configurations = configurations["configuration"]
-            else:
-                configurations = []
+        
+        configurations = self.query_api("listConfigurations", **args) or []
 
         return {"configurations": [self.update_result(config) for config in configurations]}
 
