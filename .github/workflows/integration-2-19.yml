@@ -22,8 +22,9 @@ jobs:
           - 2
         ansible-branch:
           - stable-2.19
-        container-version:
-          - 1.7.0
+        container:
+          - quay.io/ansible/cloudstack-test-container:1.7.0
+          -
     steps:
       - name: Check out code
         uses: actions/checkout@v7
@@ -59,7 +60,7 @@ jobs:
           --coverage
           cs/group${{ matrix.group }}/
         env:
-          ANSIBLE_CLOUDSTACK_CONTAINER: quay.io/ansible/cloudstack-test-container:${{ matrix.container-version }}
+          ANSIBLE_CLOUDSTACK_CONTAINER: ${{ matrix.container }}
 
       - name: Generate coverage report.
         run: >-
