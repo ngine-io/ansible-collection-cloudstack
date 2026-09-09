@@ -42,13 +42,6 @@ ANSIBLE_CLOUDSTACK_CONTAINER=quay.io/ansible/cloudstack-test-container:1.7.0 \
 
 `ANSIBLE_CLOUDSTACK_CONTAINER` selects the simulator image CI uses; without it `ansible-test` picks its default. Integration CI only runs on `master`, on schedule, or when a PR is labelled `automation`.
 
-Generate the OpenAPI document from a CloudStack endpoint:
-
-```bash
-python scripts/cs_openapi.py -o cloudstack-openapi.yaml            # live endpoint
-python scripts/cs_openapi.py --from-json listapis.json -o spec.yaml # offline
-```
-
 Build/install locally the way CI does:
 
 ```bash
@@ -85,28 +78,6 @@ Modules are one file per resource in `plugins/modules/`, structured as: `DOCUMEN
 ### Integration tests
 
 One target per module under `tests/integration/targets/<module>/`. Each target depends on the hidden `cs_common` target (`meta/main.yml`) which installs `cs`, waits for the simulator's system template, and defines shared defaults: `cs_resource_prefix` (unique per run — use it to name resources), `cs_common_template`, `cs_common_service_offering`, `cs_common_zone_adv`, `cs_common_zone_basic`. Tests are expected to cover create/idempotence/update/absent plus check mode, and to clean up after themselves.
-
-### `scripts/`
-
-Development tooling, excluded from the built collection via `build_ignore` in
-`galaxy.yml`. It is **not** excluded from `ansible-test sanity`, which lints
-every Python file in the tree — a new script must satisfy pylint (no `_` as a
-variable name, no implicit string concatenation in tuples) and black.
-
-Scripts here are controller-side only and target **Python 3.10+**, so they use
-modern syntax (`match`, `X | None`, `dict[str, Any]`) that the collection's
-modules cannot. `cs_openapi.py` is Apache-2.0 rather than GPL-3.0-or-later;
-keep its SPDX header if you edit it.
-
-`scripts/cs_openapi.py` converts CloudStack's proprietary `listApis` catalogue
-into an OpenAPI 3.2.0 document. The mapping rules and their limits live in
-[scripts/README.md](scripts/README.md); the parts worth knowing before touching
-it are that CloudStack keys operations by a `command` query parameter rather
-than by path (so paths are synthetic), that `listApis` describes the entity a
-command returns rather than the `<command>response` envelope around it, and that
-response object shapes are deduplicated into shared component schemas. The
-README also covers serving the result in the official Swagger UI container,
-including why **Try it out** must be disabled there.
 
 ## Adding a module
 

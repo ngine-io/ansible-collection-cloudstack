@@ -13,7 +13,6 @@ authors:
 build_ignore:
   - .github
   - .venv
-  - scripts
   - tests/output
 dependencies: {}
 description: "Ansible Collection for Apache CloudStack based clouds"
