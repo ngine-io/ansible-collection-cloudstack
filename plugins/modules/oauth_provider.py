@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2024, René Moser <mail@renemoser.net>
+# Copyright (c) 2026, René Moser <mail@renemoser.net>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -86,8 +86,10 @@ EXAMPLES = """
     description: Google OAuth2
     client_id: "my-client-id.apps.googleusercontent.com"
     details:
-      scope: "openid email profile"
-      clientsecret: "my secret key"
+      - key: scope
+        value: "openid email profile"
+      - key: clientsecret
+        value: "my secret key"
     secret_key: "my-secret-key"
     redirect_uri: "https://cloudstack.example.com/client/api?command=oauthlogin&source=google"
 
@@ -142,6 +144,11 @@ token_url:
   description: Token URL of the OAuth provider.
   returned: success
   type: str
+domain:
+  description: Domain of the OAuth provider.
+  returned: success
+  type: str
+  sample: "example"
 authorized_url:
   description: Authorized URL of the OAuth provider.
   returned: success
@@ -199,6 +206,7 @@ class AnsibleCloudStackOauthProvider(AnsibleCloudStack):
                 "redirecturi": self.module.params.get("redirect_uri"),
                 "details": self.module.params.get("details"),
                 "enabled": self.module.params.get("enabled"),
+                "domainid": self.get_domain(key="id"),
                 # CloudStack >=4.23 supports authorized_url and token_url parameters for OAuth providers.
                 "authorizedurl": self.module.params.get("authorized_url"),
                 "tokenurl": self.module.params.get("token_url"),
@@ -217,12 +225,13 @@ class AnsibleCloudStackOauthProvider(AnsibleCloudStack):
             "redirecturi": self.module.params.get("redirect_uri"),
             "secretkey": self.module.params.get("secret_key"),
             "enabled": self.module.params.get("enabled"),
+            "domainid": self.get_domain(key="id"),
             # CloudStack >=4.23 supports authorized_url and token_url parameters for OAuth providers.
             "authorizedurl": self.module.params.get("authorized_url"),
             "tokenurl": self.module.params.get("token_url"),
         }
 
-        if self.has_changed(args, oauth_provider):
+        if self.has_changed(args, oauth_provider, skip_diff_for_keys=["secretkey"]):
             self.result["changed"] = True
             if not self.module.check_mode:
                 self.query_api("updateOauthProvider", **args)
