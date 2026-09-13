@@ -24,7 +24,6 @@ jobs:
           - stable-2.19
         container:
           - quay.io/ansible/cloudstack-test-container:1.7.0
-          -
     steps:
       - name: Check out code
         uses: actions/checkout@v7

@@ -30,7 +30,7 @@ jobs:
           - stable-2.21
         container:
           # - quay.io/ansible/cloudstack-test-container:1.7.0
-          - ghcr.io/resmo/cloudstack-test-container:latest
+          -  ghcr.io/resmo/cloudstack-test-container@sha256:93f1799606628dd250924c85eeb389dbdbfa1da6cbace48fc5ed29fe88036c83
     steps:
       - name: Check out code
         uses: actions/checkout@v7
