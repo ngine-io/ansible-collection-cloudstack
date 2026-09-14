@@ -1,0 +1,3 @@
+---
+oauth_provider_redirect_uri: "https://cloudstack.example.com/client/api?command=oauthlogin&source=github"
+oauth_provider_redirect_uri_updated: "https://cloudstack-updated.example.com/client/api?command=oauthlogin&source=github"

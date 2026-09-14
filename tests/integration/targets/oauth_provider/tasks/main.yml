@@ -1,0 +1,221 @@
+---
+- name: setup cleanup
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    state: absent
+  register: oauth_provider
+- name: verify setup cleanup
+  assert:
+    that:
+      - oauth_provider is success
+
+- name: test fail on missing name
+  ngine_io.cloudstack.oauth_provider:
+  ignore_errors: true
+  register: oauth_provider
+- name: verify results of fail on missing name
+  assert:
+    that:
+      - oauth_provider is failed
+      - "oauth_provider.msg == 'missing required arguments: name'"
+
+- name: test fail on missing required params when present
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+  ignore_errors: true
+  register: oauth_provider
+- name: verify results of fail on missing required params when present
+  assert:
+    that:
+      - oauth_provider is failed
+
+- name: test oauth provider register in check mode
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    description: GitHub OAuth2
+    client_id: test-client-id
+    secret_key: test-secret-key
+    redirect_uri: "{{ oauth_provider_redirect_uri }}"
+  register: oauth_provider
+  check_mode: true
+- name: verify results of oauth provider register in check mode
+  assert:
+    that:
+      - oauth_provider is successful
+      - oauth_provider is changed
+
+- name: test oauth provider register
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    description: GitHub OAuth2
+    client_id: test-client-id
+    secret_key: test-secret-key
+    redirect_uri: "{{ oauth_provider_redirect_uri }}"
+  register: oauth_provider
+- name: verify results of oauth provider register
+  assert:
+    that:
+      - oauth_provider is successful
+      - oauth_provider is changed
+      - oauth_provider.id is defined and oauth_provider.id != ""
+      - oauth_provider.name == "github"
+      - oauth_provider.description == "GitHub OAuth2"
+      - oauth_provider.client_id == "test-client-id"
+      - oauth_provider.redirect_uri == oauth_provider_redirect_uri
+      - oauth_provider.enabled == true
+
+- name: test oauth provider register idempotence
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    description: GitHub OAuth2
+    client_id: test-client-id
+    secret_key: test-secret-key
+    redirect_uri: "{{ oauth_provider_redirect_uri }}"
+  register: oauth_provider2
+- name: verify results of oauth provider register idempotence
+  assert:
+    that:
+      - oauth_provider2 is successful
+      - oauth_provider2 is not changed
+      - oauth_provider2.id == oauth_provider.id
+      - oauth_provider2.name == "github"
+      - oauth_provider2.description == "GitHub OAuth2"
+      - oauth_provider2.client_id == "test-client-id"
+      - oauth_provider2.redirect_uri == oauth_provider_redirect_uri
+
+- name: test oauth provider update redirect_uri in check mode
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    description: GitHub OAuth2
+    client_id: test-client-id
+    secret_key: test-secret-key
+    redirect_uri: "{{ oauth_provider_redirect_uri_updated }}"
+  register: oauth_provider3
+  check_mode: true
+- name: verify results of oauth provider update redirect_uri in check mode
+  assert:
+    that:
+      - oauth_provider3 is successful
+      - oauth_provider3 is changed
+      - oauth_provider3.redirect_uri == oauth_provider_redirect_uri
+
+- name: test oauth provider update redirect_uri
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    description: GitHub OAuth2
+    client_id: test-client-id
+    secret_key: test-secret-key
+    redirect_uri: "{{ oauth_provider_redirect_uri_updated }}"
+  register: oauth_provider3
+- name: verify results of oauth provider update redirect_uri
+  assert:
+    that:
+      - oauth_provider3 is successful
+      - oauth_provider3 is changed
+      - oauth_provider3.id == oauth_provider.id
+      - oauth_provider3.redirect_uri == oauth_provider_redirect_uri_updated
+
+- name: test oauth provider update redirect_uri idempotence
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    description: GitHub OAuth2
+    client_id: test-client-id
+    secret_key: test-secret-key
+    redirect_uri: "{{ oauth_provider_redirect_uri_updated }}"
+  register: oauth_provider4
+- name: verify results of oauth provider update redirect_uri idempotence
+  assert:
+    that:
+      - oauth_provider4 is successful
+      - oauth_provider4 is not changed
+      - oauth_provider4.redirect_uri == oauth_provider_redirect_uri_updated
+
+- name: test oauth provider disable in check mode
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    description: GitHub OAuth2
+    client_id: test-client-id
+    secret_key: test-secret-key
+    redirect_uri: "{{ oauth_provider_redirect_uri_updated }}"
+    enabled: false
+  register: oauth_provider5
+  check_mode: true
+- name: verify results of oauth provider disable in check mode
+  assert:
+    that:
+      - oauth_provider5 is successful
+      - oauth_provider5 is changed
+      - oauth_provider5.enabled == true
+
+- name: test oauth provider disable
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    description: GitHub OAuth2
+    client_id: test-client-id
+    secret_key: test-secret-key
+    redirect_uri: "{{ oauth_provider_redirect_uri_updated }}"
+    enabled: false
+  register: oauth_provider5
+- name: verify results of oauth provider disable
+  assert:
+    that:
+      - oauth_provider5 is successful
+      - oauth_provider5 is changed
+      - oauth_provider5.id == oauth_provider.id
+      - oauth_provider5.enabled == false
+
+- name: test oauth provider disable idempotence
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    description: GitHub OAuth2
+    client_id: test-client-id
+    secret_key: test-secret-key
+    redirect_uri: "{{ oauth_provider_redirect_uri_updated }}"
+    enabled: false
+  register: oauth_provider6
+- name: verify results of oauth provider disable idempotence
+  assert:
+    that:
+      - oauth_provider6 is successful
+      - oauth_provider6 is not changed
+      - oauth_provider6.enabled == false
+
+- name: test oauth provider absent in check mode
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    state: absent
+  register: oauth_provider7
+  check_mode: true
+- name: verify results of oauth provider absent in check mode
+  assert:
+    that:
+      - oauth_provider7 is successful
+      - oauth_provider7 is changed
+      - oauth_provider7.id == oauth_provider.id
+      - oauth_provider7.name == "github"
+
+- name: test oauth provider absent
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    state: absent
+  register: oauth_provider7
+- name: verify results of oauth provider absent
+  assert:
+    that:
+      - oauth_provider7 is successful
+      - oauth_provider7 is changed
+      - oauth_provider7.id == oauth_provider.id
+      - oauth_provider7.name == "github"
+
+- name: test oauth provider absent idempotence
+  ngine_io.cloudstack.oauth_provider:
+    name: github
+    state: absent
+  register: oauth_provider8
+- name: verify results of oauth provider absent idempotence
+  assert:
+    that:
+      - oauth_provider8 is successful
+      - oauth_provider8 is not changed
+      - oauth_provider8.id is not defined
+      - oauth_provider8.name is not defined
