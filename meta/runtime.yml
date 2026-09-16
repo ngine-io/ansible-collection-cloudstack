@@ -8,8 +8,10 @@ action_groups:
     - cluster_info
     - configuration_info
     - configuration
+    - custom_action
     - disk_offering
     - domain
+    - extension
     - firewall
     - host
     - image_store

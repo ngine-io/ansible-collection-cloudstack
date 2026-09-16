@@ -1,0 +1,367 @@
+---
+- name: setup extension
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+  register: extension
+- name: verify setup extension
+  assert:
+    that:
+      - extension is successful
+
+- name: setup
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    state: absent
+  register: custom_action
+- name: verify setup
+  assert:
+    that:
+      - custom_action is successful
+
+- name: test fail if missing params
+  ngine_io.cloudstack.custom_action:
+  register: custom_action
+  ignore_errors: true
+- name: verify test fail if missing params
+  assert:
+    that:
+      - custom_action is failed
+      - "custom_action.msg.startswith('missing required arguments: ')"
+
+- name: test fail if parameters and cleanup_parameters are used together
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    parameters:
+      - name: force
+    cleanup_parameters: true
+  register: custom_action
+  ignore_errors: true
+- name: verify test fail if parameters and cleanup_parameters are used together
+  assert:
+    that:
+      - custom_action is failed
+      - "'mutually exclusive' in custom_action.msg"
+
+- name: test fail on unknown extension
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-unknown"
+  register: custom_action
+  ignore_errors: true
+- name: verify test fail on unknown extension
+  assert:
+    that:
+      - custom_action is failed
+      - "'Extension ' in custom_action.msg"
+      - "'not found' in custom_action.msg"
+
+- name: test create custom action in check mode
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    description: "{{ cs_resource_prefix }} description"
+  register: custom_action
+  check_mode: true
+- name: verify test create custom action in check mode
+  assert:
+    that:
+      - custom_action is changed
+
+- name: test create custom action
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    description: "{{ cs_resource_prefix }} description"
+  register: custom_action
+- name: verify test create custom action
+  assert:
+    that:
+      - custom_action is changed
+      - custom_action.name == cs_resource_prefix + "-action"
+      - custom_action.extension == cs_resource_prefix + "-ext"
+      - custom_action.description == cs_resource_prefix + " description"
+      - not custom_action.enabled
+      - custom_action.allowed_role_types == ['Admin']
+
+- name: test create custom action idempotence
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    description: "{{ cs_resource_prefix }} description"
+  register: custom_action
+- name: verify test create custom action idempotence
+  assert:
+    that:
+      - custom_action is not changed
+      - custom_action.description == cs_resource_prefix + " description"
+
+- name: test enable custom action
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    enabled: true
+    timeout: 12
+    success_message: done the action
+    error_message: the action failed
+  register: custom_action
+- name: verify test enable custom action
+  assert:
+    that:
+      - custom_action is changed
+      - custom_action.enabled
+      - custom_action.timeout == 12
+      - custom_action.success_message == "done the action"
+      - custom_action.error_message == "the action failed"
+
+- name: test enable custom action idempotence
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    enabled: true
+    timeout: 12
+    success_message: done the action
+    error_message: the action failed
+  register: custom_action
+- name: verify test enable custom action idempotence
+  assert:
+    that:
+      - custom_action is not changed
+      - custom_action.enabled
+
+- name: test set allowed role types
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    allowed_role_types:
+      - Admin
+      - DomainAdmin
+  register: custom_action
+- name: verify test set allowed role types
+  assert:
+    that:
+      - custom_action is changed
+      - custom_action.allowed_role_types | sort == ['Admin', 'DomainAdmin']
+
+- name: test set allowed role types idempotence in different order
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    allowed_role_types:
+      - DomainAdmin
+      - Admin
+  register: custom_action
+- name: verify test set allowed role types idempotence in different order
+  assert:
+    that:
+      - custom_action is not changed
+
+- name: test set parameters
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    parameters:
+      - name: force
+        type: BOOLEAN
+      - name: reason
+        required: true
+        value_options:
+          - maintenance
+          - failure
+  register: custom_action
+- name: verify test set parameters
+  assert:
+    that:
+      - custom_action is changed
+      - custom_action.parameters | length == 2
+      - custom_action.parameters[0].name == 'force'
+      - custom_action.parameters[0].type == 'BOOLEAN'
+      - not custom_action.parameters[0].required
+      - custom_action.parameters[1].name == 'reason'
+      - custom_action.parameters[1].type == 'STRING'
+      - custom_action.parameters[1].required
+      - custom_action.parameters[1].valueoptions == ['maintenance', 'failure']
+
+- name: test set parameters idempotence
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    parameters:
+      - name: force
+        type: BOOLEAN
+      - name: reason
+        required: true
+        value_options:
+          - maintenance
+          - failure
+  register: custom_action
+- name: verify test set parameters idempotence
+  assert:
+    that:
+      - custom_action is not changed
+      - custom_action.parameters | length == 2
+
+- name: test parameters are replaced not merged
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    parameters:
+      - name: force
+        type: BOOLEAN
+  register: custom_action
+- name: verify test parameters are replaced not merged
+  assert:
+    that:
+      - custom_action is changed
+      - custom_action.parameters | length == 1
+      - custom_action.parameters[0].name == 'force'
+
+- name: test fail on invalid validation format for type
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    parameters:
+      - name: amount
+        type: NUMBER
+        validation_format: EMAIL
+  register: custom_action
+  ignore_errors: true
+- name: verify test fail on invalid validation format for type
+  assert:
+    that:
+      - custom_action is failed
+
+- name: test cleanup parameters
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    cleanup_parameters: true
+  register: custom_action
+- name: verify test cleanup parameters
+  assert:
+    that:
+      - custom_action is changed
+      - custom_action.parameters | default([]) | length == 0
+
+- name: test cleanup parameters idempotence
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    cleanup_parameters: true
+  register: custom_action
+- name: verify test cleanup parameters idempotence
+  assert:
+    that:
+      - custom_action is not changed
+
+- name: test set details
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    details:
+      vendor: acme
+      version: "2.0"
+  register: custom_action
+- name: verify test set details
+  assert:
+    that:
+      - custom_action is changed
+      - custom_action.details.vendor == 'acme'
+      - custom_action.details.version == '2.0'
+
+- name: test set details idempotence
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    details:
+      vendor: acme
+      version: "2.0"
+  register: custom_action
+- name: verify test set details idempotence
+  assert:
+    that:
+      - custom_action is not changed
+
+- name: test cleanup details
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    cleanup_details: true
+  register: custom_action
+- name: verify test cleanup details
+  assert:
+    that:
+      - custom_action is changed
+      - custom_action.details | default({}) | length == 0
+
+- name: test cleanup details idempotence
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    cleanup_details: true
+  register: custom_action
+- name: verify test cleanup details idempotence
+  assert:
+    that:
+      - custom_action is not changed
+
+- name: test remove custom action in check mode
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    state: absent
+  register: custom_action
+  check_mode: true
+- name: verify test remove custom action in check mode
+  assert:
+    that:
+      - custom_action is changed
+      - custom_action.name == cs_resource_prefix + "-action"
+
+- name: test remove custom action
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    state: absent
+  register: custom_action
+- name: verify test remove custom action
+  assert:
+    that:
+      - custom_action is changed
+      - custom_action.name == cs_resource_prefix + "-action"
+
+- name: test remove custom action idempotence
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-ext"
+    state: absent
+  register: custom_action
+- name: verify test remove custom action idempotence
+  assert:
+    that:
+      - custom_action is not changed
+
+- name: test remove custom action of an unknown extension
+  ngine_io.cloudstack.custom_action:
+    name: "{{ cs_resource_prefix }}-action"
+    extension: "{{ cs_resource_prefix }}-unknown"
+    state: absent
+  ignore_errors: true
+  register: custom_action
+- name: verify test remove custom action of an unknown extension
+  assert:
+    that:
+      - custom_action is failed
+      - "'Extension ' in custom_action.msg"
+      - "'not found' in custom_action.msg"
+
+- name: cleanup extension
+  ngine_io.cloudstack.extension:
+    name: "{{ cs_resource_prefix }}-ext"
+    state: absent
+  register: extension
+- name: verify cleanup extension
+  assert:
+    that:
+      - extension is changed
