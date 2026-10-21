@@ -87,7 +87,7 @@ class AnsibleCloudStackConfigurationInfo(AnsibleCloudStack):
         args = {"fetch_list": True}
         if self.module.params["name"]:
             args["name"] = self.module.params["name"]
-        
+
         configurations = self.query_api("listConfigurations", **args) or []
 
         return {"configurations": [self.update_result(config) for config in configurations]}
