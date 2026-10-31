@@ -94,6 +94,8 @@
     scope: cluster
     cluster: C0-adv
     pod: POD0-adv
+    details:
+      test.detail: present
   register: sp
   check_mode: true
 - name: verify create storage pool in check mode
@@ -110,6 +112,8 @@
     scope: cluster
     cluster: C0-adv
     pod: POD0-adv
+    details:
+      test.detail: present
   register: sp
 - name: verify create storage pool
   assert:
@@ -120,6 +124,18 @@
       - sp.pod == "POD0-adv"
       - sp.storage_url == "RBD://ceph-mons.domain/poolname"
 
+- name: read the storage pool details
+  ngine_io.cloudstack.api_request:
+    command: listResourceDetails
+    params:
+      resourcetype: Storage
+      resourceid: "{{ sp.id }}"
+  register: sp_api
+- name: verify the storage pool details were stored
+  assert:
+    that:
+      - sp_api.response.resourcedetail | selectattr('key', 'equalto', 'test.detail') | map(attribute='value') | list == ['present']
+
 - name: create storage pool idempotence
   ngine_io.cloudstack.storage_pool:
     name: "storage_pool_adv"
@@ -127,6 +143,8 @@
     storage_url: rbd://admin:SECRET@ceph-mons.domain/poolname
     cluster: C0-adv
     pod: POD0-adv
+    details:
+      test.detail: present
   register: sp
 - name: verify create storage pool idempotence
   assert:
