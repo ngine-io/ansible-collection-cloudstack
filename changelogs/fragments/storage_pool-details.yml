@@ -1,0 +1,2 @@
+minor_changes:
+  - storage_pool - add the ``details`` option to set the settings a storage provider reads when the pool is created, for example ``resourceGroup`` for the ``Linstor`` provider.

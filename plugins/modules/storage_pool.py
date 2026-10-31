@@ -79,6 +79,12 @@ options:
     description:
       - Bytes CloudStack can provision from this storage pool.
     type: int
+  details:
+    description:
+      - Details of the storage pool, the settings a storage provider reads, for example C(resourceGroup) for the C(Linstor) provider.
+      - Only used when the storage pool is created.
+    type: dict
+    version_added: 3.4.0
   allocation_state:
     description:
       - Allocation state of the storage pool.
@@ -103,6 +109,17 @@ EXAMPLES = """
     name: Ceph RBD
     scope: zone
     hypervisor: KVM
+
+- name: ensure a zone scoped LINSTOR storage_pool is present
+  ngine_io.cloudstack.storage_pool:
+    zone: zone01
+    storage_url: https://linstor-controller:3371
+    provider: Linstor
+    name: linstor
+    scope: zone
+    hypervisor: KVM
+    details:
+      resourceGroup: cloudstack
 
 - name: ensure a cluster scoped storage_pool is disabled
   ngine_io.cloudstack.storage_pool:
@@ -308,6 +325,7 @@ class AnsibleCloudStackStoragePool(AnsibleCloudStack):
                 "clusterid": self.get_cluster(key="id"),
                 "podid": self.get_pod(key="id"),
                 "managed": self.module.params.get("managed"),
+                "details": self.module.params.get("details"),
             }
         )
 
@@ -458,6 +476,7 @@ def main():
             capacity_bytes=dict(type="int"),
             capacity_iops=dict(type="int"),
             managed=dict(type="bool"),
+            details=dict(type="dict"),
             storage_tags=dict(type="list", elements="str", aliases=["storage_tag"]),
             allocation_state=dict(choices=["enabled", "disabled", "maintenance"]),
             state=dict(choices=["present", "absent"], default="present"),
